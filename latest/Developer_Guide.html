@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>Developer Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly developer team</span><br>
-<span id="revnumber">version 13.0.0.Final,</span>
-<span id="revdate">2018-05-31T05:22:12Z</span>
+<span id="revnumber">version 14.0.0.Final,</span>
+<span id="revdate">2018-08-30T23:10:31Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Developer guide</div>
@@ -601,7 +601,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#JPA_Reference_Guide">10. JPA Reference Guide</a>
 <ul class="sectlevel2">
 <li><a href="#introduction">10.1. Introduction</a></li>
-<li><a href="#update-your-persistence.xml-for-hibernate-5.1">10.2. Update your Persistence.xml for Hibernate 5.1</a></li>
+<li><a href="#update-your-persistence.xml-for-hibernate">10.2. Update your Persistence.xml for Hibernate</a></li>
 <li><a href="#entity-manager">10.3. Entity manager</a></li>
 <li><a href="#container-managed-entity-manager">10.4. Container-managed entity manager</a></li>
 <li><a href="#application-managed-entity-manager">10.5. Application-managed entity manager</a></li>
@@ -612,19 +612,18 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#deployment">10.10. Deployment</a></li>
 <li><a href="#troubleshooting">10.11. Troubleshooting</a></li>
 <li><a href="#using-the-infinispan-second-level-cache">10.12. Using the Infinispan second level cache</a></li>
-<li><a href="#replacing-the-current-hibernate-5.x-jars-with-a-newer-version">10.13. Replacing the current Hibernate 5.x jars with a newer version</a></li>
-<li><a href="#using-hibernate-search">10.14. Using Hibernate Search</a></li>
-<li><a href="#packaging-the-hibernate-jpa-persistence-provider-with-your-application">10.15. Packaging the Hibernate JPA persistence provider with your application</a></li>
-<li><a href="#migrating-from-openjpa">10.16. Migrating from OpenJPA</a></li>
-<li><a href="#migrating-from-eclipselink">10.17. Migrating from EclipseLink</a></li>
-<li><a href="#migrating-from-datanucleus">10.18. Migrating from DataNucleus</a></li>
-<li><a href="#native-hibernate-use">10.19. Native Hibernate use</a></li>
-<li><a href="#injection-of-hibernate-session-and-sessionfactoryinjection-of-hibernate-session-and-sessionfactory">10.20. Injection of Hibernate Session and SessionFactoryInjection of</a></li>
-<li><a href="#hibernate-properties">10.21. Hibernate properties</a></li>
-<li><a href="#persistence-unit-properties">10.22. Persistence unit properties</a></li>
-<li><a href="#determine-the-persistence-provider-module">10.23. Determine the persistence provider module</a></li>
-<li><a href="#binding-entitymanagerfactoryentitymanager-to-jndi">10.24. Binding EntityManagerFactory/EntityManager to JNDI</a></li>
-<li><a href="#community">10.25. Community</a></li>
+<li><a href="#using-hibernate-search">10.13. Using Hibernate Search</a></li>
+<li><a href="#packaging-the-hibernate-jpa-persistence-provider-with-your-application">10.14. Packaging the Hibernate JPA persistence provider with your application</a></li>
+<li><a href="#migrating-from-openjpa">10.15. Migrating from OpenJPA</a></li>
+<li><a href="#migrating-from-eclipselink">10.16. Migrating from EclipseLink</a></li>
+<li><a href="#native-hibernate-use">10.17. Native Hibernate use</a></li>
+<li><a href="#injection-of-hibernate-session-and-sessionfactoryinjection-of-hibernate-session-and-sessionfactory">10.18. Injection of Hibernate Session and SessionFactory</a></li>
+<li><a href="#hibernate-transformer">10.19. Hibernate ORM 5.1 native API bytecode transformer</a></li>
+<li><a href="#hibernate-properties">10.20. Hibernate properties</a></li>
+<li><a href="#persistence-unit-properties">10.21. Persistence unit properties</a></li>
+<li><a href="#determine-the-persistence-provider-module">10.22. Determine the persistence provider module</a></li>
+<li><a href="#binding-entitymanagerfactoryentitymanager-to-jndi">10.23. Binding EntityManagerFactory/EntityManager to JNDI</a></li>
+<li><a href="#tips-for-using-the-latest-hibernate-orm">10.24. Tips for using the latest Hibernate ORM</a></li>
 </ul>
 </li>
 <li><a href="#JNDI_Reference">11. JNDI Reference</a></li>
@@ -707,7 +706,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#example-applications-based-on-ee6">20.2. Example Applications Based on EE6</a></li>
 </ul>
 </li>
-<li><a href="#Migrate_Order_Application_from_EAP5">21. Porting the Order Application from EAP 5.1 to WildFly 13</a>
+<li><a href="#Migrate_Order_Application_from_EAP5">21. Porting the Order Application from EAP 5.1 to WildFly 14</a>
 <ul class="sectlevel2">
 <li><a href="#overview-of-the-application">21.1. Overview of the application</a></li>
 <li><a href="#summary-of-changes">21.2. Summary of changes</a></li>
@@ -1324,7 +1323,7 @@ deployment.</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>As explained in the <a href="#Class_Loading_in_WildFly">Class Loading in WildFly</a> article,
-WildFly 13 is based on module classloading. A class within a module B
+WildFly 14 is based on module classloading. A class within a module B
 isn&#8217;t visible to a class within a module A, unless module B adds a
 dependency on module A. Module dependencies can be explicitly (as
 explained in that classloading article) or can be "implicit". This
@@ -1713,7 +1712,7 @@ applications.</p>
 <h2 id="Application_Client_Reference">5. Application Client Reference</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As a Java EE6 compliant server, WildFly 13 contains an application
+<p>As a Java EE6 compliant server, WildFly 14 contains an application
 client. An application client is essentially a cut down server instance,
 that allow you to use EE features such as injection in a client side
 program.</p>
@@ -1955,7 +1954,7 @@ Guide</a><br>
 <div class="sect2">
 <h3 id="using-cdi-beans-from-outside-the-deployment">7.1. Using CDI Beans from outside the deployment</h3>
 <div class="paragraph">
-<p>For WildFly 13 onwards, it is now possible have classes outside the
+<p>For WildFly 14 onwards, it is now possible have classes outside the
 deployment be picked up as CDI beans. In order for this to work you must
 add a dependency on the external deployment that your beans are coming
 from, and make sure the META-INF directory of this deployment is
@@ -2535,7 +2534,7 @@ Executor Service instance&#8217;s JNDI name is
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter details the extensions that are available when developing
-Enterprise Java Beans <sup>tm</sup> on WildFly 13.</p>
+Enterprise Java Beans <sup>tm</sup> on WildFly 14.</p>
 </div>
 <div class="paragraph">
 <p>Currently there is no support for configuring the extensions using an
@@ -3504,7 +3503,7 @@ defined in the server configuration (i.e. <code>standalone.xml</code> or
 <div class="sect5">
 <h6 id="the-clustering-namespace-urnclustering1.0">The clustering namespace urn:clustering:1.0</h6>
 <div class="paragraph">
-<p>This namespace is deprecated and as of WildFly 13 its use has no effect.
+<p>This namespace is deprecated and as of WildFly 14 its use has no effect.
 The clustering behavior of EJBs is determined by the profile in use on
 the server.</p>
 </div>
@@ -3964,7 +3963,7 @@ specific extensions to the security configurations.</p>
 <div class="paragraph">
 <p>The Java EE spec doesn&#8217;t mandate a specific way to configure security
 domain for a bean. It leaves it to the vendor implementations to allow
-such configurations, the way they wish. In WildFly 13, the use of
+such configurations, the way they wish. In WildFly 14, the use of
 <code>@org.jboss.ejb3.annotation.SecurityDomain</code> annotation allows the
 developer to configure the security domain for a bean. Here&#8217;s an
 example:</p>
@@ -4059,14 +4058,14 @@ of a .jar deployment or .war/WEB-INF folder of a .war deployment.
 <div class="paragraph">
 <p>As you can see the <code>doSomething</code> method is configured to be accessible
 for users with role "bar". However, the bean isn&#8217;t configured for any
-specific security domain. Prior to WildFly 13, the absence of an
+specific security domain. Prior to WildFly 14, the absence of an
 explicitly configured security domain on the bean would leave the bean
 unsecured, which meant that even if the <code>doSomething</code> method was
 configured with <code>@RolesAllowed("bar")</code> anyone even without the "bar"
 role could invoke on the bean.</p>
 </div>
 <div class="paragraph">
-<p>In WildFly 13, the presence of any security metadata (like @RolesAllowed,
+<p>In WildFly 14, the presence of any security metadata (like @RolesAllowed,
 @PermitAll, @DenyAll, @RunAs, @RunAsPrincipal) on the bean or any
 business method of the bean, makes the bean secure, even in the absence
 of an explicitly configured security domain. In such cases, the security
@@ -4107,7 +4106,7 @@ domain defaulted to "other"). However, notice that the method
 <code>helloWorld</code> doesn&#8217;t have any specific security configurations.</p>
 </div>
 <div class="paragraph">
-<p>In WildFly 13, such methods which have no explicit security
+<p>In WildFly 14, such methods which have no explicit security
 configurations, in a secured bean, will be treated similar to a method
 with <code>@DenyAll</code> configuration. What that means is, no one is allowed
 access to the <code>helloWorld</code> method. This behaviour can be controlled via
@@ -4206,10 +4205,10 @@ and will be available in the handleInvocationResult in the client invocations co
 <div class="sect2">
 <h3 id="introduction">10.1. Introduction</h3>
 <div class="paragraph">
-<p>The WildFly JPA subsystem implements the JPA 2.1 container-managed
+<p>The WildFly JPA subsystem implements the JPA 2.2 container-managed
 requirements. Deploys the persistence unit definitions, the persistence
 unit/context annotations and persistence unit/context references in the
-deployment descriptor. JPA Applications use the Hibernate (version 5.1)
+deployment descriptor. JPA Applications use the Hibernate (version 5.3)
 persistence provider, which is included with WildFly. The JPA subsystem
 uses the standard SPI (javax.persistence.spi.PersistenceProvider) to
 access the Hibernate persistence provider and some additional extensions
@@ -4224,29 +4223,23 @@ deploy JPA applications.</p>
 <div class="paragraph">
 <p>In the remainder of this documentation, "entity manager" refers to an
 instance of the <em>javax.persistence.EntityManager</em> class.
-<a href="http://download.oracle.com/javaee/7/api/javax/persistence/package-summary.html">Javadoc
-for the JPA interfaces</a>and <a href="https://jcp.org/en/jsr/detail?id=338">JPA 2.1
+<a href="https://javaee.github.io/javaee-spec/javadocs/overview-summary.html">Javadoc
+for the JPA interfaces</a>and <a href="https://jcp.org/en/jsr/detail?id=338">JPA 2.2
 specification</a>.</p>
 </div>
 <div class="paragraph">
 <p>The index of the Hibernate documentation is at
-<a href="http://hibernate.org/orm/documentation/5.1/" class="bare">http://hibernate.org/orm/documentation/5.1/</a>.</p>
+<a href="http://hibernate.org/orm/documentation/5.3/" class="bare">http://hibernate.org/orm/documentation/5.3/</a></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="update-your-persistence.xml-for-hibernate-5.1">10.2. Update your Persistence.xml for Hibernate 5.1</h3>
+<h3 id="update-your-persistence.xml-for-hibernate">10.2. Update your Persistence.xml for Hibernate</h3>
 <div class="paragraph">
-<p>The persistence provider class name in Hibernate 4.3.0 (and greater) is
+<p>The persistence provider class name in Hibernate is
 <strong>org.hibernate.jpa.HibernatePersistenceProvider</strong>.</p>
 </div>
 <div class="paragraph">
-<p>Instead of specifying:</p>
-</div>
-<div class="paragraph">
-<p><strong>&lt;provider&gt;org.hibernate.ejb.HibernatePersistence&lt;/provider&gt;</strong></p>
-</div>
-<div class="paragraph">
-<p>Switch to:</p>
+<p>Your persistence.xml can specify:</p>
 </div>
 <div class="paragraph">
 <p><strong>&lt;provider&gt;org.hibernate.jpa.HibernatePersistenceProvider&lt;/provider&gt;</strong></p>
@@ -4349,10 +4342,9 @@ context is below.</p>
 <div class="paragraph">
 <p>The (ee container managed) extended persistence context can span
 multiple transactions and allows data modifications to be queued up
-(like a shopping cart), without an active JTA transaction (to be applied
-during the next JTA TX). The Container-managed extended persistence
-context can only be injected into a stateful session bean. You can also
-think of the extended persistence context, as being an entity manager.</p>
+(without an active JTA transaction), to be applied
+during completion of next JTA transaction. The Container-managed extended persistence
+context can only be injected into a stateful session bean.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4364,9 +4356,9 @@ EntityManager em;</code></pre>
 <h4 id="extended-persistence-context-inheritance">10.8.1. Extended Persistence Context Inheritance</h4>
 <div class="listingblock">
 <div class="content">
-<pre>JPA 2.0 specification section 7.6.2.1
+<pre>JPA 2.2 specification section 7.6.3.1
  
-If a stateful session bean instantiates a stateful session bean (executing in the same EJB container instance) which also has such an extended persistence context, the extended persistence context of the first stateful session bean is inherited by the second stateful session bean and bound to it, and this rule recursively applies—independently of whether transactions are active or not at the point of the creation of the stateful session beans.</pre>
+If a stateful session bean instantiates a stateful session bean (executing in the same EJB container instance) which also has such an extended persistence context with the same synchronization type, the extended persistence context of the first stateful session bean is inherited by the second stateful session bean and bound to it, and this rule recursively applies independently of whether transactions are active or not at the point of the creation of the stateful session beans. If the stateful session beans differ in declared synchronization type, the EJBException is thrown by the container.  If the persistence context has been inherited by any stateful session beans, the container does not close the persistence context until all such stateful session beans have been removed or otherwise destroyed.</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4660,13 +4652,26 @@ org.infinispan:</strong></p>
 <div class="sect2">
 <h3 id="using-the-infinispan-second-level-cache">10.12. Using the Infinispan second level cache</h3>
 <div class="paragraph">
-<p>To enable the second level cache with Hibernate 5.1, just set the
-<strong>hibernate.cache.use_second_level_cache</strong> property to true, as is done in
-the following example (also set the
-<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/SharedCacheMode.html">shared-cache-mode</a>
-accordingly). By default the application server uses Infinispan as the
-cache provider for <strong>JPA applications</strong>, so you don&#8217;t need specify
-anything on top of that. The Infinispan version that is included in
+<p>To enable the second level cache with Hibernate, just set the
+<strong>hibernate.cache.use_second_level_cache</strong> property to true or
+set <strong>shared-cache-mode</strong> to one of the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ENABLE_SELECTIVE</p>
+</li>
+<li>
+<p>DISABLE_SELECTIVE</p>
+</li>
+<li>
+<p>ALL</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Infinispan is the cache provider for <strong>JPA applications</strong>, so you don&#8217;t need to specify
+anything in addition. The Infinispan version that is included in
 WildFly is expected to work with the Hibernate version that is included
 with WildFly. Example persistence.xml settings:</p>
 </div>
@@ -4677,9 +4682,6 @@ with WildFly. Example persistence.xml settings:</p>
    <span class="tag">&lt;description&gt;</span>example of enabling the second level cache.<span class="tag">&lt;/description&gt;</span>
    <span class="tag">&lt;jta-data-source&gt;</span>java:jboss/datasources/mydatasource<span class="tag">&lt;/jta-data-source&gt;</span>
    <span class="tag">&lt;shared-cache-mode&gt;</span>ENABLE_SELECTIVE<span class="tag">&lt;/shared-cache-mode&gt;</span>
-   <span class="tag">&lt;properties&gt;</span>
-      <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">hibernate.cache.use_second_level_cache</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-   <span class="tag">&lt;/properties&gt;</span>
 <span class="tag">&lt;/persistence-unit&gt;</span>
 <span class="tag">&lt;/persistence&gt;</span></code></pre>
 </div>
@@ -4690,9 +4692,8 @@ native API hibernate.cfg.xml file:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">hibernate.cache.region.factory_class</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.infinispan.hibernate.cache.v51.InfinispanRegionFactory</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">hibernate.cache.region.factory_class</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.infinispan.hibernate.cache.v53.InfinispanRegionFactory</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
 <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">hibernate.cache.infinispan.shared</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-<span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">hibernate.transaction.manager_lookup_class</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.hibernate.transaction.JBossTransactionManagerLookup</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
 <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">hibernate.cache.use_second_level_cache</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span></code></pre>
 </div>
 </div>
@@ -4705,10 +4706,10 @@ native API hibernate.cfg.xml file:</p>
 </div>
 </div>
 <div class="paragraph">
-<p><a href="http://infinispan.org/docs/8.0.x/user_guide/user_guide.html#_using_infinispan_as_jpa_hibernate_second_level_cache_provider">Infinispan
+<p><a href="http://infinispan.org/docs/9.3.x/user_guide/user_guide.html#jpa_hibernate_2l_cache">Infinispan
 Hibernate/JPA second level cache provider documentation</a> contains
 advanced configuration information but you should bear in mind that when
-Hibernate runs within WildFly 13, some of those configuration options,
+Hibernate runs within WildFly 14, some of those configuration options,
 such as region factory, are not needed. Moreover, the application server
 providers you with option of selecting a different cache container for
 Infinispan via <strong>hibernate.cache.infinispan.container</strong> persistence
@@ -4722,18 +4723,18 @@ in your standalone.xml:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"> <span class="tag">&lt;cache-container</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">hibernate</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">default-cache</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">local-query</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">module</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.hibernate.infinispan</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-    <span class="tag">&lt;local-cache</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">entity</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-        <span class="tag">&lt;transaction</span> <span class="attribute-name">mode</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">NON_XA</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-        <span class="tag">&lt;eviction</span> <span class="attribute-name">strategy</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">LRU</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">max-entries</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">10000</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-        <span class="tag">&lt;expiration</span> <span class="attribute-name">max-idle</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">100000</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-    <span class="tag">&lt;/local-cache&gt;</span>
-    <span class="tag">&lt;local-cache</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">local-query</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-        <span class="tag">&lt;eviction</span> <span class="attribute-name">strategy</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">LRU</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">max-entries</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">10000</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-        <span class="tag">&lt;expiration</span> <span class="attribute-name">max-idle</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">100000</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-    <span class="tag">&lt;/local-cache&gt;</span>
-    <span class="tag">&lt;local-cache</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">timestamps</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-<span class="tag">&lt;/cache-container&gt;</span></code></pre>
+<pre class="CodeRay highlight"><code data-lang="xml"> <span class="tag">&lt;cache-container</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">hibernate</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">module</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.infinispan.hibernate-cache</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+     <span class="tag">&lt;local-cache</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">entity</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+         <span class="tag">&lt;transaction</span> <span class="attribute-name">mode</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">NON_XA</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+         <span class="tag">&lt;object-memory</span> <span class="attribute-name">size</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">10000</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+         <span class="tag">&lt;expiration</span> <span class="attribute-name">max-idle</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">100000</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+     <span class="tag">&lt;/local-cache&gt;</span>
+     <span class="tag">&lt;local-cache</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">local-query</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+         <span class="tag">&lt;object-memory</span> <span class="attribute-name">size</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">10000</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+         <span class="tag">&lt;expiration</span> <span class="attribute-name">max-idle</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">100000</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+     <span class="tag">&lt;/local-cache&gt;</span>
+     <span class="tag">&lt;local-cache</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">timestamps</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+ <span class="tag">&lt;/cache-container&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4786,73 +4787,16 @@ like:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="replacing-the-current-hibernate-5.x-jars-with-a-newer-version">10.13. Replacing the current Hibernate 5.x jars with a newer version</h3>
+<h3 id="using-hibernate-search">10.13. Using Hibernate Search</h3>
 <div class="paragraph">
-<p>Just update the current
-wildfly/modules/system/layers/base/org/hibernate/main folder to contain
-the newer version (after stopping your WildFly server instance).</p>
+<p>WildFly includes Hibernate Search. If you want to use the bundled version of Hibernate Search, which requires to use the default Hibernate ORM persistence provider, this will be automatically enabled.  Having this enabled means that, provided your application includes any entity which is annotated with <strong>org.hibernate.search.annotations.Indexed</strong>, the module <strong>org.hibernate.search.orm:main</strong> will be made available to your deployment; this will also include the required version of Apache Lucene.</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Delete *.index files in
-wildfly/modules/system/layers/base/org/hibernate/main and
-wildfly/modules/system/layers/base/org/hibernate/envers/main folders.</p>
-</li>
-<li>
-<p>Backup the current contents of
-wildfly/modules/system/layers/base/org/hibernate in case you make a
-mistake.</p>
-</li>
-<li>
-<p>Remove the older jars and copy new Hibernate jars into
-wildfly/modules/system/layers/base/org/hibernate/main<br>
-wildfly/modules/system/layers/base/org/hibernate/envers/main.</p>
-</li>
-<li>
-<p>Update the
-wildfly/modules/system/layers/base/org/hibernate/main/module.xml<br>
-wildfly/modules/system/layers/base/org/hibernate/envers/main/module.xml
-to name the jars that you copied in.</p>
-</li>
-<li>
-<p>Also update the hibernate-infinispan jars in
-wildfly/modules/system/layers/base/org/hibernate/infinispan.</p>
-</li>
-</ol>
+<div class="paragraph">
+<p>If you do not want this module to be exposed to your deployment, set the persistence property <strong>wildfly.jpa.hibernate.search.module</strong> to either <strong>none</strong> to not automatically inject any Hibernate Search module, or to any other module identifier to inject a different module. For example you could set <strong>wildfly.jpa.hibernate.search.module=org.hibernate.search.orm:5.11.0.Alpha1</strong> to use the experimental version 5.11.0.Alpha1 instead of the provided module; in this case you&#8217;ll have to download and add the custom modules to the application server as other versions are not included.  When setting <strong>wildfly.jpa.hibernate.search.module=none</strong> you might also opt to include Hibernate Search and its dependencies within your application but we highly recommend the modules approach.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="using-hibernate-search">10.14. Using Hibernate Search</h3>
-<div class="paragraph">
-<p>WildFly includes Hibernate Search. If you want to use the bundled
-version of Hibernate Search - which requires to use the default
-Hibernate ORM 5.1 persistence provider - this will be automatically
-enabled.<br>
-Having this enabled means that, provided your application includes any
-entity which is annotated with
-<strong>org.hibernate.search.annotations.Indexed</strong>, the module
-<strong>org.hibernate.search.orm:main</strong> will be made available to your
-deployment; this will also include the required version of Apache
-Lucene.</p>
-</div>
-<div class="paragraph">
-<p>If you do not want this module to be exposed to your deployment, set the
-persistence property <strong>wildfly.jpa.hibernate.search.module</strong> to either
-<strong>none</strong> to not automatically inject any Hibernate Search module, or to
-any other module identifier to inject a different module.<br>
-For example you could set
-<strong>wildfly.jpa.hibernate.search.module=org.hibernate.search.orm:5.4.0.Alpha1</strong>
-to use the experimental version 5.4.0.Alpha1 instead of the provided
-module; in this case you&#8217;ll have to download and add the custom modules
-to the application server as other versions are not included.<br>
-When setting <strong>wildfly.jpa.hibernate.search.module=none</strong> you might also
-opt to include Hibernate Search and its dependencies within your
-application but we highly recommend the modules approach.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="packaging-the-hibernate-jpa-persistence-provider-with-your-application">10.15. Packaging the Hibernate JPA persistence provider with your application</h3>
+<h3 id="packaging-the-hibernate-jpa-persistence-provider-with-your-application">10.14. Packaging the Hibernate JPA persistence provider with your application</h3>
 <div class="paragraph">
 <p>WildFly allows the packaging of Hibernate persistence provider jars with
 the application. The JPA deployer will detect the presence of a
@@ -4876,7 +4820,7 @@ persistence provider in the application and
 </div>
 </div>
 <div class="sect2">
-<h3 id="migrating-from-openjpa">10.16. Migrating from OpenJPA</h3>
+<h3 id="migrating-from-openjpa">10.15. Migrating from OpenJPA</h3>
 <div class="paragraph">
 <p>You need to copy the OpenJPA jars (e.g. openjpa-all.jar serp.jar) into
 the WildFly modules/org/apache/openjpa/main folder and update
@@ -4917,7 +4861,7 @@ depends on OpenJPA, to deploy on WildFly.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="migrating-from-eclipselink">10.17. Migrating from EclipseLink</h3>
+<h3 id="migrating-from-eclipselink">10.16. Migrating from EclipseLink</h3>
 <div class="paragraph">
 <p>You need to copy the EclipseLink jar (e.g. eclipselink-2.6.0.jar or
 eclipselink.jar as in the example below) into the WildFly
@@ -4959,36 +4903,6 @@ that depends on EclipseLink, to deploy on WildFly.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>As a workaround for issue
-<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=414974">id=414974</a>, set
-(WildFly) system property "eclipselink.archive.factory" to value
-"org.jipijapa.eclipselink.JBossArchiveFactoryImpl" via jboss-cli.sh
-command (WildFly server needs to be running when this command is
-issued):</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="ruby">jboss-cli.sh --connect <span class="string"><span class="delimiter">'</span><span class="content">/system-property=eclipselink.archive.factory:add(value=org.jipijapa.eclipselink.JBossArchiveFactoryImpl)</span><span class="delimiter">'</span></span></code></pre>
-</div>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>The following shows what the standalone.xml (or your WildFly
-configuration you are using) file might look like after updating the
-system properties:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;system-properties&gt;</span>
-   ...
-   <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">eclipselink.archive.factory</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.jipijapa.eclipselink.JBossArchiveFactoryImpl</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-<span class="tag">&lt;/system-properties&gt;</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
 <p>You should then be able to deploy applications with persistence.xml that
 include;</p>
 </div>
@@ -5004,17 +4918,9 @@ EclipseLink with WildFly guide here</a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="migrating-from-datanucleus">10.18. Migrating from DataNucleus</h3>
+<h3 id="native-hibernate-use">10.17. Native Hibernate use</h3>
 <div class="paragraph">
-<p>Read the
-<a href="http://www.datanucleus.org/products/accessplatform_5_0/jpa/javaee.html">how
-to use DataNucleus with WildFly guide here</a>.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="native-hibernate-use">10.19. Native Hibernate use</h3>
-<div class="paragraph">
-<p>Applications that use the Hibernate API directly, are referred to here
+<p>Applications that use the Hibernate API directly, can be referred to
 as native Hibernate applications. Native Hibernate applications, can
 choose to use the Hibernate jars included with WildFly or they can
 package their own copy of the Hibernate jars. Applications that utilize
@@ -5033,20 +4939,9 @@ applications:</p>
 Dependencies: org.hibernate</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>If you use the Hibernate native api in your application and also use the
-JPA api to access the same entities (from the same Hibernate
-session/EntityManager), you could get surprising results (e.g.
-HibernateSession.saveOrUpdate(entity) is different than
-EntityManager.merge(entity). Each entity should be managed by either
-Hibernate native API or JPA code.</p>
-</div>
 </div>
 <div class="sect2">
-<h3 id="injection-of-hibernate-session-and-sessionfactoryinjection-of-hibernate-session-and-sessionfactory">10.20. Injection of Hibernate Session and SessionFactoryInjection of</h3>
-<div class="paragraph">
-<p>Hibernate Session and SessionFactory</p>
-</div>
+<h3 id="injection-of-hibernate-session-and-sessionfactoryinjection-of-hibernate-session-and-sessionfactory">10.18. Injection of Hibernate Session and SessionFactory</h3>
 <div class="paragraph">
 <p>You can inject a org.hibernate.Session and org.hibernate.SessionFactory
 directly, just as you can do with EntityManagers and
@@ -5065,9 +4960,165 @@ EntityManagerFactorys.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="hibernate-properties">10.21. Hibernate properties</h3>
+<h3 id="hibernate-transformer">10.19. Hibernate ORM 5.1 native API bytecode transformer</h3>
 <div class="paragraph">
-<p>WildFly automatically sets the following Hibernate (5.x) properties (if
+<p>The <strong>Hibernate ORM 5.1 native API bytecode transformer</strong>, can rewrite application bytecode,
+to handle APIs that have changed between Hibernate ORM 5.1.x + 5.3.x.  For applications that use the Hibernate ORM 5.1
+native APIs, you may either rewrite them for Hibernate ORM 5.3 or use the transformer, to rewrite your application byte-code
+during application deployment (only the in-memory copy of your application is rewritten).  If your application is only using the
+JPA specification APIs, you do not need to transform your application.</p>
+</div>
+<div class="paragraph">
+<p>For details on the Hibernate 5.3 native API changes, review the <a href="https://github.com/hibernate/hibernate-orm/blob/5.2/migration-guide.adoc">ORM 5.2</a>
++ <a href="https://github.com/hibernate/hibernate-orm/blob/5.3/migration-guide.adoc">ORM 5.3</a> migration guides.</p>
+</div>
+<div class="paragraph">
+<p>The Hibernate ORM 5.1 transformer is already deprecated, meaning it could be removed in the next release.
+For this reason, we made it easy to enable the transformer via either a system property or jboss-deployment-structure change.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;jboss-deployment-structure&gt;</span>
+    <span class="tag">&lt;deployment&gt;</span>
+        <span class="tag">&lt;transformers&gt;</span>
+            <span class="tag">&lt;transformer</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.jboss.as.hibernate.Hibernate51CompatibilityTransformer</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;/transformers&gt;</span>
+        <span class="tag">&lt;dependencies&gt;</span>
+            <span class="tag">&lt;module</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.hibernate</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">export</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+        <span class="tag">&lt;/dependencies&gt;</span>
+    <span class="tag">&lt;/deployment&gt;</span>
+    <span class="tag">&lt;sub-deployment</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">main.war</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;transformers&gt;</span>
+            <span class="tag">&lt;transformer</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.jboss.as.hibernate.Hibernate51CompatibilityTransformer</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;/transformers&gt;</span>
+    <span class="tag">&lt;/sub-deployment&gt;</span>
+<span class="tag">&lt;/jboss-deployment-structure&gt;</span></code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">If enabled, the following transformations will be made to application classes compiled with Hibernate 5.1: </dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>In user type classes, change methods with parameter type org.hibernate.engine.spi.SessionImplementor to instead use type org.hibernate.engine.spi.SharedSessionContractImplementor, this is done for implementations of:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>org.hibernate.usertype.UserType.</p>
+</li>
+<li>
+<p>org.hibernate.usertype.CompositeUserType.</p>
+</li>
+<li>
+<p>org.hibernate.usertype.UserCollectionType.</p>
+</li>
+<li>
+<p>org.hibernate.usertype.UserVersionType.</p>
+</li>
+<li>
+<p>org.hibernate.type.Type.</p>
+</li>
+<li>
+<p>org.hibernate.type.SingleColumnType.</p>
+</li>
+<li>
+<p>org.hibernate.type.AbstractStandardBasicType.</p>
+</li>
+<li>
+<p>org.hibernate.type.ProcedureParameterExtractionAware.</p>
+</li>
+<li>
+<p>org.hibernate.type.ProcedureParameterNamedBinder.</p>
+</li>
+<li>
+<p>org.hibernate.type.VersionType.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>In user type classes, when calling org.hibernate.* class methods, cast SessionImplementor to SharedSessionContractImplementor.</p>
+</li>
+<li>
+<p>Change calls to org.hibernate.BasicQueryContract.getFlushMode(), <a href="https://github.com/hibernate/hibernate-orm/blob/5.2/migration-guide.adoc#misc">to instead call BasicQueryContract.getHibernateFlushMode()</a>.</p>
+</li>
+<li>
+<p>Change calls to org.hibernate.Session.getFlushMode(), <a href="https://github.com/hibernate/hibernate-orm/blob/5.2/migration-guide.adoc#misc">to instead call Session.getHibernateFlushMode()</a>.</p>
+</li>
+<li>
+<p>Change calls to org.hibernate.Query.getFirstResult(), to instead call Query.getHibernateFirstResult(), so null can be returned when the value is uninitialized (note that 0 is now returned instead of negative values).</p>
+</li>
+<li>
+<p>Change calls to org.hibernate.Query.getMaxResults(), <a href="https://github.com/hibernate/hibernate-orm/blob/5.3/migration-guide.adoc#native-non-jpa-pagination-changes">to instead call Query.getHibernateMaxResults(), so that null will be returned when the value is uninitialized or org.hibernate.Query#setMaxResults() was called with a value &#8656; 0</a>.</p>
+</li>
+<li>
+<p>Change calls to org.hibernate.Query.setFirstResult(), <a href="https://github.com/hibernate/hibernate-orm/blob/5.3/migration-guide.adoc#native-non-jpa-pagination-changes">to instead call Query.setHibernateFirstResult(), so that calls to set a value &lt; 0 results in pagination starting with the 0th row as was done in Hibernate ORM 5.1</a>.</p>
+</li>
+<li>
+<p>Change calls to org.hibernate.Query.setMaxResults(), <a href="https://github.com/hibernate/hibernate-orm/blob/5.3/migration-guide.adoc#native-non-jpa-pagination-changes">to instead call Query.setHibernateMaxResults(), so that passed values &#8656; 0 are treated the same as uninitialized</a>.</p>
+</li>
+<li>
+<p>Change references to NEVER field in enum org.hibernate.FlushMode, to instead reference FlushMode.MANUAL.</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>TRACE + DEBUG level logging can be enabled via the "org.jboss.as.hibernate.transformer" logger category.
+Example output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">Hibernate51CompatibilityTransformer transformed application classes in 'deployment.org.jboss.as.test.compat.jpa.hibernate.transformer.VerifyHibernate51CompatibilityPropertyAndJDSEnabledTransformerTestCase.ear', class 'org/jboss/as/test/compat/jpa/hibernate/transformer/BitSetType' is calling method org/hibernate/type/AbstractSingleColumnStandardBasicType.replace, which must be changed to use SharedSessionContractImplementor as parameter.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">System Property</th>
+<th class="tableblock halign-left valign-top">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hibernate51CompatibilityTransformer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">if true, the transformer will transform ORM 5.1.x native calls to, ORM 5.3 native calls, in every application deployment</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hibernate51CompatibilityTransformer.disableAmbiguousChanges</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">disable transformation of org.hibernate.Query.setFirstResult(int) + org.hibernate.Query.setMaxResults(int), since these methods are in both Hibernate ORM 5.1.x + 5.3.x</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hibernate51CompatibilityTransformer.showTransformedClassFolder</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">specifies the folder name to create bytecode level description of applications run through the transformer.  If the transformer actually makes a change to your application, a (boolean) class variable will be added "$<em>org_jboss_as_hibernate_Hibernate51CompatibilityTransformer_transformed</em>$", that ensures that the application is only transformed once</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">disabled</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="hibernate-properties">10.20. Hibernate properties</h3>
+<div class="paragraph">
+<p>WildFly automatically sets the following Hibernate properties (if
 not already set in persistence unit definition):</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -5139,12 +5190,52 @@ across all application deployments on the AS instance).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">hibernate.implicit_naming_strategy=org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hibernate.model.generator_name_as_sequence_name=true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hibernate.jpa.compliance.transaction=true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hibernate.jpa.compliance.closed=true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hibernate.jpa.compliance.query=true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hibernate.jpa.compliance.list=true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hibernate.jpa.compliance.caching=true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hibernate.jpa.compliance.proxy=true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hibernate.enable_lazy_load_no_trans=false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hibernate.jpa.compliance.global_id_generators=true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hibernate.search.index_uninverting_allowed=true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"> </p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>In Hibernate 4.x (and greater), if <strong>new_generator_mappings</strong> is <strong>true</strong>:</p>
+<p>if <strong>hibernate.id.new_generator_mappings</strong> is <strong>true</strong>:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -5163,7 +5254,7 @@ org.hibernate.id.enhanced.SequenceStyleGenerator</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>In Hibernate 4.x (and greater), if <strong>new_generator_mappings</strong> is <strong>false</strong>:</p>
+<p>if <strong>hibernate.id.new_generator_mappings</strong> is <strong>false</strong>:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -5181,7 +5272,7 @@ org.hibernate.id.MultipleHiLoPerTableGenerator</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="persistence-unit-properties">10.22. Persistence unit properties</h3>
+<h3 id="persistence-unit-properties">10.21. Persistence unit properties</h3>
 <div class="paragraph">
 <p>The following properties are supported in the persistence unit
 definition (in the persistence.xml file):</p>
@@ -5303,7 +5394,7 @@ to false.</p></td>
 </table>
 </div>
 <div class="sect2">
-<h3 id="determine-the-persistence-provider-module">10.23. Determine the persistence provider module</h3>
+<h3 id="determine-the-persistence-provider-module">10.22. Determine the persistence provider module</h3>
 <div class="paragraph">
 <p>As mentioned above, if the <strong>jboss.as.jpa.providerModule</strong> property is not
 specified, the provider module name is determined by the <strong>provider</strong> name
@@ -5326,7 +5417,7 @@ specified in the persistence.xml. The mapping is:</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">org.hibernate</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">org.hibernate.ejb.HibernatePersistence</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.hibernate.jpa.HibernatePersistenceProvider</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">org.hibernate</p></td>
 </tr>
 <tr>
@@ -5361,7 +5452,7 @@ specified in the persistence.xml. The mapping is:</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="binding-entitymanagerfactoryentitymanager-to-jndi">10.24. Binding EntityManagerFactory/EntityManager to JNDI</h3>
+<h3 id="binding-entitymanagerfactoryentitymanager-to-jndi">10.23. Binding EntityManagerFactory/EntityManager to JNDI</h3>
 <div class="paragraph">
 <p>By default WildFly does <strong>not</strong> bind the entity manager factory to JNDI.
 However, you can explicitly configure this in the persistence.xml of
@@ -5415,68 +5506,9 @@ your application by setting the <code>jboss.entity.manager.factory.jndi.name</co
 </div>
 </div>
 <div class="sect2">
-<h3 id="community">10.25. Community</h3>
+<h3 id="tips-for-using-the-latest-hibernate-orm">10.24. Tips for using the latest Hibernate ORM</h3>
 <div class="paragraph">
-<p>Many thanks to the community, for reporting issues, solutions and code
-changes. A number of people have been answering Wildfly forum questions
-related to JPA usage. I would like to thank them for this, as well as
-those reporting issues. For those of you that haven&#8217;t downloaded the AS
-source code and started hacking patches together. I would like to
-encourage you to start by reading
-<a href="https://community.jboss.org/wiki/HackingOnWildFly">Hacking on WildFly</a>.
-You will find that it easy very easy to find your way around the
-WildFly/JPA/* source tree and make changes. Also, new for WildFly, is
-the JipiJapa project that contains additional integration code that
-makes EE JPA application deployments work better. The following list of
-contributors should grow over time, I hope to see more of you listed
-here.</p>
-</div>
-<div class="sect3">
-<h4 id="people-who-have-contributed-to-the-wildfly-jpa-layer">10.25.1. People who have contributed to the WildFly JPA layer:</h4>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://community.jboss.org/people/wolfc">Carlo de Wolf</a> (lead of the
-EJB3 project)</p>
-</li>
-<li>
-<p><strong><a href="http://in.relation.to/Bloggers/Steve">Steve Ebersole</a></strong> (lead of the
-Hibernate ORM project)</p>
-</li>
-<li>
-<p><strong><a href="https://community.jboss.org/people/swd847">Stuart Douglas</a></strong> (lead of
-the Seam Persistence project, WildFly project team member/committer)</p>
-</li>
-<li>
-<p><a href="https://community.jboss.org/people/jaikiran">Jaikiran Pai</a> (Active
-member of JBoss forums and JBoss EJB3 project team member)</p>
-</li>
-<li>
-<p><a href="http://relation.to/Bloggers/StrongLiu">Strong Liu</a> (leads the
-productization effort of Hibernate in the EAP product)</p>
-</li>
-<li>
-<p><strong><a href="https://community.jboss.org/people/smarlow">Scott Marlow</a></strong> (lead of
-the WildFly container JPA sub-project)</p>
-</li>
-<li>
-<p><strong><a href="https://community.jboss.org/people/alaisi">Antti Laisi</a></strong> <strong>(OpenJPA
-integration changes)</strong></p>
-</li>
-<li>
-<p><a href="https://docs.jboss.org/author/display/~galder.zamarreno">Galder
-Zamarreño</a> (Infinispan 2lc documentation)</p>
-</li>
-<li>
-<p><a href="https://docs.jboss.org/author/display/~sannegrinovero">Sanne Grinovero</a>
-(lead of the Hibernate Search project)</p>
-</li>
-<li>
-<p><a href="https://issues.jboss.org/secure/ViewProfile.jspa?name=pferraro">Paul
-Ferraro</a> (Infinispan 2lc integration)</p>
-</li>
-</ul>
-</div>
+<p><a href="http://docs.jboss.org/hibernate/stable/orm/topical/html_single/wildfly/Wildfly.html">Read about using Hibernate ORM feature packs on WildFly</a>.</p>
 </div>
 </div>
 </div>
@@ -5995,7 +6027,7 @@ the <strong>required</strong> jboss ejb client setup, please see
 <div class="sectionbody">
 <div class="paragraph">
 <p>This page outlines the three options you have for deploying JAX-RS
-applications in WildFly 13. These three methods are specified in the
+applications in WildFly 14. These three methods are specified in the
 JAX-RS 2.0 specification in section 2.3.2.</p>
 </div>
 <div class="sect2">
@@ -6117,7 +6149,7 @@ ear:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;jboss</span> <span class="attribute-name">umlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;jboss</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
     <span class="tag">&lt;shared-session-config</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:shared-session-config:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
         <span class="tag">&lt;session-config&gt;</span>
             <span class="tag">&lt;cookie-config&gt;</span>
@@ -6152,7 +6184,7 @@ project integration.</p>
 </div>
 <div class="paragraph">
 <p>This section covers the most relevant topics for the JBossWS version
-available on WildFly 13.</p>
+available on WildFly 14.</p>
 </div>
 <div class="sect2">
 <h3 id="JAX-WS_User_Guide">15.1. JAX-WS User Guide</h3>
@@ -19528,7 +19560,7 @@ their deployment and set module dependencies in it.</p>
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-WildFly 13 introduced the EJB client API for managing remote EJB
+WildFly 14 introduced the EJB client API for managing remote EJB
 invocations. The EJB client API works off EJBClientContext(s). An
 EJBClientContext can potentially contain any number of EJB receivers. An
 EJB receiver is a component which knows how to communicate with a server
@@ -19542,7 +19574,7 @@ applications can be classified into:
 <p>A remote client which runs as a standalone Java application</p>
 </li>
 <li>
-<p>A remote client which runs within another WildFly 13 instance</p>
+<p>A remote client which runs within another WildFly 14 instance</p>
 </li>
 </ul>
 </div>
@@ -19559,7 +19591,7 @@ than one EJBClientContext(s) and a EJB client context selector will be
 responsible for returning the appropriate context.</p>
 </div>
 <div class="paragraph">
-<p>In case of remote clients which run within another WildFly 13 instance,
+<p>In case of remote clients which run within another WildFly 14 instance,
 each deployed application will have a corresponding EJB client context.
 Whenever that application invokes on another EJB, the corresponding EJB
 client context will be used for finding the right EJB receiver and
@@ -19570,7 +19602,7 @@ letting it handle the invocation.</p>
 <div class="paragraph">
 <p>In the Overview section we briefly looked at the different types of
 remote clients. Let&#8217;s focus on the standalone remote clients (the ones
-that don&#8217;t run within another WildFly 13 instance) for some of the next
+that don&#8217;t run within another WildFly 14 instance) for some of the next
 sections. Like mentioned earlier, typically a remote standalone client
 has just one EJB client context backed by any number of EJB receivers.
 Consider this example:</p>
@@ -19605,7 +19637,7 @@ context is used by the above code to invoke the bean.</p>
 </div>
 <div class="paragraph">
 <p>Now let&#8217;s consider a case where the user application wants to invoke on
-the bean more than once, but wants to connect to the WildFly 13 server
+the bean more than once, but wants to connect to the WildFly 14 server
 using different security credentials. Let&#8217;s take a look at the following
 code:</p>
 </div>
@@ -19728,7 +19760,7 @@ context which typically is the one tied to the entire application.</p>
 have more control over which JNDI context "talks to" which server and
 connects to that server in "what way". This gives the user applications
 the flexibility that was associated with the JNP based JNDI invocations
-prior to WildFly 13 versions.</p>
+prior to WildFly 14 versions.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -20948,7 +20980,7 @@ as follows:</p>
 <div class="sect2">
 <h3 id="security">18.3. Security</h3>
 <div class="paragraph">
-<p>WildFly 13 is secure by default. What this means is that no communication
+<p>WildFly 14 is secure by default. What this means is that no communication
 can happen with an WildFly instance from a remote client (irrespective
 of whether it is a standalone client or another server instance) without
 passing the appropriate credentials. Remember that in this example, our
@@ -21478,7 +21510,7 @@ these projects is.</p>
 <div class="sect2">
 <h3 id="history">19.2. History</h3>
 <div class="paragraph">
-<p>Previous versions of JBoss AS (versions &lt; WildFly 13) used JNP project (
+<p>Previous versions of JBoss AS (versions &lt; WildFly 14) used JNP project (
 <a href="http://anonsvn.jboss.org/repos/jbossas/projects/naming/" class="bare">http://anonsvn.jboss.org/repos/jbossas/projects/naming/</a>) as the JNDI
 naming implementation. Developers of client applications of previous
 versions of JBoss AS will be familiar with the <code>jnp:// PROVIDER_URL</code> URL
@@ -21486,7 +21518,7 @@ they used to use in their applications for communicating with the JNDI
 server on the JBoss server.</p>
 </div>
 <div class="paragraph">
-<p>Starting WildFly 13, the JNP project is <em>not</em> used. Neither on the server
+<p>Starting WildFly 14, the JNP project is <em>not</em> used. Neither on the server
 side nor on the client side. The client side of the JNP project has now
 been replaced by jboss-remote-naming project (
 <a href="https://github.com/jbossas/jboss-remote-naming" class="bare">https://github.com/jbossas/jboss-remote-naming</a>). There were various
@@ -21548,7 +21580,7 @@ they used <code>jnp://localhost:1099</code> (just an example). In WildFly, the U
 protocol scheme for jboss-remote-naming project is <code>remote://</code>. The rest
 of the PROVIDER_URL part is the server hostname or IP and the port on
 which the remoting connector is exposed on the server side. By default
-the http-remoting connector port in WildFly 13 is 8080. That&#8217;s what we
+the http-remoting connector port in WildFly 14 is 8080. That&#8217;s what we
 have used in our example. The hostname we have used is localhost but
 that should point to the server IP or hostname where the server is
 running.</p>
@@ -21571,7 +21603,7 @@ version of that project (which is available in a WildFly release <strong>after</
 </table>
 </div>
 <div class="paragraph">
-<p>WildFly 13 can use the PROVIDER_URL like:</p>
+<p>WildFly 14 can use the PROVIDER_URL like:</p>
 </div>
 <div class="paragraph">
 <p>java.naming.provider.url=http-remoting://server1:8080,http-remoting://server2:8080</p>
@@ -21628,7 +21660,7 @@ port.</p>
 <div class="paragraph">
 <p>We previously mentioned that remote-naming, backed by jboss-remoting
 project, has increased support for security configurations. Starting
-WildFly 13, every service including the http remoting connector (which
+WildFly 14, every service including the http remoting connector (which
 listens by default on port 8080), is secured (see
 <a href="https://community.jboss.org/wiki/AS710Beta1-SecurityEnabledByDefault" class="bare">https://community.jboss.org/wiki/AS710Beta1-SecurityEnabledByDefault</a> for
 details). This means that when trying to do JNDI operations like a
@@ -21649,7 +21681,7 @@ named " `peter`" whose password is expected to be " `lois`".</p>
 <td class="content">
 Note: The server side configurations for the remoting connector to allow
 "peter" to access the connector, is out of the scope of this
-documentation. The WildFly 13 documentation already has chapters on how
+documentation. The WildFly 14 documentation already has chapters on how
 to set that up.
 </td>
 </tr>
@@ -21710,7 +21742,7 @@ exposed by the javax.naming.Context class. The remote-naming project
 only supports the read-only kind of methods (like the lookup() method)
 and does not support any write kind of methods (like the bind() method).
 The client applications are expected to use the remote-naming project
-mainly for lookups of JNDI objects. Neither WildFly 13 nor remote-naming
+mainly for lookups of JNDI objects. Neither WildFly 14 nor remote-naming
 project allows writing/binding to the JNDI server from a remote
 application.</p>
 </div>
@@ -22221,7 +22253,7 @@ application deployed on another JBoss instance</p>
 <h3 id="example-applications-migrated-from-previous-releases">20.1. Example Applications Migrated from Previous Releases</h3>
 <div class="paragraph">
 <p>The applications in this section were written for a previous version of
-the server but have been modified to run on WildFly 13. Changes were made
+the server but have been modified to run on WildFly 14. Changes were made
 to resolve issues that arose during deployment and runtime or to fix
 problems with application behaviour. Each example below documents the
 changes that were made to get the application to run successfully on
@@ -22232,7 +22264,7 @@ WildFly.</p>
 <div class="paragraph">
 <p>For details on how to migrate this demo application, see
 <a href="https://community.jboss.org/blogs/marek-novotny/2011/12/16/dvdstore-migration-for-jboss-as-710beta">Seam
-2 DVD Store example on WildFly 13</a> on Marek Novotny&#8217;s Blog.</p>
+2 DVD Store example on WildFly 14</a> on Marek Novotny&#8217;s Blog.</p>
 </div>
 </div>
 <div class="sect3">
@@ -22240,7 +22272,7 @@ WildFly.</p>
 <div class="paragraph">
 <p>For details on how to migrate this demo application, see
 <a href="http://community.jboss.org/blogs/marek-novotny/2011/07/29/seam-2-booking-example-on-jboss-as-7">Seam
-2 Booking example on WildFly 13</a> on Marek Novotny&#8217;s Blog.</p>
+2 Booking example on WildFly 14</a> on Marek Novotny&#8217;s Blog.</p>
 </div>
 </div>
 <div class="sect3">
@@ -22254,7 +22286,7 @@ and learn how debug and resolve them. See <a href="#Migrate_Seam_2_Booking_EAR_B
 <div class="sect3">
 <h4 id="jbpm-console-application">20.1.4. jBPM-Console application</h4>
 <div class="paragraph">
-<p>Kris Verlaenen migrated this application from AS 5 to WildFly 13. For
+<p>Kris Verlaenen migrated this application from AS 5 to WildFly 14. For
 details about this migration, see <a href="http://kverlaen.blogspot.com/2011/07/jbpm5-on-as7-lightning.html">jBPM5 on WildFly</a> on his Kris&#8217;s Blog.</p>
 </div>
 </div>
@@ -22269,7 +22301,7 @@ about this migration, see <a href="#Migrate_Order_Application_from_EAP5.1_to_Wil
 <h4 id="migrate-example-application">20.1.6. Migrate example application</h4>
 <div class="paragraph">
 <p>A step by step work through of issues, and their solutions, that might
-crop up when migrating applications to WildFly 13. See the following
+crop up when migrating applications to WildFly 14. See the following
 <a href="https://github.com/danbev/migrate">github project</a> for details.</p>
 </div>
 </div>
@@ -22295,11 +22327,11 @@ your own project. For more information about the quickstarts, see
 </div>
 </div>
 <div class="sect1">
-<h2 id="Migrate_Order_Application_from_EAP5">21. Porting the Order Application from EAP 5.1 to WildFly 13</h2>
+<h2 id="Migrate_Order_Application_from_EAP5">21. Porting the Order Application from EAP 5.1 to WildFly 14</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Andy Miller ported an example Order application that was used for
-performance testing from EAP 5.1 to WildFly 13. These are the notes he
+performance testing from EAP 5.1 to WildFly 14. These are the notes he
 made during the migration process.</p>
 </div>
 <div class="sect2">
@@ -22600,7 +22632,7 @@ changes that were made to the application.</p>
 <div class="content">
 <div class="paragraph">
 <p>This is a step-by-step how-to guide on porting the Seam Booking
-application binaries from EAP5.1 to WildFly 13. Although there are better
+application binaries from EAP5.1 to WildFly 14. Although there are better
 approaches for migrating applications, the purpose of this document is
 to show the types of issues you might encounter when migrating an
 application and how to debug and resolve those issues.</p>
@@ -23220,7 +23252,7 @@ The "/em" indicates an Entity Manager and datasource issue.</p>
 <p>==== How to resolve it:</p>
 </div>
 <div class="paragraph">
-<p>In WildFly 13, datasource configuration has changed and needs to be
+<p>In WildFly 14, datasource configuration has changed and needs to be
 defined in the <code>standalone/configuration/standalone.xml</code> file. Since
 WildFly ships with an example database that is already defined in the
 standalone.xml file, we will modify the <code>persistence.xml</code> file to use
@@ -23772,25 +23804,25 @@ and the EAR as modified to run on AS7
 <div class="paragraph">
 <p>This document details the main points that need to be considered by
 Spring developers that wish to develop new applications or to migrate
-existing applications to be run into WildFly 13.</p>
+existing applications to be run into WildFly 14.</p>
 </div>
 <div id="dependencies-and-modularity" class="paragraph">
 <p>== Dependencies and Modularity</p>
 </div>
 <div class="paragraph">
-<p>WildFly 13 has a modular class loading strategy, different from previous
+<p>WildFly 14 has a modular class loading strategy, different from previous
 versions of JBoss AS, which enforces a better class loading isolation
 between deployments and the application server itself. A detailed
 description can be found in the documentation dedicated to
 <a href="https://docs.jboss.org/author/display/AS7/Class+Loading+in+AS7">class
-loading in WildFly 13</a>.</p>
+loading in WildFly 14</a>.</p>
 </div>
 <div class="paragraph">
 <p>This reduces significantly the risk of running into a class loading
 conflict and allows applications to package their own dependencies if
 they choose to do so. This makes it easier for Spring applications that
 package their own dependencies - such as logging frameworks or
-persistence providers to run on WildFly 13.</p>
+persistence providers to run on WildFly 14.</p>
 </div>
 <div class="paragraph">
 <p>At the same time, this does not mean that duplications and conflicts
@@ -23825,7 +23857,7 @@ depending on the type of deployment as shown
 through either one of LocalSessionFactoryBean or
 AnnotationSessionFactoryBean) may use a version of Hibernate 3 packaged
 inside the application. Hibernate 4 (which is provided through the
-'org.hibernate' module of WildFly 13) is not supported by Spring 3.0 and
+'org.hibernate' module of WildFly 14) is not supported by Spring 3.0 and
 Spring 3.1 (and may be supported by Spring 3.2 as described in
 <a href="https://jira.springsource.org/browse/SPR-8096">SPR-8096</a>), so adding this
 module as a dependency is not a solution.</p>
@@ -23919,7 +23951,7 @@ JNDI binding via persistence.xml properties is not supported in WildFly
 <p>=== Using Spring-managed persistence units</p>
 </div>
 <div class="paragraph">
-<p>Spring applications running in WildFly 13 may also create persistence
+<p>Spring applications running in WildFly 14 may also create persistence
 units on their own, using the LocalContainerEntityManagerFactoryBean.
 This is what these applications need to consider:</p>
 </div>
@@ -25749,8 +25781,8 @@ applications to WildFly.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 13.0.0.Final<br>
-Last updated 2018-05-30 14:06:26 CDT
+Version 14.0.0.Final<br>
+Last updated 2018-08-23 15:27:43 CDT
 </div>
 </div>
 </body>

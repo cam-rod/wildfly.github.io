@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>High Availability Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly clustering team</span><br>
-<span id="revnumber">version 13.0.0.Final,</span>
-<span id="revdate">2018-05-31T05:22:12Z</span>
+<span id="revnumber">version 14.0.0.Final,</span>
+<span id="revdate">2018-08-30T23:10:31Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">High Availability Guide</div>
@@ -544,6 +544,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#Infinispan_Subsystem">4. Infinispan Subsystem</a>
 <ul class="sectlevel2">
 <li><a href="#cache-container">4.1. Cache container</a></li>
+<li><a href="#offloading_hotrod_store">4.2. Offloading session state to remote Infinispan Server cluster</a></li>
 </ul>
 </li>
 <li><a href="#JGroups_Subsystem">5. JGroups Subsystem</a>
@@ -567,33 +568,41 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#ejb-timer">7.2. EJB Timer</a></li>
 </ul>
 </li>
-<li><a href="#HA_Singleton_Features">8. HA Singleton Features</a></li>
-<li><a href="#Singleton_subsystem">9. Singleton subsystem</a>
+<li><a href="#Clustering_API">8. Clustering API</a>
 <ul class="sectlevel2">
-<li><a href="#singleton-configuration">9.1. Configuration</a></li>
-<li><a href="#non-ha-environments">9.2. Non-HA environments</a></li>
+<li><a href="#group">8.1. Group membership</a></li>
+<li><a href="#command-dispatcher">8.2. Command Dispatcher</a></li>
+<li><a href="#service-provider-registry">8.3. Service Provider Registry</a></li>
+<li><a href="#registry">8.4. Registry</a></li>
 </ul>
 </li>
-<li><a href="#Singleton_deployments">10. Singleton deployments</a>
+<li><a href="#HA_Singleton_Features">9. HA Singleton Features</a></li>
+<li><a href="#Singleton_subsystem">10. Singleton subsystem</a>
 <ul class="sectlevel2">
-<li><a href="#usage">10.1. Usage</a></li>
+<li><a href="#singleton-configuration">10.1. Configuration</a></li>
+<li><a href="#non-ha-environments">10.2. Non-HA environments</a></li>
 </ul>
 </li>
-<li><a href="#Singleton_MSC_services">11. Singleton MSC services</a>
+<li><a href="#Singleton_deployments">11. Singleton deployments</a>
 <ul class="sectlevel2">
-<li><a href="#installing-an-msc-service-using-an-existing-singleton-policy">11.1. Installing an MSC service using an existing singleton policy</a></li>
-<li><a href="#installing-an-msc-service-using-dynamic-singleton-policy">11.2. Installing an MSC service using dynamic singleton policy</a></li>
+<li><a href="#usage">11.1. Usage</a></li>
 </ul>
 </li>
-<li><a href="#Clustering_and_Domain_Setup_Walkthrough">12. Clustering and Domain Setup Walkthrough</a>
+<li><a href="#Singleton_MSC_services">12. Singleton MSC services</a>
 <ul class="sectlevel2">
-<li><a href="#preparation-scenario">12.1. Preparation &amp; Scenario</a></li>
-<li><a href="#download-wildfly">12.2. Download WildFly</a></li>
-<li><a href="#domain-configuration">12.3. Domain Configuration</a></li>
-<li><a href="#deployment">12.4. Deployment</a></li>
-<li><a href="#cluster-configuration">12.5. Cluster Configuration</a></li>
-<li><a href="#testing">12.6. Testing</a></li>
-<li><a href="#special-thanks">12.7. Special Thanks</a></li>
+<li><a href="#installing-an-msc-service-using-an-existing-singleton-policy">12.1. Installing an MSC service using an existing singleton policy</a></li>
+<li><a href="#installing-an-msc-service-using-dynamic-singleton-policy">12.2. Installing an MSC service using dynamic singleton policy</a></li>
+</ul>
+</li>
+<li><a href="#Clustering_and_Domain_Setup_Walkthrough">13. Clustering and Domain Setup Walkthrough</a>
+<ul class="sectlevel2">
+<li><a href="#preparation-scenario">13.1. Preparation &amp; Scenario</a></li>
+<li><a href="#download-wildfly">13.2. Download WildFly</a></li>
+<li><a href="#domain-configuration">13.3. Domain Configuration</a></li>
+<li><a href="#deployment">13.4. Deployment</a></li>
+<li><a href="#cluster-configuration">13.5. Cluster Configuration</a></li>
+<li><a href="#testing">13.6. Testing</a></li>
+<li><a href="#special-thanks">13.7. Special Thanks</a></li>
 </ul>
 </li>
 </ul>
@@ -1380,9 +1389,13 @@ While this prevents timeouts due to large state transfers, cache operations on t
 </div>
 </div>
 <div class="paragraph">
-<p>For a complete list of state-transfer attributes, refer to the <a href="https://wildscribe.github.io/">WildFly management model documentation</a>
-== Offloading session state to remote Infinispan Server cluster</p>
+<p>For a complete list of state-transfer attributes, refer to the <a href="https://wildscribe.github.io/">WildFly management model documentation</a></p>
 </div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="offloading_hotrod_store">4.2. Offloading session state to remote Infinispan Server cluster</h3>
 <div class="paragraph">
 <p>While Infinispan project is used as a library internally by WildFly to provide data distribution, Infinispan project is also distributed in a standalone server mode.
 The Infinispan Server cluster operates as a language-independent service accessed remotely over a number of protocols (HotRod, REST, etc).</p>
@@ -1411,10 +1424,8 @@ refer to <a href="http://infinispan.org/documentation/">Infinispan documentation
 <p>WildFly 13 introduced a custom optimized cache store based on HotRod protocol
 and integrating with security features provided by WildFly&#8217;s Elytron subsystem.</p>
 </div>
-</div>
-</div>
 <div class="sect3">
-<h4 id="configuring-remote-cache-container">4.1.4. Configuring remote cache container</h4>
+<h4 id="remote_cache_container">4.2.1. Configuring remote cache container</h4>
 <div class="paragraph">
 <p>To configure <code>remote-cache-container</code> ensure you have a list of available Infinispan Server nodes.
 The following example CLI script first adds socket bindings to two known Infinispan Server nodes,
@@ -1425,7 +1436,7 @@ followed by configuration of the cluster.</p>
 <pre class="CodeRay highlight"><code>batch
 /socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=infinispan-server-1:add(host=server1.example.com,port=11622)
 /socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=infinispan-server-2:add(host=server2.example.com,port=11722)
-/subsystem=infinispan/remote-cache-container=web-sessions:add(default-remote-cluster=infinispan-server-cluster-1)
+/subsystem=infinispan/remote-cache-container=web-sessions:add(default-remote-cluster=infinispan-server-cluster)
 /subsystem=infinispan/remote-cache-container=web-sessions/remote-cluster=infinispan-server-cluster:add(socket-bindings=[infinispan-server-1,infinispan-server-2])
 run-batch</code></pre>
 </div>
@@ -1442,7 +1453,7 @@ A HotRod client can be injected directly into Java EE applications using the <co
 </div>
 </div>
 <div class="sect3">
-<h4 id="configuring-hotrod-store">4.1.5. Configuring HotRod store</h4>
+<h4 id="hotrod_store">4.2.2. Configuring HotRod store</h4>
 <div class="paragraph">
 <p>The HotRod store uses one dedicated remote cache for each cache created by the server.
 For Infinispan Server versions supporting protocol version 2.7 and above (Infinispan Server version 9.2)
@@ -1471,14 +1482,14 @@ Session data is then maintained in the cache for performance and also written to
 </div>
 </div>
 <div class="sect3">
-<h4 id="security">4.1.6. Security</h4>
+<h4 id="hotrod_store_security">4.2.3. Security</h4>
 <div class="paragraph">
 <p>Securing the store is just a matter of configuring the <code>remote-cache-container</code> with SSL context.
 Please follow the Elytron security guide on how to configure new SSL context
 and <a href="http://infinispan.org/documentation/">Infinispan documentation</a> on how to secure Infinispan Server instances.</p>
 </div>
 <div class="paragraph">
-<p>Once the SSL Context is configured, use the following CLI script to configure remote-cache-container:</p>
+<p>Once the SSL Context is configured, use the following CLI script to configure <code>remote-cache-container</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1967,7 +1978,7 @@ following example for configuration in the domain mode:</p>
     "result" =&gt; undefined,
     "server-groups" =&gt; undefined
 }
-[domain@localhost:9990 /] /profile=ha/subsystem=modcluster/mod-cluster-config=configuration/:write-attribute(name=proxies, value=[proxy1, proxy2])
+[domain@localhost:9990 /] /profile=ha/subsystem=modcluster/proxy=default:write-attribute(name=proxies, value=[proxy1, proxy2])
 {
     "outcome" =&gt; "success",
     "result" =&gt; undefined,
@@ -1982,6 +1993,33 @@ following example for configuration in the domain mode:</p>
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="multiple-mod_cluster-configurations">6.1.3. Multiple mod_cluster Configurations</h4>
+<div class="paragraph">
+<p>Since WildFly 14 mod_cluster subsystem supports multiple named proxy configurations also allowing for registering
+non-default Undertow servers with the reverse proxies. Moreover, this allows single application server node to register with
+different groups of proxy servers.</p>
+</div>
+<div class="paragraph">
+<p>See the following example which adds another Undertow AJP listener, server and a host and adds a new mod_cluster configuration
+which registers this host using advertise mechanism.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>/socket-binding-group=standard-sockets/socket-binding=ajp-other:add(port=8010)
+/subsystem=undertow/server=other-server:add
+/subsystem=undertow/server=other-server/ajp-listener=ajp-other:add(socket-binding=ajp-other)
+/subsystem=undertow/server=other-server/host=other-host:add(default-web-module=root-other.war)
+/subsystem=undertow/server=other-server/host=other-host/location=other:add(handler=welcome-content)
+/subsystem=undertow/server=other-server/host=other-host:write-attribute(name=alias,value=[localhost]))
+
+/socket-binding-group=standard-sockets/socket-binding=modcluster-other:add(multicast-address=224.0.1.106,multicast-port=23364)
+/subsystem=modcluster/proxy=other:add(advertise-socket=modcluster-other,balancer=other-balancer,connector=ajp-other)
+
+reload</code></pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="runtime-operations">6.2. Runtime Operations</h3>
@@ -1990,7 +2028,7 @@ following example for configuration in the domain mode:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>[standalone@localhost:9999 subsystem=modcluster] :read-operation-names
+<pre class="CodeRay highlight"><code>[standalone@localhost:9990 /] /subsystem=modcluster/proxy=default:read-operation-names
 {
     "outcome" =&gt; "success",
     "result" =&gt; [
@@ -2045,7 +2083,7 @@ display the message received from Apache httpd.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>[standalone@localhost:9999 subsystem=modcluster] :read-proxies-configuration
+<pre class="CodeRay highlight"><code>[standalone@localhost:9990 /] /subsystem=modcluster/proxy=default:read-proxies-configuration
 {
     "outcome" =&gt; "success",
     "result" =&gt; [
@@ -2080,7 +2118,7 @@ display the message received from Apache httpd.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>[standalone@localhost:9999 subsystem=modcluster] :read-proxies-info
+<pre class="CodeRay highlight"><code>[standalone@localhost:9990 /] /subsystem=modcluster/proxy=default:read-proxies-info
 {
     "outcome" =&gt; "success",
     "result" =&gt; [
@@ -2120,7 +2158,7 @@ discovered via the Advertise protocol or via the proxy-list attribute.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>[standalone@localhost:9999 subsystem=modcluster] :list-proxies
+<pre class="CodeRay highlight"><code>[standalone@localhost:9990 subsystem=modcluster] :list-proxies
 {
     "outcome" =&gt; "success",
     "result" =&gt; [
@@ -2139,7 +2177,7 @@ proxy-list attribute.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>[standalone@localhost:9999 subsystem=modcluster] :remove-proxy(host=jfcpc, port=6666)
+<pre class="CodeRay highlight"><code>[standalone@localhost:9990 subsystem=modcluster] :remove-proxy(host=jfcpc, port=6666)
 {"outcome" =&gt; "success"}</code></pre>
 </div>
 </div>
@@ -2152,7 +2190,7 @@ attribute.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>[standalone@localhost:9999 subsystem=modcluster] :add-proxy(host=jfcpc, port=6666)
+<pre class="CodeRay highlight"><code>[standalone@localhost:9990 subsystem=modcluster] :add-proxy(host=jfcpc, port=6666)
 {"outcome" =&gt; "success"}</code></pre>
 </div>
 </div>
@@ -2171,7 +2209,7 @@ They are send automatically when deploying or undeploying webapps.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>[standalone@localhost:9999 subsystem=modcluster] :enable-context(context=/myapp, virtualhost=default-host)
+<pre class="CodeRay highlight"><code>[standalone@localhost:9990 /] /subsystem=modcluster/proxy=default:enable-context(context=/myapp, virtualhost=default-host)
 {"outcome" =&gt; "success"}</code></pre>
 </div>
 </div>
@@ -2184,7 +2222,7 @@ context of the virtualhost.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>[standalone@localhost:9999 subsystem=modcluster] :disable-context(context=/myapp, virtualhost=default-host)
+<pre class="CodeRay highlight"><code>[standalone@localhost:9990 /] /subsystem=modcluster/proxy=default:disable-context(context=/myapp, virtualhost=default-host)
 {"outcome" =&gt; "success"}</code></pre>
 </div>
 </div>
@@ -2197,7 +2235,7 @@ virtualhost.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>[standalone@localhost:9999 subsystem=modcluster] :stop-context(context=/myapp, virtualhost=default-host, waittime=50)
+<pre class="CodeRay highlight"><code>[standalone@localhost:9990 /] /subsystem=modcluster/proxy=default:stop-context(context=/myapp, virtualhost=default-host, waittime=50)
 {"outcome" =&gt; "success"}</code></pre>
 </div>
 </div>
@@ -2233,7 +2271,7 @@ a simple-load-provider is use with a fixed load factor of one.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>[standalone@localhost:9999 subsystem=modcluster] :read-resource(name=mod-cluster-config)
+<pre class="CodeRay highlight"><code>[standalone@localhost:9990 /] /subsystem=modcluster/proxy=default:read-resource(name=mod-cluster-config)
 {
     "outcome" =&gt; "success",
     "result" =&gt; {"simple-load-provider" =&gt; {"factor" =&gt; "1"}}
@@ -2260,9 +2298,9 @@ configuration is created if needed.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="ruby">[standalone<span class="instance-variable">@localhost</span>:<span class="integer">9999</span> subsystem=modcluster] <span class="symbol">:add</span>-metric(type=cpu)
+<pre class="CodeRay highlight"><code data-lang="ruby">[standalone<span class="instance-variable">@localhost</span>:<span class="integer">9990</span> /] /subsystem=modcluster/proxy=<span class="key">default</span>:add-metric(type=cpu)
 {<span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>}
-[standalone<span class="instance-variable">@localhost</span>:<span class="integer">9999</span> subsystem=modcluster] <span class="symbol">:read</span>-resource(name=mod-cluster-config)
+[standalone<span class="instance-variable">@localhost</span>:<span class="integer">9990</span> /] /subsystem=modcluster/proxy=<span class="key">default</span>:read-resource(name=mod-cluster-config)
 {
     <span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>,
     <span class="string"><span class="delimiter">&quot;</span><span class="content">result</span><span class="delimiter">&quot;</span></span> =&gt; {
@@ -2285,7 +2323,7 @@ configuration is created if needed.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>[standalone@localhost:9999 subsystem=modcluster] :remove-metric(type=cpu)
+<pre class="CodeRay highlight"><code>[standalone@localhost:9990 /] /subsystem=modcluster/proxy=default:remove-metric(type=cpu)
 {"outcome" =&gt; "success"}</code></pre>
 </div>
 </div>
@@ -2299,7 +2337,7 @@ which can be specified</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>[standalone@localhost:9999 subsystem=modcluster] :add-custom-metric(class=myclass, property=[("pro1" =&gt; "value1"), ("pro2" =&gt; "value2")]
+<pre class="CodeRay highlight"><code>[standalone@localhost:9990 /] /subsystem=modcluster/proxy=default:add-custom-metric(class=myclass, property=[("pro1" =&gt; "value1"), ("pro2" =&gt; "value2")]
 {"outcome" =&gt; "success"}</code></pre>
 </div>
 </div>
@@ -2309,14 +2347,14 @@ which can be specified</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:domain:modcluster:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-            <span class="tag">&lt;mod-cluster-config&gt;</span>
-                <span class="tag">&lt;dynamic-load-provider</span> <span class="attribute-name">history</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">9</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">decay</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">2</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-                    <span class="tag">&lt;custom-load-metric</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">myclass</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-                        <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">pro1</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">value1</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-                        <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">pro2</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">value2</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-                    <span class="tag">&lt;/custom-load-metric&gt;</span>
-                <span class="tag">&lt;/dynamic-load-provider&gt;</span>
-            <span class="tag">&lt;/mod-cluster-config&gt;</span>
+    <span class="tag">&lt;mod-cluster-config&gt;</span>
+        <span class="tag">&lt;dynamic-load-provider</span> <span class="attribute-name">history</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">9</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">decay</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">2</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;custom-load-metric</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">myclass</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">pro1</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">value1</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+                <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">pro2</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">value2</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+            <span class="tag">&lt;/custom-load-metric&gt;</span>
+        <span class="tag">&lt;/dynamic-load-provider&gt;</span>
+    <span class="tag">&lt;/mod-cluster-config&gt;</span>
 <span class="tag">&lt;/subsystem&gt;</span></code></pre>
 </div>
 </div>
@@ -2705,7 +2743,613 @@ another WildFly instance act similar in terms of failover.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="HA_Singleton_Features">8. HA Singleton Features</h2>
+<h2 id="Clustering_API">8. Clustering API</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>WildFly exposes a public API to deployments for performing common clustering operations, such as:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#group">Cluster membership introspection</a></p>
+</li>
+<li>
+<p><a href="#command-dispatcher">Cluster command execution</a></p>
+</li>
+<li>
+<p><a href="#service-provider-registry">A registry of service providers</a></p>
+</li>
+<li>
+<p><a href="#registry">A member identification registry</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This zero-dependency API allows an application to perform basic clustering tasks, while remaining decoupled from the libraries that implement WildFly&#8217;s clustering logic.</p>
+</div>
+<div class="sect2">
+<h3 id="group">8.1. Group membership</h3>
+<div class="paragraph">
+<p>The Group abstraction represents a logical cluster of nodes.
+The Group service provides the following capabilities:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>View the current membership of a group.</p>
+</li>
+<li>
+<p>Identifies a designated coordinator for a given group membership. This designated coordinator will be the same on every node for a given membership. Traditionally, the oldest member of the cluster is chosen as the coordinator.</p>
+</li>
+<li>
+<p>Registration facility for notifications of changes to group membership.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>WildFly creates a Group instance for every defined channel defined in the JGroups subsystem, as well as a local implementation.
+The local Group implementation is effectively a singleton membership containing only the current node.
+e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>@Resource(lookup = "java:jboss/clustering/group/ee") // A Group representing the cluster of the "ee" channel
+private Group group;
+
+@Resource(lookup = "java:jboss/clustering/group/local") // A non-clustered Group
+private Group localGroup;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To ensure that your application operates consistently regardless of server configuration, you are strongly recommended to reference a given Group using an alias.
+Most users should use the "default" alias, which references either:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A Group backed by the default channel of the server, if the JGroups subsystem is present</p>
+</li>
+<li>
+<p>A non-clustered Group, if the JGroups subsystem is not present</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>@Resource(lookup = "java:jboss/clustering/group/default")
+private Group group;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Additionally, WildFly creates a Group alias for every Infinispan cache-container, which references:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A Group backed by the transport channel of the cache container</p>
+</li>
+<li>
+<p>A non-clustered Group, if the cache container has no transport</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This is useful when using a Group within the context of an Infinispan cache.</p>
+</div>
+<div class="paragraph">
+<p>e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>@Resource(lookup = "java:jboss/clustering/group/server") // Backed by the transport of the "server" cache-container
+private Group group;</pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="node">8.1.1. Node</h4>
+<div class="paragraph">
+<p>A Node encapsulates a member of a group (i.e. a JGroups address).
+A Node has the following distinct characteristics, which will be unique for each member of the group:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">getName</dt>
+<dd>
+<p>The distinct logical name of this group member.
+This value inherently defaults to the hostname of the machine, and can be overridden via the "jboss.node.name" system property.
+You must override this value if you run multiple servers on the same host.</p>
+</dd>
+<dt class="hdlist1">getSocketAddress()</dt>
+<dd>
+<p>The distinct bind address/port used by this group member.
+This will be null if the group is non-clustered.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="membership">8.1.2. Membership</h4>
+<div class="paragraph">
+<p>A Membership is an immutable encapsulation of a group membership (i.e. a JGroups view).
+Membership exposes the following properties:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">getMembers()</dt>
+<dd>
+<p>Returns the list of members comprising this group membership. The order of this list will be consistent on all nodes in the cluster.</p>
+</dd>
+<dt class="hdlist1">isCoordinator()</dt>
+<dd>
+<p>Indicates whether the current member is the coordinator of the group.</p>
+</dd>
+<dt class="hdlist1">getCoordinator()</dt>
+<dd>
+<p>Returns the member designated as coordinator of this group. This methods will return a consistent value for all nodes in the cluster.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="usage">8.1.3. Usage</h4>
+<div class="paragraph">
+<p>The Group abstract is effectively a volatile reference to the current membership, and provides a facility for notification of membership changes.
+It exposes the following properties and operations:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">getName()</dt>
+<dd>
+<p>The logical name of this group.</p>
+</dd>
+<dt class="hdlist1">getLocalMember()</dt>
+<dd>
+<p>The Node instance corresponding to the local member.</p>
+</dd>
+<dt class="hdlist1">getMembership()</dt>
+<dd>
+<p>Returns the current membership of this group.</p>
+</dd>
+<dt class="hdlist1">register(GroupListener)</dt>
+<dd>
+<p>Registers the specific listener to be notified of changes to group membership.</p>
+</dd>
+<dt class="hdlist1">isSingleton()</dt>
+<dd>
+<p>Indicates whether the groups membership is non-clustered, i.e. will only ever contain a single member.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="example">8.1.4. Example</h4>
+<div class="paragraph">
+<p>A distributed "Hello world" example that prints joiners and leavers of a group membership:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>public class MyGroupListener implements GroupListener {
+    @Resource(lookup = "java:jboss/clustering/group/default") <i class="conum" data-value="1"></i><b>(1)</b>
+    private Group group;
+    private Registration&lt;GroupListener&gt; listenerRegistration;
+
+    @PostConstruct
+    public void init() {
+        this.listenerRegistration = this.group.register(this);
+        System.out.println("Initial membership: " + this.group.getMembership().getMembers());
+    }
+
+    @PreDestroy
+    public void destroy() {
+        this.listenerRegistration.close(); <i class="conum" data-value="2"></i><b>(2)</b>
+    }
+
+    @Override
+    public void membershipChanged(Membership previous, Membership current, boolean merged) {
+        List&lt;Node&gt; previousMembers = previous.getMembers();
+        List&lt;Node&gt; currentMembers = current.getMembers();
+        List&lt;Node&gt; joiners = currentMembers.stream().filter(member -&gt; !previousMembers.contains(member)).collect(Collectors.toList());
+        if (!joiners.isEmpty()) {
+            System.out.println("Welcome: " + joiners);
+        }
+        List&lt;Node&gt; leavers = previousMembers.stream().filter(member -&gt; !currentMembers.contains(member)).collect(Collectors.toList());
+        if (!leavers.isEmpty()) {
+            System.out.println("Goodbye: " + leavers);
+        }
+    }
+}</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Injects the default Group of the server</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Make sure to close your listener registration!</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="command-dispatcher">8.2. Command Dispatcher</h3>
+<div class="paragraph">
+<p>A command dispatcher is a mechanism for dispatching commands to be executed on members of a group.</p>
+</div>
+<div class="sect3">
+<h4 id="commanddispatcherfactory">8.2.1. CommandDispatcherFactory</h4>
+<div class="paragraph">
+<p>A command dispatcher is created from a CommandDispatcherFactory, an instance of which is created for every defined channel defined in the JGroups subsystem, as well as a local implementation.
+e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>@Resource(lookup = "java:jboss/clustering/dispatcher/ee") // A command dispatcher factory backed by the "ee" channel
+private CommandDispatcherFactory factory;
+
+@Resource(lookup = "java:jboss/clustering/dispatcher/local") // The non-clustered command dispatcher factory
+private CommandDispatcherFactory localFactory;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To ensure that your application functions consistently regardless of server configuration, we recommended that you reference the CommandDispatcherFactory using an alias.
+Most users should use the "default" alias, which references either:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A CommandDispatcherFactory backed by the default channel of the server, if the JGroups subsystem is present</p>
+</li>
+<li>
+<p>A non-clustered CommandDispatcherFactory, if the JGroups subsystem is not present</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>@Resource(lookup = "java:jboss/clustering/dispatcher/default")
+private CommandDispatcherFactory factory;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Additionally, WildFly creates a CommandDispatcherFactory alias for every Infinispan cache-container, which references:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A CommandDispatcherFactory backed by the transport channel of the cache container</p>
+</li>
+<li>
+<p>A non-clustered CommandDispatcherFactory, if the cache container has no transport</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This is useful in the case where a CommandDispatcher is used to communicate with members on which a given cache is deployed.</p>
+</div>
+<div class="paragraph">
+<p>e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>@Resource(lookup = "java:jboss/clustering/dispatcher/server") // Backed by the transport of the "server" cache-container
+private CommandDispatcherFactory factory;</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="command">8.2.2. Command</h4>
+<div class="paragraph">
+<p>A Command encapsulates logic to be executed on a group member.
+A Command can leverage 2 type of parameters during execution:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Sender supplied parameters</dt>
+<dd>
+<p>These are member variables of the Command implementation itself, and are provided during construction of the Command object.
+As properties of a serializable object, these must also be serializable.</p>
+</dd>
+<dt class="hdlist1">Receiver supplied parameters, i.e. local context</dt>
+<dd>
+<p>These are encapsulated in a single object, supplied during construction of the CommandDispatcher.
+The command dispatcher passes the local context as a parameter to the Command.execute(&#8230;&#8203;) method.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="commanddispatcher">8.2.3. CommandDispatcher</h4>
+<div class="paragraph">
+<p>The CommandDispatcherFactory creates a CommandDispatcher using a service identifier and a local context.
+This service identifier is used to segregate commands from multiple command dispatchers.
+A CommandDispatcher will only receive commands dispatched by a CommandDispatcher with the same service identifier.</p>
+</div>
+<div class="paragraph">
+<p>Once created, a CommandDispatcher will locally execute any received commands until it is closed.
+Once closed, a CommandDispatcher is no longer allowed to dispatch commands.</p>
+</div>
+<div class="paragraph">
+<p>The functionality of a CommandDispatcher boils down to 2 operations:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">executeOnMember(Command, Node)</dt>
+<dd>
+<p>Executes a given command on a specific group member.</p>
+</dd>
+<dt class="hdlist1">executeOnGroup(Command, Node&#8230;&#8203;)</dt>
+<dd>
+<p>Executes a given command on all members of the group, optionally excluding specific members</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Both methods return responses as a <a href="https://docs.oracle.com/javase/8/docs/api/">CompletionStage</a>, allowing for asynchronous processing of responses as they complete.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="example-2">8.2.4. Example</h4>
+<div class="paragraph">
+<p>To demonstrate how to use a CommandDispatcher, let&#8217;s create a distributed "hello world" application.</p>
+</div>
+<div class="paragraph">
+<p>First, let&#8217;s create a simple HelloWorld interface which enables the caller to send a specific message to the entire group:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>public interface HelloWorld {
+    void send(String message);
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next, we need to define a local command execution context.
+This should encapsulate any local information we need to make available to the execution of any command received by our CommandDispatcher.
+For demonstration purposes, let&#8217;s make this a separate interface:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>public interface LocalContext {
+    Node getLocalMember();
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next we create a "hello world" Command that contains a message from the sender, and responds with a message of its own.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>public class HelloWorldCommand implements Command&lt;String, LocalContext&gt; {
+    private final String message;
+
+    public HelloWorldCommand(String message) {
+        this.message = message;
+    }
+
+    @Override
+    public String execute(LocalContext context) {
+        System.out.println(String.format("Received message: %s", this.message);
+        return String.format("Hello from %s", context.getLocalMember().getName());
+    }
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, we create a @Singleton EJB that implements our HelloWorld interface:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>@Singleton
+@Startup
+@Local(HelloWorld.class)
+public class CommandDispatcherBean implements HelloWorld, LocalContext {
+
+    @Resource(lookup = "java:jboss/clustering/dispatcher/default") <i class="conum" data-value="1"></i><b>(1)</b>
+    private CommandDispatcherFactory factory;
+    private CommandDispatcher&lt;LocalContext&gt; dispatcher;
+
+    @PostConstruct
+    public void init() {
+        this.dispatcher = this.factory.createCommandDispatcher(this.getClass().getName(), this);
+    }
+
+    @PreDestroy
+    public void destroy() {
+        this.dispatcher.close(); <i class="conum" data-value="2"></i><b>(2)</b>
+    }
+
+    @Override
+    public Node getLocalMember() {
+        return this.factory.getGroup().getLocalMember();
+    }
+
+    @Override
+    public void send(String message) {
+        Map&lt;Node, CompletionStage&lt;String&gt;&gt; responses = this.dispatcher.executeOnGroup(new HelloWorldCommand(message), this.factory.getGroup().getLocalMember()); <i class="conum" data-value="3"></i><b>(3)</b>
+        responses.values().forEach(stage -&gt; stage.exceptionally(Exception::getLocalizedMessage).thenAccept(System.out::println));
+    }
+}</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Uses the default CommandDispatcherFactory of the server</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Don&#8217;t forget to close your CommandDispatcher!</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>We don&#8217;t want to send the message to ourselves, so we exclude the local member</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now you can use the HelloWorld.send(&#8230;&#8203;) operation to say hello to your cluster.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="service-provider-registry">8.3. Service Provider Registry</h3>
+<div class="paragraph">
+<p>A service provider registry is a specialized cache that tracks the group members that provide a given service.
+The ServiceProviderRegistry might be used in concert with a CommandDispatcher to communicate between a subset of group members on which a given service is installed.
+It includes a registration facility to receive notifications when the set of nodes providing a given service changes.
+WildFly uses this internally in its Singleton service/deployment implementation to drive the primary election process.</p>
+</div>
+<div class="paragraph">
+<p>WildFly exposes a ServiceProviderRegistry (from which a ServiceProviderRegistration is created) for each cache defined by the Infinispan subsystem.</p>
+</div>
+<div class="sect3">
+<h4 id="example-3">8.3.1. Example</h4>
+<div class="paragraph">
+<p>The following is an example of using a ServiceProviderRegistry to publish the availability of a given singleton EJB.
+The getProviders() method will return the set of nodes on which the ServiceProviderRegistrationBean is deployed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>@Singleton
+@Startup
+@Local(ServiceProviderRegistry.class)
+public class ServiceProviderRegistrationBean implements ServiceProviderRegistration&lt;String&gt;, ServiceProviderRegistration.Listener {
+    @Resource(lookup = "java:jboss/clustering/providers/server/default") <i class="conum" data-value="1"></i><b>(1)</b>
+    private ServiceProviderRegistry registry;
+    private ServiceProviderRegistration registration;
+
+    @PostConstruct
+    public void init() {
+        this.registration = this.registry.register(this.getClass().getName(), this);
+    }
+
+    @PreDestroy
+    public void destroy() {
+        this.registration.close(); <i class="conum" data-value="2"></i><b>(2)</b>
+    }
+
+    @Override
+    public void providersChanged(Set&lt;Node&gt; providers) {
+        System.out.println("%s is now available on the following nodes: %s", this.getClass().getName(), providers);
+    }
+
+    @Override
+    public String getService() {
+        return this.registration.getService();
+    }
+
+    @Override
+    public Set&lt;Node&gt; getProviders() {
+        return this.registration.getProviders();
+    }
+
+    @Override
+    public void close() {
+        // Do nothing - registration is close on bean destroy
+    }
+}</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Uses the default cache of the "server" cache container.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Remember to close the registration!</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="registry">8.4. Registry</h3>
+<div class="paragraph">
+<p>A registry is a specialized cache for storing a unique key/value pair for each member of a group.
+This is useful to bridge WildFly&#8217;s Group members to an internal identification system used by an application.
+The Registry service includes a facility for notifying group members of new, updated, or obsolete registry entries.</p>
+</div>
+<div class="paragraph">
+<p>WildFly exposes a RegistryFactory (from which a Registry is created) for each cache defined by the Infinispan subsystem.</p>
+</div>
+<div class="sect3">
+<h4 id="example-4">8.4.1. Example</h4>
+<div class="paragraph">
+<p>The following Registry example assigns a UUID to each group member, allowing each member to query the identifier of any other member:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>@Singleton
+@Startup
+@Local(Registry.class)
+public class RegistryBean implements Registry&lt;UUID, Void&gt; {
+    @Resource(lookup = "java:jboss/clustering/registry/server/default") <i class="conum" data-value="1"></i><b>(1)</b>
+    private RegistryFactory&lt;UUID, Void&gt; factory;
+    private Registry&lt;UUID, Void&gt; registry;
+
+    @PostConstruct
+    public void init() {
+        this.registry = this.factory.createRegistry(new AbstractMap.SimpleImmutableEntry&lt;&gt;(UUID.randomUUID(), null);
+    }
+
+    @PreDestroy
+    public void destroy() {
+        this.registry.close(); <i class="conum" data-value="2"></i><b>(2)</b>
+    }
+
+    @Override
+    public Group getGroup() {
+        return this.registry.getGroup();
+    }
+
+	@Override
+	public Map&lt;UUID, Void&gt; getEntries() {
+	    return this.registry.getEntries();
+	}
+
+    @Override
+    public Map.Entry&lt;UUID, Void&gt; getEntry(Node node) {
+        return this.registry.getEntry(node);
+    }
+
+    @Override
+    public void close() {
+        // Do nothing - registry is closed on bean destroy
+    }
+}</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Uses the default cache of the "server" cache container.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Remember to close the registry!</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="HA_Singleton_Features">9. HA Singleton Features</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In general, an HA or clustered singleton is a service that exists on
@@ -2718,7 +3362,7 @@ service is always running on one node.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="Singleton_subsystem">9. Singleton subsystem</h2>
+<h2 id="Singleton_subsystem">10. Singleton subsystem</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>WildFly 10 introduced a "singleton" subsystem, which defines a set of
@@ -2727,7 +3371,7 @@ policy can be used to instrument singleton deployments or to create
 singleton MSC services.</p>
 </div>
 <div class="sect2">
-<h3 id="singleton-configuration">9.1. Configuration</h3>
+<h3 id="singleton-configuration">10.1. Configuration</h3>
 <div class="paragraph">
 <p>The
 <a href="https://github.com/wildfly/wildfly/blob/10.0.0.Final/clustering/singleton/extension/src/main/resources/schema/wildfly-singleton_1_0.xsd">default
@@ -2774,7 +3418,7 @@ operation:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="cache-configuration">9.1.1. Cache configuration</h4>
+<h4 id="cache-configuration">10.1.1. Cache configuration</h4>
 <div class="paragraph">
 <p>The cache-container and cache attributes of a singleton policy must
 reference a valid cache from the Infinispan subsystem. If no specific
@@ -2784,7 +3428,7 @@ service and will typically use a replicated-cache configuration.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="election-policies">9.1.2. Election policies</h4>
+<h4 id="election-policies">10.1.2. Election policies</h4>
 <div class="paragraph">
 <p>WildFly includes two singleton election policy implementations:</p>
 </div>
@@ -2834,7 +3478,7 @@ e.g.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="quorum">9.1.3. Quorum</h4>
+<h4 id="quorum">10.1.3. Quorum</h4>
 <div class="paragraph">
 <p>Network partitions are particularly problematic for singleton services,
 since they can trigger multiple singleton providers for the same service
@@ -2854,7 +3498,7 @@ e.g.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="non-ha-environments">9.2. Non-HA environments</h3>
+<h3 id="non-ha-environments">10.2. Non-HA environments</h3>
 <div class="paragraph">
 <p>The singleton subsystem can be used in a non-HA profile, so long as the
 cache that it references uses a local-cache configuration. In this
@@ -2868,7 +3512,7 @@ configuration.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="Singleton_deployments">10. Singleton deployments</h2>
+<h2 id="Singleton_deployments">11. Singleton deployments</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>WildFly 10 resurrected the ability to start a given deployment on a
@@ -2882,7 +3526,7 @@ a.k.a. "
 feature of AS6 and earlier.</p>
 </div>
 <div class="sect2">
-<h3 id="usage">10.1. Usage</h3>
+<h3 id="usage">11.1. Usage</h3>
 <div class="paragraph">
 <p>A deployment indicates that it should be deployed as a singleton via a
 deployment descriptor. This can either be a standalone
@@ -2917,28 +3561,28 @@ e.g.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="Singleton_MSC_services">11. Singleton MSC services</h2>
+<h2 id="Singleton_MSC_services">12. Singleton MSC services</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>WildFly allows any user MSC service to be installed as a singleton MSC
-service via a public API. Once installed, the service will only ever
-start on 1 node in the cluster at a time. If the node providing the
-service is shutdown, or fails, another node on which the service was
-installed will start automatically.</p>
+<p>The singleton service facility exposes a mechanism for installing an MSC service such that the service only starts on a single member of a cluster at a time.
+If the member providing the singleton service is shutdown or crashes, the facility automatically elects a new primary provider and starts the service on that node.
+In general, a singleton election happens in response to any change of membership, where the membership is defined as the set of cluster nodes on which the given service was installed.</p>
 </div>
 <div class="sect2">
-<h3 id="installing-an-msc-service-using-an-existing-singleton-policy">11.1. Installing an MSC service using an existing singleton policy</h3>
+<h3 id="installing-an-msc-service-using-an-existing-singleton-policy">12.1. Installing an MSC service using an existing singleton policy</h3>
 <div class="paragraph">
-<p>While singleton MSC services have been around since AS7, WildFly adds
-the ability to leverage the singleton subsystem to create singleton MSC
-services from existing singleton policies.</p>
+<p>While singleton MSC services have been around since AS7, WildFly adds the ability to leverage the singleton subsystem to create singleton MSC services from existing singleton policies.</p>
 </div>
 <div class="paragraph">
-<p>The singleton subsystem exposes capabilities for each singleton policy
-it defines. These policies, represented via the
-<code>org.wildfly.clustering.singleton.SingletonPolicy</code> interface, can be
-referenced via the following name:
-"org.wildfly.clustering.singleton.policy"<br>
+<p>The singleton subsystem exposes capabilities for each singleton policy it defines.</p>
+</div>
+<div class="paragraph">
+<p>These policies, encapsulated by the <code>org.wildfly.clustering.singleton.service.SingletonPolicy</code> interface, can be referenced via the following capability name:
+"org.wildfly.clustering.singleton.policy" + <em>policy-name</em></p>
+</div>
+<div class="paragraph">
+<p>You can reference the default singleton policy of the server via the name:
+"org.wildfly.clustering.singleton.default-policy"
 e.g.</p>
 </div>
 <div class="listingblock">
@@ -2947,48 +3591,51 @@ e.g.</p>
     <span class="annotation">@Override</span>
     <span class="directive">public</span> <span class="type">void</span> activate(ServiceActivatorContext context) {
         ServiceName name = ServiceName.parse(<span class="string"><span class="delimiter">&quot;</span><span class="content">my.service.name</span><span class="delimiter">&quot;</span></span>);
-        Service&lt;?&gt; service = <span class="keyword">new</span> MyService();
-        <span class="keyword">try</span> {
-            SingletonPolicy policy = (SingletonPolicy) context.getServiceRegistry().getRequiredService(ServiceName.parse(SingletonPolicy.CAPABILITY_NAME)).awaitValue();
-            policy.createSingletonServiceBuilder(name, service).build(context.getServiceTarget()).install();
-        } <span class="keyword">catch</span> (<span class="exception">InterruptedException</span> e) {
-            <span class="keyword">throw</span> <span class="keyword">new</span> ServiceRegistryException(e);
-        }
+        <span class="comment">// Use default singleton policy</span>
+        Supplier&lt;SingletonPolicy&gt; policy = <span class="keyword">new</span> ActiveServiceSupplier&lt;&gt;(context.getServiceTarget(), ServiceName.parse(SingletonDefaultRequirement.SINGLETON_POLICY.getName()));
+        ServiceBuilder&lt;?&gt; builder = policy.get().createSingletonServiceConfigurator(name).build(context.getServiceTarget());
+        Service service = <span class="keyword">new</span> MyService();
+        builder.setInstance(service).install();
     }
 }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="installing-an-msc-service-using-dynamic-singleton-policy">11.2. Installing an MSC service using dynamic singleton policy</h3>
+<h3 id="installing-an-msc-service-using-dynamic-singleton-policy">12.2. Installing an MSC service using dynamic singleton policy</h3>
 <div class="paragraph">
-<p>Alternatively, you can build singleton policy dynamically, which is
-particularly useful if you want to use a custom singleton election
-policy. Specifically, <code>SingletonPolicy</code> is a generalization of the
-<code>org.wildfly.clustering.singleton.SingletonServiceBuilderFactory</code>
-interface, which includes support for specifying an election policy and,
-optionally, a quorum.<br>
-e.g.</p>
+<p>Alternatively, you can configure a singleton policy dynamically, which is particularly useful if you want to use a custom singleton election policy.
+<code>org.wildfly.clustering.singleton.service.SingletonPolicy</code> is a generalization of the <code>org.wildfly.clustering.singleton.service.SingletonServiceConfiguratorFactory</code> interface,
+which includes support for specifying an election policy and, optionally, a quorum.</p>
+</div>
+<div class="paragraph">
+<p>The 'SingletonServiceConfiguratorFactory' capability may be references using the following capability name:
+"org.wildfly.clustering.cache.singleton-service-configurator-factory" + <em>container-name</em> + "." + <em>cache-name</em></p>
+</div>
+<div class="paragraph">
+<p>You can reference a 'SingletonServiceConfiguratorFactory' using the default cache of a given cache container via the name:
+"org.wildfly.clustering.cache.default-singleton-service-configurator-factory" + <em>container-name</em></p>
+</div>
+<div class="paragraph">
+<p>e.g.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">MyServiceActivator</span> <span class="directive">implements</span> ServiceActivator {
     <span class="annotation">@Override</span>
     <span class="directive">public</span> <span class="type">void</span> activate(ServiceActivatorContext context) {
-        <span class="predefined-type">String</span> containerName = <span class="string"><span class="delimiter">&quot;</span><span class="content">server</span><span class="delimiter">&quot;</span></span>;
+        <span class="predefined-type">String</span> containerName = <span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span>;
         ElectionPolicy policy = <span class="keyword">new</span> MySingletonElectionPolicy();
         <span class="type">int</span> quorum = <span class="integer">3</span>;
         ServiceName name = ServiceName.parse(<span class="string"><span class="delimiter">&quot;</span><span class="content">my.service.name</span><span class="delimiter">&quot;</span></span>);
-        Service&lt;?&gt; service = <span class="keyword">new</span> MyService();
-        <span class="keyword">try</span> {
-            SingletonServiceBuilderFactory factory = (SingletonServiceBuilderFactory) context.getServiceRegistry().getRequiredService(SingletonServiceName.BUILDER.getServiceName(containerName))).awaitValue();
-            factory.createSingletonServiceBuilder(name, service)
+        <span class="comment">// Use a SingletonServiceConfiguratorFactory backed by default cache of &quot;foo&quot; container</span>
+        Supplier&lt;SingletonServiceConfiguratorFactory&gt; factory = <span class="keyword">new</span> ActiveServiceSupplier&lt;&gt;(context.getServiceTarget(), ServiceName.parse(SingletonDefaultCacheRequirement.SINGLETON_SERVICE_CONFIGURATOR_FACTORY.resolve(containerName).getName()));
+        ServiceBuilder&lt;?&gt; builder = factory.get().createSingletonServiceConfigurator(name)
                 .electionPolicy(policy)
-                .quorum(quorum)
-                .build(context.getServiceTarget()).install();
-        } <span class="keyword">catch</span> (<span class="exception">InterruptedException</span> e) {
-            <span class="keyword">throw</span> <span class="keyword">new</span> ServiceRegistryException(e);
-        }
+                .requireQuorum(quorum)
+                        .build(context.getServiceTarget());
+        Service service = <span class="keyword">new</span> MyService();
+        builder.setInstance(service).install();
     }
 }</code></pre>
 </div>
@@ -2997,7 +3644,7 @@ e.g.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="Clustering_and_Domain_Setup_Walkthrough">12. Clustering and Domain Setup Walkthrough</h2>
+<h2 id="Clustering_and_Domain_Setup_Walkthrough">13. Clustering and Domain Setup Walkthrough</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In this article, I&#8217;d like to show you how to setup WildFly in domain
@@ -3006,9 +3653,9 @@ among the nodes. It&#8217;s a step to step guide so you can follow the
 instructions in this article and build the sandbox by yourself.</p>
 </div>
 <div class="sect2">
-<h3 id="preparation-scenario">12.1. Preparation &amp; Scenario</h3>
+<h3 id="preparation-scenario">13.1. Preparation &amp; Scenario</h3>
 <div class="sect3">
-<h4 id="preparation">12.1.1. Preparation</h4>
+<h4 id="preparation">13.1.1. Preparation</h4>
 <div class="paragraph">
 <p>We need to prepare two hosts (or virtual hosts) to do the experiment. We
 will use these two hosts as following:</p>
@@ -3031,7 +3678,7 @@ or they will cause network problems).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="scenario">12.1.2. Scenario</h4>
+<h4 id="scenario">13.1.2. Scenario</h4>
 <div class="paragraph">
 <p>Here are some details on what we are going to do:</p>
 </div>
@@ -3092,7 +3739,7 @@ move on and you will get the points step by step.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="download-wildfly">12.2. Download WildFly</h3>
+<h3 id="download-wildfly">13.2. Download WildFly</h3>
 <div class="paragraph">
 <p>First we should download WildFly from the <a href="http://wildfly.org/downloads/">WildFly website</a>.</p>
 </div>
@@ -3101,8 +3748,8 @@ move on and you will get the points step by step.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">unzip wildfly-13.0.0.Final.zip
-cd wildfly-13.0.0.Final/bin
+<pre class="CodeRay highlight"><code data-lang="bash">unzip wildfly-14.0.0.Final.zip
+cd wildfly-14.0.0.Final/bin
 ./domain.sh</code></pre>
 </div>
 </div>
@@ -3112,12 +3759,12 @@ mode:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">wildfly-13.0.0.Final/bin$ ./domain.sh
+<pre class="CodeRay highlight"><code data-lang="bash">wildfly-14.0.0.Final/bin$ ./domain.sh
 =========================================================================
  
   JBoss Bootstrap Environment
  
-  JBOSS_HOME: /Users/weli/Downloads/wildfly-13.0.0.Final
+  JBOSS_HOME: /Users/weli/Downloads/wildfly-14.0.0.Final
  
   JAVA: /Library/Java/Home/bin/java
  
@@ -3126,7 +3773,7 @@ mode:</p>
 =========================================================================
 ...
  
-[Server:server-two] 14:46:12,375 INFO  [org.jboss.as] (Controller Boot Thread) JBAS015874: WildFly 13.0.0.Final &quot;Kenny&quot; started in 8860ms - Started 210 of 258 services (813 services are lazy, passive or on-demand)</code></pre>
+[Server:server-two] 14:46:12,375 INFO  [org.jboss.as] (Controller Boot Thread) JBAS015874: WildFly 14.0.0.Final &quot;Kenny&quot; started in 8860ms - Started 210 of 258 services (814 services are lazy, passive or on-demand)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3136,9 +3783,9 @@ next step.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="domain-configuration">12.3. Domain Configuration</h3>
+<h3 id="domain-configuration">13.3. Domain Configuration</h3>
 <div class="sect3">
-<h4 id="interface-config-on-master">12.3.1. Interface config on master</h4>
+<h4 id="interface-config-on-master">13.3.1. Interface config on master</h4>
 <div class="paragraph">
 <p>In this section we&#8217;ll setup both master and slave for them to run in
 domain mode. And we will configure master to be the domain controller.</p>
@@ -3193,7 +3840,7 @@ config to:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="interface-config-on-slave">12.3.2. Interface config on slave</h4>
+<h4 id="interface-config-on-slave">13.3.2. Interface config on slave</h4>
 <div class="paragraph">
 <p>Now we will setup interfaces on slave. Let&#8217;s edit host.xml. Similar to
 the steps on master, open host.xml first:</p>
@@ -3290,7 +3937,7 @@ you need to enable the firewall and allow access to the following ports:
 </div>
 </div>
 <div class="sect3">
-<h4 id="security-configuration">12.3.3. Security Configuration</h4>
+<h4 id="security-configuration">13.3.3. Security Configuration</h4>
 <div class="paragraph">
 <p>If you start WildFly on both master and slave now, you will see the
 slave cannot be started with following error:</p>
@@ -3330,8 +3977,8 @@ The username 'admin' is easy to guess
 Are you sure you want to add user 'admin' yes/no? yes
 About to add user 'admin' for realm 'ManagementRealm'
 Is this correct yes/no? yes
-Added user 'admin' to file '/home/weli/projs/wildfly-13.0.0.Final/standalone/configuration/mgmt-users.properties'
-Added user 'admin' to file '/home/weli/projs/wildfly-13.0.0.Final/domain/configuration/mgmt-users.properties'</code></pre>
+Added user 'admin' to file '/home/weli/projs/wildfly-14.0.0.Final/standalone/configuration/mgmt-users.properties'
+Added user 'admin' to file '/home/weli/projs/wildfly-14.0.0.Final/domain/configuration/mgmt-users.properties'</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3354,10 +4001,10 @@ Re-enter Password : passw0rd!
 What groups do you want this user to belong to? (Please enter a comma separated list, or leave blank for none)[  ]:
 About to add user 'slave' for realm 'ManagementRealm'
 Is this correct yes/no? yes
-Added user 'slave' to file '/home/weli/projs/wildfly-13.0.0.Final/standalone/configuration/mgmt-users.properties'
-Added user 'slave' to file '/home/weli/projs/wildfly-13.0.0.Final/domain/configuration/mgmt-users.properties'
-Added user 'slave' with groups  to file '/home/weli/projs/wildfly-13.0.0.Final/standalone/configuration/mgmt-groups.properties'
-Added user 'slave' with groups  to file '/home/weli/projs/wildfly-13.0.0.Final/domain/configuration/mgmt-groups.properties'
+Added user 'slave' to file '/home/weli/projs/wildfly-14.0.0.Final/standalone/configuration/mgmt-users.properties'
+Added user 'slave' to file '/home/weli/projs/wildfly-14.0.0.Final/domain/configuration/mgmt-users.properties'
+Added user 'slave' with groups  to file '/home/weli/projs/wildfly-14.0.0.Final/standalone/configuration/mgmt-groups.properties'
+Added user 'slave' with groups  to file '/home/weli/projs/wildfly-14.0.0.Final/domain/configuration/mgmt-groups.properties'
 Is this new user going to be used for one AS process to connect to another AS process?
 e.g. for a slave host controller connecting to the master or for a Remoting connection for server to server EJB calls.
 yes/no? yes
@@ -3437,7 +4084,7 @@ domain mode now as expected. Hurrah!</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="deployment">12.4. Deployment</h3>
+<h3 id="deployment">13.4. Deployment</h3>
 <div class="paragraph">
 <p>Now we can deploy a demo project into the domain. I have created a
 simple project located at:</p>
@@ -3741,7 +4388,7 @@ go on cluster configuration.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="cluster-configuration">12.5. Cluster Configuration</h3>
+<h3 id="cluster-configuration">13.5. Cluster Configuration</h3>
 <div class="paragraph">
 <p>We will use mod_cluster + apache httpd on master as our cluster
 controller here. Because WildFly has been configured to support
@@ -3905,7 +4552,7 @@ For more details on mod_cluster configurations please see this document:
 </div>
 </div>
 <div class="sect2">
-<h3 id="testing">12.6. Testing</h3>
+<h3 id="testing">13.6. Testing</h3>
 <div class="paragraph">
 <p>If everything goes fine we can start httpd service now:</p>
 </div>
@@ -3992,7 +4639,7 @@ is redirect from one host to another and the session is held.
 </div>
 </div>
 <div class="sect2">
-<h3 id="special-thanks">12.7. Special Thanks</h3>
+<h3 id="special-thanks">13.7. Special Thanks</h3>
 <div class="paragraph">
 <p><a href="https://community.jboss.org/people/wdfink">Wolf-Dieter Fink</a> has
 contributed the updated add-user.sh usages and configs in host.xml from
@@ -4008,8 +4655,8 @@ this document readable.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 13.0.0.Final<br>
-Last updated 2018-05-30 14:06:26 CDT
+Version 14.0.0.Final<br>
+Last updated 2018-08-23 15:27:43 CDT
 </div>
 </div>
 </body>

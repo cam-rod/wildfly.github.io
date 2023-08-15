@@ -522,8 +522,8 @@ table.CodeRay td.code>pre{padding:0}
 <div id="header">
 <h1>WildFly Client Configuration</h1>
 <div class="details">
-<span id="revnumber">version 13.0.0.Final,</span>
-<span id="revdate">2018-05-31T05:22:12Z</span>
+<span id="revnumber">version 14.0.0.Final,</span>
+<span id="revdate">2018-08-30T23:10:31Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Client Configuration Guide</div>
@@ -838,7 +838,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">key-store-clear-password password="&#8230;&#8203;" /&gt;</dt>
+<dt class="hdlist1">&lt;key-store-clear-password password="&#8230;&#8203;" /&gt;</dt>
 <dd>
 <p>A password specified in the clear.</p>
 </dd>
@@ -849,7 +849,7 @@ table.CodeRay td.code>pre{padding:0}
 </dl>
 </div>
 <div id="key-store-credential" class="paragraph">
-<p>The structure of the &lt;key-store-credential /&gt; element is.</p>
+<p>The structure of the &lt;key-store-credential /&gt; element is:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1191,18 +1191,26 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;key-store-ssl-certificate</span> <span class="attribute-name">key-store-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;key-store-ssl-certificate</span> <span class="attribute-name">key-store-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">provider-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">algorithm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
    <span class="tag">&lt;key-store-clear-password</span> <span class="attribute-name">password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-    <span class="tag">&lt;credential-store-reference</span> <span class="attribute-name">store</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">clear-text</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+   <span class="tag">&lt;credential-store-reference</span> <span class="attribute-name">store</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">clear-text</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
    <span class="tag">&lt;key-store-credential&gt;</span>...<span class="tag">&lt;/key-store-credential&gt;</span>
 <span class="tag">&lt;/key-store-ssl-certificate&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This structure is identical to the structure use in [&lt;key-store-credential /&gt;|#key-store-credential], the only difference being it is now to obtain the entry for the key and certificate, the nested elements however remain the protection parameter to unlock the entry.</p>
+<p>This structure is identical to the structure use in [&lt;key-store-credential /&gt;|#key-store-credential], but it is to obtain the entry for the key and certificate. The nested elements however remain the protection parameter to unlock the entry. In comparison with the key-store-credential the key-store-ssl-certificate allows to configure also the TrustManager: -</p>
 </div>
 <div class="dlist">
 <dl>
+<dt class="hdlist1">provider-name</dt>
+<dd>
+<p>- Name of the provider used to obtain the KeyManagerFactory.</p>
+</dd>
+<dt class="hdlist1">algorithm</dt>
+<dd>
+<p>- The algorithm name of the KeyManagerFactory to obtain.</p>
+</dd>
 <dt class="hdlist1">&lt;trust-store-key-store-name /&gt;</dt>
 <dd>
 <p>A reference to a KeyStore that will be used to initialise the TrustManager.</p>
@@ -1878,8 +1886,8 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 13.0.0.Final<br>
-Last updated 2018-05-30 14:06:26 CDT
+Version 14.0.0.Final<br>
+Last updated 2018-08-23 15:27:43 CDT
 </div>
 </div>
 </body>

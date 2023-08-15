@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>WildFly Admin Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly developer team</span><br>
-<span id="revnumber">version 13.0.0.Final,</span>
-<span id="revdate">2018-05-31T05:22:12Z</span>
+<span id="revnumber">version 14.0.0.Final,</span>
+<span id="revdate">2018-08-30T23:10:31Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Admin guide</div>
@@ -601,18 +601,20 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#EE">9.1. EE Subsystem Configuration</a></li>
 <li><a href="#Naming">9.2. Naming Subsystem Configuration</a></li>
 <li><a href="#DataSource">9.3. DataSource configuration</a></li>
-<li><a href="#Logging">9.4. Logging Configuration</a></li>
-<li><a href="#EJB3">9.5. EJB3 subsystem configuration guide</a></li>
-<li><a href="#Undertow">9.6. Undertow subsystem configuration</a></li>
-<li><a href="#Messaging">9.7. Messaging configuration</a></li>
-<li><a href="#Security">9.8. Security subsystem configuration</a></li>
-<li><a href="#Web_services">9.9. Web services configuration</a></li>
-<li><a href="#Resource_adapters">9.10. Resource adapters</a></li>
-<li><a href="#JSF">9.11. JSF Configuration</a></li>
-<li><a href="#JMX">9.12. JMX subsystem configuration</a></li>
-<li><a href="#Deployment_Scanner">9.13. Deployment Scanner configuration</a></li>
-<li><a href="#Core_Management">9.14. Core Management Subsystem Configuration</a></li>
-<li><a href="#Simple_configuration_subsystems">9.15. Simple configuration subsystems</a></li>
+<li><a href="#agroal">9.4. Agroal configuration</a></li>
+<li><a href="#Logging">9.5. Logging Configuration</a></li>
+<li><a href="#EJB3">9.6. EJB3 subsystem configuration guide</a></li>
+<li><a href="#Undertow">9.7. Undertow subsystem configuration</a></li>
+<li><a href="#Messaging">9.8. Messaging configuration</a></li>
+<li><a href="#MicroProfile_Config_SmallRye">9.9. MicroProfile Config Subsystem Configuration</a></li>
+<li><a href="#Security">9.10. Security subsystem configuration</a></li>
+<li><a href="#Web_services">9.11. Web services configuration</a></li>
+<li><a href="#Resource_adapters">9.12. Resource adapters</a></li>
+<li><a href="#JSF">9.13. JSF Configuration</a></li>
+<li><a href="#JMX">9.14. JMX subsystem configuration</a></li>
+<li><a href="#Deployment_Scanner">9.15. Deployment Scanner configuration</a></li>
+<li><a href="#Core_Management">9.16. Core Management Subsystem Configuration</a></li>
+<li><a href="#Simple_configuration_subsystems">9.17. Simple configuration subsystems</a></li>
 </ul>
 </li>
 <li><a href="#Domain_Setup">10. Domain Setup</a>
@@ -631,6 +633,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#Audit_logging">11.4. Audit logging</a></li>
 <li><a href="#Canceling_Management_Operations">11.5. Canceling Management Operations</a></li>
 <li><a href="#Configuration_file_history">11.6. Configuration file history</a></li>
+<li><a href="#Configuration_file_git_history">11.7. Git Configuration file history</a></li>
 </ul>
 </li>
 <li><a href="#Management_API_reference">12. Management API reference</a>
@@ -1358,7 +1361,7 @@ invoked via the HTTP API, the JSON representation of a <code>ModelNode</code>.)<
 </div>
 <div class="paragraph">
 <p>Every resource except the root resource will have an <code>add</code> operation and
-should have a <code>remove</code> operation ("should" because in WildFly 13 many do
+should have a <code>remove</code> operation ("should" because in WildFly 14 many do
 not). The parameters for the <code>add</code> operation vary depending on the
 resource. The <code>remove</code> operation has no parameters.</p>
 </div>
@@ -2232,7 +2235,95 @@ formatted as a command help content:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="cli-non-interactive-mode"><a class="link" href="#cli-non-interactive-mode">3.2.2. Non-interactive Mode</a></h4>
+<h4 id="cli-keyboard-navigation"><a class="link" href="#cli-keyboard-navigation">3.2.2. Keyboard navigation</a></h4>
+<div class="paragraph">
+<p>In order to efficiently edit commands, the CLI allows you to navigate the words
+ and characters of a command using the keyboard.</p>
+</div>
+<div class="paragraph">
+<p>NB: Part of this navigation is platform dependent.</p>
+</div>
+<div class="sect4">
+<h5 id="go-left-back-one-word"><a class="link" href="#go-left-back-one-word">Go left (back) one word</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><em>Alt+B</em> : Linux, Solaris, HP-UX, Windows.</p>
+</li>
+<li>
+<p><em>Ctrl+LeftArrow</em>: Linux, Solaris, HP-UX.</p>
+</li>
+<li>
+<p><em>Alt+LeftArrow</em>: Mac OSX.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="go-right-forward-one-word"><a class="link" href="#go-right-forward-one-word">Go right (forward) one word</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><em>Alt+F</em> : Linux, Solaris, HP-UX, Windows.</p>
+</li>
+<li>
+<p><em>Ctrl+RightArrow</em>: Linux, Solaris, HP-UX.</p>
+</li>
+<li>
+<p><em>Alt+RightArrow</em>: Mac OSX.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="go-to-the-beginning-of-the-line"><a class="link" href="#go-to-the-beginning-of-the-line">Go to the beginning of the line</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><em>Ctrl+A</em>: All supported platforms.</p>
+</li>
+<li>
+<p><em>HOME</em>:  Linux, Solaris, HP-UX, Windows</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="go-to-the-end-of-the-line"><a class="link" href="#go-to-the-end-of-the-line">Go to the end of the line</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><em>Ctrl+E</em>: All supported platforms.</p>
+</li>
+<li>
+<p><em>END</em>: Linux, Solaris, HP-UX, Windows</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="go-left-back-one-character"><a class="link" href="#go-left-back-one-character">Go left (back) one character</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><em>Ctrl+B</em> or <em>LeftArrow</em>: All supported platforms.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="go-right-forward-one-character"><a class="link" href="#go-right-forward-one-character">Go right (forward) one character</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><em>Ctrl+F</em> or <em>RightArrow</em>: All supported platforms.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="cli-non-interactive-mode"><a class="link" href="#cli-non-interactive-mode">3.2.3. Non-interactive Mode</a></h4>
 <div class="paragraph">
 <p>The CLI can also be run in non-interactive mode to support scripts and
 other types of command line or batch processing. The --command and
@@ -2270,7 +2361,7 @@ command will be added to the output.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="command-timeout"><a class="link" href="#command-timeout">3.2.3. Command timeout</a></h4>
+<h4 id="command-timeout"><a class="link" href="#command-timeout">3.2.4. Command timeout</a></h4>
 <div class="paragraph">
 <p>By default CLI command and operation executions are not timely bounded.
 It means that a command never ending its execution will make the CLI
@@ -2356,7 +2447,7 @@ configuration value sets the timeout to its default value (0 seconds).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="default-native-management-interface-security"><a class="link" href="#default-native-management-interface-security">3.2.4. Default Native Management Interface Security</a></h4>
+<h4 id="default-native-management-interface-security"><a class="link" href="#default-native-management-interface-security">3.2.5. Default Native Management Interface Security</a></h4>
 <div class="paragraph">
 <p>The native interface shares the same security configuration as the http
 interface, however we also support a local authentication mechanism
@@ -2374,7 +2465,7 @@ and password by default.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="operation-requests"><a class="link" href="#operation-requests">3.2.5. Operation Requests</a></h4>
+<h4 id="operation-requests"><a class="link" href="#operation-requests">3.2.6. Operation Requests</a></h4>
 <div class="paragraph">
 <p>Operation requests allow for low level interaction with the management
 model. They are different from the high level commands (i.e.
@@ -2636,7 +2727,7 @@ To see the full model enter <code>:read-resource(recursive=true)</code>.
 </div>
 </div>
 <div class="sect3">
-<h4 id="command-history"><a class="link" href="#command-history">3.2.6. Command History</a></h4>
+<h4 id="command-history"><a class="link" href="#command-history">3.2.7. Command History</a></h4>
 <div class="paragraph">
 <p>Command (and operation request) history is enabled by default. The
 history is kept both in-memory and in a file on the disk, i.e. it is
@@ -2684,7 +2775,7 @@ recorded command before the history expansion was disabled);</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="json-and-dmr-output"><a class="link" href="#json-and-dmr-output">3.2.7. JSON and DMR output</a></h4>
+<h4 id="json-and-dmr-output"><a class="link" href="#json-and-dmr-output">3.2.8. JSON and DMR output</a></h4>
 <div class="paragraph">
 <p>By default the CLI prints operation results using the DMR textual syntax. There are
 two ways to make the CLI to display JSON:</p>
@@ -2701,7 +2792,7 @@ two ways to make the CLI to display JSON:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="color-output"><a class="link" href="#color-output">3.2.8. Color output</a></h4>
+<h4 id="color-output"><a class="link" href="#color-output">3.2.9. Color output</a></h4>
 <div class="paragraph">
 <p>The CLI outputs results of commands and the prompt in color. To disable this, there are two possible ways to disable it:</p>
 </div>
@@ -2779,7 +2870,93 @@ two ways to make the CLI to display JSON:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="batch-processing"><a class="link" href="#batch-processing">3.2.9. Batch Processing</a></h4>
+<h4 id="paging-output"><a class="link" href="#paging-output">3.2.10. Paging and searching output</a></h4>
+<div class="paragraph">
+<p>In interactive mode, when the content to display is longer than the terminal
+ height, the content is paged. You can navigate the content by using the following
+ keys and mouse events:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>space or PAGE_DOWN: scroll the content one page down.</p>
+</li>
+<li>
+<p>'\' or PAGE_UP: scroll the content one page up.</p>
+</li>
+<li>
+<p>';' or up arrow or mouse wheel up: scroll the content one line up.</p>
+</li>
+<li>
+<p>ENTER or down arrow or mouse wheel down: scroll the content one line down.</p>
+</li>
+<li>
+<p>HOME or 'g': scroll to the top of the content. NB: HOME is only supported
+for keyboards containing this key.</p>
+</li>
+<li>
+<p>END or 'G': scroll to the bottom of the content. NB: END is only supported
+for keyboards containing this key.</p>
+</li>
+<li>
+<p>'q' or 'Q' or ESC: exit the paging.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>NB: When the end of the content is reached (using ENTER, space, &#8230;&#8203;) the paging
+ is automatically exited.</p>
+</div>
+<div class="paragraph">
+<p>It is possible to search for text when the content is paged. Search is operated
+ with the following keys:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>'/' to display prompt allowing to type some text. Type return to launch the search.<br>
+You can use up/down arrows to retrieve previously typed text. NB: search history
+ is not persisted when CLI process exits.</p>
+</li>
+<li>
+<p>'n' to jump to the next match if any. If no search text has been typed, then the
+last entry from the search history is used.</p>
+</li>
+<li>
+<p>'N' to jump to the previous match if any. If no search text has been typed,
+then the last entry from the search history is used.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+On Windows, searching and navigating backward is only supported starting with Windows 10 and Windows Server 2016.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+If the CLI process is sent the signal KILL(9) while it is paging, the terminal will stay
+ in alternate mode. This makes the terminal to behave in an unexpected manner (display and mouse events).
+ In order to restore the terminal state call: <em>tput rmcup</em>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="batch-processing"><a class="link" href="#batch-processing">3.2.11. Batch Processing</a></h4>
 <div class="paragraph">
 <p>The batch mode allows one to group commands and operations and execute
 them together as an atomic unit. If at least one of the commands or
@@ -2857,7 +3034,7 @@ name=mytopic</em>)</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="operators"><a class="link" href="#operators">3.2.10. Operators</a></h4>
+<h4 id="operators"><a class="link" href="#operators">3.2.12. Operators</a></h4>
 <div class="paragraph">
 <p>CLI has some operators that are similar to shell operators:</p>
 </div>
@@ -3527,7 +3704,7 @@ we add role based authorization checks to the management model.</p>
 <div class="paragraph">
 <p>After a realm has been defined it needs to be associated with an inbound
 or outbound connection for it to be used, the following are some
-examples where these associations are used within the WildFly 13
+examples where these associations are used within the WildFly 14
 configuration.</p>
 </div>
 <div class="sect3">
@@ -4883,14 +5060,18 @@ definition of outbound connection is described here.</p>
 <div class="sect4">
 <h5 id="ldap-2"><a class="link" href="#ldap-2">&lt;ldap /&gt;</a></h5>
 <div class="paragraph">
-<p>At the moment we only support outbound connections to ldap servers for
-the authentication process - this will later be expanded when we add
-support for database based authentication.</p>
+<p>We only support outbound connections to ldap servers for the authentication process.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;outbound-connections&gt;</span>
-  <span class="tag">&lt;ldap</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">url</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">search-dn</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">search-credential</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">initial-context-factory</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+  <span class="tag">&lt;ldap</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">url</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">search-dn</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">search-credential</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">security-realm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">initial-context-factory</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span>
+        <span class="attribute-name">referrals</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">handles-referrals-for</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">always-send-client-cert</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;properties&gt;</span>
+      <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;/properties&gt;</span>
+    <span class="tag">&lt;security-credential-reference</span> <span class="attribute-name">store</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span>  <span class="attribute-name">clear-text</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+  <span class="tag">&lt;/ldap&gt;</span>
 <span class="tag">&lt;/outbound-connections&gt;</span></code></pre>
 </div>
 </div>
@@ -4912,12 +5093,57 @@ connection.</p>
 authenticate as to perform the searches.</p>
 </li>
 <li>
-<p><strong>search-credential</strong> (mandatory) - The password required to connect to
+<p><strong>search-credential</strong> (optional) - The password required to connect to
 LDAP as the search-dn.</p>
 </li>
 <li>
 <p><strong>initial-context-factory</strong> (optional) - Allows overriding the initial
 context factory, defaults to ' `com.sun.jndi.ldap.LdapCtxFactory&#8217;</p>
+</li>
+<li>
+<p><strong>referrals</strong> (optional) - The referral handling mode.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>IGNORE</strong> - Ignore any referrals received.</p>
+</li>
+<li>
+<p><strong>FOLLOW</strong> - Automatically follow any referrals re-using the configuration for this connection.</p>
+</li>
+<li>
+<p><strong>THROW</strong> - Throw an exception is a referral is encountered, this allows an alternative connection to be identified to handle the referral.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>handles-referrals-for</strong> (optional) - A space separated list of URIs this connection can be used for.</p>
+</li>
+<li>
+<p><strong>always-send-client-cert</strong> (optional) - By default the server&#8217;s client certificate is not sent whilst verifying the users credential, if this is set to <code>true</code> it will always be sent.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The optional <code>&lt;properties/&gt;</code> element can be used to specify additional properties to be passed in to the <code>DirContext</code> when it is created.</p>
+</div>
+<div class="paragraph">
+<p>The optional <code>&lt;security-credential-reference /&gt;</code> can be used to reference a credential stored in a credential store as an alternative to
+the <code>search-credential</code> attribute.  This element supports the following attributes: -</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>store</strong> (optional) - Reference to the credential store to obtain the search credential from.</p>
+</li>
+<li>
+<p><strong>alias</strong> (optional) - The alias of the credential in the referenced store.</p>
+</li>
+<li>
+<p><strong>type</strong> (optional) - The fully qualified class name of the credential type to obtain from the credential store.</p>
+</li>
+<li>
+<p><strong>clear-text</strong> (optional) - Instead of referencing a credential store this attribute can be used to specify a clear text password.</p>
 </li>
 </ul>
 </div>
@@ -4927,7 +5153,7 @@ context factory, defaults to ' `com.sun.jndi.ldap.LdapCtxFactory&#8217;</p>
 <div class="sect2">
 <h3 id="Security_Realms_Plugins"><a class="link" href="#Security_Realms_Plugins">6.9. Plug Ins</a></h3>
 <div class="paragraph">
-<p>Within WildFly 13 for communication with the management interfaces and
+<p>Within WildFly 14 for communication with the management interfaces and
 for other services exposed using Remoting where username / password
 authentication is used the use of Digest authentication is preferred
 over the use of HTTP Basic or SASL Plain so that we can avoid the
@@ -4952,7 +5178,7 @@ support loading a users password, hash and roles from a custom store to
 allow different stores to be implemented without forcing the
 authentication back to plain text variant, this article describes the
 requirements for a plug in and shows a simple example plug-in for use
-with WildFly 13.</p>
+with WildFly 14.</p>
 </div>
 <div class="paragraph">
 <p>When implementing a plug in there are two steps to the authentication
@@ -5114,7 +5340,7 @@ used for the authorization step.</p>
 <h4 id="installing-and-configuring-a-plug-in"><a class="link" href="#installing-and-configuring-a-plug-in">6.9.4. Installing and Configuring a Plug-In</a></h4>
 <div class="paragraph">
 <p>The next step of this article describes the steps to implement a plug-in
-provider and how to make it available within WildFly 13 and how to
+provider and how to make it available within WildFly 14 and how to
 configure it. Example configuration and an example implementation are
 shown to illustrate this.</p>
 </div>
@@ -5228,7 +5454,7 @@ PlugInProvider implementation class.</p>
 <h5 id="package-as-a-module"><a class="link" href="#package-as-a-module">Package as a Module</a></h5>
 <div class="paragraph">
 <p>To make the <code>PlugInProvider</code> available to the application it is bundled
-as a module and added to the modules already shipped with WildFly 13.</p>
+as a module and added to the modules already shipped with WildFly 14.</p>
 </div>
 <div class="paragraph">
 <p>To add as a module we first need a <code>module.xml</code>: -</p>
@@ -9206,7 +9432,7 @@ you installed.</p>
 <div class="sect3">
 <h4 id="jdbc-driver-installation"><a class="link" href="#jdbc-driver-installation">9.3.1. JDBC Driver Installation</a></h4>
 <div class="paragraph">
-<p>The recommended way to install a JDBC driver into WildFly 13 is to deploy
+<p>The recommended way to install a JDBC driver into WildFly 14 is to deploy
 it as a regular JAR deployment. The reason for this is that when you run
 WildFly in domain mode, deployments are automatically propagated to all
 servers to which the deployment applies; thus distribution of the driver
@@ -9467,7 +9693,355 @@ the project documentation.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Logging"><a class="link" href="#Logging">9.4. Logging Configuration</a></h3>
+<h3 id="agroal"><a class="link" href="#agroal">9.4. Agroal configuration</a></h3>
+<div class="paragraph">
+<p>The Agroal subsystem allows the definition of datasources. Declaring a new datasource consists of two separate steps: provide a JDBC driver and define a datasource that references the driver you installed.</p>
+</div>
+<div class="paragraph">
+<p>The Agroal subsystem is provided by the <a href="https://agroal.github.io/">Agroal</a> project. For a detailed description of the available configuration properties, please consult the project documentation.</p>
+</div>
+<div class="sect3">
+<h4 id="agroal-subssystem-enable"><a class="link" href="#agroal-subssystem-enable">9.4.1. Enabling the subsystem</a></h4>
+<div class="paragraph">
+<p>If the WildFly configuration does not have Agroal subsystem enabled by default, it can be enabled in the following ways.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;extensions&gt;</span>
+    <span class="tag">&lt;extension</span> <span class="attribute-name">module</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.wildfly.extension.datasources-agroal</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    [...]
+<span class="tag">&lt;/extensions&gt;</span>
+<span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:domain:agroal:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    [...]
+<span class="tag">&lt;/subsystem&gt;</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby">[standalone<span class="instance-variable">@localhost</span>:<span class="integer">9990</span>  /] /extension=org.wildfly.extension.datasources-<span class="key">agroal</span>:add
+{<span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>}
+[standalone<span class="instance-variable">@localhost</span>:<span class="integer">9990</span>  /] /subsystem=datasources-<span class="key">agroal</span>:add
+{
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">response-headers</span><span class="delimiter">&quot;</span></span> =&gt; {
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">operation-requires-reload</span><span class="delimiter">&quot;</span></span> =&gt; <span class="predefined-constant">true</span>,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">process-state</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">reload-required</span><span class="delimiter">&quot;</span></span>
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="agroal-driver-installation"><a class="link" href="#agroal-driver-installation">9.4.2. JDBC Driver Installation</a></h4>
+<div class="paragraph">
+<p>A driver definition is a reference to a class in a JDBC driver. Multiple definitions can be created on the same JDBC driver for multiple classes in it. Agroal requires an implementation of java.sql.Driver or javax.sql.DataSource for non-XA datasources, while for XA a javax.sql.XADataSource implementation is required.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Agroal will try to load an java.sql.Driver from the specified module if the <em>class</em> is not defined
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Any installed <em>driver</em> provides an operation called <em>class-info</em> that lists all the properties available for that particular class, that can be set in the <em>connection-factory</em>.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:domain:agroal:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    [...]
+    <span class="tag">&lt;drivers&gt;</span>
+        <span class="tag">&lt;driver</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">h2</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">module</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">com.h2database.h2</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.h2.Driver</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/drivers&gt;</span>
+<span class="tag">&lt;/subsystem&gt;</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby">[standalone<span class="instance-variable">@localhost</span>:<span class="integer">9990</span>  /] /subsystem=datasources-agroal/driver=<span class="key">h2</span>:read-resource
+{
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">result</span><span class="delimiter">&quot;</span></span> =&gt; {
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">class</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">org.h2.Driver</span><span class="delimiter">&quot;</span></span>,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">module</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">com.h2database.h2</span><span class="delimiter">&quot;</span></span>
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="agroal-common-datasource-definitions"><a class="link" href="#agroal-common-datasource-definitions">9.4.3. Common Datasource Definitions</a></h4>
+<div class="paragraph">
+<p>Agroal provides both XA and non-XA datasources and most of the attributes that define them are common. This definition is mainly split in two logical units: the <em>connection factory</em> and the <em>connection pool</em>. As the name implies, the <em>connection factory</em> has all that is required to create new connections and <em>connection pool</em> defines how connections are handled by the pool.</p>
+</div>
+<div class="sect4">
+<h5 id="agroal-connection-factory"><a class="link" href="#agroal-connection-factory">Connection Factory definition</a></h5>
+<div class="paragraph">
+<p>The <em>connection factory</em> requires a reference to a <em>driver</em> (see <a href="#">agroal-driver-installation</a>). With a java.sql.Driver the preferred way to 'point' to the database is to specify an <em>url</em> attribute while for javax.sql.DataSource and javax.sql.XADataSource the preferred way is to specify <em>connection-properties</em>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Attributes <em>username</em> and <em>password</em> are provided for basic authentication with the database. Agroal does not allow <em>username</em> and <em>password</em> to be set as <em>connection-properties</em> due to security requirements.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Other features provided by the <em>connection-factory</em> definition include the possibility of executing a SQL statement right after the connection has been created and to specify the isolation level of transactions in the database.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:domain:agroal:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+     <span class="tag">&lt;datasource</span> <span class="error">[</span><span class="attribute-name">...</span><span class="error">]</span><span class="tag">&gt;</span>
+        [...]
+        <span class="tag">&lt;connection-factory</span> <span class="attribute-name">driver</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">h2</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">url</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jdbc:h2:tcp://localhost:1701</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">transaction-isolation</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">SERIALIZABLE</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">new-connection-sql</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">SELECT 1</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">username</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">sa</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">sa</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;connection-properties&gt;</span>
+                <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">aProperty</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">aValue</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+                <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">anotherProperty</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">anotherValue</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+            <span class="tag">&lt;/connection-properties&gt;</span>
+        <span class="tag">&lt;/connection-factory&gt;</span>
+    <span class="tag">&lt;/datasource&gt;</span>
+    [...]
+<span class="tag">&lt;/subsystem&gt;</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby">---
+[standalone<span class="instance-variable">@localhost</span>:<span class="integer">9990</span>  /] /subsystem=datasources-agroal/datasource=<span class="key">sample</span>:read-resource
+{
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">result</span><span class="delimiter">&quot;</span></span> =&gt; {
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">connection-factory</span><span class="delimiter">&quot;</span></span> =&gt; {
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">driver</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">h2</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">url</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">jdbc:h2:tcp://localhost:1701</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">transaction-isolation</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">SERIALIZABLE</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">new-connection-sql</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">SELECT 1</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">username</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">sa</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">password</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">sa</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">connection-properties</span><span class="delimiter">&quot;</span></span> =&gt; {
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">aProperty</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">aValue</span><span class="delimiter">&quot;</span></span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">anotherProperty</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">anotherValue</span><span class="delimiter">&quot;</span></span>
+            }
+        }
+        [...]
+    }
+}
+---</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="agroal-connection-pool"><a class="link" href="#agroal-connection-pool">Connection Pool definition</a></h5>
+<div class="paragraph">
+<p>The main attributes of the <em>connection-pool</em> definition are the ones that control it&#8217;s size. While the <em>initial size</em> attribute is only taken into account while bootstrapping the pool, <em>min size</em> and <em>max size</em> are always enforced and can be changed at any time without requiring a reload of the server.</p>
+</div>
+<div class="paragraph">
+<p>Another important attribute of the <em>connection-pool</em> is the <em>blocking timeout</em> that defines the maximum amount of time a thread will wait for a connection. If that time elapses and still no connection is available an exception is thrown. Keep in mind that the default value is <em>0</em>, meaning that a thread will wait forever for a connection to become available. Changing this setting does not require a reload of the server.</p>
+</div>
+<div class="paragraph">
+<p>The <em>connection pool</em> provides other convenient features like background validation of connections on the pool, removal of idle connections from the pool and detection of connections held for too long by one thread. All these features are disabled by default and can be enabled by specifying an interval of time on the corresponding attribute.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+There is a set of flush operations that perform many of these features on-demand. These are <em>flush-all</em> to close all connections immediately, <em>flush-graceful</em> to close all connections under normal operation, <em>flush-invalid</em> to remove any invalid connections from the pool and <em>flush-idle</em> to remove any connections not being used.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:domain:agroal:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+     <span class="tag">&lt;datasource</span> <span class="error">[</span><span class="attribute-name">...</span><span class="error">]</span><span class="tag">&gt;</span>
+        [...]
+        <span class="tag">&lt;connection-pool</span> <span class="attribute-name">max-size</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">30</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">min-size</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">10</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">initial-size</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">20</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">blocking-timeout</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">1000</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">background-validation</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">6000</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">leak-detection</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">5000</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">idle-removal</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">5</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/datasource&gt;</span>
+    [...]
+<span class="tag">&lt;/subsystem&gt;</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby">---
+[standalone<span class="instance-variable">@localhost</span>:<span class="integer">9990</span>  /] /subsystem=datasources-agroal/datasource=<span class="key">sample</span>:read-resource
+{
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">result</span><span class="delimiter">&quot;</span></span> =&gt; {
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">connection-pool</span><span class="delimiter">&quot;</span></span> =&gt; {
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">max-size</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">30</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">min-size</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">10</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">initial-size</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">20</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">blocking-timeout</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">1000</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">background-validation</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">6000</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">leak-detection</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">5000</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">idle-removal</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">5</span>
+        }
+        [...]
+    }
+}
+---</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="agroal-common-attributes"><a class="link" href="#agroal-common-attributes">Common datasource attributes</a></h5>
+<div class="paragraph">
+<p>All datasources in Agroal have a name that&#8217;s used to locate them in the WildFly runtime model and are bound to a JNDI name.</p>
+</div>
+<div class="paragraph">
+<p>The attribute <em>statistics-enabled</em> allow the collection of metrics regarding the pool that can be queried in the runtime model</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+There is also a <em>reset-statistics</em> operation provided.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:domain:agroal:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;xa-datasource</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">sample-xa</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">jndi-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">java:jboss/datasources/ExampleXADS</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">statistics-enabled</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        [...]
+    <span class="tag">&lt;/xa-datasource&gt;</span>
+    [...]
+<span class="tag">&lt;/subsystem&gt;</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby">---
+[standalone<span class="instance-variable">@localhost</span>:<span class="integer">9990</span>  /] /subsystem=datasources-agroal/datasource=sample-<span class="key">xa</span>:read-resource
+{
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">result</span><span class="delimiter">&quot;</span></span> =&gt; {
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">jndi-name</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">java:jboss/datasources/ExampleXADS</span><span class="delimiter">&quot;</span></span>,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">statistics-enabled</span><span class="delimiter">&quot;</span></span> =&gt; <span class="predefined-constant">true</span>
+        [...]
+    }
+}
+---</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The available statistics include the number of created / destroyed connections and the number of connections in use / available in the pool. There are also statistics for the time it takes to create a connection and for how long have threads been blocked waiting for a connection.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby">[standalone<span class="instance-variable">@localhost</span>:<span class="integer">9990</span>  /] /subsystem=datasources-agroal/datasource=<span class="key">sample</span>:read-resource(include-runtime)
+{
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">result</span><span class="delimiter">&quot;</span></span> =&gt; {
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">statistics</span><span class="delimiter">&quot;</span></span> =&gt; {
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">acquire-count</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">10</span><span class="constant">L</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">active-count</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">3</span><span class="constant">L</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">available-count</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">17</span><span class="constant">L</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">awaiting-count</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">0</span><span class="constant">L</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">creation-count</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">20</span><span class="constant">L</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">destroy-count</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">0</span><span class="constant">L</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">flush-count</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">0</span><span class="constant">L</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">invalid-count</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">0</span><span class="constant">L</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">leak-detection-count</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">0</span><span class="constant">L</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">max-used-count</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">20</span><span class="constant">L</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">reap-count</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">0</span><span class="constant">L</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">blocking-time-average-ms</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">0</span><span class="constant">L</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">blocking-time-max-ms</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">0</span><span class="constant">L</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">blocking-time-total-ms</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">0</span><span class="constant">L</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">creation-time-average-ms</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">96</span><span class="constant">L</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">creation-time-max-ms</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">815</span><span class="constant">L</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">creation-time-total-ms</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">964</span><span class="constant">L</span>
+        }
+        [...]
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="agroal-datasource-attributes"><a class="link" href="#agroal-datasource-attributes">DataSource specific attributes</a></h5>
+<div class="paragraph">
+<p>In addition to all the common attributes, a <em>datasource</em> definition may disable the JTA integration.</p>
+</div>
+<div class="paragraph">
+<p>Deferred enlistment is not supported, meaning that if JTA is enabled a connection must always be obtained within the scope of a transaction. The connection will always be enlisted with that transaction (lazy enlistment is not supported).</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The <em>connectable</em> attribute allows a non-XA datasource to take part in an XA transaction ('Last Resource Commit Optimization (LRCO)' / 'Commit Markable Resource')
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:domain:agroal:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;datasource</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">sample</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">jndi-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">java:jboss/datasources/ExampleDS</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">jta</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">connectable</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">statistics-enabled</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        [...]
+    <span class="tag">&lt;/datasource&gt;</span>
+    [...]
+<span class="tag">&lt;/subsystem&gt;</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby">---
+[standalone<span class="instance-variable">@localhost</span>:<span class="integer">9990</span>  /] /subsystem=datasources-agroal/datasource=sample-<span class="key">xa</span>:read-resource
+{
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">result</span><span class="delimiter">&quot;</span></span> =&gt; {
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">connectable</span><span class="delimiter">&quot;</span></span> =&gt; <span class="predefined-constant">false</span>,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">jta</span><span class="delimiter">&quot;</span></span> =&gt; <span class="predefined-constant">false</span>,
+        [...]
+    }
+}
+---</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="agroal-xa-datasource-attributes"><a class="link" href="#agroal-xa-datasource-attributes">XADataSource specific attributes</a></h5>
+<div class="paragraph">
+<p>At the moment there are no attributes specific to a XADataSource definition.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Logging"><a class="link" href="#Logging">9.5. Logging Configuration</a></h3>
 <div class="quoteblock abstract">
 <blockquote>
 The overall server logging configuration is represented by the logging
@@ -9514,7 +10088,7 @@ handlers). Each handler declares the log format and output:
 </div>
 </div>
 <div class="sect3">
-<h4 id="logging-attributes"><a class="link" href="#logging-attributes">9.4.1. Attributes</a></h4>
+<h4 id="logging-attributes"><a class="link" href="#logging-attributes">9.5.1. Attributes</a></h4>
 <div class="paragraph">
 <p>The root resource contains two notable attributes
 <code>add-logging-api-dependencies</code> and <code>use-deployment-logging-config</code>.</p>
@@ -9543,7 +10117,7 @@ logging</a> is enabled. Set to <code>false</code> to disable this feature.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="per-deployment-logging"><a class="link" href="#per-deployment-logging">9.4.2. Per-deployment Logging</a></h4>
+<h4 id="per-deployment-logging"><a class="link" href="#per-deployment-logging">9.5.2. Per-deployment Logging</a></h4>
 <div class="paragraph">
 <p>Per-deployment logging allows you to add a logging configuration file to
 your deployment and have the logging for that deployment configured
@@ -9580,7 +10154,7 @@ directories.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="logging-profiles"><a class="link" href="#logging-profiles">9.4.3. Logging Profiles</a></h4>
+<h4 id="logging-profiles"><a class="link" href="#logging-profiles">9.5.3. Logging Profiles</a></h4>
 <div class="paragraph">
 <p>Logging profiles are like additional logging subsystems. Each logging
 profile constists of three of the four notable parts listed above:
@@ -9607,7 +10181,7 @@ the redeploy is not required for logging changes to take affect.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="default-log-file-locations"><a class="link" href="#default-log-file-locations">9.4.4. Default Log File Locations</a></h4>
+<h4 id="default-log-file-locations"><a class="link" href="#default-log-file-locations">9.5.4. Default Log File Locations</a></h4>
 <div class="sect4">
 <h5 id="logging-managed-domain"><a class="link" href="#logging-managed-domain">Managed Domain</a></h5>
 <div class="paragraph">
@@ -9685,7 +10259,7 @@ subdirectory of the distribution:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="filter-expressions"><a class="link" href="#filter-expressions">9.4.5. Filter Expressions</a></h4>
+<h4 id="filter-expressions"><a class="link" href="#filter-expressions">9.5.5. Filter Expressions</a></h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 20%;">
@@ -9815,7 +10389,7 @@ argument is the replacement text.</p></td>
 </table>
 </div>
 <div class="sect3">
-<h4 id="list-log-files-and-reading-log-files"><a class="link" href="#list-log-files-and-reading-log-files">9.4.6. List Log Files and Reading Log Files</a></h4>
+<h4 id="list-log-files-and-reading-log-files"><a class="link" href="#list-log-files-and-reading-log-files">9.5.6. List Log Files and Reading Log Files</a></h4>
 <div class="paragraph">
 <p>Log files can be listed and viewed via management operations. The log
 files allowed to be viewed are intentionally limited to files that exist
@@ -9907,7 +10481,7 @@ down.</p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="faq"><a class="link" href="#faq">9.4.7. FAQ</a></h4>
+<h4 id="faq"><a class="link" href="#faq">9.5.7. FAQ</a></h4>
 <div class="sect4">
 <h5 id="why-is-there-a-logging.properties-file"><a class="link" href="#why-is-there-a-logging.properties-file">Why is there a logging.properties file?</a></h5>
 <div class="paragraph">
@@ -9936,7 +10510,7 @@ on the next boot.
 </div>
 </div>
 <div class="sect3">
-<h4 id="logging-formatters"><a class="link" href="#logging-formatters">9.4.8. Logging Formatters</a></h4>
+<h4 id="logging-formatters"><a class="link" href="#logging-formatters">9.5.8. Logging Formatters</a></h4>
 <div class="paragraph">
 <p>Formatters are used to format a log message. A formatter can be assigned to a logging handler.</p>
 </div>
@@ -10422,32 +10996,16 @@ formatted.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Logging_Handlers"><a class="link" href="#Logging_Handlers">9.4.9. Handlers</a></h4>
+<h4 id="handlers"><a class="link" href="#handlers">9.5.9. Handlers</a></h4>
+<div class="sect4">
+<h5 id="overview"><a class="link" href="#overview">Overview</a></h5>
 <div class="paragraph">
-<p>WIP</p>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-This is still a work in progress. Please feel free to edit any mistakes
-you find <span class="icon yellow"><i class="fa fa-smile-o"></i></span>
-</td>
-</tr>
-</table>
-</div>
-<div class="quoteblock abstract">
-<blockquote>
-Handlers are used to determine what happens with a log message if the
-<a href="Logging_Loggers.html#Logging_Loggers">logger</a> determines the
-message is loggable.
-</blockquote>
+<p>Handlers define how log messages are recorded. If a message is said to be
+<a href="{oracle-javadocs}/java/util/logging/Logger.html#isLoggable-java.util.logging.Level-">loggable</a> by a
+<a href="#Logging_Loggers">logger</a> the message is then processed by the log handler.</p>
 </div>
 <div class="paragraph">
-<p>There are 6 main handlers provided with WildFly and 1 generic handler;</p>
+<p>The following are the available handlers for WildFly;</p>
 </div>
 <div class="ulist">
 <ul>
@@ -10458,141 +11016,62 @@ message is loggable.
 <p><a href="#console-handler">console-handler</a></p>
 </li>
 <li>
+<p><a href="#custom-handler">custom-handler</a></p>
+</li>
+<li>
 <p><a href="#file-handler">file-handler</a></p>
 </li>
 <li>
 <p><a href="#periodic-rotating-file-handler">periodic-rotating-file-handler</a></p>
 </li>
 <li>
+<p><a href="#periodic-size-rotating-file-handler">periodic-size-rotating-file-handler</a></p>
+</li>
+<li>
 <p><a href="#size-rotating-file-handler">size-rotating-file-handler</a></p>
 </li>
 <li>
-<p><a href="#syslog-handler">syslog-handler</a></p>
+<p><a href="#socket-handler">socket-handler</a></p>
 </li>
 <li>
-<p><a href="#enabled">custom-handler</a></p>
+<p><a href="#syslog-handler">syslog-handler</a></p>
 </li>
 </ul>
 </div>
 <div class="sect5">
 <h6 id="async-handler"><a class="link" href="#async-handler">async-handler</a></h6>
 <div class="paragraph">
-<p>An <code>async-handler</code> is a handler that asynchronously writes log messages
-to it&#8217;s child handlers. This type of handler is generally used for other
-handlers that take a substantial time to write logged messages.</p>
-</div>
-<div class="sect6">
-<h7 id="attributes-2"><a class="link" href="#attributes-2">Attributes</a></h7>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="#enabled">#enabled</a></p>
-</li>
-<li>
-<p><a href="#filter-spec">#filter-spec</a></p>
-</li>
-<li>
-<p><a href="#level">#level</a></p>
-</li>
-<li>
-<p><a href="#overflow-action">#overflow-action</a></p>
-</li>
-<li>
-<p><a href="#queue-length">#queue-length</a></p>
-</li>
-<li>
-<p><a href="#subhandlers">#subhandlers</a></p>
-</li>
-</ul>
-</div>
+<p>An <code>async-handler</code> is a handler that asynchronously writes log messages to it&#8217;s child handlers. This type of
+handler is generally used to wrap other handlers that take a substantial time to write messages.</p>
 </div>
 </div>
 <div class="sect5">
 <h6 id="console-handler"><a class="link" href="#console-handler">console-handler</a></h6>
 <div class="paragraph">
-<p>A <code>console-handler</code> is a handler that writes log messages to the
-console. Generally this writes to <code>stdout</code>, but can be set to write to
-<code>stderr</code>.</p>
+<p>A <code>console-handler</code> is a handler that writes log messages to the console. Generally this writes to <code>stdout</code>,
+but can be set to write to <code>stderr</code>.</p>
 </div>
-<div class="sect6">
-<h7 id="attributes-1"><a class="link" href="#attributes-1">Attributes</a></h7>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="#autoflush">#autoflush</a></p>
-</li>
-<li>
-<p><a href="#enabled">#enabled</a></p>
-</li>
-<li>
-<p><a href="#encoding">#encoding</a></p>
-</li>
-<li>
-<p><a href="#filter-spec">#filter-spec</a></p>
-</li>
-<li>
-<p><a href="#formatter">#formatter</a></p>
-</li>
-<li>
-<p><a href="#level">#level</a></p>
-</li>
-<li>
-<p><a href="#named-formatter">#named-formatter</a></p>
-</li>
-<li>
-<p><a href="#target">#target</a></p>
-</li>
-</ul>
 </div>
+<div class="sect5">
+<h6 id="custom-handler"><a class="link" href="#custom-handler">custom-handler</a></h6>
+<div class="paragraph">
+<p>A <code>custom-handler</code> allows you to define any <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Handler.html">handler</a> as a handler that
+can be assigned to a logger or a <a href="#async-handler"><code>async-handler</code></a>.</p>
 </div>
 </div>
 <div class="sect5">
 <h6 id="file-handler"><a class="link" href="#file-handler">file-handler</a></h6>
 <div class="paragraph">
-<p>A <code>file-handler</code> is a handler that writes log messages to the specified
-file.</p>
-</div>
-<div class="sect6">
-<h7 id="attributes-3"><a class="link" href="#attributes-3">Attributes</a></h7>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="#autoflush">#autoflush</a></p>
-</li>
-<li>
-<p><a href="#enabled">#enabled</a></p>
-</li>
-<li>
-<p><a href="#encoding">#encoding</a></p>
-</li>
-<li>
-<p><a href="#filter-spec">#filter-spec</a></p>
-</li>
-<li>
-<p><a href="#formatter">#formatter</a></p>
-</li>
-<li>
-<p><a href="#level">#level</a></p>
-</li>
-<li>
-<p><a href="#named-formatter">#named-formatter</a></p>
-</li>
-<li>
-<p><a href="#file">#file</a></p>
-</li>
-</ul>
-</div>
+<p>A <code>file-handler</code> is a handler that writes log messages to the specified file.</p>
 </div>
 </div>
 <div class="sect5">
 <h6 id="periodic-rotating-file-handler"><a class="link" href="#periodic-rotating-file-handler">periodic-rotating-file-handler</a></h6>
 <div class="paragraph">
-<p>A <code>periodic-rotating-file-handler</code> is a handler that writes log messages
-to the specified file. The file rotates on the date pattern specified in
-the <a href="#suffix">#suffix</a> attribute. The suffix must
-be a valid pattern recognized by the
-<a href="http://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html"><code>java.text.SimpleDateFormat</code></a>
-and must not rotate on seconds or milliseconds.</p>
+<p>A <code>periodic-rotating-file-handler</code> is a handler that writes log messages to the specified file. The file rotates on
+the date pattern specified in the <code>suffix</code> attribute. The suffix must be a valid pattern recognized by the
+<a href="https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html"><code>java.text.SimpleDateFormat</code></a> and must not rotate on seconds or
+milliseconds.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -10606,53 +11085,41 @@ The rotate happens before the next message is written by the handler.
 </tr>
 </table>
 </div>
-<div class="sect6">
-<h7 id="attributes-3"><a class="link" href="#attributes-3">Attributes</a></h7>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="#autoflush">#autoflush</a></p>
-</li>
-<li>
-<p><a href="#enabled">#enabled</a></p>
-</li>
-<li>
-<p><a href="#encoding">#encoding</a></p>
-</li>
-<li>
-<p><a href="#filter-spec">#filter-spec</a></p>
-</li>
-<li>
-<p><a href="#formatter">#formatter</a></p>
-</li>
-<li>
-<p><a href="#level">#level</a></p>
-</li>
-<li>
-<p><a href="#named-formatter">#named-formatter</a></p>
-</li>
-<li>
-<p><a href="#file">#file</a></p>
-</li>
-<li>
-<p><a href="#suffix">#suffix</a></p>
-</li>
-</ul>
 </div>
+<div class="sect5">
+<h6 id="periodic-size-rotating-file-handler"><a class="link" href="#periodic-size-rotating-file-handler">periodic-size-rotating-file-handler</a></h6>
+<div class="paragraph">
+<p>A <code>periodic-size-rotating-file-handler</code> is a handler that writes log messages to the specified file. The file rotates on
+the date pattern specified in the <code>suffix</code> attribute or the <code>rotate-size</code> attribute. The suffix must be a valid
+pattern recognized by the <a href="https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html"><code>java.text.SimpleDateFormat</code></a> and must
+not rotate on seconds or milliseconds.</p>
+</div>
+<div class="paragraph">
+<p>The <code>max-backup-index</code> works differently on this handler than the
+<a href="#size-rotating-file-handler"><code>size-rotating-file-handler</code></a>. The date suffix of the file to be rotated must be the
+same as the current expected suffix. For example with a suffix pattern of <code>yyyy-MM</code> and a <code>rotate-size</code> of <code>10m</code> the
+file will be rotated with the current month each time the 10Mb size is reached.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The rotate happens before the next message is written by the handler.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect5">
 <h6 id="size-rotating-file-handler"><a class="link" href="#size-rotating-file-handler">size-rotating-file-handler</a></h6>
 <div class="paragraph">
-<p>A <code>size-rotating-file-handler</code> is a handler that writes log messages to
-the specified file. The file rotates when the file size is greater than
-the <a href="#rotate-size">#rotate-size</a> attribute. The
-rotated file will be kept and the index appended to the name moving
-previously rotated file indexes up by 1 until the
-<a href="#max-backup-index">#max-backup-index</a> is
-reached. Once the
-<a href="#max-backup-index">#max-backup-index</a> is
-reached, the indexed files will be overwritten.</p>
+<p>A <code>size-rotating-file-handler</code> is a handler that writes log messages to the specified file. The file rotates when
+the file size is greater than the <code>rotate-size</code> attribute. The rotated file will be kept and the index appended
+to the name moving previously rotated file indexes up by 1 until the <code>max-backup-index</code> is reached. Once the
+<code>max-backup-index</code> is reached, the indexed files will be overwritten.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -10666,83 +11133,72 @@ The rotate happens before the next message is written by the handler.
 </tr>
 </table>
 </div>
-<div class="sect6">
-<h7 id="attributes-4"><a class="link" href="#attributes-4">Attributes</a></h7>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="#autoflush">#autoflush</a></p>
-</li>
-<li>
-<p><a href="#enabled">#enabled</a></p>
-</li>
-<li>
-<p><a href="#encoding">#encoding</a></p>
-</li>
-<li>
-<p><a href="#filter-spec">#filter-spec</a></p>
-</li>
-<li>
-<p><a href="#formatter">#formatter</a></p>
-</li>
-<li>
-<p><a href="#level">#level</a></p>
-</li>
-<li>
-<p><a href="#named-formatter">#named-formatter</a></p>
-</li>
-<li>
-<p><a href="#file">#file</a></p>
-</li>
-<li>
-<p><a href="#max-backup-index">#max-backup-index</a></p>
-</li>
-<li>
-<p><a href="#rotate-size">#rotate-size</a></p>
-</li>
-<li>
-<p><a href="#rotate-on-boot">#rotate-on-boot</a></p>
-</li>
-</ul>
-</div>
-</div>
 </div>
 <div class="sect5">
-<h6 id="syslog-handler"><a class="link" href="#syslog-handler">syslog-handler</a></h6>
+<h6 id="socket-handler"><a class="link" href="#socket-handler">socket-handler</a></h6>
 <div class="paragraph">
-<p>A <code>syslog-handler</code> is a handler that writes to a syslog server. The
-handler support <a href="http://www.ietf.org/rfc/rfc3164.txt">RFC3164</a> or
-<a href="http://www.ietf.org/rfc/rfc5424.txt">RFC5424</a> formats.</p>
+<p>A <code>socket-handler</code> is a handler which sends messages over a socket. This can be a TCP or UDP socket and must be
+defined in a <a href="#socket-binding-groups">socket binding group</a> under the <code>local-destination-outbound-socket-binding</code> or
+<code>remote-destination-outbound-socket-binding</code> resource.</p>
 </div>
-<div class="sect6">
-<h7 id="attributes-5"><a class="link" href="#attributes-5">Attributes</a></h7>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="#src-557084_Handlers-port">#port</a></p>
-</li>
-<li>
-<p><a href="#src-557084_Handlers-app-name">#app-name</a></p>
-</li>
-<li>
-<p><a href="#enabled">#enabled</a></p>
-</li>
-<li>
-<p><a href="#level">#level</a></p>
-</li>
-<li>
-<p><a href="#src-557084_Handlers-facility">#facility</a></p>
-</li>
-<li>
-<p><a href="#src-557084_Handlers-server-address">#server-address</a></p>
-</li>
-<li>
-<p><a href="#src-557084_Handlers-hostname">#hostname</a></p>
-</li>
-<li>
-<p><a href="#src-557084_Handlers-syslog-format">#syslog-format</a></p>
-</li>
-</ul>
+<div class="paragraph">
+<p>During the boot logging messages will be queued until the socket binding is configured and the logging subsystem is
+added. This is important to note because setting the level of the handler to <code>DEBUG</code> or <code>TRACE</code> could result in
+large memory consumption during boot.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>A server booted in <code>--admin-only</code> mode will discard messages rather than send them over a socket.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">CLI Example</div>
+<div class="content">
+<pre class="CodeRay highlight"><code># Add the socket binding
+/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=log-server:add(host=localhost, port=4560)
+# Add a json-formatter
+/subsystem=logging/json-formatter=json:add
+# Add the socket handler
+/subsystem=logging/socket-handler=log-server-handler:add(named-formatter=json, level=INFO, outbound-socket-binding-ref=log-server)
+# Add the handler to the root logger
+/subsystem=logging/root-logger=ROOT:add-handler(name=log-server-handler)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Add a UDP Example</div>
+<div class="content">
+<pre class="CodeRay highlight"><code>/subsystem=logging/socket-handler=log-server-handler:add(named-formatter=json, level=INFO, outbound-socket-binding-ref=log-server, protocol=UDP)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Add SSL Example</div>
+<div class="content">
+<pre class="CodeRay highlight"><code># Add the socket binding
+/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=log-server:add(host=localhost, port=4560)
+
+# Add the Elytron key store
+/subsystem=elytron/key-store=log-server-ks:add(path=/path/to/keystore.jks, type=JKS, credential-reference={clear-text=mypassword})
+# Add the Elytron trust manager
+/subsystem=elytron/trust-manager=log-server-tm:add(key-store=log-server-ks)
+# Add the client SSL context
+/subsystem=elytron/client-ssl-context=log-server-context:add(trust-manager=log-server-tm, protocols=["TLSv1.2"])
+
+# Add a json-formatter
+/subsystem=logging/json-formatter=json:add
+# Add the socket handler
+/subsystem=logging/socket-handler=log-server-handler:add(named-formatter=json, level=INFO, outbound-socket-binding-ref=log-server, protocol=SSL_TCP, ssl-context=log-server-context)
+# Add the handler to the root logger
+/subsystem=logging/root-logger=ROOT:add-handler(name=log-server-handler)</code></pre>
+</div>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -10751,570 +11207,43 @@ handler support <a href="http://www.ietf.org/rfc/rfc3164.txt">RFC3164</a> or
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-The syslog-handler is missing some configuration properties that may be
+Wrapping a <code>socket-handler</code> in a <a href="#async-handler"><code>async-handler</code></a> may improve performance.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect5">
+<h6 id="syslog-handler"><a class="link" href="#syslog-handler">syslog-handler</a></h6>
+<div class="paragraph">
+<p>A <code>syslog-handler</code> is a handler that writes to a syslog server via UDP. The handler support
+<a href="http://www.ietf.org/rfc/rfc3164.txt">RFC3164</a> or <a href="http://www.ietf.org/rfc/rfc5424.txt">RFC5424</a> formats.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The syslog-handler is missing some configuration properties that may be
 useful in some scenarios like setting a formatter. Use the
 <code>org.jboss.logmanager.handlers.SyslogHandler</code> in module
 <code>org.jboss.logmanager</code> as a
-<a href="#custom-handler">#custom-handler</a> to exploit
+<a href="#custom-handler">custom-handler</a> to exploit
 these benefits. Additional attributes will be added at some point so
-this will no longer be necessary.
+this will no longer be necessary.</p>
+</div>
 </td>
 </tr>
 </table>
 </div>
 </div>
 </div>
-<div class="sect5">
-<h6 id="custom-handler"><a class="link" href="#custom-handler">custom-handler</a></h6>
-
-</div>
-<div class="sect5">
-<h6 id="attributes-6"><a class="link" href="#attributes-6">Attributes</a></h6>
-<div class="sect6">
-<h7 id="autoflush"><a class="link" href="#autoflush">autoflush</a></h7>
-<div class="sidebarblock">
-<div class="content">
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Description:</th>
-<th class="tableblock halign-left valign-top">Indicates whether a flush should happen after each write.</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default Value:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed Values:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true or false</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect6">
-<h7 id="enabled"><a class="link" href="#enabled">enabled</a></h7>
-<div class="sidebarblock">
-<div class="content">
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Description:</th>
-<th class="tableblock halign-left valign-top">If set to true the handler is enabled and functioning as
-normal, if set to false the handler is ignored when processing log
-messages.</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default Value:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed Values:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true or false</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect6">
-<h7 id="encoding"><a class="link" href="#encoding">encoding</a></h7>
-<div class="sidebarblock">
-<div class="content">
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Description:</th>
-<th class="tableblock halign-left valign-top">The character encoding used by this Handler.</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default Value:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed Values:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Any valid encoding</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect6">
-<h7 id="file"><a class="link" href="#file">file</a></h7>
-<div class="sidebarblock">
-<div class="content">
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Description:</th>
-<th class="tableblock halign-left valign-top">An object describing the file the handler should write
-to.</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">object</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default Value:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed Values:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An object optionally containing a relative-to property
-and a path. The path is a required property of the object.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect6">
-<h7 id="named-formatter"><a class="link" href="#named-formatter">named-formatter</a></h7>
-<div class="sidebarblock">
-<div class="content">
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Description:</th>
-<th class="tableblock halign-left valign-top">The name of a defined formatter to be used on the
-handler.</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default Value:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed Values:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TODO add link</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect6">
-<h7 id="formatter"><a class="link" href="#formatter">formatter</a></h7>
-<div class="sidebarblock">
-<div class="content">
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Description:</th>
-<th class="tableblock halign-left valign-top">Defines a pattern for a pattern formatter.</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default Value:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%d\{HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed Values:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TODO add link</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect6">
-<h7 id="filter-spec"><a class="link" href="#filter-spec">filter-spec</a></h7>
-<div class="sidebarblock">
-<div class="content">
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Description:</th>
-<th class="tableblock halign-left valign-top">A filter expression value to define a filter.</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default Value:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed Values:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">See Filter Expression</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect6">
-<h7 id="level"><a class="link" href="#level">level</a></h7>
-<div class="sidebarblock">
-<div class="content">
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Description :</th>
-<th class="tableblock halign-left valign-top">The log level specifying which message levels will be
-logged by this logger. Message levels lower than this value will be
-discarded.</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default Value:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ALL</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed Values:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ALL FINEST FINER TRACE DEBUG FINE CONFIG INFO WARN
-WARNING ERROR SEVERE FATAL OFF</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect6">
-<h7 id="max-backup-index"><a class="link" href="#max-backup-index">max-backup-index</a></h7>
-<div class="sidebarblock">
-<div class="content">
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Description:</th>
-<th class="tableblock halign-left valign-top">The maximum number of rotated files to keep.</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default Value:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed Values:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">any integer greater than 0</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect6">
-<h7 id="overflow-action"><a class="link" href="#overflow-action">overflow-action</a></h7>
-<div class="sidebarblock">
-<div class="content">
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Description:</th>
-<th class="tableblock halign-left valign-top">Specify what action to take when the overflowing.</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default Value:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BLOCK</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed Values:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BLOCK or DISCARD</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect6">
-<h7 id="queue-length"><a class="link" href="#queue-length">queue-length</a></h7>
-<div class="sidebarblock">
-<div class="content">
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Description:</th>
-<th class="tableblock halign-left valign-top">The queue length to use before flushing writing</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">integer</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default Value:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed Values:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">any positive integer</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect6">
-<h7 id="rotate-on-boot"><a class="link" href="#rotate-on-boot">rotate-on-boot</a></h7>
-<div class="sidebarblock">
-<div class="content">
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Description:</th>
-<th class="tableblock halign-left valign-top">Indicates whether or not the file should be rotated each
-time the #file attribute is changed. If set to true will rotate on each
-boot of the server.</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default Value:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed Values:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true or false</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect6">
-<h7 id="rotate-size"><a class="link" href="#rotate-size">rotate-size</a></h7>
-<div class="sidebarblock">
-<div class="content">
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Description:</th>
-<th class="tableblock halign-left valign-top">The size at which the file should be rotated.</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default Value:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2m</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed Values:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Any positive integer with a size type appended to the
-end. Valid types are b for bytes, k for kilobytes, m for megabytes, g
-for gigabytes or t for terabytes. Type character is not case sensitive.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect6">
-<h7 id="subhandlers"><a class="link" href="#subhandlers">subhandlers</a></h7>
-<div class="sidebarblock">
-<div class="content">
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Description:</th>
-<th class="tableblock halign-left valign-top">The handlers to associate with the async handler</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">list of strings</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default Value:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed Values:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An array of valid handler names</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect6">
-<h7 id="suffix"><a class="link" href="#suffix">suffix</a></h7>
-<div class="sidebarblock">
-<div class="content">
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Description:</th>
-<th class="tableblock halign-left valign-top">The pattern used to determine when the file should be
-rotated.</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default Value:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">null</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed Values:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Any valid java.text.SimpleDateFormat pattern.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect6">
-<h7 id="target"><a class="link" href="#target">target</a></h7>
-<div class="sidebarblock">
-<div class="content">
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Description:</th>
-<th class="tableblock halign-left valign-top">Defines the target of the console handler.</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default Value:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">System.out</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed Values:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">System.out or System.err</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
 </div>
 <div class="sect3">
-<h4 id="Logging_How_To"><a class="link" href="#Logging_How_To">9.4.10. How To</a></h4>
+<h4 id="Logging_How_To"><a class="link" href="#Logging_How_To">9.5.10. How To</a></h4>
 <div class="sect4">
 <h5 id="how-do-i-add-a-log-category"><a class="link" href="#how-do-i-add-a-log-category">How do I add a log category?</a></h5>
 <div class="listingblock">
@@ -11413,7 +11342,7 @@ continue to use the logging subsystem configuration.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Logging_Loggers"><a class="link" href="#Logging_Loggers">9.4.11. Loggers</a></h4>
+<h4 id="Logging_Loggers"><a class="link" href="#Logging_Loggers">9.5.11. Loggers</a></h4>
 <div class="paragraph">
 <p>WIP</p>
 </div>
@@ -11431,7 +11360,7 @@ you find <span class="icon yellow"><i class="fa fa-smile-o"></i></span>
 </table>
 </div>
 <div class="sect4">
-<h5 id="overview"><a class="link" href="#overview">Overview</a></h5>
+<h5 id="overview-2"><a class="link" href="#overview-2">Overview</a></h5>
 <div class="paragraph">
 <p>Loggers are used to log messages. A logger is defined by a category
 generally consisting of a package name or a class name.</p>
@@ -11485,7 +11414,7 @@ future. Both attributes are still on the resource for legacy reasons.
 </table>
 </div>
 <div class="sect6">
-<h7 id="filter-spec-2"><a class="link" href="#filter-spec-2">filter-spec</a></h7>
+<h7 id="filter-spec"><a class="link" href="#filter-spec">filter-spec</a></h7>
 <div class="paragraph">
 <p>The <code>filter-spec</code> attribute is an expression based string to define
 filters for the logger.</p>
@@ -11504,7 +11433,7 @@ Filters on loggers are not inherited.
 </div>
 </div>
 <div class="sect6">
-<h7 id="handlers"><a class="link" href="#handlers">handlers</a></h7>
+<h7 id="handlers-2"><a class="link" href="#handlers-2">handlers</a></h7>
 <div class="paragraph">
 <p>The <code>handlers</code> attribute is a list of handler names that should be
 attached to the logger. If the
@@ -11514,7 +11443,7 @@ loggable, parent loggers will continue to be processed.</p>
 </div>
 </div>
 <div class="sect6">
-<h7 id="level-2"><a class="link" href="#level-2">level</a></h7>
+<h7 id="level"><a class="link" href="#level">level</a></h7>
 <div class="paragraph">
 <p>The <code>level</code> attribute allows the minimum level to allow messages to be
 logged at for the logger.</p>
@@ -11549,7 +11478,7 @@ class name. For example the logger <code>org.wildfly</code> is the parent logger
 </div>
 </div>
 <div class="sect2">
-<h3 id="EJB3"><a class="link" href="#EJB3">9.5. EJB3 subsystem configuration guide</a></h3>
+<h3 id="EJB3"><a class="link" href="#EJB3">9.6. EJB3 subsystem configuration guide</a></h3>
 <div class="paragraph">
 <p>This page lists the options that are available for configuring the EJB
 subsystem.</p>
@@ -11608,7 +11537,7 @@ of each</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="session-bean"><a class="link" href="#session-bean">9.5.1. &lt;session-bean&gt;</a></h4>
+<h4 id="session-bean"><a class="link" href="#session-bean">9.6.1. &lt;session-bean&gt;</a></h4>
 <div class="sect4">
 <h5 id="stateless"><a class="link" href="#stateless">&lt;stateless&gt;</a></h5>
 <div class="paragraph">
@@ -11664,7 +11593,7 @@ overridden via the deployment descriptor or via the
 </div>
 </div>
 <div class="sect3">
-<h4 id="mdb"><a class="link" href="#mdb">9.5.2. &lt;mdb&gt;</a></h4>
+<h4 id="mdb"><a class="link" href="#mdb">9.6.2. &lt;mdb&gt;</a></h4>
 <div class="sect4">
 <h5 id="resource-adaptor-ref"><a class="link" href="#resource-adaptor-ref">&lt;resource-adaptor-ref&gt;</a></h5>
 <div class="paragraph">
@@ -11685,7 +11614,7 @@ annotation. The instance pools themselves are configured in the
 </div>
 </div>
 <div class="sect3">
-<h4 id="entity-bean"><a class="link" href="#entity-bean">9.5.3. &lt;entity-bean&gt;</a></h4>
+<h4 id="entity-bean"><a class="link" href="#entity-bean">9.6.3. &lt;entity-bean&gt;</a></h4>
 <div class="paragraph">
 <p>This element is used to configure the behavior for EJB2 EntityBeans.</p>
 </div>
@@ -11702,26 +11631,26 @@ instance pools themselves are configured in the <code>&lt;pools&gt;</code> eleme
 </div>
 </div>
 <div class="sect3">
-<h4 id="pools"><a class="link" href="#pools">9.5.4. &lt;pools&gt;</a></h4>
+<h4 id="pools"><a class="link" href="#pools">9.6.4. &lt;pools&gt;</a></h4>
 
 </div>
 <div class="sect3">
-<h4 id="caches"><a class="link" href="#caches">9.5.5. &lt;caches&gt;</a></h4>
+<h4 id="caches"><a class="link" href="#caches">9.6.5. &lt;caches&gt;</a></h4>
 
 </div>
 <div class="sect3">
-<h4 id="passivation-stores"><a class="link" href="#passivation-stores">9.5.6. &lt;passivation-stores&gt;</a></h4>
+<h4 id="passivation-stores"><a class="link" href="#passivation-stores">9.6.6. &lt;passivation-stores&gt;</a></h4>
 
 </div>
 <div class="sect3">
-<h4 id="async"><a class="link" href="#async">9.5.7. &lt;async&gt;</a></h4>
+<h4 id="async"><a class="link" href="#async">9.6.7. &lt;async&gt;</a></h4>
 <div class="paragraph">
 <p>This element enables async EJB invocations. It is also used to specify
 the thread pool that these invocations will use.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="timer-service"><a class="link" href="#timer-service">9.5.8. &lt;timer-service&gt;</a></h4>
+<h4 id="timer-service"><a class="link" href="#timer-service">9.6.8. &lt;timer-service&gt;</a></h4>
 <div class="paragraph">
 <p>This element enables the EJB timer service. It is also used to specify
 the thread pool that these invocations will use.</p>
@@ -11735,7 +11664,7 @@ information is saved to.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="remote"><a class="link" href="#remote">9.5.9. &lt;remote&gt;</a></h4>
+<h4 id="remote"><a class="link" href="#remote">9.6.9. &lt;remote&gt;</a></h4>
 <div class="paragraph">
 <p>This is used to enable remote EJB invocations. It specifies the remoting
 connector to use (as defined in the remoting subsystem configuration),
@@ -11743,14 +11672,14 @@ and the thread pool to use for remote invocations.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="thread-pools"><a class="link" href="#thread-pools">9.5.10. &lt;thread-pools&gt;</a></h4>
+<h4 id="thread-pools"><a class="link" href="#thread-pools">9.6.10. &lt;thread-pools&gt;</a></h4>
 <div class="paragraph">
 <p>This is used to configure the thread pools used by async, timer and
 remote invocations.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="iiop"><a class="link" href="#iiop">9.5.11. &lt;iiop&gt;</a></h4>
+<h4 id="iiop"><a class="link" href="#iiop">9.6.11. &lt;iiop&gt;</a></h4>
 <div class="paragraph">
 <p>This is used to enable IIOP (i.e. CORBA) invocation of EJB&#8217;s. If this
 element is present then the JacORB subsystem must also be installed. It
@@ -11773,7 +11702,7 @@ false the default binding name is simply the bean name.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="in-vm-remote-interface-invocation"><a class="link" href="#in-vm-remote-interface-invocation">9.5.12. &lt;in-vm-remote-interface-invocation&gt;</a></h4>
+<h4 id="in-vm-remote-interface-invocation"><a class="link" href="#in-vm-remote-interface-invocation">9.6.12. &lt;in-vm-remote-interface-invocation&gt;</a></h4>
 <div class="paragraph">
 <p>By default remote interface invocations use pass by value, as required
 by the EJB spec. This element can use used to enable pass by reference,
@@ -11810,7 +11739,7 @@ top level deployment with a META-INF/jboss-ejb-client.xml containing:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Undertow"><a class="link" href="#Undertow">9.6. Undertow subsystem configuration</a></h3>
+<h3 id="Undertow"><a class="link" href="#Undertow">9.7. Undertow subsystem configuration</a></h3>
 <div class="sidebarblock">
 <div class="content">
 <div class="paragraph">
@@ -11865,7 +11794,7 @@ for most use cases and provides reasonable performance settings.</p>
 <p>IO Subsystem</p>
 </div>
 <div class="sect3">
-<h4 id="buffer-cache-configuration"><a class="link" href="#buffer-cache-configuration">9.6.1. Buffer cache configuration</a></h4>
+<h4 id="buffer-cache-configuration"><a class="link" href="#buffer-cache-configuration">9.7.1. Buffer cache configuration</a></h4>
 <div class="paragraph">
 <p>The buffer cache is used for caching content, such as static files.
 Multiple buffer caches can be configured, which allows for separate
@@ -11918,7 +11847,7 @@ amount of memory that can be used for caching</p></td>
 </table>
 </div>
 <div class="sect3">
-<h4 id="server-configuration"><a class="link" href="#server-configuration">9.6.2. Server configuration</a></h4>
+<h4 id="server-configuration"><a class="link" href="#server-configuration">9.7.2. Server configuration</a></h4>
 <div class="paragraph">
 <p>A server represents an instance of Undertow. Basically this consists of
 a set of connectors and some configured handlers.</p>
@@ -12186,7 +12115,7 @@ serve up requests that do not match anything.</p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="servlet-container-configuration"><a class="link" href="#servlet-container-configuration">9.6.3. Servlet container configuration</a></h4>
+<h4 id="servlet-container-configuration"><a class="link" href="#servlet-container-configuration">9.7.3. Servlet container configuration</a></h4>
 <div class="paragraph">
 <p>The servlet-container element corresponds to an instance of an Undertow
 Servlet container. Most servers will only need a single servlet
@@ -12329,7 +12258,7 @@ will only be persistent across redeploys, rather than restarts.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Undertow_AJP_listeners"><a class="link" href="#Undertow_AJP_listeners">9.6.4. AJP listeners</a></h4>
+<h4 id="Undertow_AJP_listeners"><a class="link" href="#Undertow_AJP_listeners">9.7.4. AJP listeners</a></h4>
 <div class="paragraph">
 <p>The AJP listeners are child resources of the subsystem undertow. They
 are used with mod_jk, mod_proxy and mod_cluster of the Apache httpd
@@ -12376,7 +12305,7 @@ new connector configuration:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Undertow_using_as_a_Load_Balancer"><a class="link" href="#Undertow_using_as_a_Load_Balancer">9.6.5. Using Wildfly as a Load Balancer</a></h4>
+<h4 id="Undertow_using_as_a_Load_Balancer"><a class="link" href="#Undertow_using_as_a_Load_Balancer">9.7.5. Using Wildfly as a Load Balancer</a></h4>
 <div class="paragraph">
 <p>Wildfly 10 adds support for using the Undertow subsystem as a load
 balancer. Wildfly supports two different approaches, you can either
@@ -12529,13 +12458,13 @@ content.</p>
 </div>
 <div class="paragraph">
 <p>The full details of all configuration options available can be found in
-the <a href="https://wildscribe.github.io/WildFly/13/subsystem/undertow/index.html">subsystem reference</a>.</p>
+the <a href="https://wildscribe.github.io/WildFly/14/subsystem/undertow/index.html">subsystem reference</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Messaging"><a class="link" href="#Messaging">9.7. Messaging configuration</a></h3>
+<h3 id="Messaging"><a class="link" href="#Messaging">9.8. Messaging configuration</a></h3>
 <div class="paragraph">
 <p>The JMS server configuration is done through the <em>messaging-activemq</em>
 subsystem. In this chapter we are going outline the frequently used
@@ -12543,7 +12472,7 @@ configuration options. For a more detailed explanation please consult
 the Artemis user guide (See "Component Reference").</p>
 </div>
 <div class="sect3">
-<h4 id="required-extension"><a class="link" href="#required-extension">9.7.1. Required Extension</a></h4>
+<h4 id="required-extension"><a class="link" href="#required-extension">9.8.1. Required Extension</a></h4>
 <div class="paragraph">
 <p>The configuration options discussed in this section assume that the the
 <code>org.wildfly.extension.messaging-activemq</code> extension is present in your
@@ -12564,7 +12493,7 @@ element to the xml or by using the following CLI operation:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="connectors"><a class="link" href="#connectors">9.7.2. Connectors</a></h4>
+<h4 id="connectors"><a class="link" href="#connectors">9.8.2. Connectors</a></h4>
 <div class="paragraph">
 <p>There are three kind of connectors that can be used to connect to
 WildFly JMS Server</p>
@@ -12587,7 +12516,7 @@ Server to upgrade from a HTTP connection)</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="jms-connection-factories"><a class="link" href="#jms-connection-factories">9.7.3. JMS Connection Factories</a></h4>
+<h4 id="jms-connection-factories"><a class="link" href="#jms-connection-factories">9.8.3. JMS Connection Factories</a></h4>
 <div class="paragraph">
 <p>There are three kinds of <em>basic</em> JMS <code>connection-factory</code> that depends
 on the type of connectors that is used.</p>
@@ -12778,7 +12707,7 @@ application looking the default JMS provider under the JNDI name
 </div>
 </div>
 <div class="sect3">
-<h4 id="jms-queues-and-topics"><a class="link" href="#jms-queues-and-topics">9.7.4. JMS Queues and Topics</a></h4>
+<h4 id="jms-queues-and-topics"><a class="link" href="#jms-queues-and-topics">9.8.4. JMS Queues and Topics</a></h4>
 <div class="paragraph">
 <p>JMS queues and topics are sub resources of the messaging-actively
 subsystem. One can define either a <code>jms-queue</code> or <code>jms-topic</code>. Each
@@ -12850,7 +12779,7 @@ remove
 </div>
 </div>
 <div class="sect3">
-<h4 id="dead-letter-redelivery"><a class="link" href="#dead-letter-redelivery">9.7.5. Dead Letter &amp; Redelivery</a></h4>
+<h4 id="dead-letter-redelivery"><a class="link" href="#dead-letter-redelivery">9.8.5. Dead Letter &amp; Redelivery</a></h4>
 <div class="paragraph">
 <p>Some of the settings are applied against an address wild card instead of
 a specific messaging destination. The dead letter queue and redelivery
@@ -12872,7 +12801,7 @@ settings belong into this group:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="security-settings-for-artemis-addresses-and-jms-destinations"><a class="link" href="#security-settings-for-artemis-addresses-and-jms-destinations">9.7.6. Security Settings for Artemis addresses and JMS destinations</a></h4>
+<h4 id="security-settings-for-artemis-addresses-and-jms-destinations"><a class="link" href="#security-settings-for-artemis-addresses-and-jms-destinations">9.8.6. Security Settings for Artemis addresses and JMS destinations</a></h4>
 <div class="paragraph">
 <p>Security constraints are matched against an address wildcard, similar to
 the DLQ and redelivery settings.</p>
@@ -12895,7 +12824,7 @@ the DLQ and redelivery settings.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="security-domain-for-users"><a class="link" href="#security-domain-for-users">9.7.7. Security Domain for Users</a></h4>
+<h4 id="security-domain-for-users"><a class="link" href="#security-domain-for-users">9.8.7. Security Domain for Users</a></h4>
 <div class="paragraph">
 <p>By default, Artemis will use the " <code>other`" JAAS security domain. This
 domain is used to authenticate users making connections to Artemis and
@@ -12913,7 +12842,7 @@ changed by using the <code>security-domain</code>, e.g.:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="using-the-elytron-subsystem"><a class="link" href="#using-the-elytron-subsystem">9.7.8. Using the Elytron Subsystem</a></h4>
+<h4 id="using-the-elytron-subsystem"><a class="link" href="#using-the-elytron-subsystem">9.8.8. Using the Elytron Subsystem</a></h4>
 <div class="paragraph">
 <p>You can also use the elytron subsystem to secure the messaging-activemq
 subsystem.</p>
@@ -12958,7 +12887,7 @@ maps to the <code>other</code> legacy security domain.
 </div>
 </div>
 <div class="sect3">
-<h4 id="cluster-authentication"><a class="link" href="#cluster-authentication">9.7.9. Cluster Authentication</a></h4>
+<h4 id="cluster-authentication"><a class="link" href="#cluster-authentication">9.8.9. Cluster Authentication</a></h4>
 <div class="paragraph">
 <p>If the Artemis server is configured to be clustered, it will use the
 <code>cluster</code> 's <code>user</code> and <code>password</code> attributes to connect to other
@@ -12986,9 +12915,9 @@ the command line.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="deployment-of--jms.xml-files"><a class="link" href="#deployment-of--jms.xml-files">9.7.10. Deployment of -jms.xml files</a></h4>
+<h4 id="deployment-of--jms.xml-files"><a class="link" href="#deployment-of--jms.xml-files">9.8.10. Deployment of -jms.xml files</a></h4>
 <div class="paragraph">
-<p>Starting with WildFly 13, you have the ability to deploy a -jms.xml file
+<p>Starting with WildFly 14, you have the ability to deploy a -jms.xml file
 defining JMS destinations, e.g.:</p>
 </div>
 <div class="listingblock">
@@ -13022,7 +12951,7 @@ tools (e.g. console, CLI, etc).
 </div>
 </div>
 <div class="sect3">
-<h4 id="jms-bridge"><a class="link" href="#jms-bridge">9.7.11. JMS Bridge</a></h4>
+<h4 id="jms-bridge"><a class="link" href="#jms-bridge">9.8.11. JMS Bridge</a></h4>
 <div class="paragraph">
 <p>The function of a JMS bridge is to consume messages from a source JMS
 destination, and send them to a target JMS destination. Typically either
@@ -13211,7 +13140,7 @@ CLI:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="component-reference"><a class="link" href="#component-reference">9.7.12. Component Reference</a></h4>
+<h4 id="component-reference"><a class="link" href="#component-reference">9.8.12. Component Reference</a></h4>
 <div class="paragraph">
 <p>The messaging-activemq subsystem is provided by the Artemis project. For
 a detailed description of the available configuration properties, please
@@ -13234,7 +13163,7 @@ consult the project documentation.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Messaging_Connect_a_pooled-connection-factory_to_a_Remote_Artemis_Server"><a class="link" href="#Messaging_Connect_a_pooled-connection-factory_to_a_Remote_Artemis_Server">9.7.13. Connect a pooled-connection-factory to a Remote Artemis Server</a></h4>
+<h4 id="Messaging_Connect_a_pooled-connection-factory_to_a_Remote_Artemis_Server"><a class="link" href="#Messaging_Connect_a_pooled-connection-factory_to_a_Remote_Artemis_Server">9.8.13. Connect a pooled-connection-factory to a Remote Artemis Server</a></h4>
 <div class="paragraph">
 <p>The <code>messaging-activemq</code> subsystem allows to configure a
 <code>pooled-connection-factory</code> resource to let a local client deployed in
@@ -13367,7 +13296,7 @@ subsystem (which allows to inject the JMS resources using the
 <div class="paragraph">
 <p>WildFly 10 supports both backwards and forwards compatibility with
 legacy versions that were using HornetQ as their messaging brokers (such
-as JBoss AS7, WildFly 13 &amp; 9).<br>
+as JBoss AS7, WildFly 14 &amp; 9).<br>
 These two compatibility modes are provided by the ActiveMQ Artemis
 project that supports the HornetQ&#8217;s CORE protocol:</p>
 </div>
@@ -13501,7 +13430,7 @@ the legacy server.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Mesaging_AIO_-_NIO_for_messaging_journal"><a class="link" href="#Mesaging_AIO_-_NIO_for_messaging_journal">9.7.14. AIO - NIO for messaging journal</a></h4>
+<h4 id="Mesaging_AIO_-_NIO_for_messaging_journal"><a class="link" href="#Mesaging_AIO_-_NIO_for_messaging_journal">9.8.14. AIO - NIO for messaging journal</a></h4>
 <div class="paragraph">
 <p>Apache ActiveMQ Artemis (like HornetQ beforehand) ships with a <strong>high
 performance journal</strong>. Since Apache ActiveMQ Artemis handles its own
@@ -13624,7 +13553,7 @@ trace in your server console :</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Messaging_JDBC_Store_for_Messaging_Journal"><a class="link" href="#Messaging_JDBC_Store_for_Messaging_Journal">9.7.15. JDBC Store for Messaging Journal</a></h4>
+<h4 id="Messaging_JDBC_Store_for_Messaging_Journal"><a class="link" href="#Messaging_JDBC_Store_for_Messaging_Journal">9.8.15. JDBC Store for Messaging Journal</a></h4>
 <div class="paragraph">
 <p>The Artemis server that are integrated to WildFly can be configured to
 use a JDBC store for its messaging journal instead of its file-based
@@ -13700,7 +13629,7 @@ yet).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Messaging_Discovery_Configuration"><a class="link" href="#Messaging_Discovery_Configuration">9.7.16. Configuring Broadcast/Discovery</a></h4>
+<h4 id="Messaging_Discovery_Configuration"><a class="link" href="#Messaging_Discovery_Configuration">9.8.16. Configuring Broadcast/Discovery</a></h4>
 <div class="paragraph">
 <p>Each Artemis server can be configured to broadcast itself and/or discovery other Artemis servers within a cluster.
 Artemis supports two mechanisms for configuring broadcast/discovery:</p>
@@ -13759,11 +13688,355 @@ Now create your broadcast/discovery groups using this channel:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Security"><a class="link" href="#Security">9.8. Security subsystem configuration</a></h3>
+<h3 id="MicroProfile_Config_SmallRye"><a class="link" href="#MicroProfile_Config_SmallRye">9.9. MicroProfile Config Subsystem Configuration</a></h3>
+<div class="paragraph">
+<p>Support for <a href="https://microprofile.io/project/eclipse/microprofile-config">Eclipse MicroProfile Config</a> is provided by
+ the <em>microprofile-config-smallrye</em> subsystem.</p>
+</div>
+<div class="sect3">
+<h4 id="required-extension"><a class="link" href="#required-extension">9.9.1. Required Extension</a></h4>
+<div class="paragraph">
+<p>This extension is included in the standard configurations included in the
+WildFly distribution.</p>
+</div>
+<div class="paragraph">
+<p>You can also add the extension to a configuration without it either by adding
+an <code>&lt;extension module="org.wildfly.extension.microprofile.config-smallrye"/&gt;</code>
+element to the xml or by using the following CLI operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby">[standalone<span class="instance-variable">@localhost</span>:<span class="integer">9990</span> /]/extension=org.wildfly.extension.microprofile.config-<span class="key">smallrye</span>:add</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="supported-configsources"><a class="link" href="#supported-configsources">9.9.2. Supported ConfigSources</a></h4>
+<div class="paragraph">
+<p>In addition to the default <code>ConfigSources</code> specified by the MicroProfile Config specification
+(environment variables, System properties and <code>META-INF/microprofile-config.properties</code> file), the
+<code>microprofile-config-smallrye</code> provides additional types of <code>ConfigSource</code></p>
+</div>
+<div class="sect4">
+<h5 id="configsource-from-properties"><a class="link" href="#configsource-from-properties">ConfigSource from Properties</a></h5>
+<div class="paragraph">
+<p>You can store properties directly in a <code>config-source</code> in the subsystem by using the <code>properties</code>
+attribute when you add the <code>config-source</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>/subsystem=microprofile-config-smallrye/config-source=props:add(properties={"prop1" = "foo", "prop2" = "bar"})</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This results in the XML configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:wildfly:microprofile-config-smallrye:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;config-source</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">props</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">prop1</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">prop2</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">bar</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/config-source&gt;</span>
+<span class="tag">&lt;/subsystem&gt;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="configsource-from-directory"><a class="link" href="#configsource-from-directory">ConfigSource from Directory</a></h5>
+<div class="paragraph">
+<p>You can also read properties from a directory where each file is the name of
+a property and the file content is the value of the property.</p>
+</div>
+<div class="paragraph">
+<p>For example, let&#8217;s imagine that the directory <code>/etc/config/numbers-app/</code> contains 2 files:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the <code>num.size</code> file contains the value <code>5</code></p>
+</li>
+<li>
+<p>the <code>num.max</code> file contains the value <code>100</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We can create a config-source` to access these properties by using the operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>/subsystem=microprofile-config-smallrye/config-source=file-props:add(dir={path=/etc/config/numbers-app})</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This results in the XML configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:wildfly:microprofile-config-smallrye:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;config-source</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">file-props</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;dir</span> <span class="attribute-name">path</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/etc/config/numbers-app</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/config-source&gt;</span>
+<span class="tag">&lt;/subsystem&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With that configuration, any application deployed in WildFly can use the <code>num.size</code> and
+<code>num.max</code> properties that are stored in the directory:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Inject</span>
+<span class="annotation">@ConfigProperty</span>(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">num.size</span><span class="delimiter">&quot;</span></span>)
+<span class="type">int</span> numSize; <i class="conum" data-value="1"></i><b>(1)</b>
+
+<span class="annotation">@Inject</span>
+<span class="annotation">@ConfigProperty</span>(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">num.max</span><span class="delimiter">&quot;</span></span>)
+<span class="type">int</span> numMax; <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>will be set to 5</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>will be set to 100</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This corresponds to the layout used by <a href="https://docs.openshift.com/enterprise/3.2/dev_guide/configmaps.html">OpenShift ConfigMaps</a>.
+The <code>dir</code> value corresponds to the <code>mountPath</code> in the ConfigMap definition in OpenShift or Kubernetes.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="configsource-from-class"><a class="link" href="#configsource-from-class">ConfigSource from Class</a></h5>
+<div class="paragraph">
+<p>You can create a specific type of <code>ConfigSource</code> implementation by creating a <code>config-source</code> resource
+with a <code>class</code> attribute.</p>
+</div>
+<div class="paragraph">
+<p>For example, you can provide an implementation of <code>org.eclipse.microprofile.config.spi.ConfigSource</code>
+that is named <code>org.example.MyConfigSource</code> and provided by a JBoss module named <code>org.example</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>/subsystem=microprofile-config-smallrye/config-source=my-config-source:add(class={name=org.example.MyConfigSource, module=org.example})</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This results in the XML configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:wildfly:microprofile-config-smallrye:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;config-source</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">my-config-source</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;class</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.example.MyConfigSource</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">module</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.example</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/config-source&gt;</span>
+<span class="tag">&lt;/subsystem&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All properties from this <code>ConfigSource</code> will be available to any WildFly deployment.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="configsourceprovider-from-class"><a class="link" href="#configsourceprovider-from-class">ConfigSourceProvider from Class</a></h5>
+<div class="paragraph">
+<p>You can create a specific type of <code>ConfigSourceProvider</code> implementation by creating a <code>config-source-provider</code> resource
+with a <code>class</code> attribute.</p>
+</div>
+<div class="paragraph">
+<p>For example, you can provide an implementation of <code>org.eclipse.microprofile.config.spi.ConfigSourceProvider</code>
+that is named <code>org.example.MyConfigSourceProvider</code> and provided by a JBoss module named <code>org.example</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>/subsystem=microprofile-config-smallrye/config-source-provider=my-config-source-provider:add(class={name=org.example.MyConfigSourceProvider, module=org.example})</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This results in the XML configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:wildfly:microprofile-config-smallrye:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;config-source-provider</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">my-config-source-provider</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+         <span class="tag">&lt;class</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.example.MyConfigSourceProvider</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">module</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.example</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/config-source-provider&gt;</span>
+<span class="tag">&lt;/subsystem&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All properties from the <code>ConfigSource`s provided by this `ConfigSourceProvider</code> will be available to any WildFly deployment.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="deployment"><a class="link" href="#deployment">9.9.3. Deployment</a></h4>
+<div class="paragraph">
+<p>Applications that are deployed in WildFly must have CDI enabled (e.g. with a <code>META-INF/beans.xml</code>
+or by having CDI Bean annotation) to be able to use MicroProfile Config in their code.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="component-reference-2"><a class="link" href="#component-reference-2">9.9.4. Component Reference</a></h4>
+<div class="paragraph">
+<p>The Eclipse MicroProfile Config is implemented by the SmallRye Config project.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://microprofile.io/project/eclipse/microprofile-config">Eclipse MicroProfile Config</a></p>
+</li>
+<li>
+<p><a href="http://github.com/smallrye/smallrye-config/">SmallRye Config</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>[[MicroProfile_OpenTracing SmallRye]]
+= MicroProfile OpenTracing Subsystem Configuration</p>
+</div>
+<div class="paragraph">
+<p>Support for <a href="https://microprofile.io/project/eclipse/microprofile-opentracing">Eclipse MicroProfile OpenTracing</a> is
+provided as a Tech Preview feature by the <em>microprofile-opentracing-smallrye</em> subsystem.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="required-extension"><a class="link" href="#required-extension">9.9.5. Required Extension</a></h4>
+<div class="paragraph">
+<p>This extension is included in the standard configurations included in the WildFly distribution.</p>
+</div>
+<div class="paragraph">
+<p>You can also add the extension to a configuration without it either by adding
+an <code>&lt;extension module="org.wildfly.extension.microprofile.opentracing-smallrye"/&gt;</code>
+element to the xml or by using the following CLI operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>[standalone@localhost:9990 /] /extension=org.wildfly.extension.microprofile.opentracing-smallrye:add
+{"outcome" =&gt; "success"}
+
+[standalone@localhost:9990 /] /subsystem=microprofile-opentracing-smallrye:add
+{
+    "outcome" =&gt; "success",
+    "response-headers" =&gt; {
+        "operation-requires-reload" =&gt; true,
+        "process-state" =&gt; "reload-required"
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="supported-instrumentation-libraries"><a class="link" href="#supported-instrumentation-libraries">9.9.6. Supported instrumentation libraries</a></h4>
+<div class="paragraph">
+<p>WildFly&#8217;s MicroProfile OpenTracing subsystem implements MicroProfile 1.1, which includes support for tracing JAX-RS and
+CDI.</p>
+</div>
+<div class="paragraph">
+<p>Additionally, applications being deployed are able to provide their own tracers via the
+<a href="https://github.com/opentracing-contrib/java-tracerresolver"><code>TracerResolver</code></a> facility. In that case, the default tracer
+will <strong>not</strong> be used.</p>
+</div>
+<div class="paragraph">
+<p>The subsystem ships with <a href="https://github.com/jaegertracing/jaeger-client-java">Jaeger Java Client</a> as the default tracer.
+Refer to that project&#8217;s documentation for instructions on how to configure it. Note that the configuration is only
+possible by setting system properties or environment variables. If a more complex configuration is required, implement a
+<code>TracerResolver</code> that returns the <code>Tracer</code> with the desired state.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+by default, the Jaeger Client Java has a probabilistic sampling strategy, set to 0.001, meaning that only
+approximately one in one thousand traces will be sampled. To sample every request, set the environment variable
+<code>JAEGER_SAMPLER_TYPE</code> to <code>const</code> and <code>JAEGER_SAMPLER_PARAM</code> to <code>1</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+the supported configuration options for this Tech Preview feature, particularly those related to configuring
+the Jaeger Java Client tracer, may change in incompatible ways in a future release.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>By default, the service name used with the Jaeger Client is derived from the deployment&#8217;s name, which is usually the
+WAR file name.</p>
+</div>
+<div class="paragraph">
+<p>As defined by the MicroProfile OpenTracing specification, CDI beans are traced if the annotation
+<code>org.eclipse.microprofile.opentracing.Traced</code> is present, either at the type or method level. Tracing can be disabled
+by setting the annotation&#8217;s value to <code>false</code>. Similarly, a custom operation name can be set by specifying the parameter
+<code>operationName</code> for that annotation. The semantics are ruled by the MicroProfile OpenTracing specification.</p>
+</div>
+<div class="paragraph">
+<p>Note that CDI support for the deployment is required in order to activate the MicroProfile OpenTracing support. A simple
+JAX-RS application with no CDI support will <strong>not</strong> be traced.</p>
+</div>
+<div class="paragraph">
+<p>Managed beans with multiple facets, such as EJBs, can also be traced by annotating them with <code>@Traced</code>, but with
+limitations. For instance, asynchronous invocations will yield a new trace, instead of having the span to join an
+existing trace.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="component-reference-3"><a class="link" href="#component-reference-3">9.9.7. Component Reference</a></h4>
+<div class="paragraph">
+<p>The Eclipse MicroProfile OpenTracing is implemented by the SmallRye OpenTracing project.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://microprofile.io/project/eclipse/microprofile-opentracing">Eclipse MicroProfile OpenTracing</a></p>
+</li>
+<li>
+<p><a href="https://github.com/smallrye/smallrye-opentracing/">SmallRye OpenTracing</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Security"><a class="link" href="#Security">9.10. Security subsystem configuration</a></h3>
 <div class="paragraph">
 <p>The security subsystem is the subsystem that brings the security
 services provided by <a href="http://www.jboss.org/picketbox">PicketBox</a> to the
-WildFly 13 server instances.</p>
+WildFly 14 server instances.</p>
 </div>
 <div class="paragraph">
 <p>If you are looking to secure the management interfaces for the
@@ -13773,7 +14046,7 @@ management interfaces themselves are not run within a WildFly process so
 use a custom configuration.</p>
 </div>
 <div class="sect3">
-<h4 id="structure-of-the-security-subsystem"><a class="link" href="#structure-of-the-security-subsystem">9.8.1. Structure of the Security Subsystem</a></h4>
+<h4 id="structure-of-the-security-subsystem"><a class="link" href="#structure-of-the-security-subsystem">9.10.1. Structure of the Security Subsystem</a></h4>
 <div class="paragraph">
 <p>When deploying applications to WildFly most of the time it is likely
 that you would be deploying a web application or EJBs and just require a
@@ -13826,7 +14099,7 @@ credentials, roles or attributes to the authenticated subject.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="security-subsystem-configuration"><a class="link" href="#security-subsystem-configuration">9.8.2. Security Subsystem Configuration</a></h4>
+<h4 id="security-subsystem-configuration"><a class="link" href="#security-subsystem-configuration">9.10.2. Security Subsystem Configuration</a></h4>
 <div class="paragraph">
 <p>By default a lot of defaults have already been selected for the security
 subsystem and unless there is a specific implementation detail you need
@@ -14484,7 +14757,7 @@ need to be defined.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Security_Authentication_Modules"><a class="link" href="#Security_Authentication_Modules">9.8.3. Authentication Modules</a></h4>
+<h4 id="Security_Authentication_Modules"><a class="link" href="#Security_Authentication_Modules">9.10.3. Authentication Modules</a></h4>
 <div class="paragraph">
 <p>In this section we will describe each login module&#8217;s options available.</p>
 </div>
@@ -14737,7 +15010,7 @@ select Role, RoleGroup from Roles where PrincipalID=?</p></td>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Web_services"><a class="link" href="#Web_services">9.9. Web services configuration</a></h3>
+<h3 id="Web_services"><a class="link" href="#Web_services">9.11. Web services configuration</a></h3>
 <div class="paragraph">
 <p>JBossWS components are provided to the application server through the
 webservices subsystem. JBossWS components handle the processing of WS
@@ -14747,7 +15020,7 @@ subsystem is provided in the server&#8217;s domain and standalone
 configuration files.</p>
 </div>
 <div class="sect3">
-<h4 id="structure-of-the-webservices-subsystem"><a class="link" href="#structure-of-the-webservices-subsystem">9.9.1. Structure of the webservices subsystem</a></h4>
+<h4 id="structure-of-the-webservices-subsystem"><a class="link" href="#structure-of-the-webservices-subsystem">9.11.1. Structure of the webservices subsystem</a></h4>
 <div class="sect4">
 <h5 id="published-endpoint-address"><a class="link" href="#published-endpoint-address">Published endpoint address</a></h5>
 <div class="paragraph">
@@ -15048,7 +15321,7 @@ deployment classloader must to be able to load the handler class.
 </div>
 </div>
 <div class="sect3">
-<h4 id="runtime-information"><a class="link" href="#runtime-information">9.9.2. Runtime information</a></h4>
+<h4 id="runtime-information"><a class="link" href="#runtime-information">9.11.2. Runtime information</a></h4>
 <div class="paragraph">
 <p>Each web service endpoint is exposed through the deployment that
 provides the endpoint implementation. Each endpoint can be queried as a
@@ -15081,7 +15354,7 @@ context and a WSDL Url:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ws-component-reference"><a class="link" href="#ws-component-reference">9.9.3. Component Reference</a></h4>
+<h4 id="ws-component-reference"><a class="link" href="#ws-component-reference">9.11.3. Component Reference</a></h4>
 <div class="paragraph">
 <p>The web service subsystem is provided by the JBossWS project. For a
 detailed description of the available configuration properties, please
@@ -15104,7 +15377,7 @@ consult the project documentation.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Resource_adapters"><a class="link" href="#Resource_adapters">9.10. Resource adapters</a></h3>
+<h3 id="Resource_adapters"><a class="link" href="#Resource_adapters">9.12. Resource adapters</a></h3>
 <div class="paragraph">
 <p>Resource adapters are configured through the <em>resource-adapters</em>
 subsystem. Declaring a new resource adapter consists of two separate
@@ -15112,7 +15385,7 @@ steps: You would need to deploy the .rar archive and define a resource
 adapter entry in the subsystem.</p>
 </div>
 <div class="sect3">
-<h4 id="resource-adapter-definitions"><a class="link" href="#resource-adapter-definitions">9.10.1. Resource Adapter Definitions</a></h4>
+<h4 id="resource-adapter-definitions"><a class="link" href="#resource-adapter-definitions">9.12.1. Resource Adapter Definitions</a></h4>
 <div class="paragraph">
 <p>The resource adapter itself is defined within the subsystem
 <em>resource-adapters</em>:</p>
@@ -15161,14 +15434,14 @@ adapter entry in the subsystem.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ra-using-security-domains"><a class="link" href="#ra-using-security-domains">9.10.2. Using security domains</a></h4>
+<h4 id="ra-using-security-domains"><a class="link" href="#ra-using-security-domains">9.12.2. Using security domains</a></h4>
 <div class="paragraph">
 <p>Information about using security domains can be found at
 <a href="https://community.jboss.org/wiki/JBossAS7SecurityDomainModel" class="bare">https://community.jboss.org/wiki/JBossAS7SecurityDomainModel</a></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="automatic-activation-of-resource-adapter-archives"><a class="link" href="#automatic-activation-of-resource-adapter-archives">9.10.3. Automatic activation of resource adapter archives</a></h4>
+<h4 id="automatic-activation-of-resource-adapter-archives"><a class="link" href="#automatic-activation-of-resource-adapter-archives">9.12.3. Automatic activation of resource adapter archives</a></h4>
 <div class="paragraph">
 <p>A resource adapter archive can be automatically activated with a
 configuration by including an META-INF/ironjacamar.xml in the archive.</p>
@@ -15179,7 +15452,7 @@ configuration by including an META-INF/ironjacamar.xml in the archive.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ra-component-reference"><a class="link" href="#ra-component-reference">9.10.4. Component Reference</a></h4>
+<h4 id="ra-component-reference"><a class="link" href="#ra-component-reference">9.12.4. Component Reference</a></h4>
 <div class="paragraph">
 <p>The resource adapter subsystem is provided by the
 <a href="http://www.jboss.org/ironjacamar">IronJacamar</a> project. For a detailed
@@ -15217,14 +15490,14 @@ is <code>subsystem=batch-jberet</code>.
 </div>
 </div>
 <div class="sect3">
-<h4 id="default-subsystem-configuration"><a class="link" href="#default-subsystem-configuration">9.10.5. Default Subsystem Configuration</a></h4>
+<h4 id="default-subsystem-configuration"><a class="link" href="#default-subsystem-configuration">9.12.5. Default Subsystem Configuration</a></h4>
 <div class="paragraph">
 <p>For up to date information about subsystem configuration options see
 <a href="http://wildscribe.github.io/" class="bare">http://wildscribe.github.io/</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="security"><a class="link" href="#security">9.10.6. Security</a></h4>
+<h4 id="security"><a class="link" href="#security">9.12.6. Security</a></h4>
 <div class="paragraph">
 <p>A new <code>security-domain</code> attribute was added to the <code>batch-jberet</code>
 subsystem to allow batch jobs to be executed under that security domain.
@@ -15264,7 +15537,7 @@ deployment resource, for example
 </div>
 </div>
 <div class="sect3">
-<h4 id="deployment-descriptors"><a class="link" href="#deployment-descriptors">9.10.7. Deployment Descriptors</a></h4>
+<h4 id="deployment-descriptors"><a class="link" href="#deployment-descriptors">9.12.7. Deployment Descriptors</a></h4>
 <div class="paragraph">
 <p>There are no deployment descriptors for configuring a batch environment
 defined by the <a href="https://www.jcp.org/en/jsr/detail?id=352">JSR-352
@@ -15282,7 +15555,7 @@ deployment descriptor.</p>
 <div class="listingblock">
 <div class="title">Example Named Job Repository and Thread Pool</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;jboss</span> <span class="attribute-name">umlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;jboss</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
     <span class="tag">&lt;batch</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:batch-jberet:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
       <span class="tag">&lt;job-repository&gt;</span>
         <span class="tag">&lt;named</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">batch-ds</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
@@ -15295,7 +15568,7 @@ deployment descriptor.</p>
 <div class="listingblock">
 <div class="title">Example new Job Repository</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;jboss</span> <span class="attribute-name">umlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;jboss</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
     <span class="tag">&lt;batch</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:batch-jberet:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
         <span class="tag">&lt;job-repository&gt;</span>
             <span class="tag">&lt;jdbc</span> <span class="attribute-name">jndi-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">java:jboss/datasources/ExampleDS</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
@@ -15306,7 +15579,7 @@ deployment descriptor.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="deployment-resources"><a class="link" href="#deployment-resources">9.10.8. Deployment Resources</a></h4>
+<h4 id="deployment-resources"><a class="link" href="#deployment-resources">9.12.8. Deployment Resources</a></h4>
 <div class="paragraph">
 <p>Some subsystems in <a href="http://wildfly.org">WildFly</a> register runtime
 resources for deployments. The batch subsystem registers jobs and
@@ -15496,7 +15769,7 @@ and attributes (arguments) on operations.
 </div>
 </div>
 <div class="sect2">
-<h3 id="JSF"><a class="link" href="#JSF">9.11. JSF Configuration</a></h3>
+<h3 id="JSF"><a class="link" href="#JSF">9.13. JSF Configuration</a></h3>
 <div class="quoteblock abstract">
 <blockquote>
 JSF configuration is handled by the JSF subsystem. The JSF subsystem
@@ -15512,7 +15785,7 @@ attribute.
 </blockquote>
 </div>
 <div class="sect3">
-<h4 id="installing-a-new-jsf-implementation-manually"><a class="link" href="#installing-a-new-jsf-implementation-manually">9.11.1. Installing a new JSF implementation manually</a></h4>
+<h4 id="installing-a-new-jsf-implementation-manually"><a class="link" href="#installing-a-new-jsf-implementation-manually">9.13.1. Installing a new JSF implementation manually</a></h4>
 <div class="paragraph">
 <p>A new JSF implementation can be manually installed as follows:</p>
 </div>
@@ -15629,7 +15902,7 @@ The new JSF implementation should appear in the output of this command.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="changing-the-default-jsf-implementation"><a class="link" href="#changing-the-default-jsf-implementation">9.11.2. Changing the default JSF implementation</a></h4>
+<h4 id="changing-the-default-jsf-implementation"><a class="link" href="#changing-the-default-jsf-implementation">9.13.2. Changing the default JSF implementation</a></h4>
 <div class="paragraph">
 <p>The following CLI command can be used to make a newly installed JSF
 implementation the default JSF implementation used by WildFly:</p>
@@ -15644,7 +15917,7 @@ implementation the default JSF implementation used by WildFly:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="configuring-a-jsf-app-to-use-a-non-default-jsf-implementation"><a class="link" href="#configuring-a-jsf-app-to-use-a-non-default-jsf-implementation">9.11.3. Configuring a JSF app to use a non-default JSF implementation</a></h4>
+<h4 id="configuring-a-jsf-app-to-use-a-non-default-jsf-implementation"><a class="link" href="#configuring-a-jsf-app-to-use-a-non-default-jsf-implementation">9.13.3. Configuring a JSF app to use a non-default JSF implementation</a></h4>
 <div class="paragraph">
 <p>A JSF app can be configured to use an installed JSF implementation
 that&#8217;s not the default implementation by adding a
@@ -15667,7 +15940,7 @@ implementation will be used for that app.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="disallowing-doctype-declarations"><a class="link" href="#disallowing-doctype-declarations">9.11.4. Disallowing DOCTYPE declarations</a></h4>
+<h4 id="disallowing-doctype-declarations"><a class="link" href="#disallowing-doctype-declarations">9.13.4. Disallowing DOCTYPE declarations</a></h4>
 <div class="paragraph">
 <p>The following CLI commands can be used to disallow DOCTYPE declarations
 in JSF deployments:</p>
@@ -15694,7 +15967,7 @@ to the deployment&#8217;s <code>web.xml</code> file:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="JMX"><a class="link" href="#JMX">9.12. JMX subsystem configuration</a></h3>
+<h3 id="JMX"><a class="link" href="#JMX">9.14. JMX subsystem configuration</a></h3>
 <div class="paragraph">
 <p>The JMX subsystem registers a service with the Remoting endpoint so that
 remote access to JMX can be obtained over the exposed Remoting
@@ -15809,7 +16082,7 @@ dependencies</p></td>
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="audit-logging"><a class="link" href="#audit-logging">9.12.1. Audit logging</a></h4>
+<h4 id="audit-logging"><a class="link" href="#audit-logging">9.14.1. Audit logging</a></h4>
 <div class="paragraph">
 <p>Audit logging for the JMX MBean server managed by the JMX subsystem. The
 resource is at <code>/subsystem=jmx/configuration=audit-log</code> and its
@@ -15965,7 +16238,7 @@ field will be populated with Throwable.getMessage()</p></td>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Deployment_Scanner"><a class="link" href="#Deployment_Scanner">9.13. Deployment Scanner configuration</a></h3>
+<h3 id="Deployment_Scanner"><a class="link" href="#Deployment_Scanner">9.15. Deployment Scanner configuration</a></h3>
 <div class="paragraph">
 <p>The deployment scanner is only used in standalone mode. Its job is to
 monitor a directory for new files and to deploy those files. It can be
@@ -16124,7 +16397,7 @@ off scanning you can do</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Core_Management"><a class="link" href="#Core_Management">9.14. Core Management Subsystem Configuration</a></h3>
+<h3 id="Core_Management"><a class="link" href="#Core_Management">9.16. Core Management Subsystem Configuration</a></h3>
 <div class="paragraph">
 <p>The core management subsystem is composed services used to manage the
 server or monitor its status.<br>
@@ -16141,7 +16414,7 @@ The core management subsystem configuration may be used to:</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="lifecycle-listener"><a class="link" href="#lifecycle-listener">9.14.1. Lifecycle listener</a></h4>
+<h4 id="lifecycle-listener"><a class="link" href="#lifecycle-listener">9.16.1. Lifecycle listener</a></h4>
 <div class="paragraph">
 <p>You can create an implementation of
 <em>org.wildfly.extension.core.management.client.ProcessStateListener</em>
@@ -16225,7 +16498,7 @@ let&#8217;s add the module to the wildfly modules :</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="configuration-changes"><a class="link" href="#configuration-changes">9.14.2. Configuration changes</a></h4>
+<h4 id="configuration-changes"><a class="link" href="#configuration-changes">9.16.2. Configuration changes</a></h4>
 <div class="paragraph">
 <p>You can use the core management subsystem to enable and configure an
 <strong>in-memory</strong> history of the last configuration changes.<br>
@@ -16269,7 +16542,7 @@ For example to track the last 5 configuration changes let&#8217;s active this
 </div>
 </div>
 <div class="sect2">
-<h3 id="Simple_configuration_subsystems"><a class="link" href="#Simple_configuration_subsystems">9.15. Simple configuration subsystems</a></h3>
+<h3 id="Simple_configuration_subsystems"><a class="link" href="#Simple_configuration_subsystems">9.17. Simple configuration subsystems</a></h3>
 <div class="paragraph">
 <p>The following subsystems currently have no configuration beyond its root
 element in the configuration</p>
@@ -17238,7 +17511,7 @@ to open administrative interfaces and accept management requests but not
 start other runtime services oraccept end user requests.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">--server-config-c</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--server-config -c</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">standalone.xml</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A relative path which is interpreted
 to be relative to jboss.server.config.dir. The name of the configuration
@@ -17252,6 +17525,21 @@ be relative to jboss.server.config.dir. This is similar to
 --server-config but if this alternative is specified the server willnot
 overwrite the file when the management model is changed. However a full
 versioned history is maintained of the file.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--git-repo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">remote Git repository URL to use for configuration directory and content repository content or <code>local</code> if only a local repository is to be used.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--git-branch</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">master</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Git branch or tag to be used. If a <code>tag</code> name is used then the future commits will go into the detached state.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--git-auth</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A URL to an Elytron configuration file containing the credentials to be used for connecting to the Git repository.</p></td>
 </tr>
 </tbody>
 </table>
@@ -18351,7 +18639,7 @@ code in octal, e.g. "#012".</p></td>
 </table>
 </div>
 <div class="sect3">
-<h4 id="handlers-2"><a class="link" href="#handlers-2">11.4.2. Handlers</a></h4>
+<h4 id="handlers-3"><a class="link" href="#handlers-3">11.4.2. Handlers</a></h4>
 <div class="paragraph">
 <p>A handler is responsible for taking the formatted data and logging it to
 a location. There are currently two types of handlers, File and Syslog.
@@ -19355,6 +19643,155 @@ snapshot folder for the configuration which matches this prefix.</p></td>
 to specify a configuration relative to the <code>jboss.server.config.dir</code> and
 finally if no matching configuration is found an attempt to locate the
 configuration as an absolute path will be made.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Configuration_file_git_history"><a class="link" href="#Configuration_file_git_history">11.7. Git Configuration file history</a></h3>
+<div class="paragraph">
+<p>To enhance the initial <a href="#Configuration_file_history">configuration file history</a> we have now a native Git support to manage the configuration history. This feature goes a little farther than the initial configuration file history in that it also manages content repository content and all the configuration files (such as properties). This feature only work for <strong>standalone servers</strong> using the default directory layout.</p>
+</div>
+<div class="paragraph">
+<p>As mentioned in <a href="#Command_line_parameters">Command line parameters</a> we support the usage of a remote Git repository to pull the configuration from or create or use a local Git repository.
+In fact if a <code>.git</code> directory exists under <code>jboss.server.base.dir</code> then using Git for managing configuration files will be automatically activated.
+Each modification of the content or the configuration will result in a new commit when the operation is successful and there are changes to commit. If there is an authenticated user then it will be stored as the author of the commit.
+Please note that this is a real Git repository so using a native Git client you can manipulate it.</p>
+</div>
+<div class="paragraph">
+<p>Now if we execute a management operation that modifies
+the model, for example adding a new system property using the CLI:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby">[standalone<span class="instance-variable">@localhost</span>:<span class="integer">9990</span> /] /system-property=<span class="key">test</span>:add(value=<span class="string"><span class="delimiter">&quot;</span><span class="content">test123</span><span class="delimiter">&quot;</span></span>)
+{<span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What happens is:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The change is applied to the configuration file.</p>
+</li>
+<li>
+<p>The configuration file is added to a new commit.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="local_git_repository"><a class="link" href="#local_git_repository">11.7.1. Local Git Repository</a></h4>
+<div class="paragraph">
+<p>Starting the server with the option <code>--git-repo=local</code> will initiate a Git repository if none exists or use the current Git repository. When initiating the local Git repository a <code>.gitignore</code> file will be created and added to the initial commit.</p>
+</div>
+<div class="paragraph">
+<p>If a <code>--git-branch</code> parameter is added then the repository will be checked out on the supplied branch. Please note that the branch will not be automatically created and must exist in the repository already. By default, if no parameter is specified, the branch <code>master</code> will be used.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="remote_git_repository"><a class="link" href="#remote_git_repository">11.7.2. Remote Git Repository</a></h4>
+<div class="paragraph">
+<p>If a remote Git repository is provided then the server will try to pull from it at boot. If this is the first time we are pulling then local files will be deleted to avoid the pull to fail because of the need to overwrite those existing files.
+The parameter for <code>--git-repo</code> can be a URL or a remote alias provided you have manually added it to the local git configuration.</p>
+</div>
+<div class="paragraph">
+<p>If a <code>--git-branch</code> parameter is added then the branch will be pulled, otherwise it will default to <code>master</code>.</p>
+</div>
+<div class="paragraph">
+<p>For example this is an elytron configuration file that you could use to connect to Github via the <code>--git-auth</code> parameter:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="tag">&lt;configuration&gt;</span>
+    <span class="tag">&lt;authentication-client</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:elytron:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;authentication-rules&gt;</span>
+            <span class="tag">&lt;rule</span> <span class="attribute-name">use-configuration</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">test-login</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;/rule&gt;</span>
+        <span class="tag">&lt;/authentication-rules&gt;</span>
+        <span class="tag">&lt;authentication-configurations&gt;</span>
+            <span class="tag">&lt;configuration</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">test-login</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;sasl-mechanism-selector</span> <span class="attribute-name">selector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">BASIC</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                <span class="tag">&lt;set-user-name</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">ehsavoie</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                <span class="tag">&lt;credentials&gt;</span>
+                    <span class="tag">&lt;clear-password</span> <span class="attribute-name">password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">my_api_key</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                <span class="tag">&lt;/credentials&gt;</span>
+                <span class="tag">&lt;set-mechanism-realm</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">testRealm</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+            <span class="tag">&lt;/configuration&gt;</span>
+        <span class="tag">&lt;/authentication-configurations&gt;</span>
+    <span class="tag">&lt;/authentication-client&gt;</span>
+<span class="tag">&lt;/configuration&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Sample command line to start the server using the <code>standalone-full.xml</code> file pulled from Github and being authenticated via the Elytron configuration file <code>github-wildfly-config.xml</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">./standalone.sh --git-repo=https://github.com/wildfly/wildfly-config.git --git-auth=file:///home/ehsavoie/tmp/github-wildfly-config.xml -c standalone-full.xml</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="snapshots"><a class="link" href="#snapshots">11.7.3. Snapshots</a></h4>
+<div class="paragraph">
+<p>In addition to the commits taken by the server as described above you
+can manually take snapshots which will be stored as <code>tags</code> in the Git repository.
+You can choose the tag name and the commit message attached to this tag.</p>
+</div>
+<div class="paragraph">
+<p>You may also take your own snapshots using the CLI:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby">[standalone<span class="instance-variable">@localhost</span>:<span class="integer">9990</span> /] <span class="symbol">:take</span>-snapshot(name=<span class="string"><span class="delimiter">&quot;</span><span class="content">snapshot</span><span class="delimiter">&quot;</span></span>, comment=<span class="string"><span class="delimiter">&quot;</span><span class="content">1st snapshot</span><span class="delimiter">&quot;</span></span>)
+{
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">result</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">1st snapshot</span><span class="delimiter">&quot;</span></span>
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also use the CLI to list all the snapshots</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby">[standalone<span class="instance-variable">@localhost</span>:<span class="integer">9990</span> /] <span class="symbol">:list</span>-snapshots
+{
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">result</span><span class="delimiter">&quot;</span></span> =&gt; {
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">directory</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">names</span><span class="delimiter">&quot;</span></span> =&gt; [
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">snapshot : 1st snapshot</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">refs/tags/snapshot</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">snapshot2 : 2nd snapshot</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">refs/tags/snapshot2</span><span class="delimiter">&quot;</span></span>
+        ]
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To delete a particular snapshot:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby">[standalone<span class="instance-variable">@localhost</span>:<span class="integer">9990</span> /] <span class="symbol">:delete</span>-snapshot(name=<span class="string"><span class="delimiter">&quot;</span><span class="content">snapshot2</span><span class="delimiter">&quot;</span></span>)
+{<span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="remote_push"><a class="link" href="#remote_push">11.7.4. Remote push</a></h4>
+<div class="paragraph">
+<p>You may need to push your repository changes to a remote repository so you can share them.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby">[standalone<span class="instance-variable">@localhost</span>:<span class="integer">9990</span> /] <span class="symbol">:publish</span>-configuration(location=<span class="string"><span class="delimiter">&quot;</span><span class="content">origin</span><span class="delimiter">&quot;</span></span>)
+{<span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>}</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -22016,7 +22453,7 @@ to the process it was managing and release other resources:</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-request"><a class="link" href="#format-of-a-detyped-operation-request">12.5.3. Format of a Detyped Operation Request</a></h4>
 <div class="paragraph">
-<p>The basic method a user of the WildFly 13 programmatic management API
+<p>The basic method a user of the WildFly 14 programmatic management API
 would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -22536,7 +22973,7 @@ header just like this :</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-response"><a class="link" href="#format-of-a-detyped-operation-response">12.5.4. Format of a Detyped Operation Response</a></h4>
 <div class="paragraph">
-<p>As noted previously, the basic method a user of the WildFly 13
+<p>As noted previously, the basic method a user of the WildFly 14
 programmatic management API would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -23442,7 +23879,7 @@ script (e.g. 'bin/jboss-admin.bat --connect command=:shutdown').</p>
 <div class="paragraph">
 <p>To avoid "Press any key to continue &#8230;&#8203;" message you need to specify
 NOPAUSE variable. Call 'set NOPAUSE=true' in command line before running
-any WildFly 13 .bat script or include it in your custom script before
+any WildFly 14 .bat script or include it in your custom script before
 invoking scripts from WildFly.</p>
 </div>
 </div>
@@ -23929,8 +24366,8 @@ for a complete description of the command.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 13.0.0.Final<br>
-Last updated 2018-05-30 14:06:26 CDT
+Version 14.0.0.Final<br>
+Last updated 2018-08-23 15:27:43 CDT
 </div>
 </div>
 </body>
