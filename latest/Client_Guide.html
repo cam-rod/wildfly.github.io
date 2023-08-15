@@ -522,8 +522,8 @@ table.CodeRay td.code>pre{padding:0}
 <div id="header">
 <h1>WildFly Client Configuration</h1>
 <div class="details">
-<span id="revnumber">version 26.0.0.Final,</span>
-<span id="revdate">2021-12-14T21:55:34Z</span>
+<span id="revnumber">version 26.1.0.Final,</span>
+<span id="revdate">2022-04-06T15:37:55Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Client Configuration Guide</div>
@@ -1025,6 +1025,61 @@ table.CodeRay td.code>pre{padding:0}
 <p>Matches the abstract type and/or authority against the values specified within this match element.</p>
 </dd>
 </dl>
+</div>
+<div class="sect4">
+<h5 id="elytron-client-default-ssl-context-security-provider">Elytron client default SSL context security provider</h5>
+<div class="paragraph">
+<p>Elytron client provides a java security provider which can be used to register a JVM wide default <code>SSLContext</code>. The provider can instantiate an <code>SSLContext</code> from an Elytron client configuration file. This <code>SSLContext</code> will then be the one returned when <code>SSLContext.getDefault()</code> is called. When this provider is registered then all client libraries that use <code>SSLContext.getDefault()</code> will use the Elytron client configuration without having to use Elytron client APIs in their code.</p>
+</div>
+<div class="paragraph">
+<p>To register this <code>org.wildfly.security.auth.client.WildFlyElytronClientDefaultSSLContextProvider</code> provider, a runtime dependency on <code>wildfly-elytron-client</code> and <code>wildfly-client-config</code> is needed. Then it can be registered the usual way, either statically or dynamically.</p>
+</div>
+<div class="paragraph">
+<p>The provider loads the SSL context from either the current authentication context obtained from the classpath, or from the authentication context obtained from the file whose path is passed into the security provider either programmatically or as an argument in the <code>java.security</code> file. Any arguments passed to the provider directly have precedence over the authentication context from the classpath.</p>
+</div>
+<div class="paragraph">
+<p>As an example, the SSL context configured to match all rules is the one that will be initialized and returned by this provider:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;rule</span> <span class="attribute-name">use-ssl-context</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">ssl-context-for-client-provider</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>myAuthenticationContext.withSsl(MatchRule.ALL, myDefaultSslContext);</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To register the provider programmatically and specify the path to an Elytron client configuration file, the following code can be used:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="predefined-type">Security</span>.insertProviderAt(<span class="keyword">new</span> WildFlyElytronClientDefaultSSLContextProvider(CONFIG_FILE_PATH), <span class="integer">1</span>);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, the provider can be registered in the <code>java.security</code> file and the path to an Elytron client configuration file can be optionally specified as shown below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="bash">security.provider.1=org.wildfly.security.auth.client.WildFlyElytronClientDefaultSSLContextProvider CONFIG_FILE_PATH</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When you have a default SSL context configured and you register this provider with high enough priority, you can make use of it by calling:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>SSLContext.getDefault();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If no default SSL context is configured or there is no configuration present, the provider will be ignored.</p>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -2098,8 +2153,8 @@ References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta En
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 26.0.0.Final<br>
-Last updated 2021-09-13 17:18:55 CDT
+Version 26.1.0.Final<br>
+Last updated 2022-03-23 10:53:34 GMT
 </div>
 </div>
 </body>

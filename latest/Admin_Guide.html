@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>WildFly Admin Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly developer team</span><br>
-<span id="revnumber">version 26.0.0.Final,</span>
-<span id="revdate">2021-12-14T21:55:34Z</span>
+<span id="revnumber">version 26.1.0.Final,</span>
+<span id="revdate">2022-04-06T15:37:55Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Admin guide</div>
@@ -626,6 +626,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#Canceling_Management_Operations">9.6. Canceling Management Operations</a></li>
 <li><a href="#Configuration_file_history">9.7. Configuration file history</a></li>
 <li><a href="#Configuration_file_git_history">9.8. Git Configuration file history</a></li>
+<li><a href="#YAML_Configuration_file">9.9. (YAML) Configuration file (Experimental))</a></li>
 </ul>
 </li>
 <li><a href="#Management_API_reference">10. Management API reference</a>
@@ -1445,7 +1446,7 @@ invoked via the HTTP API, the JSON representation of a <code>ModelNode</code>.)<
 </div>
 <div class="paragraph">
 <p>Every resource except the root resource will have an <code>add</code> operation and
-should have a <code>remove</code> operation ("should" because in WildFly 26 many do
+should have a <code>remove</code> operation ("should" because in WildFly 26.1 many do
 not). The parameters for the <code>add</code> operation vary depending on the
 resource. The <code>remove</code> operation has no parameters.</p>
 </div>
@@ -7968,7 +7969,7 @@ you installed.</p>
 <div class="sect3">
 <h4 id="jdbc-driver-installation"><a class="link" href="#jdbc-driver-installation">7.3.1. JDBC Driver Installation</a></h4>
 <div class="paragraph">
-<p>The recommended way to install a JDBC driver into WildFly 26 is to deploy
+<p>The recommended way to install a JDBC driver into WildFly 26.1 is to deploy
 it as a regular JAR deployment. The reason for this is that when you run
 WildFly in domain mode, deployments are automatically propagated to all
 servers to which the deployment applies; thus distribution of the driver
@@ -11898,7 +11899,7 @@ the command line.</p>
 <div class="sect3">
 <h4 id="deployment-of--jms.xml-files"><a class="link" href="#deployment-of--jms.xml-files">7.8.9. Deployment of -jms.xml files</a></h4>
 <div class="paragraph">
-<p>Starting with WildFly 26, you have the ability to deploy a -jms.xml file
+<p>Starting with WildFly 26.1, you have the ability to deploy a -jms.xml file
 defining Jakarta Messaging destinations, e.g.:</p>
 </div>
 <div class="listingblock">
@@ -12523,7 +12524,7 @@ connect to a legacy app server (running HornetQ)</p>
 </li>
 <li>
 <p>forward compatibility: legacy messaging clients (using HornetQ) can connect
-to a WildFly 26 app server (running Artemis).</p>
+to a WildFly 26.1 app server (running Artemis).</p>
 </li>
 </ul>
 </div>
@@ -12576,7 +12577,7 @@ providing a <code>legacy-entries</code> attribute to the <code>jms-queue</code> 
 </div>
 <div class="paragraph">
 <p>The <code>legacy-entries</code> must be used by legacy clients (using HornetQ)
-while the regular <code>entries</code> are for WildFly 26 Jakarta Messaging clients (using
+while the regular <code>entries</code> are for WildFly 26.1 Jakarta Messaging clients (using
 Artemis).</p>
 </div>
 <div class="paragraph">
@@ -12598,7 +12599,7 @@ in the legacy <code>messaging</code> subsystem and the regular entries will be
 created with a <code>-new</code> suffix.<br>
 If <code>add-legacy-entries</code> is set to <code>false</code> during migration, no legacy
 resources will be created in the <code>messaging-activemq</code> subsystem and
-legacy messaging clients will not be able to communicate with WildFly 26
+legacy messaging clients will not be able to communicate with WildFly 26.1
 servers.</p>
 </div>
 </div>
@@ -12608,7 +12609,7 @@ servers.</p>
 <div class="paragraph">
 <p>Backward compatibility requires no configuration change in the legacy
 server.<br>
-WildFly 26 clients do not look up resources on the legacy server but
+WildFly 26.1 clients do not look up resources on the legacy server but
 use client-side JNDI to create their Jakarta Messaging resources. WildFly&#8217;s Artemis client
 can then use these resources to communicate with the legacy server
 using the HornetQ CORE protocol.</p>
@@ -12619,7 +12620,7 @@ using the HornetQ CORE protocol.</p>
 JNDI</a> to create Jakarta Messaging resources ( <code>ConnectionFactory</code> and <code>Destination</code>).</p>
 </div>
 <div class="paragraph">
-<p>For example, if a WildFly 26 messaging client wants to communicate with a
+<p>For example, if a WildFly 26.1 messaging client wants to communicate with a
 legacy server using a queue named <code>myQueue</code>, it must use the
 following properties to configure its JNDI <code>InitialContext</code>:</p>
 </div>
@@ -14102,7 +14103,7 @@ a property and the file content is the value of the property.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:wildfly:microprofile-config-smallrye:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:wildfly:microprofile-config-smallrye:2.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
     <span class="tag">&lt;config-source</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">file-props</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
         <span class="tag">&lt;dir</span> <span class="attribute-name">path</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/etc/config/numbers-app</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
     <span class="tag">&lt;/config-source&gt;</span>
@@ -14149,6 +14150,99 @@ The <code>dir</code> value corresponds to the <code>mountPath</code> in the Conf
 </tr>
 </table>
 </div>
+<div class="sect5">
+<h6 id="configsources-from-root-directory"><a class="link" href="#configsources-from-root-directory">ConfigSources from Root directory</a></h6>
+<div class="paragraph">
+<p>You can also point to a root directory by adjusting the examples in the preceding section to include
+<code>root=true</code> when defining them. Top level directories within this root directory each become an
+individual <code>ConfigSource</code> reading from a directory similar to what we saw earlier in
+<a href="#configsource-from-directory">ConfigSource from Directory</a>. Any directories below the top-level
+directories are ignored. Also, any files in the root directory are ignored; only files in the top
+level directories within the root directory will be used for the configuration.</p>
+</div>
+<div class="paragraph">
+<p>This is especially useful when running on OpenShift where constructs such as <code>ConfigMap</code> and
+<code>ServiceBinding</code> instances get mapped under
+a common known location. For example if there are two <code>ConfigMap</code> instances (for this example,
+we will call them <code>map-a</code>, and <code>map-b</code>) used by your application pod, they will
+each get mapped under <code>/etc/config</code>. So you would have <code>/etc/config/map-a</code> and <code>/etc/config/map-b</code>
+directories.</p>
+</div>
+<div class="paragraph">
+<p>Each of these directories will have files where the file name is the name of the property and the file
+content is the value of the property, like we saw earlier.</p>
+</div>
+<div class="paragraph">
+<p>We can thus simply run the following CLI command to pick up all these child directories as
+a <code>ConfigSource</code> each:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=microprofile-config-smallrye/config-source=config-map-root:add(dir={path=/etc/config, root=true})</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This results in the XML configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:wildfly:microprofile-config-smallrye:2.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;config-source</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">config-map-root</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;dir</span> <span class="attribute-name">path</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/etc/config</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">root</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/config-source&gt;</span>
+<span class="tag">&lt;/subsystem&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Assuming the <code>/etc/config</code> directory contains the <code>map-a</code> and <code>map-b</code> directories we are using
+for this example, the above is analogous to doing:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>/subsystem=microprofile-config-smallrye/config-source=file-props:add(dir={path=/etc/config/map-a})
+/subsystem=microprofile-config-smallrye/config-source=file-props:add(dir={path=/etc/config/map-b})</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Specifying the root directory rather than each individual directory removes the need to know the
+exact names of each entry under the common parent directory (this is especially useful in some
+OpenShift scenarios where the names of these directories are auto-generated).</p>
+</div>
+<div class="paragraph">
+<p>The situation where two <code>ConfigSource</code> entries under the same root both contain the same property
+should be avoided. However, to make this situation deterministic, the directories representing each
+<code>ConfigSource</code> are sorted by their name according to standard Java sorting rules before doing the
+lookup of values. To make this more concrete, if we have the following entries:
+* <code>/etc/config/map-a/name</code> contains <code>kabir</code>
+* <code>/etc/config/map-b/name</code> contains <code>jeff</code></p>
+</div>
+<div class="paragraph">
+<p>Since <code>map-a</code> will come before <code>map-b</code> after sorting, in the following scenario <code>kabir</code> (coming from
+<code>map-a</code>) will be injected for the following <code>username</code> field:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="annotation">@Inject</span>
+<span class="annotation">@ConfigProperty</span>(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>)
+<span class="predefined-type">String</span> username;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You may override this default sorting by including a file called <code>config_ordinal</code> in a directory. The
+ordinal specified in that file will be used for config values coming from that directory. Building
+on our previous example, if we had:
+* <code>/etc/config/map-a/config_ordinal</code> contains <code>120</code>
+* <code>/etc/config/map-b/config_ordinal</code> contains <code>140</code></p>
+</div>
+<div class="paragraph">
+<p>Since now <code>map-b</code> has a higher ordinal (<code>140</code>) than <code>map-a</code> (<code>120</code>), we will instead inject the value
+<code>jeff</code> for the earlier <code>username</code> field.</p>
+</div>
+<div class="paragraph">
+<p>If there is no <code>config_ordinal</code> file in a top-level directory under the root directory, the
+ordinal used when specifying the <code>ConfigSource</code> will be used for that directory.</p>
+</div>
+</div>
 </div>
 <div class="sect4">
 <h5 id="configsource-from-class"><a class="link" href="#configsource-from-class">ConfigSource from Class</a></h5>
@@ -14170,7 +14264,7 @@ that is named <code>org.example.MyConfigSource</code> and provided by a JBoss mo
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:wildfly:microprofile-config-smallrye:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:wildfly:microprofile-config-smallrye:2.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
     <span class="tag">&lt;config-source</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">my-config-source</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
         <span class="tag">&lt;class</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.example.MyConfigSource</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">module</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.example</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
     <span class="tag">&lt;/config-source&gt;</span>
@@ -14201,7 +14295,7 @@ that is named <code>org.example.MyConfigSourceProvider</code> and provided by a 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:wildfly:microprofile-config-smallrye:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:wildfly:microprofile-config-smallrye:2.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
     <span class="tag">&lt;config-source-provider</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">my-config-source-provider</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
          <span class="tag">&lt;class</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.example.MyConfigSourceProvider</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">module</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.example</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
     <span class="tag">&lt;/config-source-provider&gt;</span>
@@ -16401,6 +16495,28 @@ it from a different WildFly instance.</p>
 </li>
 </ul>
 </div>
+<div class="sect4">
+<h5 id="handling-large-job-repositories"><a class="link" href="#handling-large-job-repositories">Handling Large Job Repositories</a></h5>
+<div class="paragraph">
+<p>In some cases, when a job repository accumulates a large number of job
+execution records (say hundreds of thousands), application deployment times may
+be negatively impacted. This is relevant mainly to persistent job repository
+implementations, like the jdbc job repository.</p>
+</div>
+<div class="paragraph">
+<p>In order to avoid accumulating too high a number of job execution records, the
+application can delete old executions via
+<code>JobOperator.abandon(long executionId)</code>, or other means like pruning the
+database tables can be employed.</p>
+</div>
+<div class="paragraph">
+<p>If it&#8217;s no possible to avoid storing large number of job execution records,
+the job repositories can be configured to limit the number of job executions
+that is returned by them by setting the <code>execution-records-limit</code> attribute.
+If the attribute is set, Wildfly will only load specified maximum number of
+job executions from the backing storage mechanism.</p>
+</div>
+</div>
 </div>
 <div class="sect3">
 <h4 id="deployment-descriptors"><a class="link" href="#deployment-descriptors">7.24.4. Deployment Descriptors</a></h4>
@@ -17731,6 +17847,70 @@ For WildFly 25, the <em>elytron-oidc-client</em> subsystem has been tested with 
 Other OpenID providers haven&#8217;t been extensively tested yet so the use of other OpenID providers should
 be considered experimental for now and should not be used in a production environment yet. Proper support
 for other OpenID providers will be added in a future WildFly release.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="multi-tenancy-support"><a class="link" href="#multi-tenancy-support">7.29.5. Multi-Tenancy Support</a></h4>
+<div class="paragraph">
+<p>In some cases, it might be desirable to secure an application using multiple <code>oidc.json</code> configuration files.
+For example, you might want a different <code>oidc.json</code> file to be used depending on the request in order to authenticate
+users from multiple Keycloak realms. The <em>elytron-oidc-client</em> subsystem makes it possible to use a custom configuration
+resolver so you can define which configuration file to use for each request.</p>
+</div>
+<div class="paragraph">
+<p>To make use of the multi-tenancy feature, you need to create a class that implements the
+<code>org.wildfly.security.http.oidc.OidcClientConfigurationResolver</code> interface, as shown in the example below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">example</span>;
+
+<span class="keyword">import</span> <span class="include">java.io.InputStream</span>;
+<span class="keyword">import</span> <span class="include">java.util.HashMap</span>;
+<span class="keyword">import</span> <span class="include">java.util.Map</span>;
+<span class="keyword">import</span> <span class="include">java.util.concurrent.ConcurrentHashMap</span>;
+
+<span class="keyword">import</span> <span class="include">org.wildfly.security.http.oidc.OidcClientConfiguration</span>;
+<span class="keyword">import</span> <span class="include">org.wildfly.security.http.oidc.OidcClientConfigurationBuilder</span>;
+<span class="keyword">import</span> <span class="include">org.wildfly.security.http.oidc.OidcClientConfigurationResolver</span>;
+<span class="keyword">import</span> <span class="include">org.wildfly.security.http.oidc.OidcHttpFacade</span>;
+
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MyCustomConfigResolver</span> <span class="directive">implements</span> OidcClientConfigurationResolver {
+
+    <span class="directive">private</span> <span class="directive">final</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, OidcClientConfiguration&gt; cache = <span class="keyword">new</span> <span class="predefined-type">ConcurrentHashMap</span>&lt;&gt;();
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> OidcClientConfiguration resolve(OidcHttpFacade.Request request) {
+        <span class="predefined-type">String</span> path = request.getURI();
+        <span class="predefined-type">String</span> realm = ... <span class="comment">// determine which Keycloak realm to use based on the request path</span>
+        OidcClientConfiguration clientConfiguration = cache.get(realm);
+        <span class="keyword">if</span> (clientConfiguration == <span class="predefined-constant">null</span>) {
+            <span class="predefined-type">InputStream</span> is = getClass().getResourceAsStream(<span class="string"><span class="delimiter">&quot;</span><span class="content">/oidc-</span><span class="delimiter">&quot;</span></span> + realm + <span class="string"><span class="delimiter">&quot;</span><span class="content">.json</span><span class="delimiter">&quot;</span></span>); <span class="comment">// config to use based on the realm</span>
+            clientConfiguration = OidcClientConfigurationBuilder.build(is);
+            cache.put(realm, clientConfiguration);
+        }
+        <span class="keyword">return</span> clientConfiguration;
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once you&#8217;ve created your <code>OidcClientConfigurationResolver `, you can specify that you want to make
+use of your custom configuration resolver by setting the `oidc.config.resolver</code> <code>context-param</code> in
+your application&#8217;s <code>web.xml</code> file, as shown in the example below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;web-app&gt;</span>
+    ...
+    <span class="tag">&lt;context-param&gt;</span>
+        <span class="tag">&lt;param-name&gt;</span>oidc.config.resolver<span class="tag">&lt;/param-name&gt;</span>
+        <span class="tag">&lt;param-value&gt;</span>example.MyCustomConfigResolver<span class="tag">&lt;/param-value&gt;</span>
+    <span class="tag">&lt;/context-param&gt;</span>
+    ...
+<span class="tag">&lt;/web-app&gt;</span></code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -21213,6 +21393,143 @@ stored in a credential store.</p>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="YAML_Configuration_file"><a class="link" href="#YAML_Configuration_file">9.9. (YAML) Configuration file (Experimental))</a></h3>
+<div class="paragraph">
+<p>In order to provide some way to separate customization from the configuration provisionned by Galleon we want to <strong>experiment</strong> with a new feature where this customization is provided by YAML files.
+Because this feature is <strong>EXPERIMENTAL</strong> we are disabling it by default and you can <strong>NOT</strong> rely on it being present or compatible in the future releases.</p>
+</div>
+<div class="sect3">
+<h4 id="activate_yaml_feature"><a class="link" href="#activate_yaml_feature">9.9.1. Active the YAML support feature</a></h4>
+<div class="paragraph">
+<p>To enable that feature you need to add a ServiceLoader configuration in the <code>org.jboss.as.controller</code> module.
+You need to create the following file: <code>META-INF/services/org.jboss.as.controller.persistence.ConfigurationExtension</code> containing a single line <strong>org.jboss.as.controller.persistence.yaml.YamlConfigurationExtension</strong> in the dir folder of the <code>org.jboss.as.controller</code> module.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>mkdir -p $WILDFLY_HOME/modules/system/layers/base/org/jboss/as/controller/main/dir/META-INF/services/
+echo 'org.jboss.as.controller.persistence.yaml.YamlConfigurationExtension' &gt; $WILDFLY_HOME/modules/system/layers/base/org/jboss/as/controller/main/dir/META-INF/services/org.jboss.as.controller.persistence.ConfigurationExtension</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="starting_with_yaml_files"><a class="link" href="#starting_with_yaml_files">9.9.2. Starting with YAML files</a></h4>
+<div class="paragraph">
+<p>Using the <code>--yaml</code> or <code>-y</code> argument you can pass a list of YAML files. Each path needs to be separated by the <code>File.pathSeparator</code>.  It is a semicolon (;) on Windows and colon (:) on Mac and Unix-based operating systems.
+Paths can be absolute, relative to the current execution directory or relative to the standalone configuration directory.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>./standalone.sh -y=/home/ehsavoie/dev/wildfly/config2.yml:config.yml -c standalone-full.xml</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="what_is_in_yaml"><a class="link" href="#what_is_in_yaml">9.9.3. What is in the YAML</a></h4>
+<div class="paragraph">
+<p>The YAML root node must be <strong>wildfly-configuration</strong>, then you can follow the model tree to add or update resources.</p>
+</div>
+<div class="paragraph">
+<p>Sample YAML file to define a new PostGresql datasource:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>wildfly-configuration:
+  subsystem:
+    datasources:
+      jdbc-driver:
+        postgresql:
+          driver-name: postgresql
+          driver-xa-datasource-class-name: org.postgresql.xa.PGXADataSource
+          driver-module-name: org.postgresql.jdbc
+      data-source:
+        PostgreSQLDS:
+          enabled: true
+          exception-sorter-class-name: org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLExceptionSorter
+          jndi-name: java:jboss/datasources/PostgreSQLDS
+          jta: true
+          max-pool-size: 20
+          min-pool-size: 0
+          connection-url: "jdbc:postgresql://localhost:5432}/demo"
+          driver-name: postgresql
+          user-name: postgres
+          password: postgres
+          validate-on-match: true
+          background-validation: false
+          background-validation-millis: 10000
+          flush-strategy: FailingConnectionOnly
+          statistics-enable: false
+          stale-connection-checker-class-name: org.jboss.jca.adapters.jdbc.extensions.novendor.NullStaleConnectionChecker
+          valid-connection-checker-class-name: org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLValidConnectionChecker
+          transaction-isolation: TRANSACTION_READ_COMMITTED</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We also provide three operations using tags:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>!undefine</strong>: to undefine an attribute</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Sample YAML file to undefine the CONSOLE logger level:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>wildfly-configuration:
+    subsystem:
+        logging:
+          console-handler:
+            CONSOLE:
+              level: !undefine</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>!remove</strong>: to remove the resource</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Sample YAML file to remove the MicroProfile Smallrye JWT subsystem:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>wildfly-configuration:
+    subsystem:
+        microprofile-jwt-smallrye: !remove</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>!list-add</strong>: to add an element to a list (with an optionnal index).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Sample YAML file to add a RemoteTransactionPermission to the permissions list at the position 0:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>wildfly-configuration:
+    subsystem:
+        elytron:
+          permission-set:
+           default-permissions:
+             permissions: !list-add
+              - class-name: org.wildfly.transaction.client.RemoteTransactionPermission
+                module: org.wildfly.transaction.client
+                target-name: "*"
+                index: 0</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -23949,7 +24266,7 @@ to the process it was managing and release other resources:</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-request"><a class="link" href="#format-of-a-detyped-operation-request">10.5.3. Format of a Detyped Operation Request</a></h4>
 <div class="paragraph">
-<p>The basic method a user of the WildFly 26 programmatic management API
+<p>The basic method a user of the WildFly 26.1 programmatic management API
 would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -24469,7 +24786,7 @@ header just like this :</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-response"><a class="link" href="#format-of-a-detyped-operation-response">10.5.4. Format of a Detyped Operation Response</a></h4>
 <div class="paragraph">
-<p>As noted previously, the basic method a user of the WildFly 26
+<p>As noted previously, the basic method a user of the WildFly 26.1
 programmatic management API would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -25375,7 +25692,7 @@ script (e.g. 'bin/jboss-admin.bat --connect command=:shutdown').</p>
 <div class="paragraph">
 <p>To avoid "Press any key to continue &#8230;&#8203;" message you need to specify
 NOPAUSE variable. Call 'set NOPAUSE=true' in command line before running
-any WildFly 26 .bat script or include it in your custom script before
+any WildFly 26.1 .bat script or include it in your custom script before
 invoking scripts from WildFly.</p>
 </div>
 </div>
@@ -25936,8 +26253,8 @@ Thanks to the <em>config=&lt;config name&gt;</em> system property, the script ca
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 26.0.0.Final<br>
-Last updated 2021-10-15 17:05:18 CDT
+Version 26.1.0.Final<br>
+Last updated 2022-03-23 10:53:34 GMT
 </div>
 </div>
 </body>
