@@ -522,8 +522,8 @@ table.CodeRay td.code>pre{padding:0}
 <div id="header">
 <h1>WildFly Elytron Security</h1>
 <div class="details">
-<span id="revnumber">version 14.0.0.Final,</span>
-<span id="revdate">2018-08-30T23:10:31Z</span>
+<span id="revnumber">version 15.0.0.Final,</span>
+<span id="revdate">2018-11-30T23:13:08Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Elytron Security Guide</div>
@@ -589,48 +589,65 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#enabling-jacc-to-a-ejb-deployment">7.4. Enabling JACC to a EJB Deployment</a></li>
 </ul>
 </li>
-<li><a href="#KeyCloak_Integration">8. Using KeyCloak with WildFly Elytron</a></li>
-<li><a href="#Bearer_Token_Authorization">9. Bearer Token Authorization</a>
+<li><a href="#Elytron_and_Java_Authentication_SPI_for_Containers-JASPI">9. Elytron and Java Authentication SPI for Containers (JASPI)</a>
+<ul class="sectlevel1">
+<li><a href="#introduction">8. Introduction</a>
 <ul class="sectlevel2">
-<li><a href="#how-it-works">9.1. How it Works</a></li>
-<li><a href="#validating-jwt-tokens">9.2. Validating JWT Tokens</a></li>
-<li><a href="#validating-oauth2-bearer-tokens">9.3. Validating OAuth2 Bearer Tokens</a></li>
-<li><a href="#quickstarts">9.4. Quickstarts</a></li>
-<li><a href="#cli-examples-on-how-to-create-a-token-realm">9.5. CLI Examples on How to Create a Token Realm</a></li>
+<li><a href="#activation">8.1. Activation</a></li>
+<li><a href="#subsystem-configuration">8.2. Subsystem Configuration</a></li>
+<li><a href="#programatic-configuration">8.3. Programatic Configuration</a></li>
+<li><a href="#authentication-process">8.4. Authentication Process</a></li>
 </ul>
 </li>
-<li><a href="#OpenSSL">10. OpenSSL</a></li>
-<li><a href="#Web_Single_Sign_On">11. Web Single Sign-On</a>
-<ul class="sectlevel2">
-<li><a href="#create-a-server-configuration-template">11.1. Create a Server Configuration Template</a></li>
-<li><a href="#create-two-server-instances">11.2. Create Two Server Instances</a></li>
-<li><a href="#deploy-an-application">11.3. Deploy an Application</a></li>
 </ul>
 </li>
-<li><a href="#Custom_Components">12. Custom Components</a>
+<li><a href="#KeyCloak_Integration">10. Using KeyCloak with WildFly Elytron</a></li>
+<li><a href="#Bearer_Token_Authorization">11. Bearer Token Authorization</a>
 <ul class="sectlevel2">
-<li><a href="#security-event-listener">12.1. Security event listener</a></li>
-<li><a href="#configurable-custom-components">12.2. Configurable custom components</a></li>
+<li><a href="#how-it-works">11.1. How it Works</a></li>
+<li><a href="#validating-jwt-tokens">11.2. Validating JWT Tokens</a></li>
+<li><a href="#validating-oauth2-bearer-tokens">11.3. Validating OAuth2 Bearer Tokens</a></li>
+<li><a href="#quickstarts">11.4. Quickstarts</a></li>
+<li><a href="#cli-examples-on-how-to-create-a-token-realm">11.5. CLI Examples on How to Create a Token Realm</a></li>
 </ul>
 </li>
-<li><a href="#Migrate_Legacy_Security_to_Elytron_Security">13. Migrate Legacy Security to Elytron Security</a>
+<li><a href="#OpenSSL">12. OpenSSL</a></li>
+<li><a href="#Web_Single_Sign_On">13. Web Single Sign-On</a>
 <ul class="sectlevel2">
-<li><a href="#authentication-configuration">13.1. Authentication Configuration</a></li>
-<li><a href="#Properties_File_Based_Authentication_Migration">13.2. Properties Based Authentication / Authorization</a></li>
-<li><a href="#LDAP_Based_Authentication_Migration">13.3. LDAP Authentication Migration</a></li>
-<li><a href="#Composite_Stores_Migration">13.4. Composite Stores Migration</a></li>
-<li><a href="#Database_Authentication_Migration">13.5. Database Authentication</a></li>
-<li><a href="#Kerberos_Based_Authentication_Migration">13.6. Kerberos Authentication Migration</a></li>
-<li><a href="#Caching_Migration">13.7. Caching Migration</a></li>
-<li><a href="#clients">13.8. Clients</a></li>
-<li><a href="#Application_Client_Migration">13.9. Application Client Migration</a></li>
-<li><a href="#general-utilities">13.10. General Utilities</a></li>
-<li><a href="#Security_Vault_Migration">13.11. Security Vault Migration</a></li>
-<li><a href="#Security_Property_Migration">13.12. Security Properties</a></li>
-<li><a href="#ssl-migration">13.13. SSL Migration</a></li>
-<li><a href="#Simple_SSL_Migration">13.14. Simple SSL Migration</a></li>
-<li><a href="#SSL_with_Client_Cert_Migration">13.15. SSL with Client Cert Migration</a></li>
-<li><a href="#documentation-still-needed">13.16. Documentation Still Needed</a></li>
+<li><a href="#create-a-server-configuration-template">13.1. Create a Server Configuration Template</a></li>
+<li><a href="#create-two-server-instances">13.2. Create Two Server Instances</a></li>
+<li><a href="#deploy-an-application">13.3. Deploy an Application</a></li>
+</ul>
+</li>
+<li><a href="#Audit">14. Audit</a>
+<ul class="sectlevel2">
+<li><a href="#file-audit-log">14.1. File audit log</a></li>
+</ul>
+</li>
+<li><a href="#Custom_Components">15. Custom Components</a>
+<ul class="sectlevel2">
+<li><a href="#security-event-listener">15.1. Security event listener</a></li>
+<li><a href="#configurable-custom-components">15.2. Configurable custom components</a></li>
+</ul>
+</li>
+<li><a href="#Migrate_Legacy_Security_to_Elytron_Security">16. Migrate Legacy Security to Elytron Security</a>
+<ul class="sectlevel2">
+<li><a href="#authentication-configuration">16.1. Authentication Configuration</a></li>
+<li><a href="#Properties_File_Based_Authentication_Migration">16.2. Properties Based Authentication / Authorization</a></li>
+<li><a href="#LDAP_Based_Authentication_Migration">16.3. LDAP Authentication Migration</a></li>
+<li><a href="#Composite_Stores_Migration">16.4. Composite Stores Migration</a></li>
+<li><a href="#Database_Authentication_Migration">16.5. Database Authentication</a></li>
+<li><a href="#Kerberos_Based_Authentication_Migration">16.6. Kerberos Authentication Migration</a></li>
+<li><a href="#Caching_Migration">16.7. Caching Migration</a></li>
+<li><a href="#clients">16.8. Clients</a></li>
+<li><a href="#Application_Client_Migration">16.9. Application Client Migration</a></li>
+<li><a href="#general-utilities">16.10. General Utilities</a></li>
+<li><a href="#Security_Vault_Migration">16.11. Security Vault Migration</a></li>
+<li><a href="#Security_Property_Migration">16.12. Security Properties</a></li>
+<li><a href="#ssl-migration">16.13. SSL Migration</a></li>
+<li><a href="#Simple_SSL_Migration">16.14. Simple SSL Migration</a></li>
+<li><a href="#SSL_with_Client_Cert_Migration">16.15. SSL with Client Cert Migration</a></li>
+<li><a href="#documentation-still-needed">16.16. Documentation Still Needed</a></li>
 </ul>
 </li>
 </ul>
@@ -2662,9 +2679,9 @@ management CLI.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="ruby"><span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=elytron</span><span class="delimiter">/</span></span>filesystem-realm=exampleFsRealm/identity=<span class="key">user1</span>:add()
-<span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=elytron</span><span class="delimiter">/</span></span>filesystem-realm=exampleFsRealm/identity=<span class="key">user1</span>:set-password( clear={password=<span class="string"><span class="delimiter">&quot;</span><span class="content">password123</span><span class="delimiter">&quot;</span></span>})
-<span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=elytron</span><span class="delimiter">/</span></span>filesystem-realm=exampleFsRealm/identity=<span class="key">user1</span>:add-attribute(name=<span class="constant">Roles</span>, value=[<span class="string"><span class="delimiter">&quot;</span><span class="content">Admin</span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="content">Guest</span><span class="delimiter">&quot;</span></span>])</code></pre>
+<pre class="CodeRay highlight"><code data-lang="ruby"><span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=elytron</span><span class="delimiter">/</span></span>filesystem-realm=<span class="key">exampleFsRealm</span>:add-identity(identity=user1)
+<span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=elytron</span><span class="delimiter">/</span></span>filesystem-realm=<span class="key">exampleFsRealm</span>:set-password(clear={password=<span class="string"><span class="delimiter">&quot;</span><span class="content">password123</span><span class="delimiter">&quot;</span></span>}, identity=user1)
+<span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=elytron</span><span class="delimiter">/</span></span>filesystem-realm=<span class="key">exampleFsRealm</span>:add-identity-attribute(identity=user1, name=<span class="constant">Roles</span>, value=[<span class="string"><span class="delimiter">&quot;</span><span class="content">Admin</span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="content">Guest</span><span class="delimiter">&quot;</span></span>])</code></pre>
 </div>
 </div>
 </div>
@@ -3440,7 +3457,7 @@ application&#8217;s <em>jboss-web.xml</em> and attempt to authenticate a user us
 <h5 id="create-credential-store.">Create credential store.</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="ruby"><span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=elytron</span><span class="delimiter">/</span></span>credential-store=<span class="key">exampleCS</span>:add(uri=<span class="string"><span class="delimiter">&quot;</span><span class="content">cr-store://exampleCS?create=true</span><span class="delimiter">&quot;</span></span>,credential-reference={clear-text=cs-secret})</code></pre>
+<pre class="CodeRay highlight"><code data-lang="ruby"><span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=elytron</span><span class="delimiter">/</span></span>credential-store=<span class="key">exampleCS</span>:add(relative-to=jboss.server.data.dir, location=example.jceks,create=<span class="predefined-constant">true</span>,credential-reference={clear-text=cs-secret})</code></pre>
 </div>
 </div>
 </div>
@@ -3448,7 +3465,7 @@ application&#8217;s <em>jboss-web.xml</em> and attempt to authenticate a user us
 <h5 id="add-a-credential-to-a-credential-store.">Add a credential to a credential store.</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="ruby"><span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=elytron</span><span class="delimiter">/</span></span>credential-store=exampleCS/<span class="keyword">alias</span>=<span class="key">keystorepw</span>:add(secret-value=<span class="string"><span class="delimiter">&quot;</span><span class="content">secret</span><span class="delimiter">&quot;</span></span>)</code></pre>
+<pre class="CodeRay highlight"><code data-lang="ruby"><span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=elytron</span><span class="delimiter">/</span></span>credential-store=<span class="key">exampleCS</span>:add-<span class="keyword">alias</span>(<span class="keyword">alias</span>=keystorepw,secret-value=secret)</code></pre>
 </div>
 </div>
 </div>
@@ -3456,7 +3473,7 @@ application&#8217;s <em>jboss-web.xml</em> and attempt to authenticate a user us
 <h5 id="list-all-credentials-in-a-credential-store.">List all credentials in a credential store.</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="ruby"><span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=elytron</span><span class="delimiter">/</span></span>credential-store=<span class="key">exampleCS</span>:read-children-names(child-type=<span class="keyword">alias</span>)
+<pre class="CodeRay highlight"><code data-lang="ruby"><span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=elytron</span><span class="delimiter">/</span></span>credential-store=<span class="key">exampleCS</span>:read-aliases()
 {
     <span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>,
     <span class="string"><span class="delimiter">&quot;</span><span class="content">result</span><span class="delimiter">&quot;</span></span> =&gt; [<span class="string"><span class="delimiter">&quot;</span><span class="content">keystorepw</span><span class="delimiter">&quot;</span></span>]
@@ -3468,7 +3485,7 @@ application&#8217;s <em>jboss-web.xml</em> and attempt to authenticate a user us
 <h5 id="remove-a-credential-from-a-credential-store.">Remove a credential from a credential store.</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="ruby"><span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=elytron</span><span class="delimiter">/</span></span>credential-store=exampleCS/<span class="keyword">alias</span>=<span class="key">keystorepw</span>:remove</code></pre>
+<pre class="CodeRay highlight"><code data-lang="ruby"><span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=elytron</span><span class="delimiter">/</span></span>credential-store=<span class="key">exampleCS</span>:remove-<span class="keyword">alias</span>(<span class="keyword">alias</span>=keystorepw)</code></pre>
 </div>
 </div>
 </div>
@@ -4805,6 +4822,93 @@ use custom implementations of the following components:</p>
 present the appropriate capabilities and requirements.</p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="default-sslcontext">4.3.14. Default SSLContext</h4>
+<div class="paragraph">
+<p>Many libraries that can be used within deployments may require SSL configuration for any connections they establish, these libraries tend to be configurable by the caller or if no configuration is provided fall back to using the default <code>SSLContext</code> for the process available from: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">javax.net.ssl.SSLContext.getDefault();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By default this <code>SSLContext</code> is configured using system properties, however within the WildFly Elytron subsystem it is possible to specify that one of the configured contexts should be associated and used as the default.</p>
+</div>
+<div class="paragraph">
+<p>To make use of this feature configure your <code>SSLContext</code> as normal, the following command can then be used to specify which <code>SSLContext</code> should be used as the default.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby"><span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=elytron:write-attribute(name=default-ssl-context, value=client-context)</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As existing services and deployments could have cached the default <code>SSLContext</code> prior to this being set a reload is required to ensure the default gets set before the deployments are activated.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby"><span class="symbol">:reload</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Note:</strong> If the <code>default-ssl-context</code> attribute is subsequently 'undefined' the standard APIs do not provide us with a mechanism to revert the default so in this situation the Java process would need be restarted.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby"><span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=elytron:undefine-attribute(name=default-ssl-context)
+{
+    &quot;outcome&quot; =&gt; &quot;success&quot;,
+    &quot;response-headers&quot; =&gt; {
+        &quot;operation-requires-restart&quot; =&gt; true,
+        &quot;process-state&quot; =&gt; &quot;restart-required&quot;
+    }
+}</span></span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="configuring-sni">4.3.15. Configuring SNI</h4>
+<div class="paragraph">
+<p>Using the WildFly Elytron subsystem it is possible to configure an SSL context which supports SNI.  By supporting SNI if an SNI host name is available whilst the SSLSession is being negotiated a host specific SSLContext will be selected.  If no host specific SSLContext is identified either because no host name was received or because there is no match a default SSLContext will be used instead.  By identifying a host specific SSLContext it means that a certificate appropriate for that host can be used.</p>
+</div>
+<div class="paragraph">
+<p>The following command demonstrates how an SNI aware SSLContext can be added: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby">[standalone<span class="instance-variable">@localhost</span>:<span class="integer">9990</span> /] ./subsystem=elytron/server-ssl-sni-context=test-<span class="key">sni</span>:add(default-ssl-context=jboss,host-context-map={localhost=localhost, wildfly.org=wildfly})
+{<span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This example assumes that three SSLContexts have been previously defined following the steps available previously in this document, those contexts are <code>jboss</code>, <code>localhost</code>, and <code>wildfly</code>.</p>
+</div>
+<div class="paragraph">
+<p>During negotiation of the SSLSession if the SNI host name received is <code>localhost</code> then the <code>localhost</code> SSLContext will be used, if the SNI host name is <code>wildfly.org</code> then the <code>wildfly</code> SSLContext will be used.  If no SNI host name is received or if we receive a name that does not match this will fallback and use the <code>jboss</code> SSLContext.</p>
+</div>
+<div class="paragraph">
+<p>The resulting resource looks like: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby">[standalone<span class="instance-variable">@localhost</span>:<span class="integer">9990</span> /] ./subsystem=elytron/server-ssl-sni-context=test-<span class="key">sni</span>:read-resource
+{
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">result</span><span class="delimiter">&quot;</span></span> =&gt; {
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">default-ssl-context</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">jboss</span><span class="delimiter">&quot;</span></span>,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">host-context-map</span><span class="delimiter">&quot;</span></span> =&gt; {
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">localhost</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">localhost</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">wildfly.org</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">wildfly</span><span class="delimiter">&quot;</span></span>
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Within the <code>host-context-map</code> it is also possible to define wildcard mappings such as <code>&#42;</code> and <code>&#42;.wildfly.org</code>.</p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="configuring-the-elytron-and-security-subsystems">4.4. Configuring the Elytron and Security Subsystems</h3>
@@ -5565,8 +5669,8 @@ match against. For example, the host 127.0.0.1 would match on
 <a href="http://127.0.0.1:9990/my/path" class="bare">http://127.0.0.1:9990/my/path</a> .</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">match-no-userinfo</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Matches against URIs with no userinfo.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">match-no-user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Matches against URIs with no user.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">match-path</p></td>
@@ -5597,8 +5701,8 @@ to match against.</p></td>
 against.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">match-userinfo</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Takes a single name attribute specifying the userinfo
+<td class="tableblock halign-left valign-top"><p class="tableblock">match-user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Takes a single name attribute specifying the user
 to match against.</p></td>
 </tr>
 </tbody>
@@ -5732,7 +5836,7 @@ configuration file approach.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">matchUser(String userSpec)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This is the same as match-userinfo in the
+<td class="tableblock halign-left valign-top"><p class="tableblock">This is the same as match-user in the
 configuration file approach.</p></td>
 </tr>
 </tbody>
@@ -6103,7 +6207,343 @@ to enable JACC you can execute a command as follows:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="KeyCloak_Integration">8. Using KeyCloak with WildFly Elytron</h2>
+<h2 id="Elytron_and_Java_Authentication_SPI_for_Containers-JASPI">9. Elytron and Java Authentication SPI for Containers (JASPI)</h2>
+<div class="sectionbody">
+<div class="sect1">
+<h2 id="introduction">8. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Starting from WildFly 15 an implementation of the Servlet profile from the Java Authentication SPI for Containers (JSR-196 / JASPI) is also provided by the WildFly Elytron subsystem allowing tighter integration with the security features provided by WildFly Elytron.  This JASPI implementation is available out of the box with minimal steps required to use it for deployments, this section of the documentation describes how to make use of it and the features it provides.</p>
+</div>
+<div class="sect2">
+<h3 id="activation">8.1. Activation</h3>
+<div class="paragraph">
+<p>Presently it is the Servlet profile from the JASPI specification which is supported by this integration, the following information applies to web applications deployed to WildFly.</p>
+</div>
+<div class="paragraph">
+<p>For the JASPI integration to be enabled for a web application that web application needs to be associated with either an Elytron <code>http-authentication-factory</code> or a <code>security-domain</code> - by doing this the WildFly Elytron security handlers will be installed for the deployment and the WildFly Elytron security framework activated for the deployment.  This is all that is required for a deployment to be 'securable' using a JASPI configuration.</p>
+</div>
+<div class="paragraph">
+<p>Once the WildFly Elytron security framework is activate for a deployment at the time requests are being handled the globally registered <code>AuthConfigFactory</code> will be queried to identify if an <code>AuthConfigProvider</code> has been registered which should be used for that deployment - if an <code>AuthConfigProvider</code> is found then JASPI authentication will be used instead of the deployments authentication configuration.  If no <code>AuthConfigProvider</code> is found then the authentication configuration for the deployment will be used instead, this could mean authentication mechanisms from a <code>http-authentication-factory</code> are used or mechanisms specified in the <code>web.xml</code> are used or it could even mean no authentication is performed if the application does not have any mechanisms defined.</p>
+</div>
+<div class="paragraph">
+<p>Any updates made to the <code>AuthConfigFactory</code> are immediately available, this means that if an <code>AuthConfigProvider</code> is registered which is a match for an existing application it will start to be used immediately without requiring redeployment of the application.</p>
+</div>
+<div class="paragraph">
+<p>All web applications deployed to WildFly have a security domain which will be resolved in the following order: -
+ . From the deployment descriptors / annotations of the deployment being deployed.
+ . The value defined on the <code>default-security-domain</code> attribute on the Undertow subsystem.
+ . Default to 'other'.</p>
+</div>
+<div class="paragraph">
+<p>We assume that this security domain is a reference to a PicketBox security domain so the final step in activation is ensuring this is mapped to WildFly Elytron using an <code>application-security-domain</code> resource in the Undertow subsystem.  This mapping can either reference a WildFly Elytron security domain directly or it can reference a <code>http-authentication-factory</code> resource to obtain instances of authentication mechanisms.</p>
+</div>
+<div class="paragraph">
+<p>e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby"><span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=undertow</span><span class="delimiter">/</span></span>application-security-domain=<span class="key">MyAppSecurity</span>:add(security-domain=<span class="constant">ApplicationDomain</span>)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby"><span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=undertow</span><span class="delimiter">/</span></span>application-security-domain=<span class="key">MyAppSecurity</span>:add(http-authentication-factory=application-http-authentication)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Although this latter form references a <code>http-authentication-factory</code> that in turn will reference a security domain - for both examples the referenced security domain is associated with the deployment.</p>
+</div>
+<div class="paragraph">
+<p>The minimal steps to enable the JASPI integration are: -
+ . Leave the <code>default-security-domain</code> attribute on the Undertow subsystem undefined so it defaults to 'other'.
+ . Add an <code>application-security-domain</code> mapping from 'other' to a WildFly Elytron security domain.</p>
+</div>
+<div class="paragraph">
+<p>All deployments that do not specify their own security domain will be assigned this default mapping automatically which will activate the WildFly Elytron handlers and subsequently make JASPI available for that deployment.</p>
+</div>
+<div class="paragraph">
+<p>The security domain associated with a deployment in these steps is the security domain that will be wrapped in a CallbackHandler to be passed into the <code>ServerAuthModule</code> instances used for authentication.</p>
+</div>
+<div class="sect3">
+<h4 id="additional-options">8.1.1. Additional Options</h4>
+<div class="paragraph">
+<p>On the <code>application-security-domain</code> resource two additional attributes have been added to allow some further control of the JASPI behaviour.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>enable-jaspi</strong> - Can be set to <code>false</code> to disable JASPI support for all deployments using this mapping.</p>
+</li>
+<li>
+<p><strong>integrated-jaspi</strong> - By default all identities are loaded from the security domain, if set to <code>false</code> ad-hoc identities will be created instead.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="subsystem-configuration">8.2. Subsystem Configuration</h3>
+<div class="paragraph">
+<p>One way to register a configuration which will result in an <code>AuthConfigProvider</code> being returned for a deployment is to register a <code>jaspi-configuration</code> in the Elytron subsystem.</p>
+</div>
+<div class="paragraph">
+<p>The following command demonstrates how to add a configuration containing two <code>ServerAuthModule</code> definitions: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby">./subsystem=elytron/jaspi-configuration=simple-<span class="key">configuration</span>:add(layer=<span class="constant">HttpServlet</span>, application-context=<span class="string"><span class="delimiter">&quot;</span><span class="content">default-host /webctx</span><span class="delimiter">&quot;</span></span>, \
+        description=<span class="string"><span class="delimiter">&quot;</span><span class="content">Elytron Test Configuration</span><span class="delimiter">&quot;</span></span>, \
+        server-auth-modules=[{<span class="keyword">class</span>-name=org.wildfly.security.examples.jaspi.SimpleServerAuthModule, <span class="keyword">module</span>=org.wildfly.security.examples.jaspi, flag=<span class="constant">OPTIONAL</span>, options={a=b, c=d}}, \
+            {<span class="keyword">class</span>-name=org.wildfly.security.examples.jaspi.SecondServerAuthModule, <span class="keyword">module</span>=org.wildfly.security.examples.jaspi}])</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This results in the following configuration being persisted: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;jaspi&gt;</span>
+    <span class="tag">&lt;jaspi-configuration</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">simple-configuration</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">layer</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">HttpServlet</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">application-context</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default-host /webctx</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">description</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Elytron Test Configuration</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;server-auth-modules&gt;</span>
+            <span class="tag">&lt;server-auth-module</span> <span class="attribute-name">class-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.wildfly.security.examples.jaspi.SimpleServerAuthModule</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">module</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.wildfly.security.examples.jaspi</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">flag</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">OPTIONAL</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;options&gt;</span>
+                    <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">a</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">b</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+                    <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">c</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">d</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+                <span class="tag">&lt;/options&gt;</span>
+            <span class="tag">&lt;/server-auth-module&gt;</span>
+            <span class="tag">&lt;server-auth-module</span> <span class="attribute-name">class-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.wildfly.security.examples.jaspi.SecondServerAuthModule</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">module</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.wildfly.security.examples.jaspi</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;/server-auth-modules&gt;</span>
+    <span class="tag">&lt;/jaspi-configuration&gt;</span>
+<span class="tag">&lt;/jaspi&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>name</code> attribute is just a name that allows the resource to be referenced in the management model.</p>
+</div>
+<div class="paragraph">
+<p>The <code>layer</code> and <code>application-context</code> attributes are used when registering this configuration with the <code>AuthConfigFactory</code> - both of these attributes can be omitted allowing wildcard matching.  The <code>description</code> attribute is also optional and is used to provide a description to the <code>AuthConfigFactory</code>.</p>
+</div>
+<div class="paragraph">
+<p>Within the configuration one or more <code>server-auth-module</code> instances can be defined with the following attributes.
+ * <strong>class-name</strong> - The fully qualified class name of the <code>ServerAuthModule</code>.
+ * <strong>module</strong> - The module to load the <code>ServerAuthModule</code> from.
+ * <strong>flag</strong> - The control flag to indicate how this module operates in relation to the other modules.
+ * <strong>options</strong> - Configuration options to be passed into the <code>ServerAuthModule</code> on initialisation.</p>
+</div>
+<div class="paragraph">
+<p>Configuration defined in this way is immediately registered with the <code>AuthConfigFactory</code> so any existing deployments using the WildFly Elytron security framework that match against the <code>layer</code> and <code>application-context</code> will immediately start to make use of the configuration.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="programatic-configuration">8.3. Programatic Configuration</h3>
+<div class="paragraph">
+<p>The APIs defined within the JASPI specification allow for applications to dynamically register custom <code>AuthConfigProvider</code> instances, however the specification does not provide the actual implementations to use or a standard way to create instances of the implementations, the WildFly Elytron project contains a simple utility that can be used by deployments to help with this: -</p>
+</div>
+<div class="paragraph">
+<p><code>org.wildfly.security.auth.jaspi.JaspiConfigurationBuilder</code></p>
+</div>
+<div class="paragraph">
+<p>The following piece of code illustrates how this API can be used to register a similar configuration to the one illustrated in the subsystem.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="predefined-type">String</span> registraionId = JaspiConfigurationBuilder.builder(<span class="string"><span class="delimiter">&quot;</span><span class="content">HttpServlet</span><span class="delimiter">&quot;</span></span>, servletContext.getVirtualServerName() + <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="delimiter">&quot;</span></span> + servletContext.getContextPath())
+    .addAuthModuleFactory(SimpleServerAuthModule::<span class="keyword">new</span>, Flag.OPTIONAL, <span class="predefined-type">Collections</span>.singletonMap(<span class="string"><span class="delimiter">&quot;</span><span class="content">a</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">b</span><span class="delimiter">&quot;</span></span>))
+    .addAuthModuleFactory(SecondServerAuthModule::<span class="keyword">new</span>)
+.register();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As an example this code could be executed within the init() method of a Servlet to register the <code>AuthConfigProvider</code> specific for that deployment, in this code example the application context has also been assembled by consulting the <code>ServletContext</code>.</p>
+</div>
+<div class="paragraph">
+<p>The register method returns the resulting registration ID that can also be used to subsequently remove this registration directly from the <code>AuthConfigFactory</code>.</p>
+</div>
+<div class="paragraph">
+<p>As with the subsystem configuration this call has an immediate effect and will be live for all web applications using the WildFly Elytron security framework immediately.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="authentication-process">8.4. Authentication Process</h3>
+<div class="sect3">
+<h4 id="callbackhandler">8.4.1. CallbackHandler</h4>
+<div class="paragraph">
+<p>Based on the configuration on the <code>application-security-domain</code> resource in the Undertow subsystem the CallbackHandler passed to the ServerAuthModule in an integrated or non-integrated mode.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="integrated">8.4.2. Integrated</h4>
+<div class="paragraph">
+<p>When operating in integrated mode although the ServerAuthModule instances will be handling the actual authentication the resulting identity will be loaded from the referenced SecurityDomain using the SecurityRealms referenced by that SecurityDomain, it is still possible in this mode to override the roles that will be assigned within the Servlet container.</p>
+</div>
+<div class="paragraph">
+<p>The advantage of this mode is that ServerAuthModules are able to take advantage of the WildFly Elytron configuration for the loading of identities so identities stored in usual locations such as databases and LDAP can be loaded without the ServerAuthModule needing to be aware of these locations, additionally other WildFly Elytron configuration can be applied such as role and permission mapping.  The referenced SecurityDomain can also be referenced in other places such as for SASL authentication or other non JASPI applications all backed by a common repository of identities.</p>
+</div>
+<div class="paragraph">
+<p>In this mode the CallbackHandlers operate as follows: -</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>PasswordValidationCallback</strong></p>
+<div class="literalblock">
+<div class="content">
+<pre>The username and password will be used with the SecurityDomain to perform an authentication, if successful there is now an authenticated identity.</pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>CallerPrincipalCallback</strong></p>
+<div class="literalblock">
+<div class="content">
+<pre>This Callback is used to establish the authorized identity / the identity that will be seen once the request reached the web application.</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>If an authenticated identity has already been established via the PasswordValidationCallback this Callback is interpreted as a run-as request and authorization checks are performed to ensure the authenticated identity is authorized to run as the identity specified in this Callback.  If no authenticated identity has been established by a PasswordValidationCallback it is assumed the ServerAuthModule has handled the authentication step so this Callback will cause the specified identity to be loaded from the SecurityDomain and an authorization check to verify this identity has the LoginPermission.</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>If a Callback is received with a null Principal and name then if an authenticated identity has already been established authorization will be performed as that identity, if no identity has been established then authorization of the anonymous identity will be performed.  Where authorization of the anonymous identity is performed the SecurityDomain must have been configured to grant the anonymous identity the LoginPermission otherwise authorization will fail.</pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>GroupPrincipalCallback</strong></p>
+<div class="literalblock">
+<div class="content">
+<pre>By default in this mode the attribute loading, role decoding, and role mapping configured on the security domain will be used to establish the identity - if this Callback is received the groups specified will be taken as the roles that will be assigned to the identity whilst the request is in the servlet container.  These roles will be visible in the servlet container only.</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="non-integrated">8.4.3. Non Integrated</h4>
+<div class="paragraph">
+<p>When operating in non-integrated mode the ServerAuthModules are completely responsible for all authentication <strong>AND</strong> identity management, the Callbacks specified in the specification can be used to establish an identity.  The resulting identity will be created on the SecurityDomain but it will be independent of any identities stored in referenced SecurityRealms.</p>
+</div>
+<div class="paragraph">
+<p>The advantage of this mode is that JASPI configurations that are able to 100% handle the identities can be deployed to the application server without requiring anything beyond a simple SecurityDomain definitions, there is no need for this SecurityDomain to actually contain the identities that will be used at runtime.  The disadvantage of this mode is that the ServerAuthModule is now reposible for all identity handling potenitally making the implementation much more complex.</p>
+</div>
+<div class="paragraph">
+<p>In this mode the CallbackHandlers operate as follows: -</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>PasswordValidationCallback</strong></p>
+<div class="literalblock">
+<div class="content">
+<pre>The Callback is not supported in this mode, the purpose of this mode is for the ServerAuthModule to operate independently of the referenced SecurityDomain so requesting a password to be validated would not be suitable.</pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>CallerPrincipalCallback</strong></p>
+<div class="literalblock">
+<div class="content">
+<pre>This Callback is used to establish the Principal for the resulting identity, as the ServerAuthModule is handling all of the identity checking requirements no checks are performed to verify if the identity exists in the security domain and no authorization checks are performed.</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>If a Callback is received with a null Principal and name then then the identity will be established as the anonymous identity, as the ServerAuthModule is making the decisions no authorizaton check will be performed with the SecurityDomain.</pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>GroupPrincipalCallback</strong></p>
+<div class="literalblock">
+<div class="content">
+<pre>As the identity is created in this mode without loading from the SecurityDomain it will by default have no roles assigned, if this Callback is received the groups will be taken and assigned to the resulting identity whilst the request is in the servlet container. These roles will be visible in the servlet container only.</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="validaterequest">8.4.4. validateRequest</h4>
+<div class="paragraph">
+<p>During the call to <code>validateRequest</code> on the <code>ServerAuthContext</code> the individual <code>ServerAuthModule</code> instances will be called in the order they are defined.  A control flag can also be specified for each module, this defines how the response should be interpreted and if processing should continue to the next auth module or return immediately.</p>
+</div>
+<div class="sect4">
+<h5 id="control-flags">Control Flags</h5>
+<div class="paragraph">
+<p>Where the configuration was provided either within the WildFly Elytron subsystem or using the <code>JaspiConfigurationBuilder</code> API it is possible to associate a control flag with each <code>ServerAuthModule</code> - if one is not specified we assume <code>REQUIRED</code>.  The flags have the following meanings depending on their result.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Flag</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AuthStatus.SEND_SUCCESS</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AuthStatus.SEND_FAILURE, AuthStatus.SEND_CONTINUE</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Required</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Validation will continue to the remaining modules, provided the requirements of the remaining modules are satisfied the request will be allowed to proceed to authorization.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Validation will continue to the remaining modules, however regardless of their outcome the validation is not successful so control will return to the client.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requisite</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Validation will continue to the remaining modules, provided the requirements of the remaining modules are satisfied the request will be allowed to proceed to authorization.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The request will return immediately to the client.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sufficient</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Validation is deemed successful and complete, provided no previous Required or Requisite module has returned an AuthStatus other than AuthStatus.SUCCESS the request will proceed to authorization of the secured resource.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Validation will continue down the list of remaining modules, this status will only affect the decision if there are no REQUIRED or REQUISITE modules.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Validation will continue to the remaining modules, provided no 'Required' or 'Requisite' modules have not returned SUCCESS this will be sufficient for validation to be deemed successful and for the request to proceed to the authorization stage and the secured resource.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Validation will continue down the list of remaining modules, this status will only affect the decision if there are no REQUIRED or REQUISITE modules.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>For all <code>ServerAuthModule</code> instances if they throw an <code>AuthException</code> an error will be immediately reported to the client without further modules being called.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="secureresponse">8.4.5. secureResponse</h4>
+<div class="paragraph">
+<p>During the call to <code>secureResponse</code> each <code>ServerAuthMdoule</code> is called but this time in reverse order.  Where a module only undertakes an action in <code>secureResponse</code> if it undertook an action in <code>validateResponse</code> it is the responsibility of the module to track this.</p>
+</div>
+<div class="paragraph">
+<p>The control flag has no effect on <code>secureResponse</code> processing, processing ends when one of the following is true: -
+. All of the <code>ServerAuthModule</code> instances have been called.
+. A module returns <code>AuthStatus.SEND_FAILURE</code>.
+. A module throws an <code>AuthException</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="securityidentity">8.4.6. SecurityIdentity</h4>
+<div class="paragraph">
+<p>Once the authentication process has completed a <code>org.wildfly.security.auth.server.SecurityIdentity</code> for the deployments SecurityDomain will have been created as a result of the Callbacks to the CallbackHandler, depending on the Callbacks this will either be an identity loaded directly from the SecurityDomain or will be an ad-hoc identity described by the callbacks.  This SecurityIdentity will be associated with the request as we do for other authentication mechanisms</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="KeyCloak_Integration">10. Using KeyCloak with WildFly Elytron</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>TBD</p>
@@ -6111,7 +6551,7 @@ to enable JACC you can execute a command as follows:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="Bearer_Token_Authorization">9. Bearer Token Authorization</h2>
+<h2 id="Bearer_Token_Authorization">11. Bearer Token Authorization</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Bearer Token Authorization is the process of authorizing HTTP requests based on the existence and validity of a bearer
@@ -6124,7 +6564,7 @@ an specific <code>realm</code> implementation, the <code>token-realm</code>, to 
 authorization server.</p>
 </div>
 <div class="sect2">
-<h3 id="how-it-works">9.1. How it Works</h3>
+<h3 id="how-it-works">11.1. How it Works</h3>
 <div class="paragraph">
 <p>When a HTTP request arrives to your application, the <code>BEARER_TOKEN</code> mechanism will check if a bearer token was provided by checking the existence of an <code>Authorization</code> HTTP header with the following format:</p>
 </div>
@@ -6161,7 +6601,7 @@ the mechanism will respond with a <code>403</code> HTTP status code as follows:<
 </div>
 </div>
 <div class="sect2">
-<h3 id="validating-jwt-tokens">9.2. Validating JWT Tokens</h3>
+<h3 id="validating-jwt-tokens">11.2. Validating JWT Tokens</h3>
 <div class="paragraph">
 <p>Elytron provides built-in support for JWT tokens, which can be enabled by defining a <code>realm</code> in the Elytron subsystem as follows:</p>
 </div>
@@ -6214,7 +6654,7 @@ should be validated:</p>
 <p><strong>public-key</strong></p>
 <div class="paragraph">
 <p>A public key in PEM Format. During validation, if a public key is provided, signature will be verified based on the key you provided here. Alternatively,
-you can define a <code>key-store</code> and <code>certificate</code> attributes to configure the public key.</p>
+you can define a <code>key-store</code> and <code>certificate</code> attributes to configure the public key. This key will be used to verify tokens without "kid" claim.</p>
 </div>
 </li>
 <li>
@@ -6229,7 +6669,41 @@ you can define a <code>key-store</code> and <code>certificate</code> attributes 
 <p>The name of the certificate with a public key to load from the key store in case you defined the <code>key-store</code> attribute</p>
 </div>
 </li>
+<li>
+<p><strong>client-ssl-context</strong></p>
+<div class="paragraph">
+<p>The SSL context to be used if if you want to use remote JSON Web Keys. This enables you to use url from "jku" token claim to
+fetch public keys for token verification.</p>
+</div>
+</li>
+<li>
+<p><strong>host-name-verification-policy</strong></p>
+<div class="paragraph">
+<p>A policy that defines how host names should be verified when using remote JSON Web Keys. Allowed values: "ANY", "DEFAULT".</p>
+</div>
+</li>
 </ul>
+</div>
+<div class="paragraph">
+<p>For being able to use different key pairs for signing / verification and for easier key rotation you can define key map. This will take the "kid" claim
+from the token and use corresponding public key for verification.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"> <span class="tag">&lt;token-realm</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">JwtRealm</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">principal-claim</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">sub</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;jwt</span> <span class="attribute-name">issuer</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">as.example.com</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">audience</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">api.example.com</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;key</span> <span class="attribute-name">kid</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">public-key</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">-----BEGIN PUBLIC KEY-----MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBANc4VlnN6oZwe1PoQQeJsTwu7LGS+eEbgYMNYXahidga4+BhdGKwzMZU54ABFQ11tUMJSENQ6o3n1YKVgMnxvcMCAwEAAQ==-----END PUBLIC KEY-----</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;key</span> <span class="attribute-name">kid</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">2</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">public-key</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">-----BEGIN PUBLIC KEY-----MFswDQYJKoZIhvcNAQEBBQADSgAwRwJAcNpXy6psxC21DdnTtAdlgsEwEuJh/earH3q7xJPjmsygmrlpC66MG4/A/J9Gai2Hp+QdCSEVpBWkIoVff3sIlwIDAQAB-----END PUBLIC KEY-----</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/jwt&gt;</span>
+ <span class="tag">&lt;/token-realm&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This <code>token-realm</code> will verify tokens with "kid" claims of value "1" or "2" using corresponding key.</p>
+</div>
+<div class="paragraph">
+<p>Tokens without "kid" claim will be verified using the 'public-key' attribute of 'jwt', or in this case invalidated, as there is
+no key specified.</p>
 </div>
 <div class="paragraph">
 <p>The <code>jwt</code> validator performs different checks in order to determine the validity of a JWT:</p>
@@ -6240,7 +6714,8 @@ you can define a <code>key-store</code> and <code>certificate</code> attributes 
 <p>Expiration checks based on the values of the <code>exp</code> and <code>nbf</code> claims</p>
 </li>
 <li>
-<p>Signature checks based on the public key provided via <code>public-key</code> or <code>certificate</code> attributes</p>
+<p>Signature checks based on the public key provided via <code>public-key</code> or <code>certificate</code> attributes, key map with named public keys, or by fetching remote JSON Web Key Set
+using provided <code>client-ssl-context</code>. You can skip token signature verification by not defining any of these.</p>
 </li>
 </ul>
 </div>
@@ -6249,7 +6724,7 @@ you can define a <code>key-store</code> and <code>certificate</code> attributes 
 </div>
 </div>
 <div class="sect2">
-<h3 id="validating-oauth2-bearer-tokens">9.3. Validating OAuth2 Bearer Tokens</h3>
+<h3 id="validating-oauth2-bearer-tokens">11.3. Validating OAuth2 Bearer Tokens</h3>
 <div class="paragraph">
 <p>Elytron provides built-in support for tokens issued by an OAuth2 compliant authorization server, where these tokens are validated
 using a token introspection endpoint as defined by OAuth2 specification.</p>
@@ -6298,14 +6773,14 @@ should be validated:</p>
 <li>
 <p><strong>host-name-verification-policy</strong></p>
 <div class="paragraph">
-<p>A policy that defines how host names should be verified when using HTTPS. Allowed values: "ANY".</p>
+<p>A policy that defines how host names should be verified when using HTTPS. Allowed values: "ANY", "DEFAULT".</p>
 </div>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="quickstarts">9.4. Quickstarts</h3>
+<h3 id="quickstarts">11.4. Quickstarts</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -6315,7 +6790,7 @@ should be validated:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="cli-examples-on-how-to-create-a-token-realm">9.5. CLI Examples on How to Create a Token Realm</h3>
+<h3 id="cli-examples-on-how-to-create-a-token-realm">11.5. CLI Examples on How to Create a Token Realm</h3>
 <div class="listingblock">
 <div class="title">Create a Token Realm to validate JWT tokens using a key store to retrieve the public key</div>
 <div class="content">
@@ -6342,19 +6817,19 @@ should be validated:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="OpenSSL">10. OpenSSL</h2>
+<h2 id="OpenSSL">12. OpenSSL</h2>
 <div class="sectionbody">
 
 </div>
 </div>
 <div class="sect1">
-<h2 id="Web_Single_Sign_On">11. Web Single Sign-On</h2>
+<h2 id="Web_Single_Sign_On">13. Web Single Sign-On</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This document will guide on how to enable single sign-on across different applications deployed into different servers, where these applications belong to same security domain.</p>
 </div>
 <div class="sect2">
-<h3 id="create-a-server-configuration-template">11.1. Create a Server Configuration Template</h3>
+<h3 id="create-a-server-configuration-template">13.1. Create a Server Configuration Template</h3>
 <div class="paragraph">
 <p>For this document, you&#8217;ll need to run at least two server instances in order to check single sign-on and how it affect usability in your applications. Users should be able to log in once and have access to any application using the same security domain.</p>
 </div>
@@ -6370,7 +6845,7 @@ should be validated:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-a-http-authentication-factory">11.1.1. Create a HTTP Authentication Factory</h4>
+<h4 id="create-a-http-authentication-factory">13.1.1. Create a HTTP Authentication Factory</h4>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -6409,7 +6884,7 @@ First, you need a <em>security-domain</em> which we&#8217;ll use to authenticate
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-a-application-security-domain-in-undertow">11.1.2. Create a Application Security Domain in Undertow</h4>
+<h4 id="create-a-application-security-domain-in-undertow">13.1.2. Create a Application Security Domain in Undertow</h4>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -6435,7 +6910,7 @@ If you already have a&nbsp;_application-security-domain_&nbsp;defined in Underto
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-a-key-store">11.1.3. Create a Key Store</h4>
+<h4 id="create-a-key-store">13.1.3. Create a Key Store</h4>
 <div class="paragraph">
 <p>In order to create a <em>key-store</em> in Elytron subsystem, first create a Java Key Store as follows:</p>
 </div>
@@ -6454,7 +6929,7 @@ If you already have a&nbsp;_application-security-domain_&nbsp;defined in Underto
 </div>
 </div>
 <div class="sect3">
-<h4 id="enable-single-sign-on">11.1.4. Enable Single Sign-On</h4>
+<h4 id="enable-single-sign-on">13.1.4. Enable Single Sign-On</h4>
 <div class="paragraph">
 <p>Single Sign-On is enabled to a specific <em>application-security-domain</em> definition in Undertow subsystem. It is important that the servers you will be using to deploy applications are using the same configuration.</p>
 </div>
@@ -6472,7 +6947,7 @@ If you already have a&nbsp;_application-security-domain_&nbsp;defined in Underto
 </div>
 </div>
 <div class="sect2">
-<h3 id="create-two-server-instances">11.2. Create Two Server Instances</h3>
+<h3 id="create-two-server-instances">13.2. Create Two Server Instances</h3>
 <div class="paragraph">
 <p>All configuration you did so far should be reflect in <em>$JBOSS_HOME</em>/<em>standalone/standalone-ha.xml.</em> You can now create two distinct server configuration directories_:\_</p>
 </div>
@@ -6493,7 +6968,7 @@ $JBOSS_HOME/bin/standalone.sh -c standalone-ha.xml -Djboss.node.name=node-b -Djb
 </div>
 </div>
 <div class="sect2">
-<h3 id="deploy-an-application">11.3. Deploy an Application</h3>
+<h3 id="deploy-an-application">13.3. Deploy an Application</h3>
 <div class="paragraph">
 <p>For the sake of simplicity, these are the minimum files you need in your application:</p>
 </div>
@@ -6576,7 +7051,27 @@ Make sure you have at least a welcome file (e.g.: index.html\|jsp).
 </div>
 </div>
 <div class="sect1">
-<h2 id="Custom_Components">12. Custom Components</h2>
+<h2 id="Audit">14. Audit</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>WildFly Elytron supports audit using security event listeners - components
+which captures security events, like successful or unsucceful login attempts.</p>
+</div>
+<div class="sect2">
+<h3 id="file-audit-log">14.1. File audit log</h3>
+<div class="paragraph">
+<p>File audit log logs security events into a local file.
+It requires to define <code>path</code> to the log file, which can be <code>relative-to</code> a system property.
+It also allows to set the file format - human readable <code>SIMPLE</code> or <code>JSON</code>.
+While in WildFly 14 there was only one attribute <code>synchronized</code>, which had influence on data reliability, now there is possible more fine grained performance and reliability tunning:
+* <code>autoflush</code> defines whether should be output stream flushed after every audit event (guarantees that the log message is passed to the operating system immediately)
+* <code>synchonized</code> defines whether should be file descriptor synchronized after every audit event (guarantees that all system buffers are synchronized with the underlying device)</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Custom_Components">15. Custom Components</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>WildFly Elytron subsystem allows to add custom implementation of different
@@ -6602,7 +7097,7 @@ custom-principal-transformer        custom-security-event-listener</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="security-event-listener">12.1. Security event listener</h3>
+<h3 id="security-event-listener">15.1. Security event listener</h3>
 <div class="paragraph">
 <p>To create custom security event listener you need to implement <code>java.util.function.Consumer&lt;org.wildfly.security.auth.server.event.SecurityEvent&gt;</code> interface.
 Resulting class needs to be packed into JAR and WildFly module created.
@@ -6641,7 +7136,7 @@ for more information how to create WildFly module.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="configurable-custom-components">12.2. Configurable custom components</h3>
+<h3 id="configurable-custom-components">15.2. Configurable custom components</h3>
 <div class="paragraph">
 <p>You can also provide some component configuration from the subsystem, if class of your component will implement following method:</p>
 </div>
@@ -6665,16 +7160,16 @@ for more information how to create WildFly module.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="Migrate_Legacy_Security_to_Elytron_Security">13. Migrate Legacy Security to Elytron Security</h2>
+<h2 id="Migrate_Legacy_Security_to_Elytron_Security">16. Migrate Legacy Security to Elytron Security</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="authentication-configuration">13.1. Authentication Configuration</h3>
+<h3 id="authentication-configuration">16.1. Authentication Configuration</h3>
 
 </div>
 <div class="sect2">
-<h3 id="Properties_File_Based_Authentication_Migration">13.2. Properties Based Authentication / Authorization</h3>
+<h3 id="Properties_File_Based_Authentication_Migration">16.2. Properties Based Authentication / Authorization</h3>
 <div class="sect3">
-<h4 id="picketbox-based-configuration">13.2.1. PicketBox Based Configuration</h4>
+<h4 id="picketbox-based-configuration">16.2.1. PicketBox Based Configuration</h4>
 <div class="paragraph">
 <p>This migration example assumes a deployed web application is configured
 to require authentication using FORM based authentication and is
@@ -6938,7 +7433,7 @@ configuration however now Elytron components are used exclusively.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="legacy-security-realm">13.2.2. Legacy Security Realm</h4>
+<h4 id="legacy-security-realm">16.2.2. Legacy Security Realm</h4>
 <div class="sect4">
 <h5 id="original-configuration-1">Original Configuration</h5>
 <div class="paragraph">
@@ -7051,7 +7546,7 @@ clear the existing security realm reference.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="LDAP_Based_Authentication_Migration">13.3. LDAP Authentication Migration</h3>
+<h3 id="LDAP_Based_Authentication_Migration">16.3. LDAP Authentication Migration</h3>
 <div class="paragraph">
 <p>The section describing how to migrate from properties based
 authentication using either PicketBox or legacy security realms to
@@ -7101,7 +7596,7 @@ uniqueMember: uid=TestUserOne,ou=users,dc=group-to-principal,dc=wildfly,dc=org</
 'uid' attribute of the group entry.</p>
 </div>
 <div class="sect3">
-<h4 id="legacy-security-realm-ldap">13.3.1. Legacy Security Realm</h4>
+<h4 id="legacy-security-realm-ldap">16.3.1. Legacy Security Realm</h4>
 <div class="paragraph">
 <p>A connection to the LDAP server and related security realm can be
 created with the following commands: -</p>
@@ -7158,7 +7653,7 @@ run-batch</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="picketbox-ldapextloginmodule">13.3.2. PicketBox LdapExtLoginModule</h4>
+<h4 id="picketbox-ldapextloginmodule">16.3.2. PicketBox LdapExtLoginModule</h4>
 <div class="paragraph">
 <p>The following commands can create a PicketBox security domain configured
 to use the LdapExtLoginModule to verify a username and password.</p>
@@ -7211,7 +7706,7 @@ roleAttributeID=<span class="string"><span class="delimiter">&quot;</span><span 
 </div>
 </div>
 <div class="sect3">
-<h4 id="migrated">13.3.3. Migrated</h4>
+<h4 id="migrated">16.3.3. Migrated</h4>
 <div class="paragraph">
 <p>Within the Elytron subsystem a directory context can be defined for the
 connection to LDAP: -</p>
@@ -7283,7 +7778,7 @@ identity attribute " `Roles`" is mapped to the identity roles.
 </div>
 </div>
 <div class="sect2">
-<h3 id="Composite_Stores_Migration">13.4. Composite Stores Migration</h3>
+<h3 id="Composite_Stores_Migration">16.4. Composite Stores Migration</h3>
 <div class="paragraph">
 <p>When using either PicketBox or the legacy security realms it is possible to define a configuration where authentication is performed against one identity store whilst the information used for authorization is loaded from a different store, when using WildFly Elytron this can be achieved by using an aggregate security realm.</p>
 </div>
@@ -7291,7 +7786,7 @@ identity attribute " `Roles`" is mapped to the identity roles.
 <p>The example here makes use of a properties file for authentication and then searches LDAP to load group / role information. Both of these are based on the previous examples within this document so the environmental information is not repeated here.</p>
 </div>
 <div class="sect3">
-<h4 id="picketbox-based-configuration-2">13.4.1. PicketBox Based Configuration</h4>
+<h4 id="picketbox-based-configuration-2">16.4.1. PicketBox Based Configuration</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="ruby">./subsystem=security/security-domain=application-<span class="key">security</span>:add
@@ -7394,7 +7889,7 @@ run-batch</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="migrated-wildfly-elytron-configuration">13.4.2. Migrated WildFly Elytron Configuration</h4>
+<h4 id="migrated-wildfly-elytron-configuration">16.4.2. Migrated WildFly Elytron Configuration</h4>
 <div class="paragraph">
 <p>The equivalent WildFly Elytron configuration can be defined with the following commands:</p>
 </div>
@@ -7469,7 +7964,7 @@ attribute-mapping=[{filter-base-dn=<span class="string"><span class="delimiter">
 </div>
 </div>
 <div class="sect2">
-<h3 id="Database_Authentication_Migration">13.5. Database Authentication</h3>
+<h3 id="Database_Authentication_Migration">16.5. Database Authentication</h3>
 <div class="paragraph">
 <p>The section describing how to migrate from database accessible via JDBC
 datasource based authentication using PicketBox to Elytron. This section
@@ -7501,7 +7996,7 @@ users table like:</p>
 from ' `role&#8217; column.</p>
 </div>
 <div class="sect3">
-<h4 id="picketbox-database-loginmodule">13.5.1. PicketBox Database LoginModule</h4>
+<h4 id="picketbox-database-loginmodule">16.5.1. PicketBox Database LoginModule</h4>
 <div class="paragraph">
 <p>The following commands can create a PicketBox security domain configured
 to use database accessible via JDBC datasource to verify a username and
@@ -7544,7 +8039,7 @@ password and to assign roles.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="migrated-jdbc">13.5.2. Migrated</h4>
+<h4 id="migrated-jdbc">16.5.2. Migrated</h4>
 <div class="paragraph">
 <p>Within the Elytron subsystem to use database accesible via JDBC you need
 to define <code>jdbc-realm</code>:</p>
@@ -7589,7 +8084,7 @@ from SQL result specifies mappers.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="n-m-relation-beetween-user-and-roles">13.5.3. N-M relation beetween user and roles</h4>
+<h4 id="n-m-relation-beetween-user-and-roles">16.5.3. N-M relation beetween user and roles</h4>
 <div class="paragraph">
 <p>When using a n:m-relation beetween user and roles (which means: the user has multiple roles), the previous configuration does not work.</p>
 </div>
@@ -7664,7 +8159,7 @@ roleid <span class="predefined-type">BIGINT</span> <span class="keyword">not</sp
 </div>
 </div>
 <div class="sect2">
-<h3 id="Kerberos_Based_Authentication_Migration">13.6. Kerberos Authentication Migration</h3>
+<h3 id="Kerberos_Based_Authentication_Migration">16.6. Kerberos Authentication Migration</h3>
 <div class="paragraph">
 <p>When working with Kerberos configuration it is possible for the
 application server to rely on configuration from the environment or the
@@ -7694,7 +8189,7 @@ Kerberos realm in use and the address of the KDC.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="http-authentication-kerberos">13.6.1. HTTP Authentication</h4>
+<h4 id="http-authentication-kerberos">16.6.1. HTTP Authentication</h4>
 <div class="sect4">
 <h5 id="legacy-security-realm-kerberos">Legacy Security Realm</h5>
 <div class="paragraph">
@@ -7882,7 +8377,7 @@ authentication section</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="remoting-sasl-authentication">13.6.2. Remoting / SASL Authentication</h4>
+<h4 id="remoting-sasl-authentication">16.6.2. Remoting / SASL Authentication</h4>
 <div class="sect4">
 <h5 id="legacy-security-realm-kerberos-1">Legacy Security Realm</h5>
 <div class="paragraph">
@@ -8002,7 +8497,7 @@ security factory.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Caching_Migration">13.7. Caching Migration</h3>
+<h3 id="Caching_Migration">16.7. Caching Migration</h3>
 <div class="paragraph">
 <p>Where a PicketBox based security domain is defined it is possible to enable caching for that security domain, this enables subsequent hits to the identity store to be avoided as an in memory cache can be used instead, this example demonstrates how caching can be used with a WildFly Elytron based configuration.</p>
 </div>
@@ -8010,7 +8505,7 @@ security factory.</p>
 <p>The purpose of this chapter is to highlight the migration of a configuration with caching enabled, this example is based in the previous LDAP example but with caching enabled.</p>
 </div>
 <div class="sect3">
-<h4 id="picketbox-example">13.7.1. PicketBox Example</h4>
+<h4 id="picketbox-example">16.7.1. PicketBox Example</h4>
 <div class="paragraph">
 <p>A PicketBox based security domain can be defined with the following commands.</p>
 </div>
@@ -8061,7 +8556,7 @@ roleAttributeID=<span class="string"><span class="delimiter">&quot;</span><span 
 </div>
 </div>
 <div class="sect3">
-<h4 id="migrated-example">13.7.2. Migrated Example</h4>
+<h4 id="migrated-example">16.7.2. Migrated Example</h4>
 <div class="paragraph">
 <p>When using WildFly Elytron where caching is required the individual security realm is wrapped using a cache, a migrated configuration can be defined with the following commands:</p>
 </div>
@@ -8134,13 +8629,13 @@ attribute-mapping=[{filter-base-dn=<span class="string"><span class="delimiter">
 </div>
 </div>
 <div class="sect2">
-<h3 id="clients">13.8. Clients</h3>
+<h3 id="clients">16.8. Clients</h3>
 
 </div>
 <div class="sect2">
-<h3 id="Application_Client_Migration">13.9. Application Client Migration</h3>
+<h3 id="Application_Client_Migration">16.9. Application Client Migration</h3>
 <div class="sect3">
-<h4 id="naming-client">13.9.1. Naming Client</h4>
+<h4 id="naming-client">16.9.1. Naming Client</h4>
 <div class="paragraph">
 <p>This migration example assumes a client application performs a remote
 JNDI lookup using an ﻿﻿ <code>InitialContext</code> backed by the
@@ -8254,7 +8749,7 @@ context.runCallable(callable);</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ejb-client">13.9.2. EJB Client</h4>
+<h4 id="ejb-client">16.9.2. EJB Client</h4>
 <div class="paragraph">
 <p>This migration example assumes a client application is configured to
 invoke an EJB deployed on a remote server using a
@@ -8399,11 +8894,11 @@ context.runCallable(callable);</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="general-utilities">13.10. General Utilities</h3>
+<h3 id="general-utilities">16.10. General Utilities</h3>
 
 </div>
 <div class="sect2">
-<h3 id="Security_Vault_Migration">13.11. Security Vault Migration</h3>
+<h3 id="Security_Vault_Migration">16.11. Security Vault Migration</h3>
 <div class="paragraph">
 <p>Security Vault is primarily used in legacy configurations, a vault is
 used to store sensitive strings outside of the configuration files.
@@ -8426,7 +8921,7 @@ dependent on your platform of choice. One can use also simple form "java
 it better suites ones needs.</p>
 </div>
 <div class="sect3">
-<h4 id="single-security-vault-conversion">13.11.1. Single Security Vault Conversion</h4>
+<h4 id="single-security-vault-conversion">16.11.1. Single Security Vault Conversion</h4>
 <div class="paragraph">
 <p>To convert <strong>single</strong> security vault credential store use following
 example:</p>
@@ -8492,7 +8987,7 @@ store to the configuration.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="bulk-security-vault-conversion">13.11.2. Bulk Security Vault Conversion</h4>
+<h4 id="bulk-security-vault-conversion">16.11.2. Bulk Security Vault Conversion</h4>
 <div class="paragraph">
 <p>There is possibility to convert multiple vaults to credential store
 using --bulk-convert parameter with description file.<br>
@@ -8583,7 +9078,7 @@ mandatory except "salt:", "iteration:" and "properties:"</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Security_Property_Migration">13.12. Security Properties</h3>
+<h3 id="Security_Property_Migration">16.12. Security Properties</h3>
 <div class="paragraph">
 <p>Lets suppose security properties "a" and "c" defined in legacy security:</p>
 </div>
@@ -8644,13 +9139,13 @@ created property "e":</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="ssl-migration">13.13. SSL Migration</h3>
+<h3 id="ssl-migration">16.13. SSL Migration</h3>
 
 </div>
 <div class="sect2">
-<h3 id="Simple_SSL_Migration">13.14. Simple SSL Migration</h3>
+<h3 id="Simple_SSL_Migration">16.14. Simple SSL Migration</h3>
 <div class="sect3">
-<h4 id="simple-ssl-migration">13.14.1. Simple SSL Migration</h4>
+<h4 id="simple-ssl-migration">16.14.1. Simple SSL Migration</h4>
 <div class="paragraph">
 <p>This section describe securing HTTP connections to the server using SSL
 using Elytron.<br>
@@ -8760,7 +9255,7 @@ created Elytron <code>ssl-context</code>:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="client-cert-ssl-authentication-migration">13.14.2. Client-Cert SSL Authentication Migration</h4>
+<h4 id="client-cert-ssl-authentication-migration">16.14.2. Client-Cert SSL Authentication Migration</h4>
 <div class="paragraph">
 <p>This suppose you have already configured Client-Cert SSL authentication
 using <code>truststore</code> in legacy <code>security-realm</code>, for example by
@@ -8886,7 +9381,7 @@ above:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="SSL_with_Client_Cert_Migration">13.15. SSL with Client Cert Migration</h3>
+<h3 id="SSL_with_Client_Cert_Migration">16.15. SSL with Client Cert Migration</h3>
 <div class="paragraph">
 <p>As this documentation is primarily intended for users migrating to WildFly Elytron I am going to jump straight into the configuration required with WildFly Elytron.</p>
 </div>
@@ -8951,7 +9446,7 @@ above:</p>
 <p>However following steps are needed to be user identity provided to your applications or management console.</p>
 </div>
 <div class="sect3">
-<h4 id="realms-and-domains">13.15.1. Realms and Domains</h4>
+<h4 id="realms-and-domains">16.15.1. Realms and Domains</h4>
 <div class="paragraph">
 <p>We use users stored in standard properties files, so we can predefined Elytron security domain <code>ManagementDomain</code> and realm <code>ManagementRealm</code>:</p>
 </div>
@@ -8981,7 +9476,7 @@ above:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="principal-decoder">13.15.2. Principal decoder</h4>
+<h4 id="principal-decoder">16.15.2. Principal decoder</h4>
 <div class="paragraph">
 <p>When certificate authentication is used and the security realm accepts usernames to resolve an identity, there have to be defined way to obtain username from a client certificate.
 In this case we will use first CN attribute in certificate subject:</p>
@@ -9009,7 +9504,7 @@ In this case we will use first CN attribute in certificate subject:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="http-authentication-factory">13.15.3. HTTP Authentication Factory</h4>
+<h4 id="http-authentication-factory">16.15.3. HTTP Authentication Factory</h4>
 <div class="paragraph">
 <p>For the HTTP connections we now define a HTTP authentication factory using the previously defined resources and it is configured to support CLIENT_CERT and DIGEST authentication.</p>
 </div>
@@ -9065,7 +9560,7 @@ In this case we will use first CN attribute in certificate subject:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sasl-authentication-factory">13.15.4. SASL Authentication Factory</h4>
+<h4 id="sasl-authentication-factory">16.15.4. SASL Authentication Factory</h4>
 <div class="paragraph">
 <p>The architecture of the two authentication factories if very similar so a SASL authentication factory can be defined in the same way as the HTTP equivalent.
 However, as EXTERNAL SASL mechanism does not do any certificate verification, there is no need for configuring SASL server factory.</p>
@@ -9107,7 +9602,7 @@ However, as EXTERNAL SASL mechanism does not do any certificate verification, th
 </div>
 </div>
 <div class="sect3">
-<h4 id="ssl-context">13.15.5. SSL Context</h4>
+<h4 id="ssl-context">16.15.5. SSL Context</h4>
 <div class="paragraph">
 <p>The SSL context was already defined, but we need to modify it to not fail on client certificate authentication failure, but to fallback to password authentication.</p>
 </div>
@@ -9138,7 +9633,7 @@ However, as EXTERNAL SASL mechanism does not do any certificate verification, th
 </div>
 </div>
 <div class="sect3">
-<h4 id="using-for-management">13.15.6. Using for Management</h4>
+<h4 id="using-for-management">16.15.6. Using for Management</h4>
 <div class="paragraph">
 <p>At this point the management interfaces can be updated to use the newly defined resources, we need to add references to the two new authentication factories and the SSL context, we can also remove the existing reference to the legacy security realm. As this is modifying existing interfaces a server reload will also be required.</p>
 </div>
@@ -9258,7 +9753,7 @@ However, as EXTERNAL SASL mechanism does not do any certificate verification, th
 </div>
 </div>
 <div class="sect2">
-<h3 id="documentation-still-needed">13.16. Documentation Still Needed</h3>
+<h3 id="documentation-still-needed">16.16. Documentation Still Needed</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -9280,8 +9775,8 @@ for example, Infinispan cache cannot be used, any others?</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 14.0.0.Final<br>
-Last updated 2018-08-23 15:27:43 CDT
+Version 15.0.0.Final<br>
+Last updated 2018-11-08 14:02:51 PST
 </div>
 </div>
 </body>

@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>WildFly Admin Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly developer team</span><br>
-<span id="revnumber">version 14.0.0.Final,</span>
-<span id="revdate">2018-08-30T23:10:31Z</span>
+<span id="revnumber">version 15.0.0.Final,</span>
+<span id="revdate">2018-11-30T23:13:08Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Admin guide</div>
@@ -607,14 +607,16 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#Undertow">9.7. Undertow subsystem configuration</a></li>
 <li><a href="#Messaging">9.8. Messaging configuration</a></li>
 <li><a href="#MicroProfile_Config_SmallRye">9.9. MicroProfile Config Subsystem Configuration</a></li>
-<li><a href="#Security">9.10. Security subsystem configuration</a></li>
-<li><a href="#Web_services">9.11. Web services configuration</a></li>
-<li><a href="#Resource_adapters">9.12. Resource adapters</a></li>
-<li><a href="#JSF">9.13. JSF Configuration</a></li>
-<li><a href="#JMX">9.14. JMX subsystem configuration</a></li>
-<li><a href="#Deployment_Scanner">9.15. Deployment Scanner configuration</a></li>
-<li><a href="#Core_Management">9.16. Core Management Subsystem Configuration</a></li>
-<li><a href="#Simple_configuration_subsystems">9.17. Simple configuration subsystems</a></li>
+<li><a href="#MicroProfile_Health_SmallRye">9.10. MicroProfile Health Subsystem Configuration</a></li>
+<li><a href="#MicroProfile_OpenTracing_SmallRye">9.11. MicroProfile OpenTracing Subsystem Configuration</a></li>
+<li><a href="#Security">9.12. Security subsystem configuration</a></li>
+<li><a href="#Web_services">9.13. Web services configuration</a></li>
+<li><a href="#Resource_adapters">9.14. Resource adapters</a></li>
+<li><a href="#JSF">9.15. JSF Configuration</a></li>
+<li><a href="#JMX">9.16. JMX subsystem configuration</a></li>
+<li><a href="#Deployment_Scanner">9.17. Deployment Scanner configuration</a></li>
+<li><a href="#Core_Management">9.18. Core Management Subsystem Configuration</a></li>
+<li><a href="#Simple_configuration_subsystems">9.19. Simple configuration subsystems</a></li>
 </ul>
 </li>
 <li><a href="#Domain_Setup">10. Domain Setup</a>
@@ -1361,7 +1363,7 @@ invoked via the HTTP API, the JSON representation of a <code>ModelNode</code>.)<
 </div>
 <div class="paragraph">
 <p>Every resource except the root resource will have an <code>add</code> operation and
-should have a <code>remove</code> operation ("should" because in WildFly 14 many do
+should have a <code>remove</code> operation ("should" because in WildFly 15 many do
 not). The parameters for the <code>add</code> operation vary depending on the
 resource. The <code>remove</code> operation has no parameters.</p>
 </div>
@@ -2928,6 +2930,19 @@ then the last entry from the search history is used.</p>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>There are two possible ways <strong>to disable</strong> the output paging and write the whole output of the commands at once:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>--no-output-paging</em> command line parameter will disable the output paging;</p>
+</li>
+<li>
+<p>Add <em>&lt;output-paging&gt;false&lt;output-paging&gt;</em> in <code>jboss-cli.xml</code>.</p>
+</li>
+</ul>
+</div>
 <div class="admonitionblock warning">
 <table>
 <tr>
@@ -3704,7 +3719,7 @@ we add role based authorization checks to the management model.</p>
 <div class="paragraph">
 <p>After a realm has been defined it needs to be associated with an inbound
 or outbound connection for it to be used, the following are some
-examples where these associations are used within the WildFly 14
+examples where these associations are used within the WildFly 15
 configuration.</p>
 </div>
 <div class="sect3">
@@ -5153,7 +5168,7 @@ the <code>search-credential</code> attribute.  This element supports the followi
 <div class="sect2">
 <h3 id="Security_Realms_Plugins"><a class="link" href="#Security_Realms_Plugins">6.9. Plug Ins</a></h3>
 <div class="paragraph">
-<p>Within WildFly 14 for communication with the management interfaces and
+<p>Within WildFly 15 for communication with the management interfaces and
 for other services exposed using Remoting where username / password
 authentication is used the use of Digest authentication is preferred
 over the use of HTTP Basic or SASL Plain so that we can avoid the
@@ -5178,7 +5193,7 @@ support loading a users password, hash and roles from a custom store to
 allow different stores to be implemented without forcing the
 authentication back to plain text variant, this article describes the
 requirements for a plug in and shows a simple example plug-in for use
-with WildFly 14.</p>
+with WildFly 15.</p>
 </div>
 <div class="paragraph">
 <p>When implementing a plug in there are two steps to the authentication
@@ -5340,7 +5355,7 @@ used for the authorization step.</p>
 <h4 id="installing-and-configuring-a-plug-in"><a class="link" href="#installing-and-configuring-a-plug-in">6.9.4. Installing and Configuring a Plug-In</a></h4>
 <div class="paragraph">
 <p>The next step of this article describes the steps to implement a plug-in
-provider and how to make it available within WildFly 14 and how to
+provider and how to make it available within WildFly 15 and how to
 configure it. Example configuration and an example implementation are
 shown to illustrate this.</p>
 </div>
@@ -5454,7 +5469,7 @@ PlugInProvider implementation class.</p>
 <h5 id="package-as-a-module"><a class="link" href="#package-as-a-module">Package as a Module</a></h5>
 <div class="paragraph">
 <p>To make the <code>PlugInProvider</code> available to the application it is bundled
-as a module and added to the modules already shipped with WildFly 14.</p>
+as a module and added to the modules already shipped with WildFly 15.</p>
 </div>
 <div class="paragraph">
 <p>To add as a module we first need a <code>module.xml</code>: -</p>
@@ -8846,8 +8861,9 @@ will be created and used internally.</p>
 </div>
 <div class="paragraph">
 <p>The mandatory <code>core-threads</code> provides the number of threads to keep in
-the executor&#8217;s pool, even if they are idle. A value of <code>0</code> means there
-is no limit.</p>
+the executor&#8217;s pool, even if they are idle. If this is not defined or
+is set to 0, the core pool size will be calculated based on the number
+of available processors.</p>
 </div>
 <div class="paragraph">
 <p>The optional <code>queue-length</code> indicates the number of tasks that can be
@@ -9432,7 +9448,7 @@ you installed.</p>
 <div class="sect3">
 <h4 id="jdbc-driver-installation"><a class="link" href="#jdbc-driver-installation">9.3.1. JDBC Driver Installation</a></h4>
 <div class="paragraph">
-<p>The recommended way to install a JDBC driver into WildFly 14 is to deploy
+<p>The recommended way to install a JDBC driver into WildFly 15 is to deploy
 it as a regular JAR deployment. The reason for this is that when you run
 WildFly in domain mode, deployments are automatically propagated to all
 servers to which the deployment applies; thus distribution of the driver
@@ -12458,7 +12474,7 @@ content.</p>
 </div>
 <div class="paragraph">
 <p>The full details of all configuration options available can be found in
-the <a href="https://wildscribe.github.io/WildFly/14/subsystem/undertow/index.html">subsystem reference</a>.</p>
+the <a href="https://wildscribe.github.io/WildFly/15/subsystem/undertow/index.html">subsystem reference</a>.</p>
 </div>
 </div>
 </div>
@@ -12917,7 +12933,7 @@ the command line.</p>
 <div class="sect3">
 <h4 id="deployment-of--jms.xml-files"><a class="link" href="#deployment-of--jms.xml-files">9.8.10. Deployment of -jms.xml files</a></h4>
 <div class="paragraph">
-<p>Starting with WildFly 14, you have the ability to deploy a -jms.xml file
+<p>Starting with WildFly 15, you have the ability to deploy a -jms.xml file
 defining JMS destinations, e.g.:</p>
 </div>
 <div class="listingblock">
@@ -13296,7 +13312,7 @@ subsystem (which allows to inject the JMS resources using the
 <div class="paragraph">
 <p>WildFly 10 supports both backwards and forwards compatibility with
 legacy versions that were using HornetQ as their messaging brokers (such
-as JBoss AS7, WildFly 14 &amp; 9).<br>
+as JBoss AS7, WildFly 15 &amp; 9).<br>
 These two compatibility modes are provided by the ActiveMQ Artemis
 project that supports the HornetQ&#8217;s CORE protocol:</p>
 </div>
@@ -13911,17 +13927,140 @@ or by having CDI Bean annotation) to be able to use MicroProfile Config in their
 </div>
 </div>
 </div>
-<div class="paragraph">
-<p>[[MicroProfile_OpenTracing SmallRye]]
-= MicroProfile OpenTracing Subsystem Configuration</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="MicroProfile_Health_SmallRye"><a class="link" href="#MicroProfile_Health_SmallRye">9.10. MicroProfile Health Subsystem Configuration</a></h3>
+<div class="paragraph">
+<p>Support for <a href="https://microprofile.io/project/eclipse/microprofile-health">Eclipse MicroProfile Health</a> is provided by
+ the <em>microprofile-health-smallrye</em> subsystem.</p>
+</div>
+<div class="sect3">
+<h4 id="required-extension"><a class="link" href="#required-extension">9.10.1. Required Extension</a></h4>
+<div class="paragraph">
+<p>This extension is included in the standalone configurations included in the
+WildFly distribution.</p>
+</div>
+<div class="paragraph">
+<p>You can also add the extension to a configuration without it either by adding
+an <code>&lt;extension module="org.wildfly.extension.microprofile.health-smallrye"/&gt;</code>
+element to the xml or by using the following CLI operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby">[standalone<span class="instance-variable">@localhost</span>:<span class="integer">9990</span> /]/extension=org.wildfly.extension.microprofile.health-<span class="key">smallrye</span>:add</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="management-operation"><a class="link" href="#management-operation">9.10.2. Management Operation</a></h4>
+<div class="paragraph">
+<p>The healthiness of the application server can be queried by calling the <code>check</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>[standalone@localhost:9990 /] /subsystem=microprofile-health-smallrye:check
+{
+    "outcome" =&gt; "success", <i class="conum" data-value="1"></i><b>(1)</b>
+    "result" =&gt; {
+        "outcome" =&gt; "UP", <i class="conum" data-value="2"></i><b>(2)</b>
+        "checks" =&gt; []
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>this <code>outcome</code> means that the management operation is successful</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>this <code>outcome</code> corresponds to the health check, <code>UP</code> if the application server is healthy, <code>DOWN</code> else.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="http-endpoint"><a class="link" href="#http-endpoint">9.10.3. HTTP Endpoint</a></h4>
+<div class="paragraph">
+<p>The Health HTTP endpoint is accessible on WildFly HTTP management interface <a href="http://localhost:9990/health">http://localhost:9990/health</a>.</p>
+</div>
+<div class="paragraph">
+<p>Secured access to the HTTP endpoint is controlled by the <code>security-enabled</code> attribute of the <code>/subsystem=microprofile-health-smallrye</code> resource.
+If it is set to <code>true</code>, the HTTP client must be authenticated.</p>
+</div>
+<div class="paragraph">
+<p>If the application server is healthy, it will return a <code>200 OK</code> response:</p>
+</div>
+<hr>
+<div class="paragraph">
+<p>$ curl -v <a href="http://localhost:9990/health" class="bare">http://localhost:9990/health</a>
+&lt; HTTP/1.1 200 OK
+&#8230;&#8203;
+{"outcome":"UP","checks":[]}
+---</p>
+</div>
+<div class="paragraph">
+<p>If the application server (and its deployment) is not healthy, it returns <code>503 Service Unavailable</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ curl -v http://localhost:9990/health
+&lt; HTTP/1.1 503 Service Unavailable
+...
+{"outcome":"DOWN","checks":[{"name":"myFailingProbe","state":"DOWN","data":{"foo":"bar"}}]}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If security has been enabled, the HTTP client must pass the credentials corresponding to a management user
+created by the <code>add-user</code> script. For example:</p>
+</div>
+<hr>
+<div class="paragraph">
+<p>$ curl -v --digest -u myadminuser:myadminpassword <a href="http://localhost:9990/health" class="bare">http://localhost:9990/health</a>
+&lt; HTTP/1.1 200 OK
+&#8230;&#8203;
+{"outcome":"UP","checks":[]}
+---</p>
+</div>
+<div class="paragraph">
+<p>If the authentication fails, the  server will reply with a <code>401 NOT AUTHORIZED</code> response.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="component-reference-3"><a class="link" href="#component-reference-3">9.10.4. Component Reference</a></h4>
+<div class="paragraph">
+<p>The Eclipse MicroProfile Health is implemented by the SmallRye Health project.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://microprofile.io/project/eclipse/microprofile-health">Eclipse MicroProfile Health</a></p>
+</li>
+<li>
+<p><a href="http://github.com/smallrye/smallrye-health/">SmallRye Health</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Unresolved directive in _admin-guide/Subsystem_configuration.adoc - include::subsystem-configuration/MicroProfile_Metric.adoc[]</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="MicroProfile_OpenTracing_SmallRye"><a class="link" href="#MicroProfile_OpenTracing_SmallRye">9.11. MicroProfile OpenTracing Subsystem Configuration</a></h3>
 <div class="paragraph">
 <p>Support for <a href="https://microprofile.io/project/eclipse/microprofile-opentracing">Eclipse MicroProfile OpenTracing</a> is
 provided as a Tech Preview feature by the <em>microprofile-opentracing-smallrye</em> subsystem.</p>
 </div>
-</div>
 <div class="sect3">
-<h4 id="required-extension"><a class="link" href="#required-extension">9.9.5. Required Extension</a></h4>
+<h4 id="required-extension"><a class="link" href="#required-extension">9.11.1. Required Extension</a></h4>
 <div class="paragraph">
 <p>This extension is included in the standard configurations included in the WildFly distribution.</p>
 </div>
@@ -13947,7 +14086,7 @@ element to the xml or by using the following CLI operation:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="supported-instrumentation-libraries"><a class="link" href="#supported-instrumentation-libraries">9.9.6. Supported instrumentation libraries</a></h4>
+<h4 id="supported-instrumentation-libraries"><a class="link" href="#supported-instrumentation-libraries">9.11.2. Supported instrumentation libraries</a></h4>
 <div class="paragraph">
 <p>WildFly&#8217;s MicroProfile OpenTracing subsystem implements MicroProfile 1.1, which includes support for tracing JAX-RS and
 CDI.</p>
@@ -14011,7 +14150,7 @@ existing trace.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="component-reference-3"><a class="link" href="#component-reference-3">9.9.7. Component Reference</a></h4>
+<h4 id="component-reference-4"><a class="link" href="#component-reference-4">9.11.3. Component Reference</a></h4>
 <div class="paragraph">
 <p>The Eclipse MicroProfile OpenTracing is implemented by the SmallRye OpenTracing project.</p>
 </div>
@@ -14032,11 +14171,11 @@ existing trace.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Security"><a class="link" href="#Security">9.10. Security subsystem configuration</a></h3>
+<h3 id="Security"><a class="link" href="#Security">9.12. Security subsystem configuration</a></h3>
 <div class="paragraph">
 <p>The security subsystem is the subsystem that brings the security
 services provided by <a href="http://www.jboss.org/picketbox">PicketBox</a> to the
-WildFly 14 server instances.</p>
+WildFly 15 server instances.</p>
 </div>
 <div class="paragraph">
 <p>If you are looking to secure the management interfaces for the
@@ -14046,7 +14185,7 @@ management interfaces themselves are not run within a WildFly process so
 use a custom configuration.</p>
 </div>
 <div class="sect3">
-<h4 id="structure-of-the-security-subsystem"><a class="link" href="#structure-of-the-security-subsystem">9.10.1. Structure of the Security Subsystem</a></h4>
+<h4 id="structure-of-the-security-subsystem"><a class="link" href="#structure-of-the-security-subsystem">9.12.1. Structure of the Security Subsystem</a></h4>
 <div class="paragraph">
 <p>When deploying applications to WildFly most of the time it is likely
 that you would be deploying a web application or EJBs and just require a
@@ -14099,7 +14238,7 @@ credentials, roles or attributes to the authenticated subject.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="security-subsystem-configuration"><a class="link" href="#security-subsystem-configuration">9.10.2. Security Subsystem Configuration</a></h4>
+<h4 id="security-subsystem-configuration"><a class="link" href="#security-subsystem-configuration">9.12.2. Security Subsystem Configuration</a></h4>
 <div class="paragraph">
 <p>By default a lot of defaults have already been selected for the security
 subsystem and unless there is a specific implementation detail you need
@@ -14757,7 +14896,7 @@ need to be defined.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Security_Authentication_Modules"><a class="link" href="#Security_Authentication_Modules">9.10.3. Authentication Modules</a></h4>
+<h4 id="Security_Authentication_Modules"><a class="link" href="#Security_Authentication_Modules">9.12.3. Authentication Modules</a></h4>
 <div class="paragraph">
 <p>In this section we will describe each login module&#8217;s options available.</p>
 </div>
@@ -15010,7 +15149,7 @@ select Role, RoleGroup from Roles where PrincipalID=?</p></td>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Web_services"><a class="link" href="#Web_services">9.11. Web services configuration</a></h3>
+<h3 id="Web_services"><a class="link" href="#Web_services">9.13. Web services configuration</a></h3>
 <div class="paragraph">
 <p>JBossWS components are provided to the application server through the
 webservices subsystem. JBossWS components handle the processing of WS
@@ -15020,7 +15159,7 @@ subsystem is provided in the server&#8217;s domain and standalone
 configuration files.</p>
 </div>
 <div class="sect3">
-<h4 id="structure-of-the-webservices-subsystem"><a class="link" href="#structure-of-the-webservices-subsystem">9.11.1. Structure of the webservices subsystem</a></h4>
+<h4 id="structure-of-the-webservices-subsystem"><a class="link" href="#structure-of-the-webservices-subsystem">9.13.1. Structure of the webservices subsystem</a></h4>
 <div class="sect4">
 <h5 id="published-endpoint-address"><a class="link" href="#published-endpoint-address">Published endpoint address</a></h5>
 <div class="paragraph">
@@ -15321,7 +15460,7 @@ deployment classloader must to be able to load the handler class.
 </div>
 </div>
 <div class="sect3">
-<h4 id="runtime-information"><a class="link" href="#runtime-information">9.11.2. Runtime information</a></h4>
+<h4 id="runtime-information"><a class="link" href="#runtime-information">9.13.2. Runtime information</a></h4>
 <div class="paragraph">
 <p>Each web service endpoint is exposed through the deployment that
 provides the endpoint implementation. Each endpoint can be queried as a
@@ -15354,7 +15493,7 @@ context and a WSDL Url:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ws-component-reference"><a class="link" href="#ws-component-reference">9.11.3. Component Reference</a></h4>
+<h4 id="ws-component-reference"><a class="link" href="#ws-component-reference">9.13.3. Component Reference</a></h4>
 <div class="paragraph">
 <p>The web service subsystem is provided by the JBossWS project. For a
 detailed description of the available configuration properties, please
@@ -15377,7 +15516,7 @@ consult the project documentation.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Resource_adapters"><a class="link" href="#Resource_adapters">9.12. Resource adapters</a></h3>
+<h3 id="Resource_adapters"><a class="link" href="#Resource_adapters">9.14. Resource adapters</a></h3>
 <div class="paragraph">
 <p>Resource adapters are configured through the <em>resource-adapters</em>
 subsystem. Declaring a new resource adapter consists of two separate
@@ -15385,7 +15524,7 @@ steps: You would need to deploy the .rar archive and define a resource
 adapter entry in the subsystem.</p>
 </div>
 <div class="sect3">
-<h4 id="resource-adapter-definitions"><a class="link" href="#resource-adapter-definitions">9.12.1. Resource Adapter Definitions</a></h4>
+<h4 id="resource-adapter-definitions"><a class="link" href="#resource-adapter-definitions">9.14.1. Resource Adapter Definitions</a></h4>
 <div class="paragraph">
 <p>The resource adapter itself is defined within the subsystem
 <em>resource-adapters</em>:</p>
@@ -15434,14 +15573,14 @@ adapter entry in the subsystem.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ra-using-security-domains"><a class="link" href="#ra-using-security-domains">9.12.2. Using security domains</a></h4>
+<h4 id="ra-using-security-domains"><a class="link" href="#ra-using-security-domains">9.14.2. Using security domains</a></h4>
 <div class="paragraph">
 <p>Information about using security domains can be found at
 <a href="https://community.jboss.org/wiki/JBossAS7SecurityDomainModel" class="bare">https://community.jboss.org/wiki/JBossAS7SecurityDomainModel</a></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="automatic-activation-of-resource-adapter-archives"><a class="link" href="#automatic-activation-of-resource-adapter-archives">9.12.3. Automatic activation of resource adapter archives</a></h4>
+<h4 id="automatic-activation-of-resource-adapter-archives"><a class="link" href="#automatic-activation-of-resource-adapter-archives">9.14.3. Automatic activation of resource adapter archives</a></h4>
 <div class="paragraph">
 <p>A resource adapter archive can be automatically activated with a
 configuration by including an META-INF/ironjacamar.xml in the archive.</p>
@@ -15452,7 +15591,7 @@ configuration by including an META-INF/ironjacamar.xml in the archive.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ra-component-reference"><a class="link" href="#ra-component-reference">9.12.4. Component Reference</a></h4>
+<h4 id="ra-component-reference"><a class="link" href="#ra-component-reference">9.14.4. Component Reference</a></h4>
 <div class="paragraph">
 <p>The resource adapter subsystem is provided by the
 <a href="http://www.jboss.org/ironjacamar">IronJacamar</a> project. For a detailed
@@ -15490,14 +15629,14 @@ is <code>subsystem=batch-jberet</code>.
 </div>
 </div>
 <div class="sect3">
-<h4 id="default-subsystem-configuration"><a class="link" href="#default-subsystem-configuration">9.12.5. Default Subsystem Configuration</a></h4>
+<h4 id="default-subsystem-configuration"><a class="link" href="#default-subsystem-configuration">9.14.5. Default Subsystem Configuration</a></h4>
 <div class="paragraph">
 <p>For up to date information about subsystem configuration options see
 <a href="http://wildscribe.github.io/" class="bare">http://wildscribe.github.io/</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="security"><a class="link" href="#security">9.12.6. Security</a></h4>
+<h4 id="security"><a class="link" href="#security">9.14.6. Security</a></h4>
 <div class="paragraph">
 <p>A new <code>security-domain</code> attribute was added to the <code>batch-jberet</code>
 subsystem to allow batch jobs to be executed under that security domain.
@@ -15537,7 +15676,7 @@ deployment resource, for example
 </div>
 </div>
 <div class="sect3">
-<h4 id="deployment-descriptors"><a class="link" href="#deployment-descriptors">9.12.7. Deployment Descriptors</a></h4>
+<h4 id="deployment-descriptors"><a class="link" href="#deployment-descriptors">9.14.7. Deployment Descriptors</a></h4>
 <div class="paragraph">
 <p>There are no deployment descriptors for configuring a batch environment
 defined by the <a href="https://www.jcp.org/en/jsr/detail?id=352">JSR-352
@@ -15579,7 +15718,7 @@ deployment descriptor.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="deployment-resources"><a class="link" href="#deployment-resources">9.12.8. Deployment Resources</a></h4>
+<h4 id="deployment-resources"><a class="link" href="#deployment-resources">9.14.8. Deployment Resources</a></h4>
 <div class="paragraph">
 <p>Some subsystems in <a href="http://wildfly.org">WildFly</a> register runtime
 resources for deployments. The batch subsystem registers jobs and
@@ -15769,7 +15908,7 @@ and attributes (arguments) on operations.
 </div>
 </div>
 <div class="sect2">
-<h3 id="JSF"><a class="link" href="#JSF">9.13. JSF Configuration</a></h3>
+<h3 id="JSF"><a class="link" href="#JSF">9.15. JSF Configuration</a></h3>
 <div class="quoteblock abstract">
 <blockquote>
 JSF configuration is handled by the JSF subsystem. The JSF subsystem
@@ -15785,7 +15924,7 @@ attribute.
 </blockquote>
 </div>
 <div class="sect3">
-<h4 id="installing-a-new-jsf-implementation-manually"><a class="link" href="#installing-a-new-jsf-implementation-manually">9.13.1. Installing a new JSF implementation manually</a></h4>
+<h4 id="installing-a-new-jsf-implementation-manually"><a class="link" href="#installing-a-new-jsf-implementation-manually">9.15.1. Installing a new JSF implementation manually</a></h4>
 <div class="paragraph">
 <p>A new JSF implementation can be manually installed as follows:</p>
 </div>
@@ -15902,7 +16041,7 @@ The new JSF implementation should appear in the output of this command.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="changing-the-default-jsf-implementation"><a class="link" href="#changing-the-default-jsf-implementation">9.13.2. Changing the default JSF implementation</a></h4>
+<h4 id="changing-the-default-jsf-implementation"><a class="link" href="#changing-the-default-jsf-implementation">9.15.2. Changing the default JSF implementation</a></h4>
 <div class="paragraph">
 <p>The following CLI command can be used to make a newly installed JSF
 implementation the default JSF implementation used by WildFly:</p>
@@ -15917,7 +16056,7 @@ implementation the default JSF implementation used by WildFly:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="configuring-a-jsf-app-to-use-a-non-default-jsf-implementation"><a class="link" href="#configuring-a-jsf-app-to-use-a-non-default-jsf-implementation">9.13.3. Configuring a JSF app to use a non-default JSF implementation</a></h4>
+<h4 id="configuring-a-jsf-app-to-use-a-non-default-jsf-implementation"><a class="link" href="#configuring-a-jsf-app-to-use-a-non-default-jsf-implementation">9.15.3. Configuring a JSF app to use a non-default JSF implementation</a></h4>
 <div class="paragraph">
 <p>A JSF app can be configured to use an installed JSF implementation
 that&#8217;s not the default implementation by adding a
@@ -15940,7 +16079,7 @@ implementation will be used for that app.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="disallowing-doctype-declarations"><a class="link" href="#disallowing-doctype-declarations">9.13.4. Disallowing DOCTYPE declarations</a></h4>
+<h4 id="disallowing-doctype-declarations"><a class="link" href="#disallowing-doctype-declarations">9.15.4. Disallowing DOCTYPE declarations</a></h4>
 <div class="paragraph">
 <p>The following CLI commands can be used to disallow DOCTYPE declarations
 in JSF deployments:</p>
@@ -15967,7 +16106,7 @@ to the deployment&#8217;s <code>web.xml</code> file:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="JMX"><a class="link" href="#JMX">9.14. JMX subsystem configuration</a></h3>
+<h3 id="JMX"><a class="link" href="#JMX">9.16. JMX subsystem configuration</a></h3>
 <div class="paragraph">
 <p>The JMX subsystem registers a service with the Remoting endpoint so that
 remote access to JMX can be obtained over the exposed Remoting
@@ -16082,7 +16221,7 @@ dependencies</p></td>
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="audit-logging"><a class="link" href="#audit-logging">9.14.1. Audit logging</a></h4>
+<h4 id="audit-logging"><a class="link" href="#audit-logging">9.16.1. Audit logging</a></h4>
 <div class="paragraph">
 <p>Audit logging for the JMX MBean server managed by the JMX subsystem. The
 resource is at <code>/subsystem=jmx/configuration=audit-log</code> and its
@@ -16238,7 +16377,7 @@ field will be populated with Throwable.getMessage()</p></td>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Deployment_Scanner"><a class="link" href="#Deployment_Scanner">9.15. Deployment Scanner configuration</a></h3>
+<h3 id="Deployment_Scanner"><a class="link" href="#Deployment_Scanner">9.17. Deployment Scanner configuration</a></h3>
 <div class="paragraph">
 <p>The deployment scanner is only used in standalone mode. Its job is to
 monitor a directory for new files and to deploy those files. It can be
@@ -16397,7 +16536,7 @@ off scanning you can do</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Core_Management"><a class="link" href="#Core_Management">9.16. Core Management Subsystem Configuration</a></h3>
+<h3 id="Core_Management"><a class="link" href="#Core_Management">9.18. Core Management Subsystem Configuration</a></h3>
 <div class="paragraph">
 <p>The core management subsystem is composed services used to manage the
 server or monitor its status.<br>
@@ -16414,7 +16553,7 @@ The core management subsystem configuration may be used to:</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="lifecycle-listener"><a class="link" href="#lifecycle-listener">9.16.1. Lifecycle listener</a></h4>
+<h4 id="lifecycle-listener"><a class="link" href="#lifecycle-listener">9.18.1. Lifecycle listener</a></h4>
 <div class="paragraph">
 <p>You can create an implementation of
 <em>org.wildfly.extension.core.management.client.ProcessStateListener</em>
@@ -16498,7 +16637,7 @@ let&#8217;s add the module to the wildfly modules :</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="configuration-changes"><a class="link" href="#configuration-changes">9.16.2. Configuration changes</a></h4>
+<h4 id="configuration-changes"><a class="link" href="#configuration-changes">9.18.2. Configuration changes</a></h4>
 <div class="paragraph">
 <p>You can use the core management subsystem to enable and configure an
 <strong>in-memory</strong> history of the last configuration changes.<br>
@@ -16542,7 +16681,7 @@ For example to track the last 5 configuration changes let&#8217;s active this
 </div>
 </div>
 <div class="sect2">
-<h3 id="Simple_configuration_subsystems"><a class="link" href="#Simple_configuration_subsystems">9.17. Simple configuration subsystems</a></h3>
+<h3 id="Simple_configuration_subsystems"><a class="link" href="#Simple_configuration_subsystems">9.19. Simple configuration subsystems</a></h3>
 <div class="paragraph">
 <p>The following subsystems currently have no configuration beyond its root
 element in the configuration</p>
@@ -21567,6 +21706,22 @@ m, h, KB, MB, TB. See the
 org.jboss.as:jboss-as-controller-client artifact for a listing of legal
 measurement units..</p>
 </li>
+<li>
+<p><code>filesystem-path</code> – boolean – a flag to indicate that the attribute is a
+path on the filesystem.</p>
+</li>
+<li>
+<p><code>attached-streams</code> – boolean – a flag to indicate that the attribute is a
+stream id to an attached stream.</p>
+</li>
+<li>
+<p><code>relative-to</code> – boolean – a flag to indicate that the attribute is a
+relative path.</p>
+</li>
+<li>
+<p><code>feature-reference</code> – boolean – a flag to indicate that the attribute is a
+reference to a provisioning feature via a capability.</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -22453,7 +22608,7 @@ to the process it was managing and release other resources:</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-request"><a class="link" href="#format-of-a-detyped-operation-request">12.5.3. Format of a Detyped Operation Request</a></h4>
 <div class="paragraph">
-<p>The basic method a user of the WildFly 14 programmatic management API
+<p>The basic method a user of the WildFly 15 programmatic management API
 would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -22973,7 +23128,7 @@ header just like this :</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-response"><a class="link" href="#format-of-a-detyped-operation-response">12.5.4. Format of a Detyped Operation Response</a></h4>
 <div class="paragraph">
-<p>As noted previously, the basic method a user of the WildFly 14
+<p>As noted previously, the basic method a user of the WildFly 15
 programmatic management API would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -23879,7 +24034,7 @@ script (e.g. 'bin/jboss-admin.bat --connect command=:shutdown').</p>
 <div class="paragraph">
 <p>To avoid "Press any key to continue &#8230;&#8203;" message you need to specify
 NOPAUSE variable. Call 'set NOPAUSE=true' in command line before running
-any WildFly 14 .bat script or include it in your custom script before
+any WildFly 15 .bat script or include it in your custom script before
 invoking scripts from WildFly.</p>
 </div>
 </div>
@@ -24366,8 +24521,8 @@ for a complete description of the command.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 14.0.0.Final<br>
-Last updated 2018-08-23 15:27:43 CDT
+Version 15.0.0.Final<br>
+Last updated 2018-09-06 09:09:40 PDT
 </div>
 </div>
 </body>
