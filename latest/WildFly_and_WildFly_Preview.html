@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>WildFly and WildFly Preview</h1>
 <div class="details">
 <span id="author" class="author">WildFly team</span><br>
-<span id="revnumber">version 24.0.0.Final,</span>
-<span id="revdate">2021-06-17T00:13:37Z</span>
+<span id="revnumber">version 25.0.0.Final,</span>
+<span id="revdate">2021-10-04T20:38:36Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly and WildFly Preview</div>
@@ -734,14 +734,6 @@ implementation. Most EE 8 and MicroProfile applications are expected to run well
 certified compatible.</p>
 </li>
 <li>
-<p>The legacy security subsytem is not supported. The standard configurations are all based on Elytron security.
-Our goal is to remove the underlying Picketbox libraries altogether. When this is done, security vault support will be
-removed as well. Elytron credential stores should be used.</p>
-</li>
-<li>
-<p>The security vault tool (used to manipulate vault contents) is not provided.</p>
-</li>
-<li>
 <p>The standard configuration files do not configure an embedded messaging broker. Instead they configure the
 'messaging-activemq' subsystem to provide connections to a remote ActiveMQ Artemis broker. (It&#8217;s a task for the user to
 run such a broker or to update the config to integrate with a different broker.) We want WildFly out-of-the-box to be
@@ -753,14 +745,11 @@ embedded broker is still supported. We&#8217;ve added to the $WILDFLY_HOME/docs/
 <code>standalone-activemq-embedded.xml</code> configuration showing its use.</p>
 </li>
 <li>
-<p>The Picketlink extension is removed.</p>
-</li>
-<li>
 <p>The JSR-77 extension is removed.</p>
 </li>
 <li>
 <p>The extensions providing the legacy subsystems 'cmp', 'config-admin', 'jacorb', 'jaxr', 'messaging' (HornetQ based),
-and 'web' (not 'undertow') are removed. These were only used for domain mode to allow a Domain Controller to control
+'security' (not 'elytron'), and 'web' (not 'undertow') are removed. These were only used for domain mode to allow a Domain Controller to control
 hosts running much earlier WildFly versions where servers using these subsystems were supported.</p>
 </li>
 </ul>
@@ -799,8 +788,8 @@ and WildFly Preview won&#8217;t modify those files as we don&#8217;t regard them
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 24.0.0.Final<br>
-Last updated 2021-06-16 12:05:21 CDT
+Version 25.0.0.Final<br>
+Last updated 2021-10-04 10:00:59 CDT
 </div>
 </div>
 </body>

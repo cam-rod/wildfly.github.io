@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>High Availability Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly clustering team</span><br>
-<span id="revnumber">version 24.0.0.Final,</span>
-<span id="revdate">2021-06-17T00:13:37Z</span>
+<span id="revnumber">version 25.0.0.Final,</span>
+<span id="revdate">2021-10-04T20:38:36Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">High Availability Guide</div>
@@ -4510,8 +4510,8 @@ move on and you will get the points step by step.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>unzip wildfly-24.0.0.Final.zip
-cd wildfly-24.0.0.Final/bin
+<pre class="CodeRay highlight"><code>unzip wildfly-25.0.0.Final.zip
+cd wildfly-25.0.0.Final/bin
 ./domain.sh</code></pre>
 </div>
 </div>
@@ -4521,12 +4521,12 @@ mode:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>wildfly-24.0.0.Final/bin$ ./domain.sh
+<pre class="CodeRay highlight"><code>wildfly-25.0.0.Final/bin$ ./domain.sh
 =========================================================================
  
   JBoss Bootstrap Environment
  
-  JBOSS_HOME: /Users/weli/Downloads/wildfly-24.0.0.Final
+  JBOSS_HOME: /Users/weli/Downloads/wildfly-25.0.0.Final
  
   JAVA: /Library/Java/Home/bin/java
  
@@ -4535,7 +4535,7 @@ mode:</p>
 =========================================================================
 ...
  
-[Server:server-two] 14:46:12,375 INFO  [org.jboss.as] (Controller Boot Thread) JBAS015874: WildFly 24.0.0.Final "Kenny" started in 8860ms - Started 210 of 258 services (824 services are lazy, passive or on-demand)</code></pre>
+[Server:server-two] 14:46:12,375 INFO  [org.jboss.as] (Controller Boot Thread) JBAS015874: WildFly 25.0.0.Final "Kenny" started in 8860ms - Started 210 of 258 services (825 services are lazy, passive or on-demand)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4649,10 +4649,11 @@ to the remote domain controller :</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;domain-controller&gt;</span>
- <span class="tag">&lt;remote</span> <span class="attribute-name">security-realm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">ManagementRealm</span><span class="delimiter">&quot;</span></span> <span class="tag">&gt;</span>
+ <span class="tag">&lt;remote</span> <span class="attribute-name">authentication-context</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">hcAuthContext</span><span class="delimiter">&quot;</span></span> <span class="tag">&gt;</span>
    <span class="tag">&lt;discovery-options&gt;</span>
      <span class="tag">&lt;static-discovery</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">master-native</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">protocol</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">remote</span><span class="delimiter">&quot;</span></span>  <span class="attribute-name">host</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">10.211.55.7</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">port</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">9999</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-     <span class="tag">&lt;static-discovery</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">master-https</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">protocol</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">https-remoting</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">host</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">10.211.55.7</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">port</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">9993</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">security-realm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">ManagementRealm</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+     <span class="tag">&lt;static-discovery</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">master-https</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">protocol</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">https-remoting</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">host</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">10.211.55.7</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">port</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">9993</span><span class="delimiter">&quot;</span></span>
+                       <span class="attribute-name">authentication-context</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">hcAuthContext</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
      <span class="tag">&lt;static-discovery</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">master-http</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">protocol</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http-remoting</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">host</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">10.211.55.7</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">port</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">9990</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
    <span class="tag">&lt;/discovery-options&gt;</span>
  <span class="tag">&lt;/remote&gt;</span>
@@ -4696,135 +4697,6 @@ you need to enable the firewall and allow access to the following ports:
 </td>
 </tr>
 </table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="security-configuration">14.3.3. Security Configuration</h4>
-<div class="paragraph">
-<p>If you start WildFly on both master and slave now, you will see the
-slave cannot be started with following error:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code>[Host Controller] 20:31:24,575 ERROR [org.jboss.remoting.remote] (Remoting "endpoint" read-1) JBREM000200: Remote connection failed: javax.security.sasl.SaslException: Authentication failed: all available authentication mechanisms failed
-[Host Controller] 20:31:24,579 WARN  [org.jboss.as.host.controller] (Controller Boot Thread) JBAS010900: Could not connect to remote domain controller 10.211.55.7:9999
-[Host Controller] 20:31:24,582 ERROR [org.jboss.as.host.controller] (Controller Boot Thread) JBAS010901: Could not connect to master. Aborting. Error was: java.lang.IllegalStateException: JBAS010942: Unable to connect due to authentication failure.</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Because we haven&#8217;t properly set up the authentication between master and
-slave. Now let&#8217;s work on it:</p>
-</div>
-<div class="sect4">
-<h5 id="master">Master</h5>
-<div class="paragraph">
-<p>In bin directory there is a script called add-user.sh, we&#8217;ll use it to
-add new users to the properties file used for domain management
-authentication:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code>./add-user.sh
- 
-Enter the details of the new user to add.
-Realm (ManagementRealm) :
-Username : admin
-Password recommendations are listed below. To modify these restrictions edit the add-user.properties configuration file.
- - The password should not be one of the following restricted values {root, admin, administrator}
- - The password should contain at least 8 characters, 1 alphabetic character(s), 1 digit(s), 1 non-alphanumeric symbol(s)
- - The password should be different from the username
-Password : passw0rd!
-Re-enter Password : passw0rd!
-The username 'admin' is easy to guess
-Are you sure you want to add user 'admin' yes/no? yes
-About to add user 'admin' for realm 'ManagementRealm'
-Is this correct yes/no? yes
-Added user 'admin' to file '/home/weli/projs/wildfly-24.0.0.Final/standalone/configuration/mgmt-users.properties'
-Added user 'admin' to file '/home/weli/projs/wildfly-24.0.0.Final/domain/configuration/mgmt-users.properties'</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>As shown above, we have created a user named 'admin' and its password is
-'passw0rd!'. Then we add another user called 'slave':</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code>./add-user.sh
- 
-Enter the details of the new user to add.
-Realm (ManagementRealm) :
-Username : slave
-Password recommendations are listed below. To modify these restrictions edit the add-user.properties configuration file.
- - The password should not be one of the following restricted values {root, admin, administrator}
- - The password should contain at least 8 characters, 1 alphabetic character(s), 1 digit(s), 1 non-alphanumeric symbol(s)
- - The password should be different from the username
-Password : passw0rd!
-Re-enter Password : passw0rd!
-What groups do you want this user to belong to? (Please enter a comma separated list, or leave blank for none)[  ]:
-About to add user 'slave' for realm 'ManagementRealm'
-Is this correct yes/no? yes
-Added user 'slave' to file '/home/weli/projs/wildfly-24.0.0.Final/standalone/configuration/mgmt-users.properties'
-Added user 'slave' to file '/home/weli/projs/wildfly-24.0.0.Final/domain/configuration/mgmt-users.properties'
-Added user 'slave' with groups  to file '/home/weli/projs/wildfly-24.0.0.Final/standalone/configuration/mgmt-groups.properties'
-Added user 'slave' with groups  to file '/home/weli/projs/wildfly-24.0.0.Final/domain/configuration/mgmt-groups.properties'
-Is this new user going to be used for one AS process to connect to another AS process?
-e.g. for a slave host controller connecting to the master or for a Remoting connection for server to server EJB calls.
-yes/no? yes
-To represent the user add the following to the server-identities definition &lt;secret value="cGFzc3cwcmQh" /&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>We will use this user for slave host to connect to master. The
-add-user.sh will let you choose the type of the user. Here we need to
-choose 'Management User' type for both 'admin' and 'slave' account.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="slave">Slave</h5>
-<div class="paragraph">
-<p>In slave we need to configure host.xml for authentication. We should
-change the security-realms section as following:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;security-realms&gt;</span>
-   <span class="tag">&lt;security-realm</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">ManagementRealm</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-       <span class="tag">&lt;server-identities&gt;</span>
-           <span class="tag">&lt;secret</span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">cGFzc3cwcmQh</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-           <span class="comment">&lt;!-- This is required for SSL remoting --&gt;</span>
-           <span class="tag">&lt;ssl&gt;</span>
-             <span class="tag">&lt;keystore</span> <span class="attribute-name">path</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">server.keystore</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">relative-to</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jboss.domain.config.dir</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">keystore-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jbossas</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jboss</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">key-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jbossas</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-           <span class="tag">&lt;/ssl&gt;</span>
-       <span class="tag">&lt;/server-identities&gt;</span>
-       <span class="tag">&lt;authentication&gt;</span>
-           <span class="tag">&lt;properties</span> <span class="attribute-name">path</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">mgmt-users.properties</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">relative-to</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jboss.domain.config.dir</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-       <span class="tag">&lt;/authentication&gt;</span>
-   <span class="tag">&lt;/security-realm&gt;</span>
-<span class="tag">&lt;/security-realms&gt;</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>We&#8217;ve added server-identities into security-realm, which is used for
-authentication host when slave tries to connect to master. In secret
-value property we have 'cGFzc3cwcmQh', which is the base64 code for
-'passw0rd!'. You can generate this value by using a base64 calculator
-such as the one at <a href="http://www.webutils.pl/index.php?idx=base64" class="bare">http://www.webutils.pl/index.php?idx=base64</a>.</p>
-</div>
-<div class="paragraph">
-<p>Then in domain controller section we also need to add security-realm
-property:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;domain-controller&gt;</span>
-   <span class="tag">&lt;remote</span> <span class="attribute-name">protocol</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">remote</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">host</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">10.211.55.7</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">port</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">9999</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">username</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">slave</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">security-realm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">ManagementRealm</span><span class="delimiter">&quot;</span></span>  <span class="tag">/&gt;</span>
-<span class="tag">&lt;/domain-controller&gt;</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>So the slave host could use the authentication information we provided
-in 'ManagementRealm'.</p>
-</div>
 </div>
 <div class="sect4">
 <h5 id="dry-run">Dry Run</h5>
@@ -5429,8 +5301,8 @@ References in this document to JavaServer Pages(JSP) refer to the Jakarta Server
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 24.0.0.Final<br>
-Last updated 2021-06-16 12:05:21 CDT
+Version 25.0.0.Final<br>
+Last updated 2021-09-13 17:18:55 CDT
 </div>
 </div>
 </body>

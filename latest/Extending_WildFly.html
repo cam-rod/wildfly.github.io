@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>Extending WildFly</h1>
 <div class="details">
 <span id="author" class="author">WildFly code development team</span><br>
-<span id="revnumber">version 24.0.0.Final,</span>
-<span id="revdate">2021-06-17T00:13:37Z</span>
+<span id="revnumber">version 25.0.0.Final,</span>
+<span id="revdate">2021-10-04T20:38:36Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Extending WildFly</div>
@@ -1210,7 +1210,7 @@ implement <code>ResourceDefinition</code>.</p>
   .setXmlName(TrackerExtension.TICK)
   .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
   .setDefaultValue(<span class="keyword">new</span> ModelNode(<span class="integer">1000</span>))
-  .setAllowNull(<span class="predefined-constant">false</span>)
+  .setRequired(<span class="predefined-constant">true</span>)
   .build();
 <span class="error"> </span>
 <span class="directive">private</span> TypeDefinition(){
@@ -2411,7 +2411,7 @@ and is used to define your module. It says that it contains the
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;module</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:module:1.0</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">com.acme.corp.tracker</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;module</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:module:1.9</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">com.acme.corp.tracker</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
     <span class="tag">&lt;resources&gt;</span>
         <span class="tag">&lt;resource-root</span> <span class="attribute-name">path</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">acme-subsystem.jar</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
     <span class="tag">&lt;/resources&gt;</span></code></pre>
@@ -2712,9 +2712,8 @@ resolved using system / environment properties.</p>
 <code>java.lang.System.getEnv(String name)</code>.</p>
 </li>
 <li>
-<p>Security vault expressions, resolved against the security vault
-configured for the server or Host Controller that needs to resolve the
-expression.</p>
+<p>Encrypted expressions, resolved against the expression
+resolver in the <code>elytron</code> subsystem.</p>
 </li>
 </ul>
 </div>
@@ -2733,7 +2732,7 @@ after <code>env.</code> will be the name passed to
 <code>java.lang.System.getEnv(String name)</code>.</p>
 </div>
 <div class="paragraph">
-<p>Security vault expressions do not support default values (i.e. the
+<p>Encrypted expressions do not support default values (i.e. the
 <code>127.0.0.1</code> in the <code>jboss.bind.address.management:127.0.0.1</code> example
 above.)</p>
 </div>
@@ -4186,7 +4185,7 @@ of 1.0.0, and its resource description was as follows:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>In WildFly 24, it has a ModelVersion of 2.0.0 and has added two
+<p>In WildFly 25, it has a ModelVersion of 2.0.0 and has added two
 attributes, <code>require-bean-descriptor</code> and <code>non-portable</code> mode:</p>
 </div>
 <div class="listingblock">
@@ -4252,7 +4251,7 @@ attributes, <code>require-bean-descriptor</code> and <code>non-portable</code> m
 </div>
 <div class="paragraph">
 <p>In the rest of this section we will assume that we are running a DC
-running WildFly 24 so it will have ModelVersion 2.0.0 of the weld
+running WildFly 25 so it will have ModelVersion 2.0.0 of the weld
 subsystem, and that we are running a slave using ModelVersion 1.0.0 of
 the weld subsystem.</p>
 </div>
@@ -4387,7 +4386,7 @@ rollback the operation across the whole domain.</p>
 <div class="paragraph">
 <p>Now for the <code>weld</code> example we have been using there is a slight twist.
 We have the new <code>require-bean-descriptor</code> and <code>non-portable-mode</code>
-attributes. These have been added in WildFly 24 which supports Jakarta EE,
+attributes. These have been added in WildFly 25 which supports Jakarta EE,
 and thus CDI.
 In CDI 1.1 the values of these attributes are tweakable, so they can be set
 to either <code>true</code> or <code>false</code>. The default behaviour for these in CDI 1.1,
@@ -4418,7 +4417,7 @@ the behavior assumed on the legacy slave HC.</p>
 </div>
 <div class="paragraph">
 <p>That way the older slave HCs will work fine. However, we might also have
-WildFly 24 slave HCs in our domain, and they are missing out on the new
+WildFly 25 slave HCs in our domain, and they are missing out on the new
 features introduced by the attributes introduced in ModelVersion 2.0.0.
 If we do</p>
 </div>
@@ -4464,9 +4463,9 @@ The solution is to put these in two different profiles in <code>domain.xml</code
 </div>
 </div>
 <div class="paragraph">
-<p>Then have the HCs using WildFly 24 make their servers reference the
+<p>Then have the HCs using WildFly 25 make their servers reference the
 <code>main-server-group</code> server group, and the HCs using older versions of
-WildFly 24 make their servers reference the <code>main-server-group-legacy</code>
+WildFly 25 make their servers reference the <code>main-server-group-legacy</code>
 server group.</p>
 </div>
 <div class="sect4">
@@ -6033,7 +6032,7 @@ transformers</a></p>
 <div class="sect3">
 <h4 id="the-old-way">4.6.1. The old way</h4>
 <div class="paragraph">
-<p>This is the way that has been used up to WildFly 24.x. However, in
+<p>This is the way that has been used up to WildFly 25.x. However, in
 WildFly 9 and later, it is strongly recommended to migrate to what is
 mentioned in
 <a href="#chained-transformers">#Chained
@@ -6518,7 +6517,7 @@ Missing parameters <span class="keyword">for</span> operation <span class="strin
 <p>This difference also affects the <code>add</code> operation. Looking at the current
 model the valid values for the <code>protocol</code> attribute are <code>remote</code>,
 <code>http-remoting</code> and <code>https-remoting</code>. The last two are new protocols
-introduced in WildFly 24, meaning that the <em>implied behaviour</em> in JBoss
+introduced in WildFly 25, meaning that the <em>implied behaviour</em> in JBoss
 7.2.0 and earlier is the <code>remote</code> protocol. Since this attribute does
 not exist in the legacy model we want to discard this attribute if it is
 <code>undefined</code> or if it has the value <code>remote</code>, both of which are in line
@@ -8372,7 +8371,7 @@ developers to bind new resources easier.</p>
 </div>
 <div class="paragraph">
 <p>To support discussion in the community, the content includes a big focus
-on comparing WildFly 24 JNDI implementation with the new proposal, and
+on comparing WildFly 25 JNDI implementation with the new proposal, and
 should later evolve to the prime guide for WildFly developers needing to
 interact with JNDI at subsystem level.</p>
 </div>
@@ -8840,8 +8839,8 @@ the JAR file containing the classes above with value
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 24.0.0.Final<br>
-Last updated 2021-06-16 12:05:21 CDT
+Version 25.0.0.Final<br>
+Last updated 2021-09-13 17:18:55 CDT
 </div>
 </div>
 </body>

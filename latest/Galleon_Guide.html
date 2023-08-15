@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>Galleon Provisioning Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly developer team</span><br>
-<span id="revnumber">version 24.0.0.Final,</span>
-<span id="revdate">2021-06-17T00:13:37Z</span>
+<span id="revnumber">version 25.0.0.Final,</span>
+<span id="revdate">2021-10-04T20:38:36Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Galleon Provisioning Guide</div>
@@ -839,7 +839,6 @@ all of which provide typical core WildFly capabilities like the logging subsyste
 <td class="tableblock halign-left valign-top"><p class="tableblock">A typical manageable server core. This layer could serve as a base for a more
 specialized WildFly that doesn&#8217;t need the capabilities provided by the other foundational layers.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.core-management">core-management</a> (optional)<br>
-<a href="#gal.core-security-realms">core-security-realms</a> (optional)<br>
 <a href="#gal.jmx-remoting">jmx-remoting</a> (optional)<br>
 <a href="#gal.logging">logging</a> (optional)<br>
 <a href="#gal.management">management</a> (optional)<br>
@@ -862,11 +861,6 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Dependencies</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.application-security-realm"></a>application-security-realm</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Security realm meant for securing applications.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.base-server"></a>base-server</p></td>
@@ -912,13 +906,6 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.core-security-realms"></a>core-security-realms</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Support for core Application and Management security realms.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.application-security-realm">application-security-realm</a> (optional)<br>
-<a href="#gal.base-server">base-server</a><br>
-<a href="#gal.management-security-realm">management-security-realm</a> (optional)<br></p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.core-tools"></a>core-tools</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for <em>jboss-cli</em>, <em>add-user</em> and <em>elytron-tool</em> launch scripts and configuration files.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.management">management</a> (optional)<br></p></td>
@@ -948,6 +935,13 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.ee-security"></a>ee-security</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for EE Security.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.ejb"></a>ejb-http-invoker</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for invoking Jakarta Enterprise Beans over HTTP.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.ejb-lite">ejb-lite</a><br>
+<a href="#gal.elytron">elytron</a><br>
+<a href="#gal.undertow">undertow</a><br></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.ejb"></a>ejb</p></td>
@@ -1001,6 +995,11 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.h2-driver"></a>h2-driver</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for the H2 JDBC driver.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.iiop-openjdk"></a>iiop-openjdk</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for IIOP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.naming">naming</a><br></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.io"></a>io</p></td>
@@ -1067,23 +1066,6 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.legacy-management"></a>legacy-management</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Support for remote access to management interfaces secured with the core ManagementRealm.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.management-security-realm">management-security-realm</a><br></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.legacy-remoting"></a>legacy-remoting</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Support for inbound and outbound JBoss Remoting connections, secured using legacy security realms.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.application-security-realm">application-security-realm</a><br>
-<a href="#gal.io">io</a><br></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.legacy-security"></a>legacy-security</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Support for legacy Picketbox-based web security.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.naming">naming</a><br>
-<a href="#gal.vault">vault</a><br></p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.logging"></a>logging</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for the logging subsystem.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
@@ -1098,11 +1080,6 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.management"></a>management</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for remote access to management interfaces secured using Elytron.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.elytron">elytron</a><br></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.management-security-realm"></a>management-security-realm</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Security realm meant for securing server management interfaces.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.messaging-activemq"></a>messaging-activemq</p></td>
@@ -1252,26 +1229,19 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for the Undertow HTTP server. Provides servlet support but does not provide typical EE integration like resource injection.
 Use <a href="#gal.web-server">web-server</a> for a servlet container with EE integration.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br>
-<a href="#gal.io">io</a><br>
-<a href="#gal.vault">vault</a><br></p></td>
+<a href="#gal.io">io</a><br></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.undertow-legacy-https"></a>undertow-legacy-https</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Support for the Undertow HTTPS server secured using the legacy security ApplicationRealm.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.core-security-realms">core-security-realms</a><br>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.undertow-https"></a>undertow-https</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for the Undertow HTTPS server secured using the applicationSSC SSLContext.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.elytron">elytron</a><br>
 <a href="#gal.undertow">undertow</a><br></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.undertow-load-balancer"></a>undertow-load-balancer</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for Undertow configured as a load balancer.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br>
-<a href="#gal.io">io</a><br>
-<a href="#gal.vault">vault</a><br></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.vault"></a>vault</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Support for Picketbox security vaults.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
+<a href="#gal.io">io</a><br></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.web-clustering"></a>web-clustering</p></td>
@@ -1352,10 +1322,10 @@ References in this document to Java Persistence API(JPA) refer to the Jakarta Pe
 </div>
 </div>
 <div class="sect4">
-<h5 id="installation-of-a-cloud-server-with-support-for-https-using-legacy-core-applicationrealm"><a class="link" href="#installation-of-a-cloud-server-with-support-for-https-using-legacy-core-applicationrealm">Installation of a cloud-server with support for https (using legacy core ApplicationRealm)</a></h5>
+<h5 id="installation-of-a-cloud-server-with-support-for-https"><a class="link" href="#installation-of-a-cloud-server-with-support-for-https">Installation of a cloud-server with support for https</a></h5>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code>galleon.sh install wildfly:current --dir=my-wildfly-server --layers=cloud-server,undertow-legacy-https</code></pre>
+<pre class="CodeRay highlight nowrap"><code>galleon.sh install wildfly:current --dir=my-wildfly-server --layers=cloud-server,undertow-https</code></pre>
 </div>
 </div>
 </div>
@@ -1396,10 +1366,10 @@ alternative:</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="installation-of-a-servlet-container-with-support-for-https-using-legacy-core-applicationrealm"><a class="link" href="#installation-of-a-servlet-container-with-support-for-https-using-legacy-core-applicationrealm">Installation of a servlet container with support for https (using legacy core ApplicationRealm)</a></h5>
+<h5 id="installation-of-a-servlet-container-with-support-for-https"><a class="link" href="#installation-of-a-servlet-container-with-support-for-https">Installation of a servlet container with support for https</a></h5>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code>galleon.sh install wildfly:current --dir=my-wildfly-server --layers=web-server,undertow-legacy-https</code></pre>
+<pre class="CodeRay highlight nowrap"><code>galleon.sh install wildfly:current --dir=my-wildfly-server --layers=web-server,undertow-https</code></pre>
 </div>
 </div>
 </div>
@@ -1430,8 +1400,8 @@ References in this document to Java Persistence API(JPA) refer to the Jakarta Pe
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 24.0.0.Final<br>
-Last updated 2020-12-01 21:12:38 CST
+Version 25.0.0.Final<br>
+Last updated 2021-09-13 17:18:55 CDT
 </div>
 </div>
 </body>

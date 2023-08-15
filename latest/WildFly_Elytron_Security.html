@@ -522,8 +522,8 @@ table.CodeRay td.code>pre{padding:0}
 <div id="header">
 <h1>WildFly Elytron Security</h1>
 <div class="details">
-<span id="revnumber">version 24.0.0.Final,</span>
-<span id="revdate">2021-06-17T00:13:37Z</span>
+<span id="revnumber">version 25.0.0.Final,</span>
+<span id="revdate">2021-10-04T20:38:36Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Elytron Security Guide</div>
@@ -571,7 +571,6 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#undertow-subsystem">5.2. Undertow Subsystem</a></li>
 <li><a href="#Jakarta-Enterprise-Beans-subsystem">5.3. Jakarta Enterprise Beans Subsystem</a></li>
 <li><a href="#webservices-subsystem">5.4. WebServices Subsystem</a></li>
-<li><a href="#legacy-security-subsystem">5.5. Legacy Security Subsystem</a></li>
 </ul>
 </li>
 <li><a href="#Client_Authentication_with_Elytron_Client">6. Client Authentication with Elytron Client</a>
@@ -699,14 +698,12 @@ table.CodeRay td.code>pre{padding:0}
 <h2 id="about">1. About</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The WildFly Elytron project is a new security framework brought to
-WildFly to provide a single unified security framework across the whole
-of the application server. As a single framework it will be usable both
-for configuring management access to the server and for applications
-deployed to the server, it will also be usable across all process types
-so there will be no need to learn a different security framework for
-host controllers in a domain compared to configuring a standalone
-server.</p>
+<p>WildFly Elytron brings to WildFly a single unified security framework across
+the whole of the application server. As a single framework it will be usable
+both for configuring management access to the server and for applications
+deployed to the server.  It will also be usable across all process types so
+there will be no need to learn a different security framework for host
+controllers in a domain compared to configuring a standalone server.</p>
 </div>
 <div class="paragraph">
 <p>The project covers these main areas:</p>
@@ -3167,93 +3164,11 @@ realm.</p>
 <div class="sect2">
 <h3 id="default-management-authentication-configuration">3.5. Default Management Authentication Configuration</h3>
 <div class="paragraph">
-<p>By default, the WildFly management interfaces are secured by the legacy
-core management authentication.</p>
-</div>
-<div class="paragraph">
-<p><strong>Default Configuration</strong></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="json"><span class="error">/</span><span class="error">c</span><span class="error">o</span><span class="error">r</span><span class="error">e</span><span class="error">-</span><span class="error">s</span><span class="error">e</span><span class="error">r</span><span class="error">v</span><span class="error">i</span><span class="error">c</span><span class="error">e</span><span class="error">=</span><span class="error">m</span><span class="error">a</span><span class="error">n</span><span class="error">a</span><span class="error">g</span><span class="error">e</span><span class="error">m</span><span class="error">e</span><span class="error">n</span><span class="error">t</span><span class="error">/</span><span class="error">m</span><span class="error">a</span><span class="error">n</span><span class="error">a</span><span class="error">g</span><span class="error">e</span><span class="error">m</span><span class="error">e</span><span class="error">n</span><span class="error">t</span><span class="error">-</span><span class="error">i</span><span class="error">n</span><span class="error">t</span><span class="error">e</span><span class="error">r</span><span class="error">f</span><span class="error">a</span><span class="error">c</span><span class="error">e</span><span class="error">=</span><span class="error">h</span><span class="error">t</span><span class="error">t</span><span class="error">p</span><span class="error">-</span><span class="error">i</span><span class="error">n</span><span class="error">t</span><span class="error">e</span><span class="error">r</span><span class="error">f</span><span class="error">a</span><span class="error">c</span><span class="error">e</span>:<span class="error">r</span><span class="error">e</span><span class="error">a</span><span class="error">d</span><span class="error">-</span><span class="error">r</span><span class="error">e</span><span class="error">s</span><span class="error">o</span><span class="error">u</span><span class="error">r</span><span class="error">c</span><span class="error">e</span><span class="error">(</span><span class="error">)</span>
-{
-    <span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>,
-    <span class="string"><span class="delimiter">&quot;</span><span class="content">result</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> {
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">allowed-origins</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">console-enabled</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="value">true</span>,
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">http-authentication-factory</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">http-upgrade</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> {<span class="string"><span class="delimiter">&quot;</span><span class="content">enabled</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="value">true</span>},
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">http-upgrade-enabled</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="value">true</span>,
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">sasl-protocol</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">remote</span><span class="delimiter">&quot;</span></span>,
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">secure-socket-binding</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">security-realm</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">ManagementRealm</span><span class="delimiter">&quot;</span></span>,
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">server-name</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">socket-binding</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">management-http</span><span class="delimiter">&quot;</span></span>,
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">ssl-context</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>
-    }</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>WildFly does provide <em>management-http-authentication</em> and
-<em>management-sasl-authentication</em> in the <em>elytron</em> subsystem for securing
-the management interfaces as well.</p>
+<p>By default, the WildFly management interfaces are secured using WildFly
+Elytron capabilities.</p>
 </div>
 <div class="sect3">
-<h4 id="update-wildfly-to-use-the-default-elytron-components-for-management-authentication">3.5.1. Update WildFly to Use the Default Elytron Components for Management</h4>
-<div class="paragraph">
-<p>Authentication</p>
-</div>
-<div class="sect4">
-<h5 id="set-http-authentication-factory-to-use-management-http-authentication">Set http-authentication-factory to use</h5>
-<div class="paragraph">
-<p>management-http-authentication</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="java">/core-service=management/management-<span class="type">interface</span>=<span class="class">http</span>-<span class="type">interface</span>:<span class="class">write</span>-attribute( \
-  name=http-authentication-factory, \
-  value=management-http-authentication \
-)</code></pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="set-sasl-authentication-factory-to-use-management-sasl-authentication">Set sasl-authentication-factory to use</h5>
-<div class="paragraph">
-<p>management-sasl-authentication</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="java">/core-service=management/management-<span class="type">interface</span>=<span class="class">http</span>-<span class="type">interface</span>:<span class="class">write</span>-attribute( \
-  name=http-upgrade.sasl-authentication-factory, \
-  value=management-sasl-authentication \
-)</code></pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="undefine-security-realm">Undefine security-realm</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="java">/core-service=management/management-<span class="type">interface</span>=<span class="class">http</span>-<span class="type">interface</span>:<span class="class">undefine</span>-attribute(name=security-realm)</code></pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="reload-wildfly-for-the-changes-to-take-affect.">Reload WildFly for the changes to take effect.</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code>reload</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The management interfaces are now secured using the default components
-provided by the 'elytron' subsystem.</p>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="default-elytron-management-http-authentication-configuration">3.5.2. Default Elytron Management HTTP Authentication Configuration</h4>
+<h4 id="default-elytron-management-http-authentication-configuration">3.5.1. Default Elytron Management HTTP Authentication Configuration</h4>
 <div class="paragraph">
 <p>When you access the management interface over HTTP, for example when
 using the web-based management console, WildFly will use the
@@ -3338,7 +3253,7 @@ realm.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="default-elytron-management-cli-authentication">3.5.3. Default Elytron Management CLI Authentication</h4>
+<h4 id="default-elytron-management-cli-authentication">3.5.2. Default Elytron Management CLI Authentication</h4>
 <div class="paragraph">
 <p>By default, the management CLI ( <em>jboss-cli.sh</em>) is configured to
 connect over <em>remote+http</em>.</p>
@@ -8313,16 +8228,6 @@ propagate authenticated information to Jakarta Enterprise Beans container :</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="legacy-security-subsystem">5.5. Legacy Security Subsystem</h3>
-<div class="paragraph">
-<p>As previously described, Elytron based security is configured by
-chaining together different capability references to form a complete
-security policy. To allow an incremental migration from the legacy
-Security subsystem some of the major components of this subsystem can be
-mapped to Elytron capabilities and used within an Elytron based set up.</p>
-</div>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -10818,7 +10723,6 @@ Care should be taken when using the command line tool to ensure the store is not
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code>]$ bin/elytron-tool.sh credential-store --add=example --location=standalone/configuration/mycredstore.cs
 Credential store password:
-Confirm credential store password:
 Secret to store:
 Confirm secret to store:
 Alias "example" has been successfully stored</code></pre>
@@ -11037,7 +10941,6 @@ Alias "imported" has been successfully stored</code></pre>
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code>]$ bin/elytron-tool.sh credential-store --aliases --location=standalone/configuration/mycredstore.cs
 Credential store password:
-Confirm credential store password:
 Credential store contains following aliases: example</code></pre>
 </div>
 </div>
@@ -11299,7 +11202,7 @@ If an operation that includes a <code><code>credential-reference</code></code> p
         <span class="tag">&lt;/credential-stores&gt;</span>
 
         <span class="tag">&lt;authentication-rules&gt;</span>
-                    <span class="tag">&lt;rule</span> <span class="attribute-name">use-configuration</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+            <span class="tag">&lt;rule</span> <span class="attribute-name">use-configuration</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
         <span class="tag">&lt;/authentication-rules&gt;</span>
         <span class="tag">&lt;authentication-configurations&gt;</span>
             <span class="tag">&lt;configuration</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
@@ -11431,9 +11334,6 @@ As the type is specified when retrieving a credential it is possible to store mu
 </div>
 <div class="paragraph">
 <p>Within the WildFly Elytron command line tool an additional command <code>vault</code> is available specifically for the conversion of legacy vaults to a credential store.  A complete vault can be converted to a credential store with the following command: -</p>
-</div>
-<div class="paragraph">
-<p>The following command can be used to convert a single entry from a vault to a credential store: -</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15025,8 +14925,8 @@ for example, Infinispan cache cannot be used, any others?</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 24.0.0.Final<br>
-Last updated 2021-06-16 12:05:21 CDT
+Version 25.0.0.Final<br>
+Last updated 2021-10-04 10:00:59 CDT
 </div>
 </div>
 </body>

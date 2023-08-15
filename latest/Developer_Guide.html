@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>Developer Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly developer team</span><br>
-<span id="revnumber">version 24.0.0.Final,</span>
-<span id="revdate">2021-06-17T00:13:37Z</span>
+<span id="revnumber">version 25.0.0.Final,</span>
+<span id="revdate">2021-10-04T20:38:36Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Developer guide</div>
@@ -1159,7 +1159,7 @@ ear deployment is as follows:</p>
      <span class="comment">&lt;!-- exclude-subsystem prevents a subsystems deployment unit processors running on a deployment --&gt;</span>
      <span class="comment">&lt;!-- which gives basically the same effect as removing the subsystem, but it only affects single deployment --&gt;</span>
      <span class="tag">&lt;exclude-subsystems&gt;</span>
-        <span class="tag">&lt;subsystem</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">resteasy</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+        <span class="tag">&lt;subsystem</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">logging</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
     <span class="tag">&lt;/exclude-subsystems&gt;</span>
     <span class="comment">&lt;!-- Exclusions allow you to prevent the server from automatically adding some dependencies     --&gt;</span>
     <span class="tag">&lt;exclusions&gt;</span>
@@ -1271,7 +1271,7 @@ module&#8217;s module.xml file can tell you:</p>
 <div class="listingblock">
 <div class="title">Example declaration of the jboss.api property</div>
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;module</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:module:1.5</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">com.google.guava</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;module</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:module:1.9</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">com.google.guava</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
     <span class="tag">&lt;properties&gt;</span>
         <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jboss.api</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">private</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
     <span class="tag">&lt;/properties&gt;</span></code></pre>
@@ -1487,7 +1487,7 @@ deployment.</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>As explained in the <a href="#Class_Loading_in_WildFly">Class Loading in WildFly</a> article,
-WildFly 24 is based on module classloading. A class within a module B
+WildFly 25 is based on module classloading. A class within a module B
 isn&#8217;t visible to a class within a module A, unless module B adds a
 dependency on module A. Module dependencies can be explicitly (as
 explained in that classloading article) or can be "implicit". This
@@ -1602,17 +1602,33 @@ locations in the deployment, as specified by spec) or the presence of
 annotation based Jakarta Enterprise Beans (ex: @Stateless, @Stateful, @MessageDriven etc)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta RESTful Web Services (Resteasy) subsystem</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">javax.xml.bind.api</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">org.jboss.resteasy.resteasy-atom-provider
-org.jboss.resteasy.resteasy-cdi org.jboss.resteasy.resteasy-jaxrs
-org.jboss.resteasy.resteasy-jaxb-provider
-org.jboss.resteasy.resteasy-jackson2-provider
-org.jboss.resteasy.resteasy-jsapi
-org.jboss.resteasy.resteasy-multipart-provider
-org.jboss.resteasy.async-http-servlet-30</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The presence of Jakarta RESTful Web Services
-annotations in the deployment</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta RESTful Web Services (RESTEasy) subsystem</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.fasterxml.jackson.core.jackson-annotations<br>
+com.fasterxml.jackson.core.jackson-core<br>
+com.fasterxml.jackson.core.jackson-databind<br>
+com.fasterxml.jackson.datatype.jackson-datatype-jdk8<br>
+com.fasterxml.jackson.datatype.jackson-datatype-jsr310<br>
+com.fasterxml.jackson.jaxrs.jackson-jaxrs-json-provider<br>
+javax.json.api<br>
+javax.ws.rs.api<br>
+javax.xml.bind.api<br>
+org.eclipse.microprofile.restclient<br>
+org.jboss.resteasy.resteasy-atom-provider<br>
+org.jboss.resteasy.resteasy-client<br>
+org.jboss.resteasy.resteasy-client-api<br>
+org.jboss.resteasy.resteasy-client-microprofile<br>
+org.jboss.resteasy.resteasy-core<br>
+org.jboss.resteasy.resteasy-core-spi<br>
+org.jboss.resteasy.resteasy-crypto<br>
+org.jboss.resteasy.resteasy-jackson2-provider<br>
+org.jboss.resteasy.resteasy-jaxb-provider<br>
+org.jboss.resteasy.resteasy-jsapi<br>
+org.jboss.resteasy.resteasy-json-binding-provider<br>
+org.jboss.resteasy.resteasy-json-p-provider<br>
+org.jboss.resteasy.resteasy-multipart-provider<br>
+org.jboss.resteasy.resteasy-validator-provider</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The presence of Jakarta RESTful Web Services annotations in the deployment</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Connectors subsystem</p></td>
@@ -1876,7 +1892,7 @@ applications.</p>
 <h2 id="Application_Client_Reference">5. Application Client Reference</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As a Jakarta EE compliant server, WildFly 24 contains an application
+<p>As a Jakarta EE compliant server, WildFly 25 contains an application
 client. An application client is essentially a cut down server instance,
 that allows you to use EE features such as injection in a client side
 program.</p>
@@ -2131,7 +2147,7 @@ Guide</a><br>
 <div class="sect2">
 <h3 id="using-cdi-beans-from-outside-the-deployment">7.1. Using CDI Beans from outside the deployment</h3>
 <div class="paragraph">
-<p>For WildFly 24 onwards, it is now possible to have classes outside the
+<p>For WildFly 25 onwards, it is now possible to have classes outside the
 deployment be picked up as CDI beans. In order for this to work, you must
 add a dependency on the external deployment that your beans are coming
 from, and make sure the META-INF directory of this deployment is
@@ -2723,7 +2739,7 @@ Executor Service instance&#8217;s JNDI name is
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter details the extensions that are available when developing
-Enterprise Java Beans <sup>tm</sup> on WildFly 24.</p>
+Enterprise Java Beans <sup>tm</sup> on WildFly 25.</p>
 </div>
 <div class="paragraph">
 <p>Currently there is no support for configuring the extensions using an
@@ -3785,7 +3801,7 @@ defined in the server configuration (i.e. <code>standalone.xml</code> or
 <div class="sect5">
 <h6 id="the-clustering-namespace-urnclustering1.0">The clustering namespace urn:clustering:1.0</h6>
 <div class="paragraph">
-<p>This namespace is deprecated and as of WildFly 24 its use has no effect.
+<p>This namespace is deprecated and as of WildFly 25 its use has no effect.
 The clustering behavior of Jakarta Enterprise Beans are determined by the profile in use on
 the server.</p>
 </div>
@@ -4317,7 +4333,7 @@ specific extensions to the security configurations.</p>
 <div class="paragraph">
 <p>The Jakarta EE spec doesn&#8217;t mandate a specific way to configure security
 domain for a bean. It leaves it to the vendor implementations to allow
-such configurations, the way they wish. In WildFly 24, the use of
+such configurations, the way they wish. In WildFly 25, the use of
 <code>@org.jboss.ejb3.annotation.SecurityDomain</code> annotation allows the
 developer to configure the security domain for a bean. Here&#8217;s an
 example:</p>
@@ -4412,14 +4428,14 @@ of a .jar deployment or .war/WEB-INF folder of a .war deployment.
 <div class="paragraph">
 <p>As you can see the <code>doSomething</code> method is configured to be accessible
 for users with role "bar". However, the bean isn&#8217;t configured for any
-specific security domain. Prior to WildFly 24, the absence of an
+specific security domain. Prior to WildFly 25, the absence of an
 explicitly configured security domain on the bean would leave the bean
 unsecured, which meant that even if the <code>doSomething</code> method was
 configured with <code>@RolesAllowed("bar")</code> anyone even without the "bar"
 role could invoke on the bean.</p>
 </div>
 <div class="paragraph">
-<p>In WildFly 24, the presence of any security metadata (like @RolesAllowed,
+<p>In WildFly 25, the presence of any security metadata (like @RolesAllowed,
 @PermitAll, @DenyAll, @RunAs, @RunAsPrincipal) on the bean or any
 business method of the bean, makes the bean secure, even in the absence
 of an explicitly configured security domain. In such cases, the security
@@ -4460,7 +4476,7 @@ domain defaulted to "other"). However, notice that the method
 <code>helloWorld</code> doesn&#8217;t have any specific security configurations.</p>
 </div>
 <div class="paragraph">
-<p>In WildFly 24, such methods which have no explicit security
+<p>In WildFly 25, such methods which have no explicit security
 configurations, in a secured bean, will be treated similar to a method
 with <code>@DenyAll</code> configuration. What that means is, no one is allowed
 access to the <code>helloWorld</code> method. This behaviour can be controlled via
@@ -5585,7 +5601,7 @@ native API hibernate.cfg.xml file:</p>
 <p><a href="http://infinispan.org/docs/9.4.x/user_guide/user_guide.html#integrations_jpa_hibernate">Infinispan
 Hibernate/JPA second level cache provider documentation</a> contains
 advanced configuration information but you should bear in mind that when
-Hibernate runs within WildFly 24, some of those configuration options,
+Hibernate runs within WildFly 25, some of those configuration options,
 such as region factory, are not needed. Moreover, the application server
 providers you with option of selecting a different cache container for
 Infinispan via <strong>hibernate.cache.infinispan.container</strong> persistence
@@ -5706,7 +5722,7 @@ depends on OpenJPA, to deploy on WildFly.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="java"> &lt;module xmlns=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:module:1.1</span><span class="delimiter">&quot;</span></span> name=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.apache.openjpa</span><span class="delimiter">&quot;</span></span>&gt;
+<pre class="CodeRay highlight nowrap"><code data-lang="java"> &lt;module xmlns=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:module:1.9</span><span class="delimiter">&quot;</span></span> name=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.apache.openjpa</span><span class="delimiter">&quot;</span></span>&gt;
 <span class="error"> </span><span class="error"> </span><span class="error"> </span> &lt;resources&gt;
 <span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span> &lt;resource-root path=<span class="string"><span class="delimiter">&quot;</span><span class="content">jipijapa-openjpa-1.0.1.Final.jar</span><span class="delimiter">&quot;</span></span>/&gt;
         &lt;resource-root path=<span class="string"><span class="delimiter">&quot;</span><span class="content">openjpa-all.jar</span><span class="delimiter">&quot;</span></span>&gt;
@@ -5745,7 +5761,7 @@ that depends on EclipseLink, to deploy on WildFly.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="xml"> <span class="tag">&lt;module</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:module:1.1</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.eclipse.persistence</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"> <span class="tag">&lt;module</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:module:1.9</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.eclipse.persistence</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
     <span class="tag">&lt;resources&gt;</span>
         <span class="tag">&lt;resource-root</span> <span class="attribute-name">path</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jipijapa-eclipselink-10.0.0.Final.jar</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
         <span class="tag">&lt;resource-root</span> <span class="attribute-name">path</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">eclipselink.jar</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>           <span class="tag">&lt;filter&gt;</span>
@@ -7060,13 +7076,12 @@ is removed from the Narayana object store and unregistered from the transaction 
 <h3 id="transactions-configuration">11.4. Transactions configuration</h3>
 <div class="paragraph">
 <p>Configuration related to the behaviour of the Narayana transaction manager
-is covered under <code>transactions</code> subsystem. For the details of the configuration
-options please check the description in the transactions subsystem model
-and see the <a href="http://narayana.io/documentation">Narayana documentation</a>.</p>
+is covered under <code>transactions</code> subsystem. For the details refer to
+<a href="Admin_Guide.html#Transactions_Subsystem">Admin Guide Transactions subsystem</a>.</p>
 </div>
 <div class="paragraph">
 <p>To check the subsystem model you can use the <a href="wildscribe" target="_blank" rel="noopener">WildFly model reference</a>
-or you can list all the configuration options of the subsystem in <code>jboss-cli</code></p>
+or list all the configuration options of the subsystem in <code>jboss-cli</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7616,7 +7631,7 @@ References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta En
 <div class="sectionbody">
 <div class="paragraph">
 <p>This page outlines the three options you have for deploying Jakarta RESTful Web Services
-applications in WildFly 24. These three methods are specified in the
+applications in WildFly 25. These three methods are specified in the
 JAX-RS 2.0 specification in section 2.3.2.</p>
 </div>
 <div class="sect2">
@@ -7785,7 +7800,7 @@ project integration.</p>
 </div>
 <div class="paragraph">
 <p>This section covers the most relevant topics for the JBossWS version
-available on WildFly 24.</p>
+available on WildFly 25.</p>
 </div>
 <div class="sect2">
 <h3 id="Jakarta_XML_Web_Services_User_Guide">16.1. Jakarta XML Web Services User Guide</h3>
@@ -11262,130 +11277,6 @@ element:</p>
 <span class="tag">&lt;/login-config&gt;</span></code></pre>
 </div>
 </div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="jaspi-authentication">JASPI Authentication</h5>
-<div class="paragraph">
-<p>A Java Authentication SPI (JASPI) provider can be configured in WildFly
-security subsystem to authenticate SOAP messages:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;security-domain</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jaspi</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-<span class="tag">&lt;authentication-jaspi&gt;</span>
-<span class="tag">&lt;login-module-stack</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jaas-lm-stack</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-<span class="tag">&lt;login-module</span> <span class="attribute-name">code</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">UsersRoles</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">flag</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">required</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-<span class="tag">&lt;module-option</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">usersProperties</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jbossws-users.properties</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-<span class="tag">&lt;module-option</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">rolesProperties</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jbossws-roles.properties</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-<span class="tag">&lt;/login-module&gt;</span>
-<span class="tag">&lt;/login-module-stack&gt;</span>
-<span class="tag">&lt;auth-module</span> <span class="attribute-name">code</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.jboss.wsf.stack.cxf.jaspi.module.UsernameTokenServerAuthModule</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">login-module-stack-ref</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jaas-lm-stack</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-<span class="tag">&lt;/authentication-jaspi&gt;</span>
-<span class="tag">&lt;/security-domain&gt;</span></code></pre>
-</div>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-For further information on configuring security domains in WildFly,
-please refer to
-<a href="https://docs.jboss.org/author/display/WFLY9/Security+subsystem+configuration">here</a>.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Here
-<code>org.jboss.wsf.stack.cxf.jaspi.module.UsernameTokenServerAuthModule</code> is
-the class implementing
-<code>javax.security.auth.message.module.ServerAuthModule</code>, which delegates
-to the proper login module to perform authentication using the
-credentials from WS-Security UsernameToken in the incoming SOAP message.
-Alternative implementations of <code>ServerAuthModule</code> can be implemented and
-configured.</p>
-</div>
-<div class="paragraph">
-<p>To enable JASPI authentication, the endpoint deployment needs to specify
-the security domain to use; that can be done in two different ways:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Setting the <code>jaspi.security.domain</code> property in the
-<code>jboss-webservices.xml</code> descriptor</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.1&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="tag">&lt;webservices</span>
-<span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.jboss.com/xml/ns/javaee</span><span class="delimiter">&quot;</span></span>
-<span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span>
-<span class="attribute-name">version</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">1.2</span><span class="delimiter">&quot;</span></span>
-<span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.jboss.com/xml/ns/javaee</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
- 
-<span class="tag">&lt;property&gt;</span>
-<span class="tag">&lt;name&gt;</span>jaspi.security.domain<span class="tag">&lt;/name&gt;</span>
-<span class="tag">&lt;value&gt;</span>jaspi<span class="tag">&lt;/value&gt;</span>
-<span class="tag">&lt;/property&gt;</span>
- 
-<span class="tag">&lt;/webservices&gt;</span></code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Referencing (through <code>@EndpointConfig</code> annotation) an endpoint config
-that sets the <code>jaspi.security.domain</code> property</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="annotation">@EndpointConfig</span>(configFile = <span class="string"><span class="delimiter">&quot;</span><span class="content">WEB-INF/jaxws-endpoint-config.xml</span><span class="delimiter">&quot;</span></span>, configName = <span class="string"><span class="delimiter">&quot;</span><span class="content">jaspiSecurityDomain</span><span class="delimiter">&quot;</span></span>)
-<span class="directive">public</span> <span class="type">class</span> <span class="class">ServiceEndpointImpl</span> <span class="directive">implements</span> ServiceIface {</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The <code>jaspi.security.domain</code> property is specified as follows in the
-referenced descriptor:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="tag">&lt;jaxws-config</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:jbossws-jaxws-config:4.0</span><span class="delimiter">&quot;</span></span>
-<span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">xmlns:javaee</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://java.sun.com/xml/ns/javaee</span><span class="delimiter">&quot;</span></span>
-<span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:jbossws-jaxws-config:4.0 schema/jbossws-jaxws-config_4_0.xsd</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-<span class="tag">&lt;endpoint-config&gt;</span>
-<span class="tag">&lt;config-name&gt;</span>jaspiSecurityDomain<span class="tag">&lt;/config-name&gt;</span>
-<span class="tag">&lt;property&gt;</span>
-<span class="tag">&lt;property-name&gt;</span>jaspi.security.domain<span class="tag">&lt;/property-name&gt;</span>
-<span class="tag">&lt;property-value&gt;</span>jaspi<span class="tag">&lt;/property-value&gt;</span>
-<span class="tag">&lt;/property&gt;</span>
-<span class="tag">&lt;/endpoint-config&gt;</span>
-<span class="tag">&lt;/jaxws-config&gt;</span></code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If the JASPI security domain is specified in both
-<code>jboss-webservices.xml</code> and config file referenced by <code>@EndpointConfig</code>
-annotation, the JASPI security domain specified in
-<code>jboss-webservices.xml</code> will take precedence.
-</td>
-</tr>
-</table>
 </div>
 </div>
 </div>
@@ -15250,330 +15141,6 @@ org.apache.ws.security.crypto.merlin.keystore.password=cspass
 org.apache.ws.security.crypto.merlin.keystore.alias=myclientkey
 org.apache.ws.security.crypto.merlin.keystore.file=META-INF/clientstore.jks</pre>
 </div>
-</div>
-</div>
-</div>
-<div class="sect5">
-<h6 id="picketlink-sts">PicketLink STS</h6>
-<div class="paragraph">
-<p><a href="http://www.jboss.org/picketlink">PicketLink</a> provides facilities for
-building up an alternative to the Apache CXF Security Token Service
-implementation.</p>
-</div>
-<div class="paragraph">
-<p>Similarly to the previous implementation, the STS is served through a
-WebServiceProvider annotated POJO:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="java"> <span class="keyword">package</span> <span class="namespace">org.jboss.test.ws.jaxws.samples.wsse.policy.trust</span>;
-<span class="error"> </span>
-<span class="keyword">import</span> <span class="include">javax.annotation.Resource</span>;
-<span class="keyword">import</span> <span class="include">javax.xml.ws.Service</span>;
-<span class="keyword">import</span> <span class="include">javax.xml.ws.ServiceMode</span>;
-<span class="keyword">import</span> <span class="include">javax.xml.ws.WebServiceContext</span>;
-<span class="keyword">import</span> <span class="include">javax.xml.ws.WebServiceProvider</span>;
-<span class="error"> </span>
-<span class="keyword">import</span> <span class="include">org.apache.cxf.annotations.EndpointProperties</span>;
-<span class="keyword">import</span> <span class="include">org.apache.cxf.annotations.EndpointProperty</span>;
-<span class="keyword">import</span> <span class="include">org.apache.cxf.interceptor.InInterceptors</span>;
-<span class="keyword">import</span> <span class="include">org.picketlink.identity.federation.core.wstrust.PicketLinkSTS</span>;
-<span class="error"> </span>
-<span class="annotation">@WebServiceProvider</span>(serviceName = <span class="string"><span class="delimiter">&quot;</span><span class="content">PicketLinkSTS</span><span class="delimiter">&quot;</span></span>, portName = <span class="string"><span class="delimiter">&quot;</span><span class="content">PicketLinkSTSPort</span><span class="delimiter">&quot;</span></span>, targetNamespace = <span class="string"><span class="delimiter">&quot;</span><span class="content">urn:picketlink:identity-federation:sts</span><span class="delimiter">&quot;</span></span>, wsdlLocation = <span class="string"><span class="delimiter">&quot;</span><span class="content">WEB-INF/wsdl/PicketLinkSTS.wsdl</span><span class="delimiter">&quot;</span></span>)
-<span class="annotation">@ServiceMode</span>(value = Service.Mode.MESSAGE)
-<span class="comment">//be sure to have dependency on org.apache.cxf module when on AS7, otherwise Apache CXF annotations are ignored</span>
-<span class="annotation">@EndpointProperties</span>(value = {
-<span class="annotation">@EndpointProperty</span>(key = <span class="string"><span class="delimiter">&quot;</span><span class="content">ws-security.signature.username</span><span class="delimiter">&quot;</span></span>, value = <span class="string"><span class="delimiter">&quot;</span><span class="content">mystskey</span><span class="delimiter">&quot;</span></span>),
-<span class="annotation">@EndpointProperty</span>(key = <span class="string"><span class="delimiter">&quot;</span><span class="content">ws-security.signature.properties</span><span class="delimiter">&quot;</span></span>, value = <span class="string"><span class="delimiter">&quot;</span><span class="content">stsKeystore.properties</span><span class="delimiter">&quot;</span></span>),
-<span class="annotation">@EndpointProperty</span>(key = <span class="string"><span class="delimiter">&quot;</span><span class="content">ws-security.callback-handler</span><span class="delimiter">&quot;</span></span>, value = <span class="string"><span class="delimiter">&quot;</span><span class="content">org.jboss.test.ws.jaxws.samples.wsse.policy.trust.STSCallbackHandler</span><span class="delimiter">&quot;</span></span>),
-<span class="annotation">@EndpointProperty</span>(key = <span class="string"><span class="delimiter">&quot;</span><span class="content">ws-security.validate.token</span><span class="delimiter">&quot;</span></span>, value = <span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span>) <span class="comment">//to let the JAAS integration deal with validation through the interceptor below</span>
-})
-<span class="annotation">@InInterceptors</span>(interceptors =
-<span class="error"> </span>
-)
-<span class="directive">public</span> <span class="type">class</span> <span class="class">PicketLinkSTService</span> <span class="directive">extends</span> PicketLinkSTS {
-<span class="annotation">@Resource</span>
-<span class="directive">public</span> <span class="type">void</span> setWSC(WebServiceContext wctx)
-Unknown macro: { <span class="local-variable">this</span>.context = wctx; }
-<span class="error"> </span>
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The <code>@WebServiceProvider</code> annotation references the following WS-Policy
-enabled wsdl contract; please note the wsdl operations, messages and
-such must match the <code>PicketLinkSTS</code> implementation:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
-<span class="tag">&lt;wsdl:definitions</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">PicketLinkSTS</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">targetNamespace</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:picketlink:identity-federation:sts</span><span class="delimiter">&quot;</span></span>
-    <span class="attribute-name">xmlns:tns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:picketlink:identity-federation:sts</span><span class="delimiter">&quot;</span></span>
-    <span class="attribute-name">xmlns:xsd</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema</span><span class="delimiter">&quot;</span></span>
-    <span class="attribute-name">xmlns:wsdl</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://schemas.xmlsoap.org/wsdl/</span><span class="delimiter">&quot;</span></span>
-    <span class="attribute-name">xmlns:wsap10</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2006/05/addressing/wsdl</span><span class="delimiter">&quot;</span></span>
-    <span class="attribute-name">xmlns:wsp</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/ns/ws-policy</span><span class="delimiter">&quot;</span></span>
-    <span class="attribute-name">xmlns:wsu</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd</span><span class="delimiter">&quot;</span></span>
-    <span class="attribute-name">xmlns:wst</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://docs.oasis-open.org/ws-sx/ws-trust/200512</span><span class="delimiter">&quot;</span></span>
-    <span class="attribute-name">xmlns:soap12</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://schemas.xmlsoap.org/wsdl/soap12/</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-  <span class="tag">&lt;wsdl:types&gt;</span>
-    <span class="tag">&lt;xs:schema</span> <span class="attribute-name">elementFormDefault</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">qualified</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">targetNamespace</span>=<span class="string"><span class="delimiter">'</span><span class="content">http://docs.oasis-open.org/ws-sx/ws-trust/200512</span><span class="delimiter">'</span></span> <span class="attribute-name">xmlns:xs</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-      <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">'</span><span class="content">RequestSecurityToken</span><span class="delimiter">'</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">'</span><span class="content">wst:AbstractRequestSecurityTokenType</span><span class="delimiter">'</span></span> <span class="tag">/&gt;</span>
-      <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">'</span><span class="content">RequestSecurityTokenResponse</span><span class="delimiter">'</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">'</span><span class="content">wst:AbstractRequestSecurityTokenType</span><span class="delimiter">'</span></span> <span class="tag">/&gt;</span>
-      <span class="tag">&lt;xs:complexType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">'</span><span class="content">AbstractRequestSecurityTokenType</span><span class="delimiter">'</span></span> <span class="tag">&gt;</span>
-        <span class="tag">&lt;xs:sequence&gt;</span>
-          <span class="tag">&lt;xs:any</span> <span class="attribute-name">namespace</span>=<span class="string"><span class="delimiter">'</span><span class="content">##any</span><span class="delimiter">'</span></span> <span class="attribute-name">processContents</span>=<span class="string"><span class="delimiter">'</span><span class="content">lax</span><span class="delimiter">'</span></span> <span class="attribute-name">minOccurs</span>=<span class="string"><span class="delimiter">'</span><span class="content">0</span><span class="delimiter">'</span></span> <span class="attribute-name">maxOccurs</span>=<span class="string"><span class="delimiter">'</span><span class="content">unbounded</span><span class="delimiter">'</span></span> <span class="tag">/&gt;</span>
-        <span class="tag">&lt;/xs:sequence&gt;</span>
-        <span class="tag">&lt;xs:attribute</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">'</span><span class="content">Context</span><span class="delimiter">'</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">'</span><span class="content">xs:anyURI</span><span class="delimiter">'</span></span> <span class="attribute-name">use</span>=<span class="string"><span class="delimiter">'</span><span class="content">optional</span><span class="delimiter">'</span></span> <span class="tag">/&gt;</span>
-        <span class="tag">&lt;xs:anyAttribute</span> <span class="attribute-name">namespace</span>=<span class="string"><span class="delimiter">'</span><span class="content">##other</span><span class="delimiter">'</span></span> <span class="attribute-name">processContents</span>=<span class="string"><span class="delimiter">'</span><span class="content">lax</span><span class="delimiter">'</span></span> <span class="tag">/&gt;</span>
-      <span class="tag">&lt;/xs:complexType&gt;</span>
-      <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">'</span><span class="content">RequestSecurityTokenCollection</span><span class="delimiter">'</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">'</span><span class="content">wst:RequestSecurityTokenCollectionType</span><span class="delimiter">'</span></span> <span class="tag">/&gt;</span>
-      <span class="tag">&lt;xs:complexType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">'</span><span class="content">RequestSecurityTokenCollectionType</span><span class="delimiter">'</span></span> <span class="tag">&gt;</span>
-        <span class="tag">&lt;xs:sequence&gt;</span>
-          <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">'</span><span class="content">RequestSecurityToken</span><span class="delimiter">'</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">'</span><span class="content">wst:AbstractRequestSecurityTokenType</span><span class="delimiter">'</span></span> <span class="attribute-name">minOccurs</span>=<span class="string"><span class="delimiter">'</span><span class="content">2</span><span class="delimiter">'</span></span> <span class="attribute-name">maxOccurs</span>=<span class="string"><span class="delimiter">'</span><span class="content">unbounded</span><span class="delimiter">'</span></span><span class="tag">/&gt;</span>
-        <span class="tag">&lt;/xs:sequence&gt;</span>
-      <span class="tag">&lt;/xs:complexType&gt;</span>
-      <span class="tag">&lt;xs:element</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">'</span><span class="content">RequestSecurityTokenResponseCollection</span><span class="delimiter">'</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">'</span><span class="content">wst:RequestSecurityTokenResponseCollectionType</span><span class="delimiter">'</span></span> <span class="tag">/&gt;</span>
-      <span class="tag">&lt;xs:complexType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">'</span><span class="content">RequestSecurityTokenResponseCollectionType</span><span class="delimiter">'</span></span> <span class="tag">&gt;</span>
-        <span class="tag">&lt;xs:sequence&gt;</span>
-          <span class="tag">&lt;xs:element</span> <span class="attribute-name">ref</span>=<span class="string"><span class="delimiter">'</span><span class="content">wst:RequestSecurityTokenResponse</span><span class="delimiter">'</span></span> <span class="attribute-name">minOccurs</span>=<span class="string"><span class="delimiter">'</span><span class="content">1</span><span class="delimiter">'</span></span> <span class="attribute-name">maxOccurs</span>=<span class="string"><span class="delimiter">'</span><span class="content">unbounded</span><span class="delimiter">'</span></span> <span class="tag">/&gt;</span>
-        <span class="tag">&lt;/xs:sequence&gt;</span>
-        <span class="tag">&lt;xs:anyAttribute</span> <span class="attribute-name">namespace</span>=<span class="string"><span class="delimiter">'</span><span class="content">##other</span><span class="delimiter">'</span></span> <span class="attribute-name">processContents</span>=<span class="string"><span class="delimiter">'</span><span class="content">lax</span><span class="delimiter">'</span></span> <span class="tag">/&gt;</span>
-      <span class="tag">&lt;/xs:complexType&gt;</span>
-    <span class="tag">&lt;/xs:schema&gt;</span>
-  <span class="tag">&lt;/wsdl:types&gt;</span>
-
-  <span class="tag">&lt;wsdl:message</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">RequestSecurityTokenMsg</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-    <span class="tag">&lt;wsdl:part</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">request</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">element</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">wst:RequestSecurityToken</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-  <span class="tag">&lt;/wsdl:message&gt;</span>
-  <span class="tag">&lt;wsdl:message</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">RequestSecurityTokenResponseCollectionMsg</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-    <span class="tag">&lt;wsdl:part</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">responseCollection</span><span class="delimiter">&quot;</span></span>
-            <span class="attribute-name">element</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">wst:RequestSecurityTokenResponseCollection</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-  <span class="tag">&lt;/wsdl:message&gt;</span>
-
-  <span class="tag">&lt;wsdl:portType</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">SecureTokenService</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-    <span class="tag">&lt;wsdl:operation</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">IssueToken</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-      <span class="tag">&lt;wsdl:input</span> <span class="attribute-name">wsap10:Action</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://docs.oasis-open.org/ws-sx/ws-trust/200512/RST/Issue</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">message</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">tns:RequestSecurityTokenMsg</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-      <span class="tag">&lt;wsdl:output</span> <span class="attribute-name">wsap10:Action</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://docs.oasis-open.org/ws-sx/ws-trust/200512/RSTRC/IssueFinal</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">message</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">tns:RequestSecurityTokenResponseCollectionMsg</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-    <span class="tag">&lt;/wsdl:operation&gt;</span>
-  <span class="tag">&lt;/wsdl:portType&gt;</span>
-  <span class="tag">&lt;wsdl:binding</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">STSBinding</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">tns:SecureTokenService</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-    <span class="tag">&lt;wsp:PolicyReference</span> <span class="attribute-name">URI</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">#UT_policy</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-    <span class="tag">&lt;soap12:binding</span> <span class="attribute-name">transport</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://schemas.xmlsoap.org/soap/http</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-    <span class="tag">&lt;wsdl:operation</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">IssueToken</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-      <span class="tag">&lt;soap12:operation</span> <span class="attribute-name">soapAction</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://docs.oasis-open.org/ws-sx/ws-trust/200512/RST/Issue</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">style</span>=<span class="string"><span class="delimiter">&quot;</span><span class="key">document</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-      <span class="tag">&lt;wsdl:input&gt;</span>
-        <span class="tag">&lt;wsp:PolicyReference</span> <span class="attribute-name">URI</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">#Input_policy</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-        <span class="tag">&lt;soap12:body</span> <span class="attribute-name">use</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">literal</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-      <span class="tag">&lt;/wsdl:input&gt;</span>
-      <span class="tag">&lt;wsdl:output&gt;</span>
-        <span class="tag">&lt;wsp:PolicyReference</span> <span class="attribute-name">URI</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">#Output_policy</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-        <span class="tag">&lt;soap12:body</span> <span class="attribute-name">use</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">literal</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-      <span class="tag">&lt;/wsdl:output&gt;</span>
-    <span class="tag">&lt;/wsdl:operation&gt;</span>
-  <span class="tag">&lt;/wsdl:binding&gt;</span>
-  <span class="tag">&lt;wsdl:service</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">PicketLinkSTS</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-    <span class="tag">&lt;wsdl:port</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">PicketLinkSTSPort</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">binding</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">tns:STSBinding</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-      <span class="tag">&lt;soap12:address</span> <span class="attribute-name">location</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://localhost:8080/picketlink-sts/PicketLinkSTS</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-    <span class="tag">&lt;/wsdl:port&gt;</span>
-  <span class="tag">&lt;/wsdl:service&gt;</span>
-
-  <span class="tag">&lt;wsp:Policy</span> <span class="attribute-name">wsu:Id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">UT_policy</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-      <span class="tag">&lt;wsp:ExactlyOne&gt;</span>
-         <span class="tag">&lt;wsp:All&gt;</span>
-            <span class="tag">&lt;wsap10:UsingAddressing</span><span class="tag">/&gt;</span>
-            <span class="tag">&lt;sp:SymmetricBinding</span>
-               <span class="attribute-name">xmlns:sp</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-               <span class="tag">&lt;wsp:Policy&gt;</span>
-                  <span class="tag">&lt;sp:ProtectionToken&gt;</span>
-                     <span class="tag">&lt;wsp:Policy&gt;</span>
-                        <span class="tag">&lt;sp:X509Token</span>
-                           <span class="attribute-name">sp:IncludeToken</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/Never</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-                           <span class="tag">&lt;wsp:Policy&gt;</span>
-                              <span class="tag">&lt;sp:RequireDerivedKeys</span> <span class="tag">/&gt;</span>
-                              <span class="tag">&lt;sp:RequireThumbprintReference</span> <span class="tag">/&gt;</span>
-                              <span class="tag">&lt;sp:WssX509V3Token10</span> <span class="tag">/&gt;</span>
-                           <span class="tag">&lt;/wsp:Policy&gt;</span>
-                        <span class="tag">&lt;/sp:X509Token&gt;</span>
-                     <span class="tag">&lt;/wsp:Policy&gt;</span>
-                  <span class="tag">&lt;/sp:ProtectionToken&gt;</span>
-                  <span class="tag">&lt;sp:AlgorithmSuite&gt;</span>
-                     <span class="tag">&lt;wsp:Policy&gt;</span>
-                        <span class="tag">&lt;sp:Basic256</span> <span class="tag">/&gt;</span>
-                     <span class="tag">&lt;/wsp:Policy&gt;</span>
-                  <span class="tag">&lt;/sp:AlgorithmSuite&gt;</span>
-                  <span class="tag">&lt;sp:Layout&gt;</span>
-                     <span class="tag">&lt;wsp:Policy&gt;</span>
-                        <span class="tag">&lt;sp:Lax</span> <span class="tag">/&gt;</span>
-                     <span class="tag">&lt;/wsp:Policy&gt;</span>
-                  <span class="tag">&lt;/sp:Layout&gt;</span>
-                  <span class="tag">&lt;sp:IncludeTimestamp</span> <span class="tag">/&gt;</span>
-                  <span class="tag">&lt;sp:EncryptSignature</span> <span class="tag">/&gt;</span>
-                  <span class="tag">&lt;sp:OnlySignEntireHeadersAndBody</span> <span class="tag">/&gt;</span>
-               <span class="tag">&lt;/wsp:Policy&gt;</span>
-            <span class="tag">&lt;/sp:SymmetricBinding&gt;</span>
-            <span class="tag">&lt;sp:SignedSupportingTokens</span>
-               <span class="attribute-name">xmlns:sp</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-               <span class="tag">&lt;wsp:Policy&gt;</span>
-                  <span class="tag">&lt;sp:UsernameToken</span>
-                     <span class="attribute-name">sp:IncludeToken</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-                     <span class="tag">&lt;wsp:Policy&gt;</span>
-                        <span class="tag">&lt;sp:WssUsernameToken10</span> <span class="tag">/&gt;</span>
-                     <span class="tag">&lt;/wsp:Policy&gt;</span>
-                  <span class="tag">&lt;/sp:UsernameToken&gt;</span>
-               <span class="tag">&lt;/wsp:Policy&gt;</span>
-            <span class="tag">&lt;/sp:SignedSupportingTokens&gt;</span>
-            <span class="tag">&lt;sp:Wss11</span>
-               <span class="attribute-name">xmlns:sp</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-               <span class="tag">&lt;wsp:Policy&gt;</span>
-                  <span class="tag">&lt;sp:MustSupportRefKeyIdentifier</span> <span class="tag">/&gt;</span>
-                  <span class="tag">&lt;sp:MustSupportRefIssuerSerial</span> <span class="tag">/&gt;</span>
-                  <span class="tag">&lt;sp:MustSupportRefThumbprint</span> <span class="tag">/&gt;</span>
-                  <span class="tag">&lt;sp:MustSupportRefEncryptedKey</span> <span class="tag">/&gt;</span>
-               <span class="tag">&lt;/wsp:Policy&gt;</span>
-            <span class="tag">&lt;/sp:Wss11&gt;</span>
-            <span class="tag">&lt;sp:Trust13</span>
-               <span class="attribute-name">xmlns:sp</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-               <span class="tag">&lt;wsp:Policy&gt;</span>
-                  <span class="tag">&lt;sp:MustSupportIssuedTokens</span> <span class="tag">/&gt;</span>
-                  <span class="tag">&lt;sp:RequireClientEntropy</span> <span class="tag">/&gt;</span>
-                  <span class="tag">&lt;sp:RequireServerEntropy</span> <span class="tag">/&gt;</span>
-               <span class="tag">&lt;/wsp:Policy&gt;</span>
-            <span class="tag">&lt;/sp:Trust13&gt;</span>
-         <span class="tag">&lt;/wsp:All&gt;</span>
-      <span class="tag">&lt;/wsp:ExactlyOne&gt;</span>
-   <span class="tag">&lt;/wsp:Policy&gt;</span>
-
-   <span class="tag">&lt;wsp:Policy</span> <span class="attribute-name">wsu:Id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Input_policy</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-      <span class="tag">&lt;wsp:ExactlyOne&gt;</span>
-         <span class="tag">&lt;wsp:All&gt;</span>
-            <span class="tag">&lt;sp:SignedParts</span>
-               <span class="attribute-name">xmlns:sp</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-               <span class="tag">&lt;sp:Body</span> <span class="tag">/&gt;</span>
-               <span class="tag">&lt;sp:Header</span> <span class="attribute-name">Name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">To</span><span class="delimiter">&quot;</span></span>
-                  <span class="attribute-name">Namespace</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2005/08/addressing</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-               <span class="tag">&lt;sp:Header</span> <span class="attribute-name">Name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">From</span><span class="delimiter">&quot;</span></span>
-                  <span class="attribute-name">Namespace</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2005/08/addressing</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-               <span class="tag">&lt;sp:Header</span> <span class="attribute-name">Name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">FaultTo</span><span class="delimiter">&quot;</span></span>
-                  <span class="attribute-name">Namespace</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2005/08/addressing</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-               <span class="tag">&lt;sp:Header</span> <span class="attribute-name">Name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">ReplyTo</span><span class="delimiter">&quot;</span></span>
-                  <span class="attribute-name">Namespace</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2005/08/addressing</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-               <span class="tag">&lt;sp:Header</span> <span class="attribute-name">Name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">MessageID</span><span class="delimiter">&quot;</span></span>
-                  <span class="attribute-name">Namespace</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2005/08/addressing</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-               <span class="tag">&lt;sp:Header</span> <span class="attribute-name">Name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">RelatesTo</span><span class="delimiter">&quot;</span></span>
-                  <span class="attribute-name">Namespace</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2005/08/addressing</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-               <span class="tag">&lt;sp:Header</span> <span class="attribute-name">Name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Action</span><span class="delimiter">&quot;</span></span>
-                  <span class="attribute-name">Namespace</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2005/08/addressing</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-            <span class="tag">&lt;/sp:SignedParts&gt;</span>
-            <span class="tag">&lt;sp:EncryptedParts</span>
-               <span class="attribute-name">xmlns:sp</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-               <span class="tag">&lt;sp:Body</span> <span class="tag">/&gt;</span>
-            <span class="tag">&lt;/sp:EncryptedParts&gt;</span>
-         <span class="tag">&lt;/wsp:All&gt;</span>
-      <span class="tag">&lt;/wsp:ExactlyOne&gt;</span>
-   <span class="tag">&lt;/wsp:Policy&gt;</span>
-
-   <span class="tag">&lt;wsp:Policy</span> <span class="attribute-name">wsu:Id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Output_policy</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-      <span class="tag">&lt;wsp:ExactlyOne&gt;</span>
-         <span class="tag">&lt;wsp:All&gt;</span>
-            <span class="tag">&lt;sp:SignedParts</span>
-               <span class="attribute-name">xmlns:sp</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-               <span class="tag">&lt;sp:Body</span> <span class="tag">/&gt;</span>
-               <span class="tag">&lt;sp:Header</span> <span class="attribute-name">Name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">To</span><span class="delimiter">&quot;</span></span>
-                  <span class="attribute-name">Namespace</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2005/08/addressing</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-               <span class="tag">&lt;sp:Header</span> <span class="attribute-name">Name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">From</span><span class="delimiter">&quot;</span></span>
-                  <span class="attribute-name">Namespace</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2005/08/addressing</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-               <span class="tag">&lt;sp:Header</span> <span class="attribute-name">Name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">FaultTo</span><span class="delimiter">&quot;</span></span>
-                  <span class="attribute-name">Namespace</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2005/08/addressing</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-               <span class="tag">&lt;sp:Header</span> <span class="attribute-name">Name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">ReplyTo</span><span class="delimiter">&quot;</span></span>
-                  <span class="attribute-name">Namespace</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2005/08/addressing</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-               <span class="tag">&lt;sp:Header</span> <span class="attribute-name">Name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">MessageID</span><span class="delimiter">&quot;</span></span>
-                  <span class="attribute-name">Namespace</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2005/08/addressing</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-               <span class="tag">&lt;sp:Header</span> <span class="attribute-name">Name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">RelatesTo</span><span class="delimiter">&quot;</span></span>
-                  <span class="attribute-name">Namespace</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2005/08/addressing</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-               <span class="tag">&lt;sp:Header</span> <span class="attribute-name">Name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Action</span><span class="delimiter">&quot;</span></span>
-                  <span class="attribute-name">Namespace</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2005/08/addressing</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-            <span class="tag">&lt;/sp:SignedParts&gt;</span>
-            <span class="tag">&lt;sp:EncryptedParts</span>
-               <span class="attribute-name">xmlns:sp</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-               <span class="tag">&lt;sp:Body</span> <span class="tag">/&gt;</span>
-            <span class="tag">&lt;/sp:EncryptedParts&gt;</span>
-         <span class="tag">&lt;/wsp:All&gt;</span>
-      <span class="tag">&lt;/wsp:ExactlyOne&gt;</span>
-   <span class="tag">&lt;/wsp:Policy&gt;</span>
-
-<span class="tag">&lt;/wsdl:definitions&gt;</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Differently from the Apache CXF STS example described above, the
-PicketLink based STS gets its configuration from a picketlink-sts.xml
-descriptor which must be added in WEB-INF into the deployment; please
-refer to the PicketLink documentation for further information:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;PicketLinkSTS</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:picketlink:identity-federation:config:1.0</span><span class="delimiter">&quot;</span></span>
-    <span class="attribute-name">STSName</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">PicketLinkSTS</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">TokenTimeout</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">7200</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">EncryptToken</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-    <span class="tag">&lt;KeyProvider</span> <span class="attribute-name">ClassName</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.picketlink.identity.federation.core.impl.KeyStoreKeyManager</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-        <span class="tag">&lt;Auth</span> <span class="attribute-name">Key</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">KeyStoreURL</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">Value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">stsstore.jks</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-        <span class="tag">&lt;Auth</span> <span class="attribute-name">Key</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">KeyStorePass</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">Value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">stsspass</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-        <span class="tag">&lt;Auth</span> <span class="attribute-name">Key</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">SigningKeyAlias</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">Value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">mystskey</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-        <span class="tag">&lt;Auth</span> <span class="attribute-name">Key</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">SigningKeyPass</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">Value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">stskpass</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-        <span class="tag">&lt;ValidatingAlias</span> <span class="attribute-name">Key</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://localhost:8080/jaxws-samples-wsse-policy-trust/SecurityService</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">Value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">myservicekey</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-    <span class="tag">&lt;/KeyProvider&gt;</span>
-    <span class="tag">&lt;TokenProviders&gt;</span>
-            <span class="tag">&lt;TokenProvider</span> <span class="attribute-name">ProviderClass</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.picketlink.identity.federation.core.wstrust.plugins.saml.SAML11TokenProvider</span><span class="delimiter">&quot;</span></span>
-                <span class="attribute-name">TokenType</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://docs.oasis-open.org/wss/oasis-wss-saml-token-profile-1.1#SAMLV1.1</span><span class="delimiter">&quot;</span></span>
-            <span class="attribute-name">TokenElement</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Assertion</span><span class="delimiter">&quot;</span></span>
-            <span class="attribute-name">TokenElementNS</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:oasis:names:tc:SAML:1.0:assertion</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-            <span class="tag">&lt;TokenProvider</span> <span class="attribute-name">ProviderClass</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.picketlink.identity.federation.core.wstrust.plugins.saml.SAML20TokenProvider</span><span class="delimiter">&quot;</span></span>
-                <span class="attribute-name">TokenType</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://docs.oasis-open.org/wss/oasis-wss-saml-token-profile-1.1#SAMLV2.0</span><span class="delimiter">&quot;</span></span>
-            <span class="attribute-name">TokenElement</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Assertion</span><span class="delimiter">&quot;</span></span>
-            <span class="attribute-name">TokenElementNS</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:oasis:names:tc:SAML:2.0:assertion</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-    <span class="tag">&lt;/TokenProviders&gt;</span>
-<span class="tag">&lt;/PicketLinkSTS&gt;</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Finally, the PicketLink alternative approach of course requires
-different WildFly module dependencies to be declared in the MANIFEST.MF:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Manifest-Version: 1.0
-Ant-Version: Apache Ant 1.8.2
-Created-By: 1.6.0_26-b03 (Sun Microsystems Inc.)
-Dependencies: org.apache.ws.security,org.apache.cxf,org.picketlink</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Here is how the PicketLink STS endpoint is packaged:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code>alessio@inuyasha /dati/jbossws/stack/cxf/trunk $ jar -tvf ./modules/testsuite/cxf-tests/target/test-libs/jaxws-samples-wsse-policy-trustPicketLink-sts.war
-     0 Mon Sep 03 17:38:38 CEST 2012 META-INF/
-   174 Mon Sep 03 17:38:36 CEST 2012 META-INF/MANIFEST.MF
-     0 Mon Sep 03 17:38:38 CEST 2012 WEB-INF/
-     0 Mon Sep 03 17:38:38 CEST 2012 WEB-INF/classes/
-     0 Mon Sep 03 16:35:50 CEST 2012 WEB-INF/classes/org/
-     0 Mon Sep 03 16:35:50 CEST 2012 WEB-INF/classes/org/jboss/
-     0 Mon Sep 03 16:35:50 CEST 2012 WEB-INF/classes/org/jboss/test/
-     0 Mon Sep 03 16:35:52 CEST 2012 WEB-INF/classes/org/jboss/test/ws/
-     0 Mon Sep 03 16:35:50 CEST 2012 WEB-INF/classes/org/jboss/test/ws/jaxws/
-     0 Mon Sep 03 16:35:52 CEST 2012 WEB-INF/classes/org/jboss/test/ws/jaxws/samples/
-     0 Mon Sep 03 16:35:50 CEST 2012 WEB-INF/classes/org/jboss/test/ws/jaxws/samples/wsse/
-     0 Mon Sep 03 16:35:50 CEST 2012 WEB-INF/classes/org/jboss/test/ws/jaxws/samples/wsse/policy/
-     0 Mon Sep 03 16:35:52 CEST 2012 WEB-INF/classes/org/jboss/test/ws/jaxws/samples/wsse/policy/trust/
-  1686 Mon Sep 03 16:35:50 CEST 2012 WEB-INF/classes/org/jboss/test/ws/jaxws/samples/wsse/policy/trust/PicketLinkSTService.class
-  1148 Mon Sep 03 16:35:52 CEST 2012 WEB-INF/classes/org/jboss/test/ws/jaxws/samples/wsse/policy/trust/STSCallbackHandler.class
-   251 Mon Sep 03 17:38:34 CEST 2012 WEB-INF/jboss-web.xml
-     0 Mon Sep 03 16:35:50 CEST 2012 WEB-INF/wsdl/
-  9070 Mon Sep 03 17:38:34 CEST 2012 WEB-INF/wsdl/PicketLinkSTS.wsdl
-  1267 Mon Sep 03 17:38:34 CEST 2012 WEB-INF/classes/picketlink-sts.xml
-  1054 Mon Sep 03 16:35:50 CEST 2012 WEB-INF/classes/stsKeystore.properties
-  3978 Mon Sep 03 16:35:50 CEST 2012 WEB-INF/classes/stsstore.jks</code></pre>
 </div>
 </div>
 </div>
@@ -21181,7 +20748,7 @@ their deployment and set module dependencies in it.</p>
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-WildFly 24 introduced the EJB client API for managing remote EJB
+WildFly 25 introduced the EJB client API for managing remote EJB
 invocations. The EJB client API works off EJBClientContext(s). An
 EJBClientContext can potentially contain any number of EJB receivers. An
 EJB receiver is a component which knows how to communicate with a server
@@ -21195,7 +20762,7 @@ applications can be classified into:
 <p>A remote client which runs as a standalone Java application</p>
 </li>
 <li>
-<p>A remote client which runs within another WildFly 24 instance</p>
+<p>A remote client which runs within another WildFly 25 instance</p>
 </li>
 </ul>
 </div>
@@ -21212,7 +20779,7 @@ than one EJBClientContext(s) and an EJB client context selector will be
 responsible for returning the appropriate context.</p>
 </div>
 <div class="paragraph">
-<p>In case of remote clients which run within another WildFly 24 instance,
+<p>In case of remote clients which run within another WildFly 25 instance,
 each deployed application will have a corresponding EJB client context.
 Whenever that application invokes on another EJB, the corresponding EJB
 client context will be used for finding the right EJB receiver and
@@ -21223,7 +20790,7 @@ letting it handle the invocation.</p>
 <div class="paragraph">
 <p>In the Overview section we briefly looked at the different types of
 remote clients. Let&#8217;s focus on the standalone remote clients (the ones
-that don&#8217;t run within another WildFly 24 instance) for some of the next
+that don&#8217;t run within another WildFly 25 instance) for some of the next
 sections. Like mentioned earlier, typically a remote standalone client
 has just one EJB client context backed by any number of EJB receivers.
 Consider this example:</p>
@@ -21258,7 +20825,7 @@ context is used by the above code to invoke the bean.</p>
 </div>
 <div class="paragraph">
 <p>Now let&#8217;s consider a case where the user application wants to invoke on
-the bean more than once, but wants to connect to the WildFly 24 server
+the bean more than once, but wants to connect to the WildFly 25 server
 using different security credentials. Let&#8217;s take a look at the following
 code:</p>
 </div>
@@ -21381,7 +20948,7 @@ context which typically is the one tied to the entire application.</p>
 have more control over which JNDI context "talks to" which server and
 connects to that server in "what way". This gives the user applications
 the flexibility that was associated with the JNP based JNDI invocations
-prior to WildFly 24 versions.</p>
+prior to WildFly 25 versions.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -22625,7 +22192,7 @@ as follows:</p>
 <div class="sect2">
 <h3 id="security">19.3. Security</h3>
 <div class="paragraph">
-<p>WildFly 24 is secure by default. What this means is that no communication
+<p>WildFly 25 is secure by default. What this means is that no communication
 can happen with an WildFly instance from a remote client (irrespective
 of whether it is a standalone client or another server instance) without
 passing the appropriate credentials. Remember that in this example, our
@@ -23207,7 +22774,7 @@ wildfly-naming-client project. The other property is the PROVIDER_URL.
 which is <code>remote+http://</code> for wildfly-naming-client. The rest
 of the PROVIDER_URL part is the server hostname or IP and the port on
 which the remoting connector is exposed on the server side. By default
-the http-remoting connector port in WildFly 24 is 8080. That&#8217;s what we
+the http-remoting connector port in WildFly 25 is 8080. That&#8217;s what we
 have used in our example. The hostname we have used is localhost but
 that should point to the server IP or hostname where the server is
 running.</p>
@@ -23881,7 +23448,7 @@ about this migration, see <a href="#Migrate_Order_Application_from_EAP5">Order A
 <h4 id="migrate-example-application">21.1.5. Migrate example application</h4>
 <div class="paragraph">
 <p>A step by step work through of issues, and their solutions, that might
-crop up when migrating applications to WildFly 24. See the following
+crop up when migrating applications to WildFly 25. See the following
 <a href="https://github.com/danbev/migrate">github project</a> for details.</p>
 </div>
 </div>
@@ -24220,24 +23787,24 @@ References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta En
 <div class="paragraph">
 <p>This document details the main points that need to be considered by
 Spring developers that wish to develop new applications or to migrate
-existing applications to be run into WildFly 24.</p>
+existing applications to be run into WildFly 25.</p>
 </div>
 <div class="sect2">
 <h3 id="dependencies-and-modularity">23.1. Dependencies and Modularity</h3>
 <div class="paragraph">
-<p>WildFly 24 has a modular class loading strategy, different from previous
+<p>WildFly 25 has a modular class loading strategy, different from previous
 versions of JBoss AS, which enforces a better class loading isolation
 between deployments and the application server itself. A detailed
 description can be found in the documentation dedicated to
 <a href="https://docs.jboss.org/author/display/AS7/Class+Loading+in+AS7">class
-loading in WildFly 24</a>.</p>
+loading in WildFly 25</a>.</p>
 </div>
 <div class="paragraph">
 <p>This reduces significantly the risk of running into a class loading
 conflict and allows applications to package their own dependencies if
 they choose to do so. This makes it easier for Spring applications that
 package their own dependencies - such as logging frameworks or
-persistence providers to run on WildFly 24.</p>
+persistence providers to run on WildFly 25.</p>
 </div>
 <div class="paragraph">
 <p>At the same time, this does not mean that duplications and conflicts
@@ -24272,7 +23839,7 @@ depending on the type of deployment as shown
 through either one of LocalSessionFactoryBean or
 AnnotationSessionFactoryBean) may use a version of Hibernate 3 packaged
 inside the application. Hibernate 4 (which is provided through the
-'org.hibernate' module of WildFly 24) is not supported by Spring 3.0 and
+'org.hibernate' module of WildFly 25) is not supported by Spring 3.0 and
 Spring 3.1 (and may be supported by Spring 3.2 as described in
 <a href="https://jira.springsource.org/browse/SPR-8096">SPR-8096</a>), so adding this
 module as a dependency is not a solution.</p>
@@ -24365,7 +23932,7 @@ JNDI binding via persistence.xml properties is not supported in WildFly
 <div class="sect3">
 <h4 id="using-spring-managed-persistence-units">23.4.2. Using Spring-managed persistence units</h4>
 <div class="paragraph">
-<p>Spring applications running in WildFly 24 may also create persistence
+<p>Spring applications running in WildFly 25 may also create persistence
 units on their own, using the LocalContainerEntityManagerFactoryBean.
 This is what these applications need to consider:</p>
 </div>
@@ -24468,7 +24035,7 @@ WEB-INF/jboss-deployment-structure.xml with the following content:</p>
 <p>JBossWS 5 - The fifth generation of JBossWS, a major leap forward, brings new features and performances improvements to WildFly Web Services</p>
 </li>
 <li>
-<p>RESTEasy 3 - WildFly which goes beyond the standard Jakarta EE REST APIs (Jakarta RESTful Web Services 2.1), by also providing a number of useful extensions, such as JSON Web Encryption, Jackson, Yaml, Jakarta JSON Processing, and reactive facilities.</p>
+<p>RESTEasy - WildFly which goes beyond the standard Jakarta EE REST APIs (Jakarta RESTful Web Services 2.1), by also providing a number of useful extensions, such as JSON Web Encryption, Jackson, Yaml, Jakarta JSON Processing, and reactive facilities.</p>
 </li>
 <li>
 <p>OpenJDK ORB - WildFly switched the IIOP implementation from JacORB, to a downstream branch of the OpenJDK Orb, leading to better interoperability with the JVM ORB and the Jakarta EE RI.</p>
@@ -25543,7 +25110,7 @@ a lot of effort. If you can not migrate to Hibernate 5, you must define a custom
 <p>Some changes to the <code>MessageBodyWriter</code> interface may represent a backward incompatible change with respect to JAX-RS 1.X.</p>
 </div>
 <div class="paragraph">
-<p>Be sure to define an <code>@Produces</code> or <code>@Consumes</code> for your endpoints. Failure to do so may result in an error similar to the following.</p>
+<p>Be sure to define a <code>@Produces</code> or <code>@Consumes</code> for your endpoints. Failure to do so may result in an error similar to the following.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -25554,8 +25121,8 @@ a lot of effort. If you can not migrate to Hibernate 5, you must define a custom
 <div class="sect4">
 <h5 id="rest-client-api">REST Client API</h5>
 <div class="paragraph">
-<p>Some REST Client API classes and methods are deprecated, for example: <code>org.jboss.resteasy.client.ClientRequest</code> and <code>org.jboss.resteasy.client.ClientResponse</code>. Instead, use
-<a href="https://docs.jboss.org/resteasy/docs/3.15.0.Final/javadocs/index.html?org/jboss/resteasy/client/jaxrs/ResteasyClient.html">﻿<code>org.jboss.resteasy.client.jaxrs.ResteasyClient</code></a> and <code>javax.ws.rs.core.Response</code>. See the <code>resteasy-jaxrs-client</code> quickstart for an example of an external Jakarta RESTful Web Services RestEasy client that interacts with a Jakarta RESTful Web Services.</p>
+<p>Some REST Client API classes and methods are deprecated or removed, for example: <code>org.jboss.resteasy.client.ClientRequest</code> and <code>org.jboss.resteasy.client.ClientResponse</code> have been removed. Instead, use
+<a href="https://jakarta.ee/specifications/restful-ws/2.1/apidocs/javax/ws/rs/client/Client.html"><code>javax.ws.rs.client.Client</code></a> and <code>javax.ws.rs.core.Response</code>. See the <code>resteasy-jaxrs-client</code> quickstart for an example of an external Jakarta RESTful Web Services RESTEasy client that interacts with a Jakarta RESTful Web Services.</p>
 </div>
 </div>
 </div>
@@ -25901,8 +25468,8 @@ applications to WildFly.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 24.0.0.Final<br>
-Last updated 2021-06-16 12:05:21 CDT
+Version 25.0.0.Final<br>
+Last updated 2021-09-13 17:18:55 CDT
 </div>
 </div>
 </body>
