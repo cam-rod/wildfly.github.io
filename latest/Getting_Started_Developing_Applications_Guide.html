@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>Getting Started Developing Applications Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly team</span><br>
-<span id="revnumber">version 22.0.1.Final,</span>
-<span id="revdate">2021-02-12T19:04:12Z</span>
+<span id="revnumber">version 23.0.0.Final,</span>
+<span id="revdate">2021-03-10T23:27:43Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Getting Started Developing Applications Guide</div>
@@ -570,7 +570,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#creating-your-own-application">7. Creating your own application</a></li>
 <li><a href="#more-resources">8. More Resources</a>
 <ul class="sectlevel2">
-<li><a href="#Developing_JSF_Project_Using">8.1. Developing JSF Project Using JBoss AS7, Maven and IntelliJ</a></li>
+<li><a href="#Developing_Jakarta_Server_Faces_Project_Using">8.1. Developing Jakarta Server Faces Project Using JBoss AS7, Maven and IntelliJ</a></li>
 <li><a href="#Getting_Started_Developing_Applications_Presentation_Demo">8.2. Getting Started Developing Applications Presentation &amp; Demo</a></li>
 </ul>
 </li>
@@ -3947,12 +3947,12 @@ JBoss AS 7, but with Ruby.</p></td>
 </tbody>
 </table>
 <div class="sect2">
-<h3 id="Developing_JSF_Project_Using">8.1. Developing JSF Project Using JBoss AS7, Maven and IntelliJ</h3>
+<h3 id="Developing_Jakarta_Server_Faces_Project_Using">8.1. Developing Jakarta Server Faces Project Using JBoss AS7, Maven and IntelliJ</h3>
 <div class="paragraph">
 <p>JBoss AS7 is a very 'modern' application server that has very fast
-startup speed. So it&#8217;s an excellent container to test your JSF project.
+startup speed. So it&#8217;s an excellent container to test your Jakarta Server Faces project.
 In this article, I&#8217;d like to show you how to use AS7, maven and IntelliJ
-together to develop your JSF project.</p>
+together to develop your Jakarta Server Faces project.</p>
 </div>
 <div class="paragraph">
 <p>In this article I&#8217;d like to introduce the following things:</p>
@@ -3963,7 +3963,7 @@ together to develop your JSF project.</p>
 <p>Create a project using Maven</p>
 </li>
 <li>
-<p>Add JSF into project</p>
+<p>Add Jakarta Server Faces into project</p>
 </li>
 <li>
 <p>Writing Code</p>
@@ -3978,7 +3978,7 @@ together to develop your JSF project.</p>
 <p>Import project into IntelliJ</p>
 </li>
 <li>
-<p>Add IntelliJ JSF support to project</p>
+<p>Add IntelliJ Jakarta Server Faces support to project</p>
 </li>
 <li>
 <p>Add JBoss AS7 to IntelliJ</p>
@@ -4063,9 +4063,9 @@ development, it&#8217;s a commercial software and can be downloaded from:
 </div>
 </div>
 <div class="sect3">
-<h4 id="add-jsf-into-project">8.1.2. Add JSF into project</h4>
+<h4 id="add-Jakarta-Server-Faces-into-project">8.1.2. Add Jakarta Server Faces into project</h4>
 <div class="paragraph">
-<p>The JSF library is now included in maven repo, so we can let maven to
+<p>The Jakarta Server Faces library is now included in maven repo, so we can let maven to
 manage the download for us. First is to add repository into our pom.xml:</p>
 </div>
 <div class="listingblock">
@@ -4078,7 +4078,7 @@ manage the download for us. First is to add repository into our pom.xml:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Then we add JSF dependency into pom.xml:</p>
+<p>Then we add Jakarta Server Faces dependency into pom.xml:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4093,7 +4093,7 @@ manage the download for us. First is to add repository into our pom.xml:</p>
 <div class="paragraph">
 <p>Please note the 'scope' is 'provided', because we don&#8217;t want to bundle
 the jsf.jar into the war produced by our project later, as JBoss AS7
-already have jsf bundled in.</p>
+already have Jakarta Server Faces bundled in.</p>
 </div>
 <div class="paragraph">
 <p>Then we run 'mvn install' to update the project, and maven will download
@@ -4103,7 +4103,7 @@ jsf-api for us automatically.</p>
 <div class="sect3">
 <h4 id="writing-code">8.1.3. Writing Code</h4>
 <div class="paragraph">
-<p>Writing JSF code in this article is trivial, so I&#8217;ve put written a
+<p>Writing Jakarta Server Faces code in this article is trivial, so I&#8217;ve put written a
 project called 'jsfdemo' onto github:</p>
 </div>
 <div class="paragraph">
@@ -4225,7 +4225,7 @@ deployed:</p>
 <p><span class="image"><img src="images/jsf/2._java.jpg" alt="images/jsf/2._java.jpg"></span></p>
 </div>
 <div class="paragraph">
-<p>Now we have learnt how to create a JSF project and deploy it to AS7
+<p>Now we have learnt how to create a Jakarta Server Faces project and deploy it to AS7
 without any help from graphical tools. Next let&#8217;s see how to use
 IntelliJ IDEA to go on developing/debugging our project.</p>
 </div>
@@ -4276,17 +4276,17 @@ other options as default:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="adding-intellij-jsf-support-to-project">8.1.7. Adding IntelliJ JSF support to project</h4>
+<h4 id="adding-intellij-Jakarta-Server-Faces-support-to-project">8.1.7. Adding IntelliJ Jakarta Server Faces support to project</h4>
 <div class="paragraph">
 <p>Let&#8217;s see how to use IntelliJ and AS7 to debug the project. First we
-need to add 'JSF' facet into project. Open project setting:</p>
+need to add 'Jakarta Server Faces' facet into project. Open project setting:</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="images/jsf/8b8d0051f4f15033f17cb859c65f2d8481914678.jpg" alt="images/jsf/8b8d0051f4f15033f17cb859c65f2d8481914678.jpg"></span></p>
 </div>
 <div class="paragraph">
 <p>Click on 'Facets' section on left; Select 'Web' facet that we already
-have, and click the '+' on top, choose 'JSF':</p>
+have, and click the '+' on top, choose 'Jakarta Server Faces':</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="images/jsf/e6947b84a56a698ca1392a440081bddfb5cae284.jpg" alt="images/jsf/e6947b84a56a698ca1392a440081bddfb5cae284.jpg"></span></p>
@@ -4304,7 +4304,7 @@ have, and click the '+' on top, choose 'JSF':</p>
 <p><span class="image"><img src="images/jsf/9988c572bad281146f405e9287f645a3da201885.jpg" alt="images/jsf/9988c572bad281146f405e9287f645a3da201885.jpg"></span></p>
 </div>
 <div class="paragraph">
-<p>Now we have enabled IntelliJ&#8217;s JSF support for project.</p>
+<p>Now we have enabled IntelliJ&#8217;s Jakarta Server Faces support for project.</p>
 </div>
 </div>
 <div class="sect3">
@@ -4482,7 +4482,7 @@ on 'Get current time':</p>
 <h4 id="conclusion">8.1.10. Conclusion</h4>
 <div class="paragraph">
 <p>In this article I&#8217;ve shown to you how to use maven to create a project
-using JSF and deploy it in JBoss AS7, and I&#8217;ve also talked about the
+using Jakarta Server Faces and deploy it in JBoss AS7, and I&#8217;ve also talked about the
 usage of IntelliJ during project development phase. Hope the contents
 are practical and helpful to you <span class="icon yellow"><i class="fa fa-smile-o"></i></span></p>
 </div>
@@ -4673,7 +4673,7 @@ compatibility.</p>
 The command line also uses the Deptyped Management API to communicate
 with the server. It&#8217;s designed to be as "unixy" as possible, allowing
 you to "cd" into nodes, with full tab completion etc. The CLI allows you
-to deploy and undeploy applications, create JMS queues, topics etc.,
+to deploy and undeploy applications, create Jakarta Messaging queues, topics etc.,
 create datasources (normal and XA). It also fully supports the domain
 node.
 </td>
@@ -5019,8 +5019,8 @@ bean, CDI will inject that bean</p>
 <div class="sect4">
 <h5 id="introduction-2">Introduction</h5>
 <div class="paragraph">
-<p>This quickstart adds in a "complete" view layer into the mix. Java EE
-ships with a JSF. JSF is a server side rendering, component orientated
+<p>This quickstart adds in a "complete" view layer into the mix. Jakarta EE
+ships with a Jakarta Server Faces. Jakarta Server Faces is a server side rendering, component orientated
 framework, where you write markup using an HTML like language, adding in
 dynamic behavior by binding components to beans in the back end. The
 quickstart also makes more use of CDI to wire the application together.</p>
@@ -5070,12 +5070,12 @@ quickstart also makes more use of CDI to wire the application together.</p>
 </li>
 <li>
 <p><code>faces-config.xml</code> - nice feature from AS7 - we can just put
-<code>faces-config.xml</code> into the WEB-INF and it enables JSF (inspiration from
+<code>faces-config.xml</code> into the WEB-INF and it enables Jakarta Server Faces (inspiration from
 CDI)</p>
 </li>
 <li>
 <p><code>pom.xml</code> we saw this before, this time it&#8217;s the same but adds in
-JSF API</p>
+Jakarta Server Faces API</p>
 </li>
 </ol>
 </div>
@@ -5128,7 +5128,7 @@ persistence etc.</p>
 <li>
 <p><code>@Named</code> – As we discussed CDI is typesafe, (beans are injected by
 type) but sometimes need to access in a non-typesafe fashion. @Named
-exposes the Bean in EL - and allows us to access it from JSF</p>
+exposes the Bean in EL - and allows us to access it from Jakarta Server Faces</p>
 </li>
 <li>
 <p><code>@SessionScoped</code> – really simple app, we keep the game data in the
@@ -5191,10 +5191,10 @@ instance at runtime</p>
 <div class="sect4">
 <h5 id="introduction-3">Introduction</h5>
 <div class="paragraph">
-<p>The login quickstart builds on the knowledge of CDI and JSF we have got
-from numberguess. New stuff we will learn about is how to use JPA to
-store data in a database, how to use JTA to control transactions, and
-how to use EJB for declarative TX control.</p>
+<p>The login quickstart builds on the knowledge of CDI and Jakarta Server Faces we have got
+from numberguess. New stuff we will learn about is how to use Jakarta Persistence to
+store data in a database, how to use Jakarta Transactions to control transactions, and
+how to use Jakarta Enterprise Beans for declarative TX control.</p>
 </div>
 </div>
 <div class="sect4">
@@ -5258,8 +5258,8 @@ auto-create tables - as you always have.</p>
 </div>
 </li>
 <li>
-<p><code>pom.xml</code> is the same again, but just adds in dependencies for JPA,
-JTA and EJB</p>
+<p><code>pom.xml</code> is the same again, but just adds in dependencies for Jakarta Persistence,
+Jakarta Transactions and Jakarta Enterprise Beans</p>
 </li>
 </ol>
 </div>
@@ -5269,7 +5269,7 @@ JTA and EJB</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>template.xhtml</code> One of the updates added to JSF 2.0 was templating
+<p><code>template.xhtml</code> One of the updates added to Jakarta Server Faces was templating
 ability. We take advantage of that in this app, as we have multiple
 views</p>
 <div class="olist loweralpha">
@@ -5332,7 +5332,7 @@ logout, link to add users.</p>
 <li>
 <p><code>Credentials.java</code> Backing bean for the login form field, pretty
 trivial. It&#8217;s request scoped (natural for a login field) and named so we
-can get it from JSF.</p>
+can get it from Jakarta Server Faces.</p>
 </li>
 <li>
 <p><code>Login.java</code></p>
@@ -5350,7 +5350,7 @@ session or until they log out}}</p>
 </li>
 <li>
 <p>Uses the userManager service to load the user, and sends any
-messages to JSF as needed</p>
+messages to Jakarta Server Faces as needed</p>
 </li>
 <li>
 <p>Uses a producer method to expose the @LoggedIn user (producer
@@ -5360,7 +5360,7 @@ methods used as we don&#8217;t know which user at development time)</p>
 </div>
 </li>
 <li>
-<p><code>User.java</code> Is a pretty straightforward JPA entity. Mapped with
+<p><code>User.java</code> Is a pretty straightforward Jakarta Persistence entity. Mapped with
 <code>@Entity</code>, has an natural id.</p>
 </li>
 <li>
@@ -5381,11 +5381,11 @@ ManagedBean version, which requires manual TX control</p>
 <p>Inject the UserTransaction (this is provided by CDI)</p>
 </li>
 <li>
-<p><code>getUsers()</code> standard JPA-QL that we know and love - but lots of
+<p><code>getUsers()</code> standard Jakarta Persistence-QL that we know and love - but lots of
 ugly TX handling code.</p>
 </li>
 <li>
-<p>Same for <code>addUser()</code> and <code>findUser()</code> methods - very simple JPA
+<p>Same for <code>addUser()</code> and <code>findUser()</code> methods - very simple Jakarta Persistence
 but&#8230;&#8203;</p>
 </li>
 <li>
@@ -5421,7 +5421,7 @@ selection of beans at deployment time</p>
 <p>Much simple now we have declarative TX control.</p>
 </li>
 <li>
-<p>Start to see how we can introduce EJB to get useful enterprise
+<p>Start to see how we can introduce Jakarta Enterprise Beans to get useful enterprise
 services such as declarative TX control</p>
 </li>
 </ol>
@@ -5450,7 +5450,7 @@ services such as declarative TX control</p>
 JBoss AS (tell people to check the
 <a href="/pages/createpage.action?spaceKey=WFLY&amp;title=Getting+Started+Developing+Applications&amp;linkCreation=true&amp;fromPageId=557131">Getting
 Started Developing Applications</a> Guide for details). It demonstrates
-CDI, JSF, EJB, JPA (which we&#8217;ve seen before) and JAX-RS and Bean
+CDI, Jakarta Server Faces, Jakarta Enterprise Beans, Jakarta Persistence (which we&#8217;ve seen before) and Jakarta RESTful Web Services and Bean
 Validation as well. We add in Arquillian for testing.</p>
 </div>
 </div>
@@ -5476,20 +5476,20 @@ Validation as well. We add in Arquillian for testing.</p>
 </li>
 <li>
 <p>Register a member - make sure to enter an invalid email and phone -
-show bean validation at work</p>
+show Jakarta Bean Validation at work</p>
 </li>
 <li>
-<p>Click on the member URL and show the output from JAX-RS</p>
+<p>Click on the member URL and show the output from Jakarta RESTful Web Services</p>
 </li>
 </ol>
 </div>
 </div>
 <div class="sect4">
-<h5 id="bean-validation">Bean Validation</h5>
+<h5 id="Jakarta-Bean-Validation">Jakarta Bean Validation</h5>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Explain the benefits of bean validation - need your data always
+<p>Explain the benefits of Jakarta Bean Validation - need your data always
 valid (protect your data) AND good errors for your user. BV allows you
 to express once, apply often.</p>
 </li>
@@ -5524,30 +5524,30 @@ layer and in your views</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="jax-rs">JAX-RS</h5>
+<h5 id="Jakarta-RESTful-Web-Services">Jakarta RESTful Web Services</h5>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
 <p><code>index.xhtml</code> - Show that URL generation is just manual</p>
 </li>
 <li>
-<p><code>JaxRsActivator.java</code> - simply activates JAX-RS</p>
+<p><code>JaxRsActivator.java</code> - simply activates Jakarta RESTful Web Services</p>
 </li>
 <li>
-<p><code>Member.java</code> - add JAXB annotation to make JAXB process the class properly</p>
+<p><code>Member.java</code> - add Jakarta XML Binding annotation to make Jakarta XML Binding process the class properly</p>
 </li>
 <li>
 <p><code>MemberResourceRESTService.java</code></p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p><code>@Path</code> sets the JAX-RS resource</p>
+<p><code>@Path</code> sets the Jakarta RESTful Web Services resource</p>
 </li>
 <li>
-<p>JAX-RS services can use injection</p>
+<p>Jakarta RESTful Web Services services can use injection</p>
 </li>
 <li>
-<p><code>@GET</code> methods are auto transformed to XML using JAXB</p>
+<p><code>@GET</code> methods are auto transformed to XML using Jakarta XML Binding</p>
 </li>
 </ol>
 </div>
@@ -5608,6 +5608,18 @@ logic</p>
 </li>
 </ol>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+References in this document to CDI refer to Jakarta Contexts and Dependency Injection unless otherwise noted.
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -5616,8 +5628,8 @@ logic</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 22.0.1.Final<br>
-Last updated 2021-02-12 11:00:13 PST
+Version 23.0.0.Final<br>
+Last updated 2021-02-12 11:14:30 PST
 </div>
 </div>
 </body>

@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>High Availability Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly clustering team</span><br>
-<span id="revnumber">version 22.0.1.Final,</span>
-<span id="revdate">2021-02-12T19:04:12Z</span>
+<span id="revnumber">version 23.0.0.Final,</span>
+<span id="revdate">2021-03-10T23:27:43Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">High Availability Guide</div>
@@ -572,7 +572,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#remote-user-authentication-with-elytron">7.4. Remote User Authentication with Elytron</a></li>
 </ul>
 </li>
-<li><a href="#EJB_Services">8. EJB Services</a>
+<li><a href="#Jakarta_Enterprise_Beans_Services">8. Jakarta Enterprise Beans Services</a>
 <ul class="sectlevel2">
 <li><a href="#ejb-subsystem">8.1. EJB Subsystem</a></li>
 <li><a href="#ejb-timer">8.2. EJB Timer</a></li>
@@ -708,10 +708,10 @@ the following features:</p>
 <p>session-oriented servlets to provide user interaction</p>
 </li>
 <li>
-<p>session-oriented EJBs to perform state-dependent business computation</p>
+<p>session-oriented Jakarta Enterprise Beans to perform state-dependent business computation</p>
 </li>
 <li>
-<p>EJB entity beans to store critical data in a persistent store (e.g.
+<p>Jakarta Enterprise Beans entity beans to store critical data in a persistent store (e.g.
 database)</p>
 </li>
 <li>
@@ -724,8 +724,8 @@ database)</p>
 interacting with an instance of that application will not be interrupted
 even when the node on which that instance executes crashes. Behind the
 scenes, WildFly makes sure that all of the user data that the
-application make use of (HTTP session data, EJB SFSB sessions, EJB
-entities and SSO credentials) are available at other nodes in the
+application make use of (HTTP session data, Jakarta Enterprise Beans SFSB sessions,
+Jakarta Enterprise Beans entities and SSO credentials) are available at other nodes in the
 cluster, so that when a failure occurs and the client is redirected to
 that new node for continuation of processing (i.e. the client "fails
 over" to the new node), the user&#8217;s data is available and processing can
@@ -786,7 +786,7 @@ high-availability/clustering</p>
 <h3 id="organization-of-the-guide">1.5. Organization of the guide</h3>
 <div class="paragraph">
 <p>As high availability features and their configuration depend on the
-particular component they affect (e.g. HTTP sessions, EJB SFSB sessions,
+particular component they affect (e.g. HTTP sessions, Jakarta Enterprise Beans SFSB sessions,
 Hibernate), we organize the discussion around those Jakarta EE features. We
 strive to make each section as self-contained as possible. Also, when
 discussing a feature, we will introduce any WildFly subsystems upon
@@ -849,7 +849,7 @@ Cache containers returned by the Infinispan subsystem are auto-configured with t
 </div>
 </div>
 <div class="paragraph">
-<p>A cache container may designate a specific cache as its default cache, i.e. the cache returned via <a href="http://docs.jboss.org/infinispan/9.2/apidocs/org/infinispan/manager/CacheContainer.html#getCache--">CacheContainer.getCache()</a>:</p>
+<p>A cache container may designate a specific cache as its default cache, i.e. the cache returned via <a href="https://docs.jboss.org/infinispan/11.0/apidocs/org/infinispan/manager/CacheContainer.html#getCache()">CacheContainer.getCache()</a>:</p>
 </div>
 <div class="paragraph">
 <p>e.g. To set "bar" as the default cache of the "foo" container:</p>
@@ -858,6 +858,19 @@ Cache containers returned by the Infinispan subsystem are auto-configured with t
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code>/subsystem=infinispan/cache-container=foo:write-attribute(name=default-cache, value=bar)</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>A cache container can be injected directly into Jakarta EE applications using the <code>@Resource</code> annotation, e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="annotation">@Resource</span>(lookup = <span class="string"><span class="delimiter">&quot;</span><span class="content">java:jboss/infinispan/container/foo</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">private</span> org.infinispan.manager.EmbeddedCacheManager container;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that the server will not manage the lifecycle of any caches created from the injected cache manager.
+The application is responsible for managing the lifecycle of manually created caches.</p>
 </div>
 <div class="sect3">
 <h4 id="transport">4.1.1. Transport</h4>
@@ -914,7 +927,7 @@ It is only necessary to define a transport if the cache container contains clust
 A local cache does not require a transport, as cache reads and writes are always local.</p>
 </div>
 <div class="paragraph">
-<p>For more information about this cache type, refer to the <a href="http://infinispan.org/docs/stable/user_guide/user_guide.html#local_mode">the Infinispan documentation</a>.</p>
+<p>For more information about this cache type, refer to the <a href="https://infinispan.org/documentation/">the Infinispan documentation</a>.</p>
 </div>
 <div class="paragraph">
 <p>To create a local cache:</p>
@@ -935,7 +948,7 @@ A local cache does not require a transport, as cache reads and writes are always
 A replicated cache requires a transport, as cache writes are replicated to all nodes in the cluster on which the associated cache is running.</p>
 </div>
 <div class="paragraph">
-<p>For more information about this cache type, refer to the <a href="http://infinispan.org/docs/stable/user_guide/user_guide.html#replicated_mode">the Infinispan documentation</a>.</p>
+<p>For more information about this cache type, refer to the <a href="https://infinispan.org/documentation/">the Infinispan documentation</a>.</p>
 </div>
 <div class="paragraph">
 <p>To create a replicated cache:</p>
@@ -956,7 +969,7 @@ A replicated cache requires a transport, as cache writes are replicated to all n
 A distributed cache requires a transport, as cache writes need to forward to each owner, and cache reads from a non-owner require a remote request.</p>
 </div>
 <div class="paragraph">
-<p>For more information about this cache type, refer to the <a href="http://infinispan.org/docs/stable/user_guide/user_guide.html#distribution_mode">the Infinispan documentation</a>.</p>
+<p>For more information about this cache type, refer to the <a href="https://infinispan.org/documentation/">the Infinispan documentation</a>.</p>
 </div>
 <div class="paragraph">
 <p>To create a distributed cache where a given entry is stored on 3 nodes:</p>
@@ -983,7 +996,7 @@ while the backup copy is the node that last updated the entry.</p>
 By comparison, a distributed cache (with 2 owners) uses 1 remote invocation to write a cache entry if and only if the primary owner initiated the cache operation, and otherwise requires 2 remote invocations.</p>
 </div>
 <div class="paragraph">
-<p>For more information about this cache type, refer to the <a href="http://infinispan.org/docs/stable/user_guide/user_guide.html#scattered_mode">the Infinispan documentation</a>.</p>
+<p>For more information about this cache type, refer to the <a href="https://infinispan.org/documentation/">the Infinispan documentation</a>.</p>
 </div>
 <div class="paragraph">
 <p>To create a scattered cache:</p>
@@ -1004,7 +1017,7 @@ By comparison, a distributed cache (with 2 owners) uses 1 remote invocation to w
 An invalidation cache requires a transport, as cache writes trigger invalidation on remote nodes on which the associated cache is running.</p>
 </div>
 <div class="paragraph">
-<p>For more information about this cache type, refer to the <a href="http://infinispan.org/docs/stable/user_guide/user_guide.html#invalidation_mode">the Infinispan documentation</a>.</p>
+<p>For more information about this cache type, refer to the <a href="https://infinispan.org/documentation/">the Infinispan documentation</a>.</p>
 </div>
 <div class="paragraph">
 <p>To create an invalidation cache:</p>
@@ -1358,10 +1371,8 @@ By default, files are stored in a file named "<em>cache-name</em>.dat" within a 
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="hotrod_store">4.1.4. HotRod store</h4>
+<div class="sect5">
+<h6 id="hotrod_store">HotRod store</h6>
 <div class="paragraph">
 <p>The HotRod store uses one dedicated remote cache for each cache created by the server.
 For Infinispan Server versions supporting protocol version 2.7 and above (Infinispan Server version 9.2)
@@ -1381,6 +1392,8 @@ The following CLI script demonstrates a typical use case for offloading sessions
 /subsystem=infinispan/cache-container=web/invalidation-cache=foo/component=transaction:add(mode=BATCH)
 /subsystem=infinispan/cache-container=web/invalidation-cache=foo/component=locking:add(isolation=REPEATABLE_READ)
 run-batch</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect4">
@@ -1413,6 +1426,34 @@ While this prevents timeouts due to large state transfers, cache operations on t
 </div>
 <div class="paragraph">
 <p>For a complete list of state-transfer attributes, refer to the <a href="wildscribe" target="_blank" rel="noopener">WildFly management model documentation</a></p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="injecting-a-cache-into-jakarta-ee-applications">Injecting a cache into Jakarta EE applications</h5>
+<div class="paragraph">
+<p>A cache can be injected directly into Jakarta EE applications using the <code>@Resource</code> annotation, e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="annotation">@Resource</span>(lookup = <span class="string"><span class="delimiter">&quot;</span><span class="content">java:jboss/infinispan/cache/foo/bar</span><span class="delimiter">&quot;</span></span>) <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="directive">private</span> org.infinispan.Cache&lt;<span class="predefined-type">Integer</span>, <span class="predefined-type">Object</span>&gt; cache;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>where <code>foo</code> is the name of the cache container and <code>bar</code> is the name of the cache to inject</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>or in order to inject the default cache of the cache container use the following resource lookup:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="annotation">@Resource</span>(lookup = <span class="string"><span class="delimiter">&quot;</span><span class="content">java:jboss/infinispan/cache/foo/default</span><span class="delimiter">&quot;</span></span>)</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -2081,8 +2122,7 @@ An externalizer reads/writes the state of an object directly from/to an input/ou
 <div class="paragraph">
 <p>Externalizers are dynamically loaded during deployment via the service loader mechanism.
 Implementations should be enumerated within a file named:
-<code>/META-INF/services/org.wildfly.clustering.marshalling.Externalizer</code>
-Unresolved directive in _high-availability/Subsystem_Support.adoc - include::subsystem-support/Offloading_session_state_to_remote_Infinispan_server_cluster.adoc[]</p>
+<code>/META-INF/services/org.wildfly.clustering.marshalling.Externalizer</code></p>
 </div>
 </div>
 </div>
@@ -3134,7 +3174,7 @@ complete authorization.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="EJB_Services">8. EJB Services</h2>
+<h2 id="Jakarta_Enterprise_Beans_Services">8. Jakarta Enterprise Beans Services</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter explains how clustering of EJBs works in WildFly.</p>
@@ -3365,6 +3405,18 @@ selected and the invocation will be forwarded to that node.</p>
 <div class="paragraph">
 <p>As can be seen both remote standalone client and remote clients on
 another WildFly instance act similar in terms of failover.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -3774,7 +3826,7 @@ For demonstration purposes, let&#8217;s make this a separate interface:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Finally, we create a @Singleton EJB that implements our HelloWorld interface:</p>
+<p>Finally, we create a @Singleton Jakarta Enterprise Beans that implements our HelloWorld interface:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3845,49 +3897,49 @@ WildFly uses this internally in its Singleton service/deployment implementation 
 <div class="sect3">
 <h4 id="example-3">9.3.1. Example</h4>
 <div class="paragraph">
-<p>The following is an example of using a ServiceProviderRegistry to publish the availability of a given singleton EJB.
+<p>The following is an example of using a ServiceProviderRegistry to publish the availability of a given singleton Jakarta Enterprise Beans.
 The getProviders() method will return the set of nodes on which the ServiceProviderRegistrationBean is deployed.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>@Singleton
-@Startup
-@Local(ServiceProviderRegistry.class)
-public class ServiceProviderRegistrationBean implements ServiceProviderRegistration&lt;String&gt;, ServiceProviderRegistration.Listener {
-    @Resource(lookup = "java:jboss/clustering/providers/server/default") <i class="conum" data-value="1"></i><b>(1)</b>
-    private ServiceProviderRegistry registry;
-    private ServiceProviderRegistration registration;
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="annotation">@Singleton</span>
+<span class="annotation">@Startup</span>
+<span class="annotation">@Local</span>(ServiceProviderRegistry.class)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">ServiceProviderRegistrationBean</span> <span class="directive">implements</span> ServiceProviderRegistration&lt;<span class="predefined-type">String</span>&gt;, ServiceProviderRegistration.Listener {
+    <span class="annotation">@Resource</span>(lookup = <span class="string"><span class="delimiter">&quot;</span><span class="content">java:jboss/clustering/providers/server/default</span><span class="delimiter">&quot;</span></span>) <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">private</span> ServiceProviderRegistry registry;
+    <span class="directive">private</span> ServiceProviderRegistration registration;
 
-    @PostConstruct
-    public void init() {
-        this.registration = this.registry.register(this.getClass().getName(), this);
+    <span class="annotation">@PostConstruct</span>
+    <span class="directive">public</span> <span class="type">void</span> init() {
+        <span class="local-variable">this</span>.registration = <span class="local-variable">this</span>.registry.register(<span class="local-variable">this</span>.getClass().getName(), <span class="local-variable">this</span>);
     }
 
-    @PreDestroy
-    public void destroy() {
-        this.registration.close(); <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="annotation">@PreDestroy</span>
+    <span class="directive">public</span> <span class="type">void</span> destroy() {
+        <span class="local-variable">this</span>.registration.close(); <i class="conum" data-value="2"></i><b>(2)</b>
     }
 
-    @Override
-    public void providersChanged(Set&lt;Node&gt; providers) {
-        System.out.println("%s is now available on the following nodes: %s", this.getClass().getName(), providers);
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> providersChanged(<span class="predefined-type">Set</span>&lt;Node&gt; providers) {
+        <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">%s is now available on the following nodes: %s</span><span class="delimiter">&quot;</span></span>, <span class="local-variable">this</span>.getClass().getName(), providers);
     }
 
-    @Override
-    public String getService() {
-        return this.registration.getService();
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">String</span> getService() {
+        <span class="keyword">return</span> <span class="local-variable">this</span>.registration.getService();
     }
 
-    @Override
-    public Set&lt;Node&gt; getProviders() {
-        return this.registration.getProviders();
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">Set</span>&lt;Node&gt; getProviders() {
+        <span class="keyword">return</span> <span class="local-variable">this</span>.registration.getProviders();
     }
 
-    @Override
-    public void close() {
-        // Do nothing - registration is close on bean destroy
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> close() {
+        <span class="comment">// Do nothing - registration is close on bean destroy</span>
     }
-}</pre>
+}</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -3921,44 +3973,44 @@ The Registry service includes a facility for notifying group members of new, upd
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>@Singleton
-@Startup
-@Local(Registry.class)
-public class RegistryBean implements Registry&lt;UUID, Void&gt; {
-    @Resource(lookup = "java:jboss/clustering/registry/server/default") <i class="conum" data-value="1"></i><b>(1)</b>
-    private RegistryFactory&lt;UUID, Void&gt; factory;
-    private Registry&lt;UUID, Void&gt; registry;
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="annotation">@Singleton</span>
+<span class="annotation">@Startup</span>
+<span class="annotation">@Local</span>(<span class="predefined-type">Registry</span>.class)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">RegistryBean</span> <span class="directive">implements</span> <span class="predefined-type">Registry</span>&lt;<span class="predefined-type">UUID</span>, <span class="predefined-type">Void</span>&gt; {
+    <span class="annotation">@Resource</span>(lookup = <span class="string"><span class="delimiter">&quot;</span><span class="content">java:jboss/clustering/registry/server/default</span><span class="delimiter">&quot;</span></span>) <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="directive">private</span> RegistryFactory&lt;<span class="predefined-type">UUID</span>, <span class="predefined-type">Void</span>&gt; factory;
+    <span class="directive">private</span> <span class="predefined-type">Registry</span>&lt;<span class="predefined-type">UUID</span>, <span class="predefined-type">Void</span>&gt; registry;
 
-    @PostConstruct
-    public void init() {
-        this.registry = this.factory.createRegistry(new AbstractMap.SimpleImmutableEntry&lt;&gt;(UUID.randomUUID(), null);
+    <span class="annotation">@PostConstruct</span>
+    <span class="directive">public</span> <span class="type">void</span> init() {
+        <span class="local-variable">this</span>.registry = <span class="local-variable">this</span>.factory.createRegistry(<span class="keyword">new</span> <span class="predefined-type">AbstractMap</span>.SimpleImmutableEntry&lt;&gt;(<span class="predefined-type">UUID</span>.randomUUID(), <span class="predefined-constant">null</span>);
     }
 
-    @PreDestroy
-    public void destroy() {
-        this.registry.close(); <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="annotation">@PreDestroy</span>
+    <span class="directive">public</span> <span class="type">void</span> destroy() {
+        <span class="local-variable">this</span>.registry.close(); <i class="conum" data-value="2"></i><b>(2)</b>
     }
 
-    @Override
-    public Group getGroup() {
-        return this.registry.getGroup();
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">Group</span> getGroup() {
+        <span class="keyword">return</span> <span class="local-variable">this</span>.registry.getGroup();
     }
 
-	@Override
-	public Map&lt;UUID, Void&gt; getEntries() {
-	    return this.registry.getEntries();
-	}
+        <span class="annotation">@Override</span>
+        <span class="directive">public</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">UUID</span>, <span class="predefined-type">Void</span>&gt; getEntries() {
+            <span class="keyword">return</span> <span class="local-variable">this</span>.registry.getEntries();
+        }
 
-    @Override
-    public Map.Entry&lt;UUID, Void&gt; getEntry(Node node) {
-        return this.registry.getEntry(node);
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">Map</span>.Entry&lt;<span class="predefined-type">UUID</span>, <span class="predefined-type">Void</span>&gt; getEntry(Node node) {
+        <span class="keyword">return</span> <span class="local-variable">this</span>.registry.getEntry(node);
     }
 
-    @Override
-    public void close() {
-        // Do nothing - registry is closed on bean destroy
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> close() {
+        <span class="comment">// Do nothing - registry is closed on bean destroy</span>
     }
-}</pre>
+}</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4458,8 +4510,8 @@ move on and you will get the points step by step.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>unzip wildfly-22.0.0.Final.zip
-cd wildfly-22.0.0.Final/bin
+<pre class="CodeRay highlight"><code>unzip wildfly-23.0.0.Final.zip
+cd wildfly-23.0.0.Final/bin
 ./domain.sh</code></pre>
 </div>
 </div>
@@ -4469,12 +4521,12 @@ mode:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>wildfly-22.0.0.Final/bin$ ./domain.sh
+<pre class="CodeRay highlight"><code>wildfly-23.0.0.Final/bin$ ./domain.sh
 =========================================================================
  
   JBoss Bootstrap Environment
  
-  JBOSS_HOME: /Users/weli/Downloads/wildfly-22.0.0.Final
+  JBOSS_HOME: /Users/weli/Downloads/wildfly-23.0.0.Final
  
   JAVA: /Library/Java/Home/bin/java
  
@@ -4483,7 +4535,7 @@ mode:</p>
 =========================================================================
 ...
  
-[Server:server-two] 14:46:12,375 INFO  [org.jboss.as] (Controller Boot Thread) JBAS015874: WildFly 22.0.0.Final "Kenny" started in 8860ms - Started 210 of 258 services (822 services are lazy, passive or on-demand)</code></pre>
+[Server:server-two] 14:46:12,375 INFO  [org.jboss.as] (Controller Boot Thread) JBAS015874: WildFly 23.0.0.Final "Kenny" started in 8860ms - Started 210 of 258 services (823 services are lazy, passive or on-demand)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4687,8 +4739,8 @@ The username 'admin' is easy to guess
 Are you sure you want to add user 'admin' yes/no? yes
 About to add user 'admin' for realm 'ManagementRealm'
 Is this correct yes/no? yes
-Added user 'admin' to file '/home/weli/projs/wildfly-22.0.0.Final/standalone/configuration/mgmt-users.properties'
-Added user 'admin' to file '/home/weli/projs/wildfly-22.0.0.Final/domain/configuration/mgmt-users.properties'</code></pre>
+Added user 'admin' to file '/home/weli/projs/wildfly-23.0.0.Final/standalone/configuration/mgmt-users.properties'
+Added user 'admin' to file '/home/weli/projs/wildfly-23.0.0.Final/domain/configuration/mgmt-users.properties'</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4711,10 +4763,10 @@ Re-enter Password : passw0rd!
 What groups do you want this user to belong to? (Please enter a comma separated list, or leave blank for none)[  ]:
 About to add user 'slave' for realm 'ManagementRealm'
 Is this correct yes/no? yes
-Added user 'slave' to file '/home/weli/projs/wildfly-22.0.0.Final/standalone/configuration/mgmt-users.properties'
-Added user 'slave' to file '/home/weli/projs/wildfly-22.0.0.Final/domain/configuration/mgmt-users.properties'
-Added user 'slave' with groups  to file '/home/weli/projs/wildfly-22.0.0.Final/standalone/configuration/mgmt-groups.properties'
-Added user 'slave' with groups  to file '/home/weli/projs/wildfly-22.0.0.Final/domain/configuration/mgmt-groups.properties'
+Added user 'slave' to file '/home/weli/projs/wildfly-23.0.0.Final/standalone/configuration/mgmt-users.properties'
+Added user 'slave' to file '/home/weli/projs/wildfly-23.0.0.Final/domain/configuration/mgmt-users.properties'
+Added user 'slave' with groups  to file '/home/weli/projs/wildfly-23.0.0.Final/standalone/configuration/mgmt-groups.properties'
+Added user 'slave' with groups  to file '/home/weli/projs/wildfly-23.0.0.Final/domain/configuration/mgmt-groups.properties'
 Is this new user going to be used for one AS process to connect to another AS process?
 e.g. for a slave host controller connecting to the master or for a Remoting connection for server to server EJB calls.
 yes/no? yes
@@ -5359,14 +5411,26 @@ the mod_cluster 1.2.0 usages.<br>
 Misty Stanley-Jones has given a lot of suggestions and helps to make
 this document readable.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+References in this document to JavaServer Pages(JSP) refer to the Jakarta Server Pages unless otherwise noted
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 22.0.1.Final<br>
-Last updated 2020-11-10 16:51:30 PST
+Version 23.0.0.Final<br>
+Last updated 2021-03-09 09:07:24 PST
 </div>
 </div>
 </body>

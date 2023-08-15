@@ -524,13 +524,13 @@ table.CodeRay td.code>pre{padding:0}
 <h1>Getting Started Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly team</span><br>
-<span id="revnumber">version 22.0.1.Final,</span>
-<span id="revdate">2021-02-12T19:04:12Z</span>
+<span id="revnumber">version 23.0.0.Final,</span>
+<span id="revdate">2021-03-10T23:27:43Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Getting Started Guide</div>
 <ul class="sectlevel1">
-<li><a href="#getting-started-with-wildfly">1. Getting Started with WildFly 22</a>
+<li><a href="#getting-started-with-wildfly">1. Getting Started with WildFly 23</a>
 <ul class="sectlevel2">
 <li><a href="#download">1.1. Download</a></li>
 <li><a href="#requirements">1.2. Requirements</a></li>
@@ -538,10 +538,10 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#wildfly---a-quick-tour">1.4. WildFly - A Quick Tour</a>
 <ul class="sectlevel3">
 <li><a href="#wildfly-directory-structure">1.4.1. WildFly Directory Structure</a></li>
-<li><a href="#wildfly-10-configurations">1.4.2. WildFly 22 Configurations</a></li>
-<li><a href="#starting-wildfly-10">1.4.3. Starting WildFly 22</a></li>
+<li><a href="#wildfly-10-configurations">1.4.2. WildFly 23 Configurations</a></li>
+<li><a href="#starting-wildfly-10">1.4.3. Starting WildFly 23</a></li>
 <li><a href="#starting-wildfly-with-an-alternate-configuration">1.4.4. Starting WildFly with an Alternate Configuration</a></li>
-<li><a href="#managing-your-wildfly-10">1.4.5. Managing your WildFly 22</a></li>
+<li><a href="#managing-your-wildfly-10">1.4.5. Managing your WildFly 23</a></li>
 <li><a href="#modifying-the-example-datasource">1.4.6. Modifying the Example DataSource</a></li>
 </ul>
 </li>
@@ -560,15 +560,15 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect1">
-<h2 id="getting-started-with-wildfly">1. Getting Started with WildFly 22</h2>
+<h2 id="getting-started-with-wildfly">1. Getting Started with WildFly 23</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>WildFly 22 is the latest release in a series of JBoss open-source
-application server offerings. WildFly 22 is an exceptionally fast,
+<p>WildFly 23 is the latest release in a series of JBoss open-source
+application server offerings. WildFly 23 is an exceptionally fast,
 lightweight and powerful implementation of the Jakarta
 Platform specifications. The state-of-the-art architecture built on the
 Modular Service Container enables services on-demand when your
-application requires them. The table below lists the technologies available in WildFly 22
+application requires them. The table below lists the technologies available in WildFly 23
 server configuration profiles.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -585,104 +585,104 @@ server configuration profiles.</p>
 <th class="tableblock halign-left valign-top">Jakarta EE Full Platform</th>
 <th class="tableblock halign-left valign-top">Jakarta EE Web
 Profile</th>
-<th class="tableblock halign-left valign-top">WildFly 22 Full Platform</th>
-<th class="tableblock halign-left valign-top">WildFly 22 Web Profile</th>
+<th class="tableblock halign-left valign-top">WildFly 23 Full Platform</th>
+<th class="tableblock halign-left valign-top">WildFly 23 Web Profile</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-356: Java API for Web Socket</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta WebSocket</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-374: Java API for JSON Processing 1.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta JSON Processing 1.1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-367: Java API for JSON Binding 1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta JSON Binding Specification 1.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-369: Java Servlet 4.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Servlet 4.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-372: JavaServer Faces 2.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Server Faces 2.3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-341: Expression Language 3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Expression Language 3.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-245: JavaServer Pages 2.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Server Pages 2.3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-52: Standard Tag Library for JavaServer Pages (JSTL) 1.2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Standard Tag Library 1.2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-352: Batch Applications for the Java Platform 1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Batch 1.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-236: Concurrency Utilities for Jakarta EE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Concurrency</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-365: Contexts and Dependency Injection for Java 2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Contexts and Dependency Injection 2.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-330: Dependency Injection for Java 1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Dependency Injection</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-380: Bean Validation 2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Bean Validation 2.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-345: Enterprise JavaBeans 3.2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Enterprise Beans 3.2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">XCMP 2.0Optional</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X(Lite)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">XCMP
@@ -690,148 +690,147 @@ Profile</th>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X(Lite)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-318: Interceptors 1.2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Interceptors 1.2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-322: Jakarta EE Connector Architecture 1.7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Connectors 1.7</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-338: Java Persistence 2.2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Persistence 2.2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-250: Common Annotations for the Java Platform 1.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Annotations 1.3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-343: Java Message Service API 2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Messaging 2.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-907: Java Transaction API 1.2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Transactions 1.3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-919: JavaMail 1.6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Mail 1.6</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-370: Java API for RESTFul Web Services 2.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta RESTful Web Services 2.1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-109: Implementing Enterprise Web Services 1.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Enterprise Web Services 1.3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-224: Java API for XML-Based Web Services 2.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta XML Web Services Specification 2.3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-181: Web Services Metadata for the Java Platform</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Web Services Metadata</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-101: Java API for XML-Based RPC 1.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta XML RPC 1.1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-67: Java APIs for XML Messaging 1.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta SOAP with Attachments 1.3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-93: Java API for XML Registries</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta XML Registries</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-222: Java Architecture for XML Binding (JAXB) 2.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta XML Binding Specification 2.3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-196: Java Authentication Service Provider Interface for Containers
-1.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Authentication 1.1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-115: Java Authorization Contract for Containers 1.5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Authorization 1.5</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-88: Jakarta EE Application Deployment 1.2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta EE Application Deployment 1.2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-77: J2EE Management 1.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Management 1.1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"> </p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"> </p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-45: Debugging Support for Other Languages 1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Debugging Support for Other Languages 1.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSR-375: Jakarta EE Security API 1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Security 1.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
@@ -840,7 +839,7 @@ Profile</th>
 </tbody>
 </table>
 <div class="paragraph">
-<p>Missing ActiveMQ Artemis and JMS?</p>
+<p>Missing ActiveMQ Artemis and Jakarta Messaging?</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -849,36 +848,37 @@ Profile</th>
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-The WildFly Web Profile doesn&#8217;t include JMS (provided by ActiveMQ Artemis) by
+The WildFly Web Profile doesn&#8217;t include Jakarta Messaging (provided by ActiveMQ Artemis) by
 default. If you want to use messaging, make sure you start the server
+ using the "Full Platform" configuration.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
 <p>This document provides a quick overview on how to download and get
-started using WildFly 22 for your application development. For in-depth
-content on administrative features, refer to the WildFly 22 Admin Guide.</p>
+started using WildFly 23 for your application development. For in-depth
+content on administrative features, refer to the WildFly 23 Admin Guide.</p>
 </div>
 <div class="sect2">
 <h3 id="download">1.1. Download</h3>
 <div class="paragraph">
-<p>WildFly 22 distributions can be obtained from:</p>
+<p>WildFly 23 distributions can be obtained from:</p>
 </div>
 <div class="paragraph">
 <p><a href="http://www.wildfly.org/downloads/">wildfly.org/downloads</a></p>
 </div>
 <div class="paragraph">
-<p>WildFly 22 provides a single distribution available in zip or tar file
+<p>WildFly 23 provides a single distribution available in zip or tar file
 formats.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>wildfly-22.0.0.Final.zip</strong></p>
+<p><strong>wildfly-23.0.0.Final.zip</strong></p>
 </li>
 <li>
-<p><strong>wildfly-22.0.0.Final.tar.gz</strong></p>
+<p><strong>wildfly-23.0.0.Final.tar.gz</strong></p>
 </li>
 </ul>
 </div>
@@ -898,7 +898,7 @@ of the current long-term support Java release.</p>
 <h3 id="installation">1.3. Installation</h3>
 <div class="paragraph">
 <p>Simply extract your chosen download to the directory of your choice. You
-can install WildFly 22 on any operating system that supports the zip or
+can install WildFly 23 on any operating system that supports the zip or
 tar formats. Refer to the Release Notes for additional information
 related to the release.</p>
 </div>
@@ -906,7 +906,7 @@ related to the release.</p>
 <div class="sect2">
 <h3 id="wildfly---a-quick-tour">1.4. WildFly - A Quick Tour</h3>
 <div class="paragraph">
-<p>Now that you&#8217;ve downloaded WildFly 22, the next thing to discuss is the
+<p>Now that you&#8217;ve downloaded WildFly 23, the next thing to discuss is the
 layout of the distribution and explore the server directory structure,
 key configuration files, log files, user deployments and so on. It&#8217;s
 worth familiarizing yourself with the layout so that you&#8217;ll be able to
@@ -974,7 +974,7 @@ used by the single standalone server run from this installation.</p></td>
 <div class="sect4">
 <h5 id="standalone-directory-structure">Standalone Directory Structure</h5>
 <div class="paragraph">
-<p>In " <strong><em>standalone</em></strong> " mode each WildFly 22 server instance is an
+<p>In " <strong><em>standalone</em></strong> " mode each WildFly 23 server instance is an
 independent process (similar to previous JBoss AS versions; e.g., 3, 4,
 5, or 6). The configuration files, deployment content and writable areas
 used by the single standalone server run from a WildFly installation are
@@ -1038,7 +1038,7 @@ process.</p></td>
 <div class="sect4">
 <h5 id="domain-directory-structure">Domain Directory Structure</h5>
 <div class="paragraph">
-<p>A key feature of WildFly 22 is the managing multiple servers from a
+<p>A key feature of WildFly 23 is the managing multiple servers from a
 single control point. A collection of multiple servers are referred to
 as a " <strong><em>domain</em></strong> ". Domains can span multiple physical (or virtual)
 machines with all WildFly instances on a given host under the control of
@@ -1112,7 +1112,7 @@ process.</p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="wildfly-10-configurations">1.4.2. WildFly 22 Configurations</h4>
+<h4 id="wildfly-10-configurations">1.4.2. WildFly 23 Configurations</h4>
 <div class="sect4">
 <h5 id="standalone-server-configurations">Standalone Server Configurations</h5>
 <div class="ulist">
@@ -1167,8 +1167,8 @@ high availability</p>
 <ul>
 <li>
 <p>A configuration oriented toward microservices, providing our
-MicroProfile platform implementations combined with JAX-RS and
-technologies JAX-RS application&#8217;s commonly use to integrate with
+MicroProfile platform implementations combined with Jakarta RESTful Web Services and
+technologies Jakarta RESTful Web Services applications commonly use to integrate with
 external services.</p>
 </li>
 </ul>
@@ -1214,9 +1214,9 @@ provide.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="starting-wildfly-10">1.4.3. Starting WildFly 22</h4>
+<h4 id="starting-wildfly-10">1.4.3. Starting WildFly 23</h4>
 <div class="paragraph">
-<p>To start WildFly 22 using the default web profile configuration in "
+<p>To start WildFly 23 using the default web profile configuration in "
 <em>standalone</em>" mode, change directory to $JBOSS_HOME/bin.</p>
 </div>
 <div class="listingblock">
@@ -1304,14 +1304,14 @@ discussion in the user forum and access the enhanced web-based
 Administration Console. Or, if you uncover a defect while using WildFly,
 report an issue to inform us (attached patches will be reviewed). This
 landing page is recommended for convenient access to information about
-WildFly 22 but can easily be replaced with your own if desired.</p>
+WildFly 23 but can easily be replaced with your own if desired.</p>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="managing-your-wildfly-10">1.4.5. Managing your WildFly 22</h4>
+<h4 id="managing-your-wildfly-10">1.4.5. Managing your WildFly 23</h4>
 <div class="paragraph">
-<p>WildFly 22 offers two administrative mechanisms for managing your
+<p>WildFly 23 offers two administrative mechanisms for managing your
 running instance:</p>
 </div>
 <div class="ulist">
@@ -1327,7 +1327,7 @@ running instance:</p>
 <div class="sect4">
 <h5 id="authentication">Authentication</h5>
 <div class="paragraph">
-<p>By default WildFly 22 is now distributed with security enabled for the
+<p>By default WildFly 23 is now distributed with security enabled for the
 management interfaces, this means that before you connect using the
 administration console or remotely using the CLI you will need to add a
 new user, this can be achieved simply by using the <em>add-user.sh</em> script
@@ -1571,8 +1571,8 @@ debug messages.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 22.0.1.Final<br>
-Last updated 2021-02-12 11:00:13 PST
+Version 23.0.0.Final<br>
+Last updated 2021-03-09 18:54:50 PST
 </div>
 </div>
 </body>

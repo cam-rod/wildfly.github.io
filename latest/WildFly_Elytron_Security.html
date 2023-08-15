@@ -522,8 +522,8 @@ table.CodeRay td.code>pre{padding:0}
 <div id="header">
 <h1>WildFly Elytron Security</h1>
 <div class="details">
-<span id="revnumber">version 22.0.1.Final,</span>
-<span id="revdate">2021-02-12T19:04:12Z</span>
+<span id="revnumber">version 23.0.0.Final,</span>
+<span id="revdate">2021-03-10T23:27:43Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Elytron Security Guide</div>
@@ -569,7 +569,7 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel2">
 <li><a href="#using-the-out-of-the-box-elytron-components">5.1. Using the Out of the Box Elytron Components</a></li>
 <li><a href="#undertow-subsystem">5.2. Undertow Subsystem</a></li>
-<li><a href="#ejb-subsystem">5.3. EJB Subsystem</a></li>
+<li><a href="#Jakarta-Enterprise-Beans-subsystem">5.3. Jakarta Enterprise Beans Subsystem</a></li>
 <li><a href="#webservices-subsystem">5.4. WebServices Subsystem</a></li>
 <li><a href="#legacy-security-subsystem">5.5. Legacy Security Subsystem</a></li>
 </ul>
@@ -651,38 +651,39 @@ table.CodeRay td.code>pre{padding:0}
 </li>
 <li><a href="#CredentialStore">17. Credential Store</a>
 <ul class="sectlevel2">
-<li><a href="#keystorecredentialstore">17.1. KeyStoreCredentialStore</a></li>
-<li><a href="#referencing-credentials">17.2. Referencing Credentials</a></li>
-<li><a href="#credentialstore-apis">17.3. CredentialStore APIs</a></li>
-<li><a href="#migrating-existing-vaults">17.4. Migrating Existing Vaults</a></li>
-<li><a href="#Custom_CredentialStore">17.5. Custom Credential Store</a></li>
-<li><a href="#reference">17.6. Reference</a></li>
+<li><a href="#credential-store-creation">17.1. Credential Store Creation</a></li>
+<li><a href="#credential-manipulation">17.2. Credential Manipulation</a></li>
+<li><a href="#referencing-credentials">17.3. Referencing Credentials</a></li>
+<li><a href="#credentialstore-apis">17.4. CredentialStore APIs</a></li>
+<li><a href="#Migrating_Existing_Vaults">17.5. Migrating Existing Vaults</a></li>
+<li><a href="#Custom_CredentialStore">17.6. Custom Credential Store</a></li>
+<li><a href="#reference">17.7. Reference</a></li>
 </ul>
 </li>
-<li><a href="#Custom_Components">18. Custom Components</a>
+<li><a href="#EncryptedExpressions">18. Encrypted Expressions</a>
 <ul class="sectlevel2">
-<li><a href="#security-event-listener">18.1. Security event listener</a></li>
-<li><a href="#configurable-custom-components">18.2. Configurable custom components</a></li>
+<li><a href="#expression-encryption-resource">18.1. expression=encryption resource</a></li>
+<li><a href="#creating-expressions">18.2. Creating Expressions</a></li>
+<li><a href="#domain-mode">18.3. Domain Mode</a></li>
 </ul>
 </li>
-<li><a href="#Migrate_Legacy_Security_to_Elytron_Security">19. Migrate Legacy Security to Elytron Security</a>
+<li><a href="#Custom_Components">19. Custom Components</a>
 <ul class="sectlevel2">
-<li><a href="#authentication-configuration">19.1. Authentication Configuration</a></li>
-<li><a href="#Properties_File_Based_Authentication_Migration">19.2. Properties Based Authentication / Authorization</a></li>
-<li><a href="#LDAP_Based_Authentication_Migration">19.3. LDAP Authentication Migration</a></li>
-<li><a href="#Composite_Stores_Migration">19.4. Composite Stores Migration</a></li>
-<li><a href="#Database_Authentication_Migration">19.5. Database Authentication</a></li>
-<li><a href="#Kerberos_Based_Authentication_Migration">19.6. Kerberos Authentication Migration</a></li>
-<li><a href="#Caching_Migration">19.7. Caching Migration</a></li>
-<li><a href="#clients">19.8. Clients</a></li>
-<li><a href="#Application_Client_Migration">19.9. Application Client Migration</a></li>
-<li><a href="#general-utilities">19.10. General Utilities</a></li>
-<li><a href="#Security_Vault_Migration">19.11. Security Vault Migration</a></li>
-<li><a href="#Security_Property_Migration">19.12. Security Properties</a></li>
-<li><a href="#ssl-migration">19.13. SSL Migration</a></li>
-<li><a href="#Simple_SSL_Migration">19.14. Simple SSL Migration</a></li>
-<li><a href="#SSL_with_Client_Cert_Migration">19.15. SSL with Client Cert Migration</a></li>
-<li><a href="#documentation-still-needed">19.16. Documentation Still Needed</a></li>
+<li><a href="#security-event-listener">19.1. Security event listener</a></li>
+<li><a href="#configurable-custom-components">19.2. Configurable custom components</a></li>
+</ul>
+</li>
+<li><a href="#Migrate_Legacy_Security_to_Elytron_Security">20. Migrate Legacy Security to Elytron Security</a>
+<ul class="sectlevel2">
+<li><a href="#authentication-configuration">20.1. Authentication Configuration</a></li>
+<li><a href="#Properties_File_Based_Authentication_Migration">20.2. Properties Based Authentication / Authorization</a></li>
+<li><a href="#LDAP_Based_Authentication_Migration">20.3. LDAP Authentication Migration</a></li>
+<li><a href="#Composite_Stores_Migration">20.4. Composite Stores Migration</a></li>
+<li><a href="#Database_Authentication_Migration">20.5. Database Authentication</a></li>
+<li><a href="#Kerberos_Based_Authentication_Migration">20.6. Kerberos Authentication Migration</a></li>
+<li><a href="#Caching_Migration">20.7. Caching Migration</a></li>
+<li><a href="#clients">20.8. Clients</a></li>
+<li><a href="#Application_Client_Migration">20.9. Application Client Migration</a></li>
 </ul>
 </li>
 </ul>
@@ -8024,9 +8025,9 @@ the application security domain mapping to take effect.</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="ejb-subsystem">5.3. EJB Subsystem</h3>
+<h3 id="Jakarta-Enterprise-Beans-subsystem">5.3. Jakarta Enterprise Beans Subsystem</h3>
 <div class="paragraph">
-<p>Configuration can be added to the EJB subsystem to map a security domain
+<p>Configuration can be added to the Jakarta Enterprise Beans subsystem to map a security domain
 name referenced in a deployment to an Elytron security domain:</p>
 </div>
 <div class="listingblock">
@@ -8068,6 +8069,14 @@ should be used</p>
 </ul>
 </div>
 <div class="paragraph">
+<p>There is another attribute called <code>legacy-compliant-principal-propagation</code>.
+If it is set to true and there is no incoming run-as identity,
+then the principal of the local unsecured bean is the current authenticated identity. This was the case
+for legacy PicketBox security. If this attribute is set to false, the behaviour will comply with the Elytron&#8217;s previous
+behaviour and if there is no incoming run-as identity then the principal of the local unsecured bean is anonymous.
+This attribute is optional and the default value is true.</p>
+</div>
+<div class="paragraph">
 <p>When an application security domain mapping is configured for a bean in
 a deployment, this indicates that security should be handled by Elytron.</p>
 </div>
@@ -8083,8 +8092,8 @@ descriptor or annotation to secure webservice endpoint.</p>
 <div class="paragraph">
 <p>When Elytron security is enabled, JAAS subject or principal can be pushed
 to jbossws-cxf endpoint’s SecurityContext to propagate authenticated
-identity to EJB container. Here is a CXF interceptor example to
-propagate authenticated information to EJB container :</p>
+identity to Jakarta Enterprise Beans container. Here is a CXF interceptor example to
+propagate authenticated information to Jakarta Enterprise Beans container :</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8201,7 +8210,7 @@ authentication configuration to use during authentication.</p>
 when establishing a client connection.</p>
 </div>
 <div class="paragraph">
-<p><strong>IMPORTANT</strong>: When using Elytron Client to make EJB calls, any hard-coded
+<p><strong>IMPORTANT</strong>: When using Elytron Client to make Jakarta Enterprise Beans calls, any hard-coded
 programatic authentication information, such as setting
 <em>Context.SECURITY_PRINCIPAL</em> in the <em>javax.naming.InitialContext</em>, will
 override the Elytron Client configuration.</p>
@@ -8702,7 +8711,7 @@ subsystem&#8217;s configuration is used.</p>
 <p>Prior to WildFly 11, many WildFly client libraries used different configuration strategies. WildFly 11 introduces a new <code>wildfly-config.xml</code> file which unifies all client configuration in a single place. In addition to being able to configure authentication using Elytron as described in the previous section, a <code>wildfly-config.xml</code> file can also be used to:</p>
 </div>
 <div class="sect3">
-<h4 id="configure-ejb-client-connections-global-interceptors-and-invocation-timeout">6.5.1. Configure EJB client connections, global interceptors, and invocation timeout</h4>
+<h4 id="configure-jakarta-enterprise-beans-client-connections-global-interceptors-and-invocation-timeout">6.5.1. Configure Jakarta Enterprise Beans client connections, global interceptors, and invocation timeout</h4>
 <div class="paragraph">
 <p>Schema location: [<a href="https://github.com/wildfly/jboss-ejb-client/blob/4.0.2.Final/src/main/resources/schema/wildfly-client-ejb_3_0.xsd" class="bare">https://github.com/wildfly/jboss-ejb-client/blob/4.0.2.Final/src/main/resources/schema/wildfly-client-ejb_3_0.xsd</a>]</p>
 </div>
@@ -8952,6 +8961,19 @@ to enable JACC you can execute a command as follows:</p>
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code>[standalone@localhost:9990 /] /subsystem=ejb3/application-security-domain=my-security-domain:write-attribute(name=enable-jacc,value=true)</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+References in this document to Java Authorization Contract for Containers (JACC) refer to Jakarta Authorization unless otherwise noted.
+      References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -9367,6 +9389,18 @@ to enable JACC you can execute a command as follows:</p>
 <div class="paragraph">
 <p>The EE Security API is built on JASPI.  Within JASPI we support two different modes of operation 'integrated', and 'non-integrated'.  In integrated mode any identity being established during authentication is expected to exist in the associated security domain.  With the EE Security APIs however it is quite likely an alternative store will be in use so configuration the mapping to use 'non-integrated' JASPI allows for identities to be dynamically created as required.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+References in this document to Java Authorization Contract for Containers (JACC) refer to the Jakarta Authorization unless otherwise noted
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -9755,7 +9789,7 @@ should be validated:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/wildfly/quickstart/tree/master/jaxrs-jwt">JAX-RS secured using JSON Web Tokens</a></p>
+<p><a href="https://github.com/wildfly/quickstart/tree/master/jaxrs-jwt">Jakarta RESTful Web Services secured using JSON Web Tokens</a></p>
 </li>
 </ul>
 </div>
@@ -10351,19 +10385,23 @@ events in a JSON format, and uses RFC5424 to describe the audit event.</p>
 <p>One new component included with WildFly Elytron for the secure storage of credentials is the Credential Store.  Previous versions of the application server made use of the Vault which was used for the secure storage of clear text strings; the credential store moves forward a step to focus on the secure storage of credentials.  As with the Vault the stored credentials could be clear text passwords however other formats are also supported.</p>
 </div>
 <div class="paragraph">
-<p>WildFly Elytron contains a default credential store implementation <code>KeyStoreCredentialStore</code> which is a store implementation backed by a <code>KeyStore</code>.</p>
+<p>WildFly Elytron contains two default credential store implementations.  The first implementation is the <code>KeyStoreCredentialStore</code> which is an
+implementation backed by a <code>KeyStore</code>.  The <code>KeyStoreCredentialStore</code> implementation supports the storage of various credential types,
+<code>PasswordCredential</code>, <code>KeyPairCredential</code>, and <code>SecretKeyCredential</code>.  The second implementation is the <code>PropertiesCredentialStore</code>.  This credential
+store is dedicated to the storage of <code>SecretKeyCredential</code> instances using a properties file.  The <code>PropertiesCredentialStore</code> does not offer any protection
+of the credentials it stores so its primary purpose is to provide an initial key to a server environment.</p>
 </div>
 <div class="paragraph">
-<p>This documentation will be focused on using the <code>KeyStoreCredentialStore</code>; however the section <a href="#Custom_CredentialStore">Custom CredentialStore</a> will describe how to convert a vault to a credential store.</p>
+<p>This documentation is primarily focused on the <code>KeyStoreCredentialStore</code> and <code>PropertiesCredentialStore</code>; however the section <a href="#Custom_CredentialStore">Custom CredentialStore</a> describes the SPIs for implementing a custom credential store and the section <a href="#Migrating_Existing_Vaults">Migrating Existing Vaults</a> describes how to convert a vault to a credential store.</p>
 </div>
-<div class="sect2">
-<h3 id="keystorecredentialstore">17.1. KeyStoreCredentialStore</h3>
-<div class="sect3">
-<h4 id="creation">17.1.1. Creation</h4>
-<div class="sect4">
-<h5 id="command-line">Command Line</h5>
 <div class="paragraph">
-<p>Included with WildFly is a command line tool which amongst other things allows for the creation of and manipulation of credential stores.  A script to execute this tool can be found within the <code>bin</code> folder of the application server installation.  The WildFly Elytron tool supports a number of commands, one of which being <code>credential-store</code> which operates on a credential store.  By default, this command assumes the type of the store is a <code>KeyStoreCredentialStore</code> backed by a <code>JCEKS</code> <code>KeyStore</code>.</p>
+<p>It is possible to operate on credential stores using either a standalone command line tool <code>elytron-tool.sh</code> which is included with WildFly or by using management operations through the <code>jboss-cli.sh</code>, management console or other management client calling the management interface directly.</p>
+</div>
+<div class="paragraph">
+<p>The <code>elytron-tool.sh</code> script to execute the command line tool can be found within the <code>bin</code> folder of the application server installation.</p>
+</div>
+<div class="paragraph">
+<p>The WildFly Elytron tool supports a number of commands, one of which being <code>credential-store</code> which operates on a credential store.  The commands in this documentation are making use of the <code>.sh</code> script on linux; the <code>elytron-tool.bat</code> and <code>elytron-tools.ps1</code> scripts can be used on Microsoft Windows.</p>
 </div>
 <div class="paragraph">
 <p>The following command provides a summary of the command line arguments which can be used with the <code>credential-store</code> command:</p>
@@ -10373,17 +10411,17 @@ events in a JSON format, and uses RFC5424 to describe the audit event.</p>
 <pre class="CodeRay highlight nowrap"><code>]$ bin/elytron-tool.sh credential-store</code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-These commands are making use of the <code>.sh</code> script on linux; the <code>elytron-tool.bat</code> and <code>elytron-tools.ps1</code> scripts can be used on Microsoft Windows.
-</td>
-</tr>
-</table>
+<div class="sect2">
+<h3 id="credential-store-creation">17.1. Credential Store Creation</h3>
+<div class="sect3">
+<h4 id="keystorecredentialstore-credential-store">17.1.1. KeyStoreCredentialStore / credential-store</h4>
+<div class="paragraph">
+<p>The <code>KeyStoreCredentialStore</code> supports the largest number of credential types which can be stored within a credential store, additionally as the implementation is backed by a Java KeyStore the storage is protected using the mechanisms provided by the KeyStore implementations.</p>
+</div>
+<div class="sect4">
+<h5 id="command-line">Command Line</h5>
+<div class="paragraph">
+<p>When using the <code>credential-store</code> command of the <code>elytron-tool.sh</code> script by default, this command assumes the type of the store is a <code>KeyStoreCredentialStore</code> backed by a <code>JCEKS</code> <code>KeyStore</code>.</p>
 </div>
 <div class="paragraph">
 <p>A new credential store can be created using the following command: -</p>
@@ -10399,6 +10437,18 @@ Credential Store has been successfully created</code></pre>
 <div class="paragraph">
 <p>This command prompts twice for the password that should be used to secure the store.  Alternatively the password can be passed in using the <code>--password</code> argument however that may mean the password is cached in the local command history or visible to other users viewing the list of running processes.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The command line tool only creates the instance of the credential store on the underlying file system; the management operation is still required to define the credential store in the <code>elytron</code> subsystem.
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect4">
 <h5 id="management-operation">Management Operation</h5>
@@ -10410,7 +10460,7 @@ Credential Store has been successfully created</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code>/] /subsystem=elytron/credential-store=mycredstore:add(location=mycredstore.cs, relative-to=jboss.server.config.dir, credential-reference={clear-text=StorePassword})
+<pre class="CodeRay highlight nowrap"><code>/] /subsystem=elytron/credential-store=mycredstore:add(path=mycredstore.cs, relative-to=jboss.server.config.dir, credential-reference={clear-text=StorePassword})
 {"outcome" =&gt; "success"}</code></pre>
 </div>
 </div>
@@ -10419,7 +10469,7 @@ Credential Store has been successfully created</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code>/] /subsystem=elytron/credential-store=mycredstore:add(location=mycredstore.cs, relative-to=jboss.server.config.dir, credential-reference={clear-text=StorePassword}, create=true)
+<pre class="CodeRay highlight nowrap"><code>/] /subsystem=elytron/credential-store=mycredstore:add(path=mycredstore.cs, relative-to=jboss.server.config.dir, credential-reference={clear-text=StorePassword}, create=true)
 {"outcome" =&gt; "success"}</code></pre>
 </div>
 </div>
@@ -10441,7 +10491,108 @@ The file representing the credential store is not created immediately, it will i
 </div>
 </div>
 <div class="sect3">
-<h4 id="adding-a-credential">17.1.2. Adding a Credential</h4>
+<h4 id="propertiescredentialstore-secret-key-credential-store">17.1.2. PropertiesCredentialStore / secret-key-credential-store</h4>
+<div class="paragraph">
+<p>This is a simple credential store implementation which can only be used to store <code>SecretKey</code> instances.  This credential store also does not offer any protection of the contents.
+Within an application server environment it is always possible to get into a cycle of how is an initial secret provided to unlock further resources, this is primarily the purpose
+of this credential store.  The strategy in the past had been to use masking of a password using password based encryption, the down side of this approach was the password used for
+the masking was stored in the source code and being an open source project this means the password is well known.  By using the <code>PropertiesCredentialStore</code> installations are back
+in control of the initial secret.  Although this credential store does not offer its own protection filesystem level access control can still be used to restrict access ideally to
+just the application server process.</p>
+</div>
+<div class="sect4">
+<h5 id="command-line-2">Command Line</h5>
+<div class="paragraph">
+<p>A new credential store can be created using the following command: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>]$ bin/elytron-tool.sh credential-store --create --location=standalone/configuration/propcredstore.cs --type PropertiesCredentialStore
+Credential Store has been successfully created</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="management-operation-2">Management Operation</h5>
+<div class="paragraph">
+<p>It is also possible to operate on a credential store using management operations against a running server using the application server&#8217;s CLI.</p>
+</div>
+<div class="paragraph">
+<p>The following operation can be used to add a <code>secret-key-credential-store</code> resource to the <code>elytron</code> subsystem referencing this newly created credential store.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/] /subsystem=elytron/secret-key-credential-store=mycredstore:add(path=propcredstore.cs, relative-to=jboss.server.config.dir, create=false, populate=false)
+{"outcome" =&gt; "success"}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example the resource was added to reference an existing credential store, however with a small change this command can also automatically create the store if it does not exist, and
+populate it with a generated SecretKey under the alias <code>key</code> if it does not already exist.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/] /subsystem=elytron/secret-key-credential-store=mycredstore:add(path=propcredstore.cs, relative-to=jboss.server.config.dir)
+{"outcome" =&gt; "success"}</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+If you rely on automatic generation of a <code>SecretKey</code> be sure to create a backup of the key as soon as possible.  If you were to loose the key we do not have a mechanism to decrypt anything
+encrypted with the lost key.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="credential-manipulation">17.2. Credential Manipulation</h3>
+<div class="paragraph">
+<p>The contents of the credential stores can be manipulated using either the command line tool or by using management operations.  Unlike key stores the credential store APIs allow for multiple entries to be stored under a single alias provided each entry is of a different credential type.</p>
+</div>
+<div class="sect3">
+<h4 id="adding-credentials">17.2.1. Adding Credentials</h4>
+<div class="paragraph">
+<p>The different credential store implementations support different credential types as illustrated in this table.</p>
+</div>
+<table class="tableblock frame-all grid-all">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Credential Type</th>
+<th class="tableblock halign-left valign-top">KeyStoreCredentialStore</th>
+<th class="tableblock halign-left valign-top">PropertiesCredentialStore</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">PasswordCredential</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supported</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unsupported</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">KeyPairCredential</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supported</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unsupported</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">SecretKeyCredential</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supported</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supported</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>As with all the manipulation options it is possible to use either the command line tool or management operations against a running server to modify the contents of the store.</p>
 </div>
@@ -10457,11 +10608,13 @@ Care should be taken when using the command line tool to ensure the store is not
 </tr>
 </table>
 </div>
+<div class="sect4">
+<h5 id="passwordcredential">PasswordCredential</h5>
 <div class="paragraph">
 <p>Using the tooling it is possible to add a clear text password as a credential.</p>
 </div>
-<div class="sect4">
-<h5 id="command-line-2">Command Line</h5>
+<div class="sect5">
+<h6 id="command-line-3">Command Line</h6>
 <div class="paragraph">
 <p>The following command adds a new credential with an alias of <code>example</code> to the store using the command line tool: -</p>
 </div>
@@ -10475,8 +10628,27 @@ Confirm secret to store:
 Alias "example" has been successfully stored</code></pre>
 </div>
 </div>
+</div>
 <div class="sect5">
-<h6 id="adding-keypaircredentials">Adding KeyPairCredentials</h6>
+<h6 id="management-operation-3">Management Operation</h6>
+<div class="paragraph">
+<p>Using a management operation the following command can be used to add a new alias of <code>example</code> to the credential store.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>[standalone@localhost:9990 /] /subsystem=elytron/credential-store=mycredstore:add-alias(alias=example, secret-value=ExamplePassword)
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; undefined
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="keypaircredential">KeyPairCredential</h5>
+<div class="sect5">
+<h6 id="command-line-4">Command Line</h6>
 <div class="paragraph">
 <p>The following command allows you to import a key pair credential with an alias of <code>example</code> from a file containing
 a private key in OpenSSH format:</p>
@@ -10554,28 +10726,114 @@ cZrYRyy9+X68fylEWBMzyg+nhjWkxJlJ2M2LAGY=</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="management-operation-2">Management Operation</h5>
+<h5 id="secretkeycredential">SecretKeyCredential</h5>
+<div class="sect5">
+<h6 id="command-line-5">Command Line</h6>
 <div class="paragraph">
-<p>Using a management operation the following command can be used to add a new alias of <code>example</code> to the credential store.</p>
+<p>Each of the examples in this section uses the <code>KeyStoreCredentialStore</code> to use the <code>PropertiesCredentialStore</code> this can be specified on the command line by adding the <code>--type PropertiesCredentialStore</code> parameter to the command line.</p>
+</div>
+<div class="paragraph">
+<p>A new secret key can be generated with the following command.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code>[standalone@localhost:9990 /] /subsystem=elytron/credential-store=mycredstore:add-alias(alias=example, secret-value=ExamplePassword)
+<pre class="CodeRay highlight nowrap"><code>]$ bin/elytron-tool.sh credential-store --generate-secret-key=example --location=standalone/configuration/mycredstore.cs
+Credential store password:
+Alias "example" has been successfully stored</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By default this will create a 256 bit secret key, if either a 128 bit or 192 bit secret key is desired this can be specified with the <code>--size=128</code> or <code>--size=192</code> parameters respectively.</p>
+</div>
+<div class="paragraph">
+<p>An existing secret key can be exported with the following command.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>]$ bin/elytron-tool.sh credential-store --export-secret-key=example --location=standalone/configuration/mycredstore.cs
+Credential store password:
+Exported SecretKey for alias example=RUxZAUucgH8RSMNvoUj/rMz+pBZddttGCuT9of4TgfYLnN5Z1w==</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The exported key uses a custom representation to allow Elytron to recognise exported keys.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Finally a previously exported secret key can be imported with the following command.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>]$ bin/elytron-tool.sh credential-store --import-secret-key=imported --location=standalone/configuration/mycredstore.cs
+Credential store password:
+SecretKey to import: RUxZAUucgH8RSMNvoUj/rMz+pBZddttGCuT9of4TgfYLnN5Z1w==
+Alias "imported" has been successfully stored</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is possible to also specify the key to import on the command line e.g. <code>--key=RUxZAUucgH8RSMNvoUj/rMz+pBZddttGCuT9of4TgfYLnN5Z1w==</code> but this would be vieweable by others users that can consult running processes and might also be cached in the history of the shell executing the commands.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="management-operations">Management Operations</h6>
+<div class="paragraph">
+<p>For secret key manipulation the same set of command are available for both the <code>credential-store</code> resource and the <code>secret-key-credential-store</code> resource.</p>
+</div>
+<div class="paragraph">
+<p>A new secret key can be generated with the following command.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>[standalone@localhost:9990 /] /subsystem=elytron/credential-store=mycredstore:generate-secret-key(alias=example)
+{"outcome" =&gt; "success"}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To generate either a 128 bit key or 192 bit key the parameter <code>key-size=128</code> or <code>key-size=192</code> can be specified respectively.</p>
+</div>
+<div class="paragraph">
+<p>An existing secret key can be exported with the following command.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>[standalone@localhost:9990 /] /subsystem=elytron/credential-store=mycredstore:export-secret-key(alias=example)
 {
     "outcome" =&gt; "success",
-    "result" =&gt; undefined
+    "result" =&gt; {"key" =&gt; "RUxZAUs+Y1CzEPw0g2AHHOZ+oTKhT9osSabWQtoxR+O+42o11g=="}
 }</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>Finally a previously exported secret key can be imported with the following commands.
+
+[standalone@localhost:9990 /] history --disable
+[standalone@localhost:9990 /] /subsystem=elytron/credential-store=mycredstore:import-secret-key(alias=imported, key="RUxZAUs+Y1CzEPw0g2AHHOZ+oTKhT9osSabWQtoxR+O+42o11g==")
+{"outcome" =&gt; "success"}
+[standalone@localhost:9990 /] history --enable</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this last example we also temporarily disable the history in the CLI to prevent the key from being cached in the CLI hisory.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="listing-aliases">17.1.3. Listing Aliases</h4>
+<h4 id="listing-aliases">17.2.2. Listing Aliases</h4>
 <div class="paragraph">
 <p>It is possible to list the aliases contained within the credential store, however it is not possible to list the actual values stored.</p>
 </div>
 <div class="sect4">
-<h5 id="command-line-3">Command Line</h5>
+<h5 id="command-line-6">Command Line</h5>
 <div class="paragraph">
 <p>Using the command line tool will show a list of aliases stored within the credential store:</p>
 </div>
@@ -10589,7 +10847,7 @@ Credential store contains following aliases: example</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="management-operation-3">Management Operation</h5>
+<h5 id="management-operation-4">Management Operation</h5>
 <div class="paragraph">
 <p>The following management operation will also show the aliases contained within the credential store.</p>
 </div>
@@ -10605,12 +10863,12 @@ Credential store contains following aliases: example</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="removing-aliases">17.1.4. Removing Aliases</h4>
+<h4 id="removing-credentials">17.2.3. Removing Credentials</h4>
 <div class="paragraph">
 <p>Finally, it is also possible to remove an alias from the credential store.</p>
 </div>
 <div class="sect4">
-<h5 id="command-line-4">Command Line</h5>
+<h5 id="command-line-7">Command Line</h5>
 <div class="paragraph">
 <p>Using the WildFly Elytron Tool the following command will remove an alias from the store.</p>
 </div>
@@ -10624,7 +10882,7 @@ Alias "example" has been successfully removed</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="management-operation-4">Management Operation</h5>
+<h5 id="management-operation-5">Management Operation</h5>
 <div class="paragraph">
 <p>The following management operation can be used to remove an alias from the credential store.</p>
 </div>
@@ -10648,16 +10906,19 @@ Alias "example" has been successfully removed</code></pre>
 }</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>By default the <code>credential-store</code> resource assumes the type to be removed is <code>PasswordCredential</code>.  If a different type is to be removed it can be specified with the <code>entry-type=SecretKeyCredential</code> parameter.  The <code>secret-key-credential-store</code> only holds secret keys so the entry type never needs to be specified.</p>
+</div>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="referencing-credentials">17.2. Referencing Credentials</h3>
+<h3 id="referencing-credentials">17.3. Referencing Credentials</h3>
 <div class="paragraph">
 <p>After being able to populate and manipulate a credential store the next step is being able to reference the stored credential so that it can be used.</p>
 </div>
 <div class="sect3">
-<h4 id="management-model-references">17.2.1. Management Model References</h4>
+<h4 id="management-model-references">17.3.1. Management Model References</h4>
 <div class="paragraph">
 <p>Various resources that make use of credentials across the application server&#8217;s management model contain <code>credential-reference</code> attributes that can be used either to specify a <code>clear-password</code> or to cross-reference a credential from within a configured credential store.</p>
 </div>
@@ -10686,7 +10947,7 @@ The next section will describe how credentials can automatically be added to the
 </div>
 </div>
 <div class="sect3">
-<h4 id="automatic-updates-of-credential-stores">17.2.2. Automatic Updates of Credential Stores</h4>
+<h4 id="automatic-updates-of-credential-stores">17.3.2. Automatic Updates of Credential Stores</h4>
 <div class="paragraph">
 <p>Instead of needing to add a credential to a previously defined credential store in order to reference it from a <code>credential-reference</code>,
 it is possible to have the credential get added automatically to the previously defined credential store by specifying both
@@ -10780,7 +11041,7 @@ If an operation that includes a <code><code>credential-reference</code></code> p
 </div>
 </div>
 <div class="sect3">
-<h4 id="wildfly-config-xml">17.2.3. wildfly-config.xml</h4>
+<h4 id="wildfly-config-xml">17.3.3. wildfly-config.xml</h4>
 <div class="paragraph">
 <p>If you are making use of the <code>wildfly-config.xml</code> descriptor it is also possible to define a credential store within this descriptor to obtain credentials without requiring them to be in-lined within the configuration.</p>
 </div>
@@ -10907,7 +11168,7 @@ to specify it as a masked password.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="credentialstore-apis">17.3. CredentialStore APIs</h3>
+<h3 id="credentialstore-apis">17.4. CredentialStore APIs</h3>
 <div class="paragraph">
 <p>It is also possible to make use of the CredentialStore APIs directly.  This could be useful for applications that require access to securely stored credentials.  This could also be an option for an application to populate a credential store for use elsewhere.</p>
 </div>
@@ -10968,7 +11229,7 @@ As the type is specified when retrieving a credential it is possible to store mu
 </div>
 </div>
 <div class="sect2">
-<h3 id="migrating-existing-vaults">17.4. Migrating Existing Vaults</h3>
+<h3 id="Migrating_Existing_Vaults">17.5. Migrating Existing Vaults</h3>
 <div class="paragraph">
 <p>If migrating from a prior version of the application server it is possible that you already are making use of a PicketBox vault for the storage of clear text passwords.  The tooling provided can be used to convert the vault to the format used by the <code>KeyStoreCredentialStore</code>.</p>
 </div>
@@ -10995,7 +11256,7 @@ Vault (enc-dir="standalone/configuration/vault";keystore="standalone/configurati
 </div>
 </div>
 <div class="sect2">
-<h3 id="Custom_CredentialStore">17.5. Custom Credential Store</h3>
+<h3 id="Custom_CredentialStore">17.6. Custom Credential Store</h3>
 <div class="paragraph">
 <p>It is also possible to provide custom credential store implementations.  Overall the pattern to implementing a custom credential store is very similar to the pattern that would be followed to implement a custom key store.</p>
 </div>
@@ -11070,12 +11331,12 @@ Vault (enc-dir="standalone/configuration/vault";keystore="standalone/configurati
 </div>
 </div>
 <div class="sect2">
-<h3 id="reference">17.6. Reference</h3>
+<h3 id="reference">17.7. Reference</h3>
 <div class="paragraph">
 <p>The previous sections have made use of either the WildFly Elytron Tool or the management operations and specified the arguments and configuration options required for the action being performed.  These operations and tools however support a variety of other options so this section provides some additional detail.</p>
 </div>
 <div class="sect3">
-<h4 id="elytron-tool-code-credential-store-code-command">17.6.1. Elytron Tool - <code>credential-store</code> Command</h4>
+<h4 id="elytron-tool-code-credential-store-code-command">17.7.1. Elytron Tool - <code>credential-store</code> Command</h4>
 <div class="paragraph">
 <p>Examples of how to structure calling the <code>credential-store</code> command were provided earlier.  When using the <code>credential-store</code> command the following actions are possible: -</p>
 </div>
@@ -11113,12 +11374,28 @@ Vault (enc-dir="standalone/configuration/vault";keystore="standalone/configurati
 <td class="tableblock halign-left valign-top"><p class="tableblock">Generate a new key pair credential and add it as an entry to the credential store using the specified alias.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--generate-secret-key &lt;alias&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Generate a new secret key credential and add it as an entry to the credential store using the specified alias.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--export-secret-key &lt;alias&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Export a secret key credential identified using the specified alias.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-xp,--export-key-pair-public-key &lt;alias&gt;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Display the public key of a key pair credential entry under the specified alias in OpenSSH format.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--import-secret-key &lt;alias&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Import a secret key credential and add it as an entry to the credential store using the specified alias.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-ikp,--import-key-pair &lt;alias&gt;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Add a new key pair credential entry to the credential store using the specified alias.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--encrypt &lt;alias&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Encrypt a clear text string using the secret key stored under the specified alias.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-v,--aliases</p></td>
@@ -11168,7 +11445,7 @@ Vault (enc-dir="standalone/configuration/vault";keystore="standalone/configurati
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-o,--other-providers &lt;providers&gt;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Comma separated list of JCA provider names. Providers will be supplied to the credential store instance.  Each provider must be installed through java.security file or through service loader from properly packaged jar file on classpath.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comma separated list of Jakarta Connectors provider names. Providers will be supplied to the credential store instance.  Each provider must be installed through java.security file or through service loader from properly packaged jar file on classpath.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-p,--password &lt;pwd&gt;</p></td>
@@ -11227,10 +11504,35 @@ Vault (enc-dir="standalone/configuration/vault";keystore="standalone/configurati
 </tbody>
 </table>
 <div class="paragraph">
+<p>The following parameter can be provided for the <code>generate-secret-key</code> command:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 15. generate-secret-key Parameter</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--size</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Size of the secret key in bits, can be one of 128, 192, or 256.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">256</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
 <p>The following parameters can be provided for the <code>import-key-pair</code> command:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 15. import-key-pair Parameters</caption>
+<caption class="title">Table 16. import-key-pair Parameters</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -11264,14 +11566,73 @@ Vault (enc-dir="standalone/configuration/vault";keystore="standalone/configurati
 </tr>
 </tbody>
 </table>
+<div class="paragraph">
+<p>The following parameter can be provided for the <code>import-secret-key</code> command:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 17. import-secret-key Parameter</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The secret key to be imported, if not specified the key will be prompted for.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The following parameters can be provided for the <code>encrypt</code> command:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 18. encrypt Parameters</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--clear-text &lt;clear text&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The clear text string to encrypt, if omitted this wil be prompted for.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/AThe following parameters can be provided for the <code>generate-key-pair</code> command:</p>
+<p class="tableblock">.generate-key-pair Parameters</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>|Parameter |Description |Default Value</p>
+</div>
+<div class="paragraph">
+<p>|-k, --algorithm &lt;algorithm name&gt;
+|The encryption algorithm to be used. One of: RSA, DSA, or EC
+|RSA</p>
+</div>
 </div>
 <div class="sect3">
-<h4 id="elytron-tool-code-vault-code-command">17.6.2. Elytron Tool - <code>vault</code> Command</h4>
+<h4 id="elytron-tool-code-vault-code-command">17.7.2. Elytron Tool - <code>vault</code> Command</h4>
 <div class="paragraph">
 <p>The <code>vault</code> command is used to convert a legacy vault to a credential store and supports the following parameters.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 16. vault Parameters</caption>
+<caption class="title">Table 19. vault Parameters</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -11317,7 +11678,7 @@ Vault (enc-dir="standalone/configuration/vault";keystore="standalone/configurati
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-o,--other-providers &lt;providers&gt;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Comma separated list of JCA provider names. Providers will be supplied to the credential store instance.  Each provider must be installed through java.security file or through service loader from properly packaged jar file on classpath.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comma separated list of Jakarta Connectors provider names. Providers will be supplied to the credential store instance.  Each provider must be installed through java.security file or through service loader from properly packaged jar file on classpath.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-p,--keystore-password &lt;pwd&gt;</p></td>
@@ -11347,12 +11708,12 @@ Vault (enc-dir="standalone/configuration/vault";keystore="standalone/configurati
 </table>
 </div>
 <div class="sect3">
-<h4 id="keystorecredentialstore-2">17.6.3. KeyStoreCredentialStore</h4>
+<h4 id="keystorecredentialstore">17.7.3. KeyStoreCredentialStore</h4>
 <div class="paragraph">
 <p>When configuring the <code>KeyStoreCredentialStore</code> the following configuration options are supported.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 17. KeyStoreCredentialStore Configuration</caption>
+<caption class="title">Table 20. KeyStoreCredentialStore Configuration</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -11413,7 +11774,200 @@ Vault (enc-dir="standalone/configuration/vault";keystore="standalone/configurati
 </div>
 </div>
 <div class="sect1">
-<h2 id="Custom_Components">18. Custom Components</h2>
+<h2 id="EncryptedExpressions">18. Encrypted Expressions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>WildFly Elytron provides support for handling encrypted expressions in the management model using a <code>SecretKey</code> from a <code>CredentialStore</code> to decrypt the expression at runtime.</p>
+</div>
+<div class="paragraph">
+<p>For information regarding how to create, configure, and populate credential stores including the manipulation of secret keys please refer to the <a href="#CredentialStore">Credential Store</a> chapter.</p>
+</div>
+<div class="paragraph">
+<p>Within the <code>elytron</code> subsystem one or more <code>resolvers</code> can be defined to handle the decryption of a previously encrypted expression.  Each resolver will reference a single secret key in a
+single credential store which it will use to decrypt the expressions.  Encrypted expressions can take one of two forms:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>${ENC::ResolverName:RUxZAUMQXUj3qP1hbXyO5PpmsbgkepjoscIf3tKXvGiPDXYqNAc=}</code></p>
+</li>
+<li>
+<p><code>${ENC::RUxZAUMQXUj3qP1hbXyO5PpmsbgkepjoscIf3tKXvGiPDXYqNAc=}</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In both cases the <code>ENC</code> prefix is used to identify the expression is an encrypted expression.  This prefix is the default however it is possible to define an alternative prefix for use
+across the configuration.</p>
+</div>
+<div class="paragraph">
+<p>Within the first example the <code>ResolverName</code> is the name of an individual resolver definition.  The name of the resolver has been omitted in the second example as it is also possible
+to define a default resolver which will be used if no resolver is specified within the expression.</p>
+</div>
+<div class="sect2">
+<h3 id="expression-encryption-resource">18.1. expression=encryption resource</h3>
+<div class="paragraph">
+<p>Support for decrypting expressions is enabled by defining a singleton <code>expression=encryption</code> resource within the <code>elytron</code> subsystem.</p>
+</div>
+<div class="paragraph">
+<p>This resource can be defined with the following attributes.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>prefix</code> (Default <code>ENC</code>) - The prefix used within the encrypted expressions.</p>
+</li>
+<li>
+<p><code>default-resolver</code> (Optional) - For expressions that do not define a resolver, the default resolver to use.</p>
+</li>
+<li>
+<p><code>resolvers</code> - A lit of one more named resolver definitions.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>An individual resolver is defined with three attributes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>name</code> - The name of the individual configuration used to reference it.</p>
+</li>
+<li>
+<p><code>credential-store</code> - Reference to the credential store instance that contains the secret key this resolver will use.</p>
+</li>
+<li>
+<p><code>secret-key</code> - The alias of the secret key within the credential store to use.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following is an example CLI command to define an <code>expression=encryption</code> resource in the <code>elytron</code> subsystem with two resolver definitions one if which is a
+default and an alternative prefix.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>[standalone@localhost:9990 /] /subsystem=elytron/expression=encryption:add(prefix=ENCRYPTED, default-resolver=one, \
+    resolvers=[{name=one, credential-store=store-one, secret-key=key}, \
+               {name=two, credential-store=store-two,secret-key=key}])
+{"outcome" =&gt; "success"}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="creating-expressions">18.2. Creating Expressions</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The following section illustrates how to create an encrypted expression.  If you repeat the same command for the same clear text it is normal that a different
+result is returned for the same key.  This is because a unique initialisation vector is used for each call.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="management-operation-6">18.2.1. Management Operation</h4>
+<div class="paragraph">
+<p>Once the <code>expression=encryption</code> resource has been defined the <code>create-expression</code> management operation can be called to generate an expression using the referenced
+secret key.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+When using management operations to create expressions from a <code>clear-text</code> string remember to disable the history in the CLI first otherwise the clear text string will be cached.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In these examples the <code>expression=encryption</code> resource has been configured to use the default prefix.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>[standalone@localhost:9990 /] history --disable
+[standalone@localhost:9990 /] /subsystem=elytron/expression=encryption:create-expression(resolver=two, clear-text=MyPassword)
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; {"expression" =&gt; "${ENC::two:RUxZAUMQcUVLxqjt8zh8FabcA+wcnux+mqfLE27sfmHfKNG9BcY=}"}
+}
+
+[standalone@localhost:9990 /] history --enable</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When using the <code>create-expression</code> operation the <code>resolver</code> attribute can be ommited, in that case the <code>default-resolver</code> will be used instead.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>[standalone@localhost:9990 /] history --disable
+[standalone@localhost:9990 /] /subsystem=elytron/expression=encryption:create-expression(clear-text=MyPassword)
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; {"expression" =&gt; "${ENC::RUxZAUMQu7biKBAwtUi+to+BlQnbjK3URUHMUDh8ReTlN0Alao0=}"}
+}
+
+[standalone@localhost:9990 /] history --enable</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In both cases the resulting expression can be used on any attribute of a resource which supports the use of expressions.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="command-line-tool">18.2.2. Command Line Tool</h4>
+<div class="paragraph">
+<p>Once a credential store has been populated with a secret key the <code>credential-store</code> command of the <code>elytron-tool</code> can also be used to create the encrypted string to include in an expression.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>]$ bin/elytron-tool.sh credential-store --location standalone/configuration/store-one.cs --type PropertiesCredentialStore --encrypt key
+Clear text value:
+Confirm clear text value:
+Clear text encrypted to token 'RUxZAUMQvGzk6Vaadp2cahhZ6rlPhHOZcWyjXALlAthrENvRTvQ=' using alias 'key'.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>--encrypt</code> action is used with the <code>credential-store</code> command, the argument to this action is the alias of the secret key to use.  In this form the tool will prompt
+twice for the clear text which is being encrypted.  When using the command line tool the output is just the Base64 encoded encrypted ciphertext.  To use this in the management model
+it will need to be included in an expression as described earlier i.e. using the appropriate prefix and if required resolver name.</p>
+</div>
+<div class="paragraph">
+<p>When using the <code>--encrypt</code> action it is also possible to pass in <code>--clear-text</code> parameter to pass in the clear text directly but this may be visible to other users and may also
+be cached in the command history of your shell.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="domain-mode">18.3. Domain Mode</h3>
+<div class="paragraph">
+<p>When using encrypted expressions in domain mode things are slightly different to how the legacy vault may have been used in the past.</p>
+</div>
+<div class="paragraph">
+<p>To make use of encrypted expressions in the host controller configuration the <code>expression=encryption</code> resource and relevant <code>*credential-store</code> definitions must be defined
+within the <code>elytron</code> subsystem definition of the host controller i.e. in the same <code>host.xml</code> configuration.</p>
+</div>
+<div class="paragraph">
+<p>For expressions within a domain profile being used to configure one or more servers the <code>expression=encryption</code> resource and relevant <code>*credential-store</code> definitions must be defined within the <code>elytron</code> subsystem
+definition of the same profile.</p>
+</div>
+<div class="paragraph">
+<p>The runtime management operations are not supported against the <code>expression=encryption</code> or <code>*credential-store</code> when defined within a domain profile so for these environments the credential store and relevant
+expressions should be created offline before defining in the model.  It is possible to reference a common credential store file shared between the host controller management model and the domain profile but after making
+any updates to the credential store from the host controller the application server processes will need to be restarted to force them to reload the credential store.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Custom_Components">19. Custom Components</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>WildFly Elytron subsystem allows adding custom implementation of different
@@ -11440,7 +11994,7 @@ custom-principal-transformer</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="security-event-listener">18.1. Security event listener</h3>
+<h3 id="security-event-listener">19.1. Security event listener</h3>
 <div class="paragraph">
 <p>This section describes how to add a custom security event listener. Similar steps can be followed to add another
 custom component type.</p>
@@ -11483,7 +12037,7 @@ for more information how to create WildFly module.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="configurable-custom-components">18.2. Configurable custom components</h3>
+<h3 id="configurable-custom-components">19.2. Configurable custom components</h3>
 <div class="paragraph">
 <p>You can also provide some component configuration from the subsystem, if class of your component will implement following method:</p>
 </div>
@@ -11507,16 +12061,16 @@ for more information how to create WildFly module.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="Migrate_Legacy_Security_to_Elytron_Security">19. Migrate Legacy Security to Elytron Security</h2>
+<h2 id="Migrate_Legacy_Security_to_Elytron_Security">20. Migrate Legacy Security to Elytron Security</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="authentication-configuration">19.1. Authentication Configuration</h3>
+<h3 id="authentication-configuration">20.1. Authentication Configuration</h3>
 
 </div>
 <div class="sect2">
-<h3 id="Properties_File_Based_Authentication_Migration">19.2. Properties Based Authentication / Authorization</h3>
+<h3 id="Properties_File_Based_Authentication_Migration">20.2. Properties Based Authentication / Authorization</h3>
 <div class="sect3">
-<h4 id="picketbox-based-configuration">19.2.1. PicketBox Based Configuration</h4>
+<h4 id="picketbox-based-configuration">20.2.1. PicketBox Based Configuration</h4>
 <div class="paragraph">
 <p>This migration example assumes a deployed web application is configured
 to require authentication using FORM based authentication and is
@@ -11780,7 +12334,7 @@ configuration however now Elytron components are used exclusively.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="FileSystemRealm_Based_Authentication_Migration">19.2.2. Migrating to FileSystemRealm Based Authentication</h4>
+<h4 id="FileSystemRealm_Based_Authentication_Migration">20.2.2. Migrating to FileSystemRealm Based Authentication</h4>
 <div class="paragraph">
 <p>An alternative to using a legacy properties-realm in Elytron is to use
 the new filesystem-realm. An Elytron filesystem-realm will use file-backed
@@ -11920,7 +12474,7 @@ with the conversion of all remaining combinations.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="legacy-security-realm">19.2.3. Legacy Security Realm</h4>
+<h4 id="legacy-security-realm">20.2.3. Legacy Security Realm</h4>
 <div class="sect4">
 <h5 id="original-configuration-1">Original Configuration</h5>
 <div class="paragraph">
@@ -12033,7 +12587,7 @@ clear the existing security realm reference.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="LDAP_Based_Authentication_Migration">19.3. LDAP Authentication Migration</h3>
+<h3 id="LDAP_Based_Authentication_Migration">20.3. LDAP Authentication Migration</h3>
 <div class="paragraph">
 <p>The section describing how to migrate from properties based
 authentication using either PicketBox or legacy security realms to
@@ -12083,7 +12637,7 @@ uniqueMember: uid=TestUserOne,ou=users,dc=group-to-principal,dc=wildfly,dc=org</
 'uid' attribute of the group entry.</p>
 </div>
 <div class="sect3">
-<h4 id="legacy-security-realm-ldap">19.3.1. Legacy Security Realm</h4>
+<h4 id="legacy-security-realm-ldap">20.3.1. Legacy Security Realm</h4>
 <div class="paragraph">
 <p>A connection to the LDAP server and related security realm can be
 created with the following commands: -</p>
@@ -12140,7 +12694,7 @@ run-batch</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="picketbox-ldapextloginmodule">19.3.2. PicketBox LdapExtLoginModule</h4>
+<h4 id="picketbox-ldapextloginmodule">20.3.2. PicketBox LdapExtLoginModule</h4>
 <div class="paragraph">
 <p>The following commands can create a PicketBox security domain configured
 to use the LdapExtLoginModule to verify a username and password.</p>
@@ -12193,7 +12747,7 @@ roleAttributeID="uid" \
 </div>
 </div>
 <div class="sect3">
-<h4 id="migrated">19.3.3. Migrated</h4>
+<h4 id="migrated">20.3.3. Migrated</h4>
 <div class="paragraph">
 <p>Within the Elytron subsystem a directory context can be defined for the
 connection to LDAP: -</p>
@@ -12265,7 +12819,7 @@ identity attribute " `Roles`" is mapped to the identity roles.
 </div>
 </div>
 <div class="sect2">
-<h3 id="Composite_Stores_Migration">19.4. Composite Stores Migration</h3>
+<h3 id="Composite_Stores_Migration">20.4. Composite Stores Migration</h3>
 <div class="paragraph">
 <p>When using either PicketBox or the legacy security realms it is possible to define a configuration where authentication is performed against one identity store whilst the information used for authorization is loaded from a different store, when using WildFly Elytron this can be achieved by using an aggregate security realm.</p>
 </div>
@@ -12273,7 +12827,7 @@ identity attribute " `Roles`" is mapped to the identity roles.
 <p>The example here makes use of a properties file for authentication and then searches LDAP to load group / role information. Both of these are based on the previous examples within this document so the environmental information is not repeated here.</p>
 </div>
 <div class="sect3">
-<h4 id="picketbox-based-configuration-2">19.4.1. PicketBox Based Configuration</h4>
+<h4 id="picketbox-based-configuration-2">20.4.1. PicketBox Based Configuration</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code>./subsystem=security/security-domain=application-security:add
@@ -12376,7 +12930,7 @@ run-batch</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="migrated-wildfly-elytron-configuration">19.4.2. Migrated WildFly Elytron Configuration</h4>
+<h4 id="migrated-wildfly-elytron-configuration">20.4.2. Migrated WildFly Elytron Configuration</h4>
 <div class="paragraph">
 <p>The equivalent WildFly Elytron configuration can be defined with the following commands:</p>
 </div>
@@ -12451,7 +13005,7 @@ attribute-mapping=[{filter-base-dn="ou=groups,dc=group-to-principal,dc=wildfly,d
 </div>
 </div>
 <div class="sect2">
-<h3 id="Database_Authentication_Migration">19.5. Database Authentication</h3>
+<h3 id="Database_Authentication_Migration">20.5. Database Authentication</h3>
 <div class="paragraph">
 <p>The section describing how to migrate from database accessible via JDBC
 datasource based authentication using PicketBox to Elytron. This section
@@ -12483,7 +13037,7 @@ users table like:</p>
 from ' `role&#8217; column.</p>
 </div>
 <div class="sect3">
-<h4 id="picketbox-database-loginmodule">19.5.1. PicketBox Database LoginModule</h4>
+<h4 id="picketbox-database-loginmodule">20.5.1. PicketBox Database LoginModule</h4>
 <div class="paragraph">
 <p>The following commands can create a PicketBox security domain configured
 to use database accessible via JDBC datasource to verify a username and
@@ -12526,7 +13080,7 @@ password and to assign roles.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="migrated-jdbc">19.5.2. Migrated</h4>
+<h4 id="migrated-jdbc">20.5.2. Migrated</h4>
 <div class="paragraph">
 <p>Within the Elytron subsystem to use database accesible via JDBC you need
 to define <code>jdbc-realm</code>:</p>
@@ -12571,7 +13125,7 @@ from SQL result specifies mappers.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="n-m-relation-beetween-user-and-roles">19.5.3. N-M relation beetween user and roles</h4>
+<h4 id="n-m-relation-beetween-user-and-roles">20.5.3. N-M relation beetween user and roles</h4>
 <div class="paragraph">
 <p>When using a n:m-relation beetween user and roles (which means: the user has multiple roles), the previous configuration does not work.</p>
 </div>
@@ -12646,7 +13200,7 @@ roleid <span class="predefined-type">BIGINT</span> <span class="keyword">not</sp
 </div>
 </div>
 <div class="sect2">
-<h3 id="Kerberos_Based_Authentication_Migration">19.6. Kerberos Authentication Migration</h3>
+<h3 id="Kerberos_Based_Authentication_Migration">20.6. Kerberos Authentication Migration</h3>
 <div class="paragraph">
 <p>When working with Kerberos configuration it is possible for the
 application server to rely on configuration from the environment or the
@@ -12676,7 +13230,7 @@ Kerberos realm in use and the address of the KDC.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="http-authentication-kerberos">19.6.1. HTTP Authentication</h4>
+<h4 id="http-authentication-kerberos">20.6.1. HTTP Authentication</h4>
 <div class="sect4">
 <h5 id="legacy-security-realm-kerberos">Legacy Security Realm</h5>
 <div class="paragraph">
@@ -12864,7 +13418,7 @@ authentication section</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="remoting-sasl-authentication">19.6.2. Remoting / SASL Authentication</h4>
+<h4 id="remoting-sasl-authentication">20.6.2. Remoting / SASL Authentication</h4>
 <div class="sect4">
 <h5 id="legacy-security-realm-kerberos-1">Legacy Security Realm</h5>
 <div class="paragraph">
@@ -12984,7 +13538,7 @@ security factory.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Caching_Migration">19.7. Caching Migration</h3>
+<h3 id="Caching_Migration">20.7. Caching Migration</h3>
 <div class="paragraph">
 <p>Where a PicketBox based security domain is defined it is possible to enable caching for that security domain, this enables subsequent hits to the identity store to be avoided as an in memory cache can be used instead, this example demonstrates how caching can be used with a WildFly Elytron based configuration.</p>
 </div>
@@ -12992,7 +13546,7 @@ security factory.</p>
 <p>The purpose of this chapter is to highlight the migration of a configuration with caching enabled, this example is based in the previous LDAP example but with caching enabled.</p>
 </div>
 <div class="sect3">
-<h4 id="picketbox-example">19.7.1. PicketBox Example</h4>
+<h4 id="picketbox-example">20.7.1. PicketBox Example</h4>
 <div class="paragraph">
 <p>A PicketBox based security domain can be defined with the following commands.</p>
 </div>
@@ -13043,7 +13597,7 @@ roleAttributeID="uid" \
 </div>
 </div>
 <div class="sect3">
-<h4 id="migrated-example">19.7.2. Migrated Example</h4>
+<h4 id="migrated-example">20.7.2. Migrated Example</h4>
 <div class="paragraph">
 <p>When using WildFly Elytron where caching is required the individual security realm is wrapped using a cache, a migrated configuration can be defined with the following commands:</p>
 </div>
@@ -13116,13 +13670,13 @@ attribute-mapping=[{filter-base-dn="ou=groups,dc=group-to-principal,dc=wildfly,d
 </div>
 </div>
 <div class="sect2">
-<h3 id="clients">19.8. Clients</h3>
+<h3 id="clients">20.8. Clients</h3>
 
 </div>
 <div class="sect2">
-<h3 id="Application_Client_Migration">19.9. Application Client Migration</h3>
+<h3 id="Application_Client_Migration">20.9. Application Client Migration</h3>
 <div class="sect3">
-<h4 id="naming-client">19.9.1. Naming Client</h4>
+<h4 id="naming-client">20.9.1. Naming Client</h4>
 <div class="paragraph">
 <p>This migration example assumes a client application performs a remote
 JNDI lookup using an ﻿﻿ <code>InitialContext</code> backed by the
@@ -13236,7 +13790,7 @@ context.runCallable(callable);</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ejb-client">19.9.2. EJB Client</h4>
+<h4 id="ejb-client">20.9.2. EJB Client</h4>
 <div class="paragraph">
 <p>This migration example assumes a client application is configured to
 invoke an EJB deployed on a remote server using a
@@ -13376,16 +13930,28 @@ AuthenticationContext context = AuthenticationContext.empty().with(MatchRule.ALL
 context.runCallable(callable);</code></pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
+:leveloffset: -1
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="general-utilities">19.10. General Utilities</h3>
+<div class="sect3">
+<h4 id="general-utilities">20.9.3. General Utilities</h4>
 
 </div>
-<div class="sect2">
-<h3 id="Security_Vault_Migration">19.11. Security Vault Migration</h3>
+<div class="sect3">
+<h4 id="Security_Vault_Migration">20.9.4. Security Vault Migration</h4>
 <div class="paragraph">
 <p>Security Vault is primarily used in legacy configurations, a vault is
 used to store sensitive strings outside of the configuration files.
@@ -13407,8 +13973,8 @@ dependent on your platform of choice. One can use also simple form "java
 -jar $JBOSS_HOME/bin/wildfly-elytron-tool.jar &lt;command&gt; &lt;arguments&gt;" if
 it better suites ones needs.</p>
 </div>
-<div class="sect3">
-<h4 id="single-security-vault-conversion">19.11.1. Single Security Vault Conversion</h4>
+<div class="sect4">
+<h5 id="single-security-vault-conversion">Single Security Vault Conversion</h5>
 <div class="paragraph">
 <p>To convert <strong>single</strong> security vault credential store use following
 example:</p>
@@ -13449,8 +14015,8 @@ example:</p>
 <div class="paragraph">
 <p>Use elytron-tool.sh vault --help to get description of all parameters.</p>
 </div>
-<div class="sect4">
-<h5 id="notes">Notes:</h5>
+<div class="sect5">
+<h6 id="notes">Notes:</h6>
 <div class="ulist">
 <ul>
 <li>
@@ -13473,8 +14039,8 @@ store to the configuration.</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="bulk-security-vault-conversion">19.11.2. Bulk Security Vault Conversion</h4>
+<div class="sect4">
+<h5 id="bulk-security-vault-conversion">Bulk Security Vault Conversion</h5>
 <div class="paragraph">
 <p>There is possibility to convert multiple vaults to credential store
 using --bulk-convert parameter with description file.<br>
@@ -13564,8 +14130,8 @@ mandatory except "salt:", "iteration:" and "properties:"</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="Security_Property_Migration">19.12. Security Properties</h3>
+<div class="sect3">
+<h4 id="Security_Property_Migration">20.9.5. Security Properties</h4>
 <div class="paragraph">
 <p>Lets suppose security properties "a" and "c" defined in legacy security:</p>
 </div>
@@ -13625,14 +14191,14 @@ created property "e":</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="ssl-migration">19.13. SSL Migration</h3>
+<div class="sect3">
+<h4 id="ssl-migration">20.9.6. SSL Migration</h4>
 
 </div>
-<div class="sect2">
-<h3 id="Simple_SSL_Migration">19.14. Simple SSL Migration</h3>
 <div class="sect3">
-<h4 id="simple-ssl-migration">19.14.1. Simple SSL Migration</h4>
+<h4 id="Simple_SSL_Migration">20.9.7. Simple SSL Migration</h4>
+<div class="sect4">
+<h5 id="simple-ssl-migration">Simple SSL Migration</h5>
 <div class="paragraph">
 <p>This section describe securing HTTP connections to the server using SSL
 using Elytron.<br>
@@ -13741,8 +14307,8 @@ created Elytron <code>ssl-context</code>:</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="client-cert-ssl-authentication-migration">19.14.2. Client-Cert SSL Authentication Migration</h4>
+<div class="sect4">
+<h5 id="client-cert-ssl-authentication-migration">Client-Cert SSL Authentication Migration</h5>
 <div class="paragraph">
 <p>This suppose you have already configured Client-Cert SSL authentication
 using <code>truststore</code> in legacy <code>security-realm</code>, for example by
@@ -13867,8 +14433,8 @@ above:</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="SSL_with_Client_Cert_Migration">19.15. SSL with Client Cert Migration</h3>
+<div class="sect3">
+<h4 id="SSL_with_Client_Cert_Migration">20.9.8. SSL with Client Cert Migration</h4>
 <div class="paragraph">
 <p>As this documentation is primarily intended for users migrating to WildFly Elytron I am going to jump straight into the configuration required with WildFly Elytron.</p>
 </div>
@@ -13932,8 +14498,8 @@ above:</p>
 <div class="paragraph">
 <p>However following steps are needed to be user identity provided to your applications or management console.</p>
 </div>
-<div class="sect3">
-<h4 id="realms-and-domains">19.15.1. Realms and Domains</h4>
+<div class="sect4">
+<h5 id="realms-and-domains">Realms and Domains</h5>
 <div class="paragraph">
 <p>We use users stored in standard properties files, so we can predefined Elytron security domain <code>ManagementDomain</code> and realm <code>ManagementRealm</code>:</p>
 </div>
@@ -13962,8 +14528,8 @@ above:</p>
 <p>This mean, for any client certificate there have to exists user in the security realm.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="principal-decoder">19.15.2. Principal decoder</h4>
+<div class="sect4">
+<h5 id="principal-decoder">Principal decoder</h5>
 <div class="paragraph">
 <p>When certificate authentication is used and the security realm accepts usernames to resolve an identity, there have to be defined way to obtain username from a client certificate.
 In this case we will use first CN attribute in certificate subject:</p>
@@ -13990,8 +14556,8 @@ In this case we will use first CN attribute in certificate subject:</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="http-authentication-factory">19.15.3. HTTP Authentication Factory</h4>
+<div class="sect4">
+<h5 id="http-authentication-factory">HTTP Authentication Factory</h5>
 <div class="paragraph">
 <p>For the HTTP connections we now define a HTTP authentication factory using the previously defined resources and it is configured to support CLIENT_CERT and DIGEST authentication.</p>
 </div>
@@ -14046,8 +14612,8 @@ In this case we will use first CN attribute in certificate subject:</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="sasl-authentication-factory">19.15.4. SASL Authentication Factory</h4>
+<div class="sect4">
+<h5 id="sasl-authentication-factory">SASL Authentication Factory</h5>
 <div class="paragraph">
 <p>The architecture of the two authentication factories if very similar so a SASL authentication factory can be defined in the same way as the HTTP equivalent.
 However, as EXTERNAL SASL mechanism does not do any certificate verification, there is no need for configuring SASL server factory.</p>
@@ -14088,8 +14654,8 @@ However, as EXTERNAL SASL mechanism does not do any certificate verification, th
 <p>There is used the same principal transformer as defined for HTTP.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="ssl-context">19.15.5. SSL Context</h4>
+<div class="sect4">
+<h5 id="ssl-context">SSL Context</h5>
 <div class="paragraph">
 <p>The SSL context was already defined, but we need to modify it to not fail on client certificate authentication failure, but to fallback to password authentication.</p>
 </div>
@@ -14119,8 +14685,8 @@ However, as EXTERNAL SASL mechanism does not do any certificate verification, th
 <p>As we will be supporting fallback to username/password authentication need-client-auth is set to false. This allows connections to be established but an alternative form of authentication will be required.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="using-for-management">19.15.6. Using for Management</h4>
+<div class="sect4">
+<h5 id="using-for-management">Using for Management</h5>
 <div class="paragraph">
 <p>At this point the management interfaces can be updated to use the newly defined resources, we need to add references to the two new authentication factories and the SSL context, we can also remove the existing reference to the legacy security realm. As this is modifying existing interfaces a server reload will also be required.</p>
 </div>
@@ -14151,16 +14717,16 @@ However, as EXTERNAL SASL mechanism does not do any certificate verification, th
 <span class="tag">&lt;/management&gt;</span></code></pre>
 </div>
 </div>
-<div class="sect4">
-<h5 id="admin-clients">Admin Clients</h5>
+<div class="sect5">
+<h6 id="admin-clients">Admin Clients</h6>
 <div class="paragraph">
 <p>At this stage assuming the same files have been used as in this example it should be possible to connect to the management interface of the server either using a web browser or the JBoss CLI with username and password from your original <code>mgmt-users.properties</code> file.</p>
 </div>
 <div class="paragraph">
 <p>For certificate based authentication certificates signed by your CA, whose subject DN resolves to username existing in properties realm will be accepted.</p>
 </div>
-<div class="sect5">
-<h6 id="cli-client-configuration">CLI Client Configuration</h6>
+<div class="sect6">
+<h7 id="cli-client-configuration">CLI Client Configuration</h7>
 <div class="paragraph">
 <p>This suppose you have used following configuration in <code>bin/jboss-cli.xml</code>:</p>
 </div>
@@ -14239,8 +14805,8 @@ However, as EXTERNAL SASL mechanism does not do any certificate verification, th
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="documentation-still-needed">19.16. Documentation Still Needed</h3>
+<div class="sect3">
+<h4 id="documentation-still-needed">20.9.9. Documentation Still Needed</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -14260,10 +14826,11 @@ for example, Infinispan cache cannot be used, any others?</p>
 </div>
 </div>
 </div>
+</div>
 <div id="footer">
 <div id="footer-text">
-Version 22.0.1.Final<br>
-Last updated 2021-01-06 18:34:43 PST
+Version 23.0.0.Final<br>
+Last updated 2021-03-09 09:08:12 PST
 </div>
 </div>
 </body>

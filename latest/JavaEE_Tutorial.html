@@ -524,13 +524,13 @@ table.CodeRay td.code>pre{padding:0}
 <h1>JavaEE 7 Tutorial</h1>
 <div class="details">
 <span id="author" class="author">WildFly team</span><br>
-<span id="revnumber">version 22.0.1.Final,</span>
-<span id="revdate">2021-02-12T19:04:12Z</span>
+<span id="revnumber">version 23.0.0.Final,</span>
+<span id="revdate">2021-03-10T23:27:43Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">JavaEE 7 Tutorial</div>
 <ul class="sectlevel1">
-<li><a href="#Java_API_for_RESTful_Web_Services_JAX-RS">1. Java API for RESTful Web Services (JAX-RS)</a>
+<li><a href="#Jakarta_RESTful_Web_Services">1. Jakarta RESTful Web Services</a>
 <ul class="sectlevel2">
 <li><a href="#content-java-api-restful-web-services">1.1. Content</a></li>
 <li><a href="#tutorial-overview">1.2. Tutorial Overview</a></li>
@@ -542,48 +542,60 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#exploring-the-mobile-client">1.8. Exploring the mobile client</a></li>
 </ul>
 </li>
-<li><a href="#Java_Servlet_Technology">2. Java Servlet Technology</a>
+<li><a href="#Jakarta_Servlet_Technology">2. Jakarta Servlet Technology</a>
 <ul class="sectlevel2">
 <li><a href="#content-java-servlet-technology">2.1. Content</a></li>
 <li><a href="#asynchronous-support">2.2. Asynchronous Support</a></li>
 </ul>
 </li>
-<li><a href="#Managed_Beans">3. Managed Beans</a></li>
-<li><a href="#Bean_Validation">4. Bean Validation</a>
+<li><a href="#Jakarta_Persistence_API">3. Jakarta Persistence API</a></li>
+<li><a href="#Jakarta_Transactions">4. Jakarta Transactions</a></li>
+<li><a href="#Managed_Beans">5. Managed Beans</a></li>
+<li><a href="#Jakarta_Contexts_and_Dependency_Injection">6. Jakarta Contexts and Dependency Injection</a></li>
+<li><a href="#Jakarta_Bean_Validation">7. Jakarta Bean Validation</a></li>
+<li><a href="#Jakarta_Messaging_API">8. Jakarta Messaging API</a>
 <ul class="sectlevel2">
-<li><a href="#configure-jbossas-for-messaging">4.1. Configure JBossAS for Messaging</a></li>
-<li><a href="#adding-the-message-destinations">4.2. Adding the message destinations</a></li>
+<li><a href="#configure-jbossas-for-messaging">8.1. Configure WildFly for Messaging</a></li>
+<li><a href="#adding-the-message-destinations">8.2. Adding the message destinations</a></li>
 </ul>
 </li>
-<li><a href="#JavaMail_API">5. JavaMail API</a>
+<li><a href="#Jakarta_Connectors_Architecture">9. Jakarta Connectors Architecture</a></li>
+<li><a href="#Jakarta_Mail">10. Jakarta Mail</a></li>
+<li><a href="#Java_Authorization_Contract_for_Containers_JACC">11. Java Authorization Contract for Containers (JACC)</a></li>
+<li><a href="#Jakarta_Authentication">12. Jakarta Authentication</a></li>
+<li><a href="#Jakarta_Enterprise_Beans">13. Jakarta Enterprise Beans</a>
 <ul class="sectlevel2">
-<li><a href="#session-beans">5.1. Session Beans</a>
+<li><a href="#session-beans">13.1. Session Beans</a>
 <ul class="sectlevel3">
-<li><a href="#stateful-session-beans">5.1.1. Stateful Session Beans</a></li>
-<li><a href="#stateless-session-beans">5.1.2. Stateless Session Beans</a></li>
-<li><a href="#singleton-session-beans">5.1.3. Singleton Session Beans</a></li>
+<li><a href="#stateful-session-beans">13.1.1. Stateful Session Beans</a></li>
+<li><a href="#stateless-session-beans">13.1.2. Stateless Session Beans</a></li>
+<li><a href="#singleton-session-beans">13.1.3. Singleton Session Beans</a></li>
 </ul>
 </li>
-<li><a href="#message-driven-beans">5.2. Message Driven Beans</a></li>
-<li><a href="#how-can-enterprise-javabeans-can-be-accessed">5.3. How can Enterprise JavaBeans can be accessed?</a>
+<li><a href="#message-driven-beans">13.2. Message Driven Beans</a></li>
+<li><a href="#how-can-enterprise-javabeans-can-be-accessed">13.3. How can Enterprise JavaBeans can be accessed?</a>
 <ul class="sectlevel3">
-<li><a href="#remote-call-invocation">5.3.1. Remote call invocation</a></li>
-<li><a href="#local-call-invocation">5.3.2. Local call invocation</a></li>
-<li><a href="#web-services">5.3.3. Web Services</a></li>
+<li><a href="#remote-call-invocation">13.3.1. Remote call invocation</a></li>
+<li><a href="#local-call-invocation">13.3.2. Local call invocation</a></li>
+<li><a href="#web-services">13.3.3. Web Services</a></li>
 </ul>
 </li>
-<li><a href="#packaging">5.4. Packaging</a></li>
-<li><a href="#developing-web-service-implementations">5.5. Developing web service implementations</a>
-<ul class="sectlevel3">
-<li><a href="#the-service-implementation-class">5.5.1. The service implementation class</a></li>
-<li><a href="#deploying-service-implementations">5.5.2. Deploying service implementations</a></li>
+<li><a href="#packaging">13.4. Packaging</a></li>
 </ul>
 </li>
-<li><a href="#consuming-web-services">5.6. Consuming web services</a>
+<li><a href="#Jakarta_XML_Web_Services">14. Jakarta XML Web Services</a>
+<ul class="sectlevel2">
+<li><a href="#developing-web-service-implementations">14.1. Developing web service implementations</a>
 <ul class="sectlevel3">
-<li><a href="#creating-the-client-artifacts">5.6.1. Creating the client artifacts</a></li>
-<li><a href="#constructing-a-service-stub">5.6.2. Constructing a service stub</a></li>
-<li><a href="#appendix">5.6.3. Appendix</a></li>
+<li><a href="#the-service-implementation-class">14.1.1. The service implementation class</a></li>
+<li><a href="#deploying-service-implementations">14.1.2. Deploying service implementations</a></li>
+</ul>
+</li>
+<li><a href="#consuming-web-services">14.2. Consuming web services</a>
+<ul class="sectlevel3">
+<li><a href="#creating-the-client-artifacts">14.2.1. Creating the client artifacts</a></li>
+<li><a href="#constructing-a-service-stub">14.2.2. Constructing a service stub</a></li>
+<li><a href="#appendix">14.2.3. Appendix</a></li>
 </ul>
 </li>
 </ul>
@@ -618,7 +630,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect1">
-<h2 id="Java_API_for_RESTful_Web_Services_JAX-RS">1. Java API for RESTful Web Services (JAX-RS)</h2>
+<h2 id="Jakarta_RESTful_Web_Services">1. Jakarta RESTful Web Services</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="content-java-api-restful-web-services">1.1. Content</h3>
@@ -627,18 +639,18 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="tutorial-overview">1.2. Tutorial Overview</h3>
 <div class="paragraph">
-<p>This chapter describes the Java API for RESTful web services (JAX-RS,
-defined in <a href="http://jcp.org/en/jsr/detail?id=311">JSR331</a>).
-<a href="http://www.jboss.org/resteasy">RESTEasy</a> is an portable implementation of
+<p>This chapter describes the Jakarta RESTful Web Services
+(defined in <a href="https://jakarta.ee/specifications/restful-ws/2.1/" class="bare">https://jakarta.ee/specifications/restful-ws/2.1/</a>).
+<a href="https://resteasy.github.io/">RESTEasy</a> is an portable implementation of
 this specification which can run in any Servlet container. Tight
 integration with JBoss Application Server is available for optimal user
-experience in that environment. While JAX-RS is only a server-side
-specification, RESTeasy has innovated to bring JAX-RS to the client
-through the RESTEasy JAX-RS Client Framework.</p>
+experience in that environment. While Jakarta RESTful Web Services is client as well as
+server-side specification, RESTeasy has innovated to bring Jakarta RESTful Web Services to the client
+through the RESTEasy Jakarta RESTful Web Services Client Framework.</p>
 </div>
 <div class="paragraph">
 <p>Detailed documentation on RESTEasy is available
-<a href="http://www.jboss.org/resteasy/docs.html">here</a>.<br>
+<a href="https://resteasy.github.io/docs/">here</a>.<br>
 The source for this tutorial is in github repository
 <a href="https://github.com/tdiesler/javaee-tutorial">git://github.com/tdiesler/javaee-tutorial.git</a></p>
 </div>
@@ -702,7 +714,7 @@ APIs.</p>
 </div>
 <div class="paragraph">
 <p>The Jakarta specification for RESTful services is
-JAX-RS. It is covered by JSR-311 ( <a href="http://jcp.org/jsr/detail/311.jsp" class="bare">http://jcp.org/jsr/detail/311.jsp</a>).
+Jakarta RESTful Web Services. It is covered by Jakarta RESTful Web Services 2.1 (<a href="https://jakarta.ee/specifications/restful-ws/2.1/" class="bare">https://jakarta.ee/specifications/restful-ws/2.1/</a>).
 In the REST model, the server exposes APIs through specific URIs
 (typically URLs), and clients access those URIs to query or modify data.
 REST uses a stateless communication protocol. Typically, this is HTTP.</p>
@@ -782,7 +794,7 @@ a simple Java representation of a RESTful entity.</p>
 </div>
 <div class="paragraph">
 <p>The Library is the RESTful Root Resource. Here we use a set of standard
-JAX-RS annotations to define</p>
+Jakarta RESTful Web Services annotations to define</p>
 </div>
 <div class="ulist">
 <ul>
@@ -837,7 +849,7 @@ JAX-RS annotations to define</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The Library root resource uses these JAX-RS annotations:</p>
+<p>The Library root resource uses these Jakarta RESTful Web Services annotations:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -949,7 +961,7 @@ project, we set the JBOSS_HOME environment variable accordingly.</p>
 throughout this tutorial, can manage server startup/shutdown. It is
 however also possible to startup the server instance manually before you
 run the tests. The latter allows you to look at the console and see what
-log output the deployment phase and JAX-RS endpoint invocations produce.</p>
+log output the deployment phase and Jakarta RESTful Web Services endpoint invocations produce.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1039,7 +1051,7 @@ from the repository.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we copy the JAX-RS endpoint webapp that we build above to the
+<p>Now we copy the Jakarta RESTful Web Services endpoint webapp that we built above to the
 'deployments' folder and commit the changes.</p>
 </div>
 <div class="listingblock">
@@ -1065,7 +1077,7 @@ remote: Starting application...Done</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You can now use curl or your browser to see the JAX-RS endpoint in
+<p>You can now use curl or your browser to see the Jakarta RESTful Web Services endpoint in
 action. The following URL lists the books that are currently registered
 in the library.</p>
 </div>
@@ -1160,7 +1172,7 @@ time.</p>
 </div>
 <div class="paragraph">
 <p>When you unlock the home screen by dragging the little green lock to the
-right. You should see the the running JAX-RS client application.</p>
+right. You should see the the running Jakarta RESTful Web Services client application.</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="images/jaxrs/NoBooks.png" alt="images/jaxrs/NoBooks.png"></span></p>
@@ -1215,7 +1227,7 @@ full set</a> of mobile platform APIs would be available through this
 approach.</p>
 </div>
 <div class="paragraph">
-<p>The JAX-RS client application uses an annotated library client interface</p>
+<p>The Jakarta RESTful Web Services client application uses an annotated library client interface</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1261,7 +1273,7 @@ approach.</p>
 <div class="paragraph">
 <p>The first uses APIs that are available in the Android SDK natively. The
 code is much more involved, but there would be no need to add external
-libraries (i.e. resteasy, jackson, etc). The effect is that the total
+libraries (i.e. RESTEasy, jackson, etc). The effect is that the total
 size of the application is considerably smaller in size (i.e. 40k)</p>
 </div>
 <div class="listingblock">
@@ -1304,7 +1316,7 @@ size of the application is considerably smaller in size (i.e. 40k)</p>
 </div>
 <div class="paragraph">
 <p>The second implementation uses the fabulous RESTEasy client proxy to
-interact with the JAX-RS endpoint. The details of Http connectivity and
+interact with the Jakarta RESTful Web Services endpoint. The details of Http connectivity and
 JSON data binding is transparently handled by RESTEasy. The total size
 of the application is considerably bigger in size (i.e. 400k)</p>
 </div>
@@ -1332,7 +1344,7 @@ that would enable the portable PhoneGap approach.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="Java_Servlet_Technology">2. Java Servlet Technology</h2>
+<h2 id="Jakarta_Servlet_Technology">2. Jakarta Servlet Technology</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Coming Soon</p>
@@ -1356,17 +1368,21 @@ This guide is still under development, check back soon!
 <div class="sect2">
 <h3 id="asynchronous-support">2.2. Asynchronous Support</h3>
 <div class="paragraph">
-<p>[[Java_Server_Faces_Technology_(JSF)]]
-= Java Server Faces Technology (JSF)</p>
+<p>[[Jakarta_Server_Faces_Technology_(Jakarta_Server_Faces)]]
+= Jakarta Server Faces Technology (Jakarta Server Faces)</p>
 </div>
-<div class="paragraph">
-<p>[[Java_Persistence_API_(JPA)]]
-= Java Persistence API (JPA)</p>
 </div>
-<div class="paragraph">
-<p>[[Java_Transaction_API_(JTA)]]
-= Java Transaction API (JTA)</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="Jakarta_Persistence_API">3. Jakarta Persistence API</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="Jakarta_Transactions">4. Jakarta Transactions</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Coming Soon</p>
 </div>
@@ -1384,23 +1400,27 @@ This guide is still under development, check back soon!
 </div>
 </div>
 </div>
-</div>
 <div class="sect1">
-<h2 id="Managed_Beans">3. Managed Beans</h2>
+<h2 id="Managed_Beans">5. Managed Beans</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>[[Contexts_and_Dependency_Injection_(CDI)]]
-= Contexts and Dependency Injection (CDI)</p>
-</div>
+
 </div>
 </div>
 <div class="sect1">
-<h2 id="Bean_Validation">4. Bean Validation</h2>
+<h2 id="Jakarta_Contexts_and_Dependency_Injection">6. Jakarta Contexts and Dependency Injection</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>[[Java_Message_Service_API_(JMS)]]
-= Java Message Service API (JMS)</p>
+
 </div>
+</div>
+<div class="sect1">
+<h2 id="Jakarta_Bean_Validation">7. Jakarta Bean Validation</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="Jakarta_Messaging_API">8. Jakarta Messaging API</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Coming Soon</p>
 </div>
@@ -1417,10 +1437,10 @@ This guide is still under development, check back soon!
 </table>
 </div>
 <div class="sect2">
-<h3 id="configure-jbossas-for-messaging">4.1. Configure JBossAS for Messaging</h3>
+<h3 id="configure-jbossas-for-messaging">8.1. Configure WildFly for Messaging</h3>
 <div class="paragraph">
-<p>Currently, the default configuration does not include the JMS subsystem.
-To enable JMS in the standalone server you need to add these
+<p>Currently, the default configuration does not include the Jakarta Messaging subsystem.
+To enable Jakarta Messaging in the standalone server you need to add these
 configuration items to standalone.xml or simply use standalone-full.xml.</p>
 </div>
 <div class="listingblock">
@@ -1524,16 +1544,16 @@ configuration items to standalone.xml or simply use standalone-full.xml.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Alternatively run the server using the preview configuration</p>
+<p>Alternatively run the server using the 'full' or 'full-ha' configuration</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="error">$</span> bin/standalone.sh --server-config=standalone-preview.xml</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="error">$</span> bin/standalone.sh --server-config=standalone-full.xml</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="adding-the-message-destinations">4.2. Adding the message destinations</h3>
+<h3 id="adding-the-message-destinations">8.2. Adding the message destinations</h3>
 <div class="paragraph">
 <p>For this tutorial we use two message destinations</p>
 </div>
@@ -1553,7 +1573,7 @@ Interface (CLI)</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="error">$</span> bin/jboss-admin.sh --connect
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="error">$</span> bin/jboss-cli.sh --connect
 Connected to standalone controller at localhost:<span class="integer">9999</span>
 [standalone<span class="annotation">@localhost</span>:<span class="integer">9999</span> /] jms-queue add --queue-address=BidQueue --entries=queue/bid
 [standalone<span class="annotation">@localhost</span>:<span class="integer">9999</span> /] jms-topic add --topic-address=AuctionTopic --entries=topic/auction
@@ -1564,20 +1584,24 @@ Closed connection to localhost:<span class="integer">9999</span></code></pre>
 <div class="paragraph">
 <p>or by adding them to the subsytem configuration as shown above.</p>
 </div>
-<div class="paragraph">
-<p>[[JavaEE_Connector_Architecture_(JCA)]]
-= JavaEE Connector Architecture (JCA)</p>
-</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="JavaMail_API">5. JavaMail API</h2>
+<h2 id="Jakarta_Connectors_Architecture">9. Jakarta Connectors Architecture</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>[[Java_Authorization_Contract_for_Containers_(JACC)]]
-= Java Authorization Contract for Containers (JACC)</p>
+
 </div>
+</div>
+<div class="sect1">
+<h2 id="Jakarta_Mail">10. Jakarta Mail</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="Java_Authorization_Contract_for_Containers_JACC">11. Java Authorization Contract for Containers (JACC)</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>In order to register your own JACC Module, you&#8217;ll need to create a
 server module containing the required classes, and then set three system
@@ -1639,10 +1663,23 @@ classes from:</p>
 <pre class="CodeRay highlight nowrap"><code data-lang="java">[standalone<span class="annotation">@localhost</span>:<span class="integer">9990</span> /] /system-property=org.jboss.as.security.jacc-module:add(value=com.example.customjacc)</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>[[Java_Authentication_Service_Provider_Interface_for_Containers_(JASPIC)]]
-= Java Authentication Service Provider Interface for Containers (JASPIC)</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+References in this document to Java Authorization Contract for Containers (JACC) refer to the Jakarta Authorization unless otherwise noted
+</td>
+</tr>
+</table>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Jakarta_Authentication">12. Jakarta Authentication</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>JASPI is not available by default for deployments, and a specific
 Security Domain must be created to use it. For a simplified developer
@@ -1680,10 +1717,11 @@ instead, placed under the root META-INF directory:</p>
 &lt;/jboss-app&gt;</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>[[Enterprise_JavaBeans_Technology_(EJB)]]
-= Enterprise JavaBeans Technology (EJB)</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="Jakarta_Enterprise_Beans">13. Jakarta Enterprise Beans</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>In this section we&#8217;ll look at the two main types of beans (Session Beans
 and Message Driven Beans), the methods to access and the packaging
@@ -1705,57 +1743,59 @@ This guide is still under development, check back soon!
 </table>
 </div>
 <div class="sect2">
-<h3 id="session-beans">5.1. Session Beans</h3>
+<h3 id="session-beans">13.1. Session Beans</h3>
 <div class="sect3">
-<h4 id="stateful-session-beans">5.1.1. Stateful Session Beans</h4>
+<h4 id="stateful-session-beans">13.1.1. Stateful Session Beans</h4>
 
 </div>
 <div class="sect3">
-<h4 id="stateless-session-beans">5.1.2. Stateless Session Beans</h4>
+<h4 id="stateless-session-beans">13.1.2. Stateless Session Beans</h4>
 
 </div>
 <div class="sect3">
-<h4 id="singleton-session-beans">5.1.3. Singleton Session Beans</h4>
+<h4 id="singleton-session-beans">13.1.3. Singleton Session Beans</h4>
 
 </div>
 </div>
 <div class="sect2">
-<h3 id="message-driven-beans">5.2. Message Driven Beans</h3>
+<h3 id="message-driven-beans">13.2. Message Driven Beans</h3>
 
 </div>
 <div class="sect2">
-<h3 id="how-can-enterprise-javabeans-can-be-accessed">5.3. How can Enterprise JavaBeans can be accessed?</h3>
+<h3 id="how-can-enterprise-javabeans-can-be-accessed">13.3. How can Enterprise JavaBeans can be accessed?</h3>
 <div class="sect3">
-<h4 id="remote-call-invocation">5.3.1. Remote call invocation</h4>
+<h4 id="remote-call-invocation">13.3.1. Remote call invocation</h4>
 
 </div>
 <div class="sect3">
-<h4 id="local-call-invocation">5.3.2. Local call invocation</h4>
+<h4 id="local-call-invocation">13.3.2. Local call invocation</h4>
 
 </div>
 <div class="sect3">
-<h4 id="web-services">5.3.3. Web Services</h4>
+<h4 id="web-services">13.3.3. Web Services</h4>
 
 </div>
 </div>
 <div class="sect2">
-<h3 id="packaging">5.4. Packaging</h3>
-<div class="paragraph">
-<p>[[Java_API_for_XML_Web_Services_(JAX-WS)]]
-= Java API for XML Web Services (JAX-WS)</p>
+<h3 id="packaging">13.4. Packaging</h3>
+
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Jakarta_XML_Web_Services">14. Jakarta XML Web Services</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>JBossWS uses the JBoss Application Server as its target container. The
 following examples focus on web service deployments that leverage EJB3
-service implementations and the JAX-WS programming models. For further
+service implementations and the Jakarta XML Web Services programming models. For further
 information on POJO service implementations and advanced topics you need
-consult the <a href="Developer_Guide.html#JAX-WS_User_Guide">user guide</a>.</p>
-</div>
+consult the <a href="Developer_Guide.html#Jakarta_XML_Web_Services_User_Guide">user guide</a>.</p>
 </div>
 <div class="sect2">
-<h3 id="developing-web-service-implementations">5.5. Developing web service implementations</h3>
+<h3 id="developing-web-service-implementations">14.1. Developing web service implementations</h3>
 <div class="paragraph">
-<p>JAX-WS does leverage annotations in order to express web service meta
+<p>Jakarta XML Web Services does leverage annotations in order to express web service meta
 data on Java components and to describe the mapping between Java data
 types and XML. When developing web service implementations you need to
 decide whether you are going to start with an abstract contract (WSDL)
@@ -1800,7 +1840,7 @@ Services</a></p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="the-service-implementation-class">5.5.1. The service implementation class</h4>
+<h4 id="the-service-implementation-class">14.1.1. The service implementation class</h4>
 <div class="paragraph">
 <p>When starting from Java you must provide the service implementation. A
 valid endpoint implementation class must meet the following
@@ -1931,7 +1971,7 @@ If you have more complex mapping problems you need to consult the
 </div>
 </div>
 <div class="sect3">
-<h4 id="deploying-service-implementations">5.5.2. Deploying service implementations</h4>
+<h4 id="deploying-service-implementations">14.1.2. Deploying service implementations</h4>
 <div class="paragraph">
 <p>Service deployment basically depends on the implementation type. As you
 may already know web services can be implemented as EJB3 components or
@@ -1981,16 +2021,16 @@ in the application server management console.
 </div>
 </div>
 <div class="sect2">
-<h3 id="consuming-web-services">5.6. Consuming web services</h3>
+<h3 id="consuming-web-services">14.2. Consuming web services</h3>
 <div class="paragraph">
 <p>When creating web service clients you would usually start from the WSDL.
-JBossWS ships with a set of tools to generate the required JAX-WS
+JBossWS ships with a set of tools to generate the required Jakarta XML Web Services
 artefacts to build client implementations. In the following section we
 will look at the most basic usage patterns. For a more detailed
 introduction to web service client please consult the user guide.</p>
 </div>
 <div class="sect3">
-<h4 id="creating-the-client-artifacts">5.6.1. Creating the client artifacts</h4>
+<h4 id="creating-the-client-artifacts">14.2.1. Creating the client artifacts</h4>
 <div class="sect4">
 <h5 id="using-wsconsume">Using wsconsume</h5>
 <div class="paragraph">
@@ -2003,13 +2043,13 @@ consult the user guide.</p>
 <div class="literalblock">
 <div class="content">
 <pre>wsconsume is a command line tool that generates
-portable JAX-WS artifacts from a WSDL file.
+portable Jakarta XML Web Services artifacts from a WSDL file.
 
 usage: org.jboss.ws.tools.jaxws.command.wsconsume [options] &lt;wsdl-url&gt;
 
 options:
     -h, --help                  Show this help message
-    -b, --binding=&lt;file&gt;        One or more JAX-WS or JAXB binding files
+    -b, --binding=&lt;file&gt;        One or more Jakarta XML Web Services or JAXB binding files
     -k, --keep                  Keep/Generate Java source
     -c  --catalog=&lt;file&gt;        Oasis XML Catalog file for entity resolution
     -p  --package=&lt;name&gt;        The target package for generated source
@@ -2094,13 +2134,13 @@ client implementations in the next section.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="constructing-a-service-stub">5.6.2. Constructing a service stub</h4>
+<h4 id="constructing-a-service-stub">14.2.2. Constructing a service stub</h4>
 <div class="paragraph">
 <p>Web service clients make use of a service stubs that hide the details of
 a remote web service invocation. To a client application a WS invocation
 just looks like an invocation of any other business component. In this
 case the service endpoint interface acts as the business interface.
-JAX-WS does use a service factory class to construct this as particular
+Jakarta XML Web Services does use a service factory class to construct this as particular
 service stub:</p>
 </div>
 <div class="listingblock">
@@ -2133,7 +2173,7 @@ stub</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="appendix">5.6.3. Appendix</h4>
+<h4 id="appendix">14.2.3. Appendix</h4>
 <div class="sect4">
 <h5 id="sample-wsdl-contract">Sample wsdl contract</h5>
 <div class="listingblock">
@@ -2227,6 +2267,18 @@ stub</p>
 &lt;/<span class="include">definitions</span>&gt;</code></pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -2235,8 +2287,8 @@ stub</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 22.0.1.Final<br>
-Last updated 2021-02-12 11:00:13 PST
+Version 23.0.0.Final<br>
+Last updated 2021-03-09 18:54:50 PST
 </div>
 </div>
 </body>

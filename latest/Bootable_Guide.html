@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>Bootable JAR Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly team</span><br>
-<span id="revnumber">version 22.0.1.Final,</span>
-<span id="revdate">2021-02-12T19:04:12Z</span>
+<span id="revnumber">version 23.0.0.Final,</span>
+<span id="revdate">2021-04-13T00:41:16Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Bootable JAR Guide</div>
@@ -642,7 +642,7 @@ their content is assembled to create the server contained in the JAR.</p>
 <div class="paragraph">
 <p>The set of Galleon layers to include is driven by the needs of the application you are developing.
 The list of <a href="#wildfly_layers">WildFly Layers</a> provides details on
-the server features that each layer brings. Make sure that the API and server features you are using (eg: JAX-RS, Eclipse MicroProfile Config, datasources)
+the server features that each layer brings. Make sure that the API and server features you are using (eg: Jakarta RESTful Web Services, MicroProfile Config, datasources)
 are provided by the layers you are choosing.</p>
 </div>
 <div class="paragraph">
@@ -685,6 +685,21 @@ you would need to specify the server version, for example <code><code>wildfly@ma
 </div>
 <div class="paragraph">
 <p>(2) The <a href="#gal.jaxrs-server">jaxrs-server layer</a> and all its dependencies are provisioned.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If your project is using <a href="WildFly_and_WildFly_Preview.html">WildFly Preview</a>, the <code>feature-pack-location</code> to use
+is <code>wildfly-preview@maven(org.jboss.universe:community-universe)</code>.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="sect2">
 <h3 id="wildfly_layers">2.1. WildFly Layers</h3>
@@ -772,7 +787,7 @@ all of which provide typical core WildFly capabilities like the logging subsyste
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jaxrs-server"></a>jaxrs-server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An extension of <em>datasources-web-server</em> with support for JAX-RS, CDI and JPA.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An extension of <em>datasources-web-server</em> with support for Jakarta RESTful Web Services, CDI and JPA.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.bean-validation">bean-validation</a> (optional)<br>
 <a href="#gal.cdi">cdi</a> (optional)<br>
 <a href="#gal.datasources-web-server">datasources-web-server</a><br>
@@ -1012,12 +1027,12 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jsonb"></a>jsonb</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Support for JSON Binding (JSON-B) provisioning the JSON-B API and Implementation modules.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for JSON Binding (Jakarta JSON Binding) provisioning the Jakarta JSON Binding API and Implementation modules.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jsonp"></a>jsonp</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Support for JSON Processing (JSON-P) provisioning the JSON-P API and Implementation modules.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for JSON Processing (Jakarta JSON Processing) provisioning the Jakarta JSON Processing API and Implementation modules.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
 </tr>
 <tr>
@@ -1060,7 +1075,7 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.messaging-activemq"></a>messaging-activemq</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Support for connections to a remote JMS broker.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for connections to a remote Jakarta Messaging broker.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.resource-adapters">resource-adapters</a><br></p></td>
 </tr>
 <tr>
@@ -1124,6 +1139,22 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.microprofile-config">microprofile-config</a><br></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-reactive-messaging"></a>microprofile-reactive-messaging</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile Reactive Messaging</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br>
+<a href="#gal.microprofile-reactive-streams-operators">reactive-streams-operators</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-reactive-messaging-kafka"></a>microprofile-reactive-messaging-kafka</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile Reactive Messaging Kafka connector</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.microprofile-reactive-messaging">reactive-messaging</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-reactive-streams-operators"></a>microprofile-reactive-streams-operators</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile Reactive Streams Operators</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.naming"></a>naming</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for JNDI.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
@@ -1149,7 +1180,7 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.remote-activemq"></a>remote-activemq</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Support for connections to a remote Apache Activemq Artemis JMS broker.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for connections to a remote Apache Activemq Artemis Jakarta Messaging broker.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.resource-adapters">resource-adapters</a><br></p></td>
 </tr>
 <tr>
@@ -1165,7 +1196,7 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.resource-adapters"></a>resource-adapters</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Support for deployment of JCA adapters.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for deployment of Jakarta Connectors resource adapters.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.transactions">transactions</a><br></p></td>
 </tr>
 <tr>
@@ -1247,6 +1278,19 @@ and configured to connect to the server.</p></td>
 </tr>
 </tbody>
 </table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+References in this document to Java Persistence API(JPA) refer to the Jakarta Persistence unless otherwise noted.
+      References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -1331,6 +1375,10 @@ the Maven plugin offers a <em>development</em> mode that allows you to build and
 <td class="tableblock halign-left valign-top"><p class="tableblock">Display help then exit</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--cli-script=&lt;path to CLI script file&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to a CLI script to execute when starting the Bootable JAR</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">--deployment=&lt;path to WAR/JAR/EAR file or exploded deployment directory&gt;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Application to install in the hollow JAR. Adding a deployment to an bootable JAR already containing a deployment is invalid.</p></td>
 </tr>
@@ -1370,8 +1418,8 @@ the Maven plugin offers a <em>development</em> mode that allows you to build and
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 22.0.1.Final<br>
-Last updated 2020-11-10 16:51:30 PST
+Version 23.0.0.Final<br>
+Last updated 2021-04-12 09:22:35 CDT
 </div>
 </div>
 </body>

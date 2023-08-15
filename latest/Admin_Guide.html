@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>WildFly Admin Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly developer team</span><br>
-<span id="revnumber">version 22.0.1.Final,</span>
-<span id="revdate">2021-02-12T19:04:12Z</span>
+<span id="revnumber">version 23.0.0.Final,</span>
+<span id="revdate">2021-03-12T19:11:02Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Admin guide</div>
@@ -615,16 +615,18 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#MicroProfile_OpenAPI_SmallRye">9.15. MicroProfile OpenAPI Subsystem Configuration</a></li>
 <li><a href="#MicroProfile_OpenTracing_SmallRye">9.16. MicroProfile OpenTracing Subsystem Configuration</a></li>
 <li><a href="#MicroProfile-Fault-Tolerance-SmallRye">9.17. MicroProfile Fault Tolerance Subsystem Configuration</a></li>
-<li><a href="#Security">9.18. Security subsystem configuration</a></li>
-<li><a href="#Web_services">9.19. Web services configuration</a></li>
-<li><a href="#Resource_adapters">9.20. Resource adapters</a></li>
-<li><a href="#Batch_JSR-352">9.21. Batch (JSR-352) Subsystem Configuration</a></li>
-<li><a href="#JSF">9.22. JSF Configuration</a></li>
-<li><a href="#JMX">9.23. JMX subsystem configuration</a></li>
-<li><a href="#Deployment_Scanner">9.24. Deployment Scanner configuration</a></li>
-<li><a href="#Core_Management">9.25. Core Management Subsystem Configuration</a></li>
-<li><a href="#JAXRS">9.26. JAXRS subsystem configuration</a></li>
-<li><a href="#Simple_configuration_subsystems">9.27. Simple configuration subsystems</a></li>
+<li><a href="#MicroProfile_Reactive_Streams_Operators_SmallRye">9.18. MicroProfile Reactive Streams Operators Subsystem Configuration</a></li>
+<li><a href="#MicroProfile_Reactive_Messaging_SmallRye">9.19. MicroProfile Reactive Messaging Subsystem Configuration</a></li>
+<li><a href="#Security">9.20. Security subsystem configuration</a></li>
+<li><a href="#Web_services">9.21. Web services configuration</a></li>
+<li><a href="#Resource_adapters">9.22. Resource adapters</a></li>
+<li><a href="#Jakarta_Batch">9.23. Jakarta Batch Subsystem Configuration</a></li>
+<li><a href="#Jakarta_Server_Faces">9.24. Jakarta Server Faces Configuration</a></li>
+<li><a href="#JMX">9.25. JMX subsystem configuration</a></li>
+<li><a href="#Deployment_Scanner">9.26. Deployment Scanner configuration</a></li>
+<li><a href="#Core_Management">9.27. Core Management Subsystem Configuration</a></li>
+<li><a href="#JAXRS">9.28. JAXRS subsystem configuration</a></li>
+<li><a href="#Simple_configuration_subsystems">9.29. Simple configuration subsystems</a></li>
 </ul>
 </li>
 <li><a href="#Domain_Setup">10. Domain Setup</a>
@@ -639,11 +641,12 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel2">
 <li><a href="#Command_line_parameters">11.1. Command line parameters</a></li>
 <li><a href="#Suspend">11.2. Suspend, Resume and Graceful shutdown</a></li>
-<li><a href="#JVM_settings">11.3. JVM settings</a></li>
-<li><a href="#Audit_logging">11.4. Audit logging</a></li>
-<li><a href="#Canceling_Management_Operations">11.5. Canceling Management Operations</a></li>
-<li><a href="#Configuration_file_history">11.6. Configuration file history</a></li>
-<li><a href="#Configuration_file_git_history">11.7. Git Configuration file history</a></li>
+<li><a href="#Starting_and_Stopping_Servers_in_a_Managed_Domain">11.3. Starting and Stopping Servers in a Managed Domain</a></li>
+<li><a href="#JVM_settings">11.4. JVM settings</a></li>
+<li><a href="#Audit_logging">11.5. Audit logging</a></li>
+<li><a href="#Canceling_Management_Operations">11.6. Canceling Management Operations</a></li>
+<li><a href="#Configuration_file_history">11.7. Configuration file history</a></li>
+<li><a href="#Configuration_file_git_history">11.8. Git Configuration file history</a></li>
 </ul>
 </li>
 <li><a href="#Management_API_reference">12. Management API reference</a>
@@ -658,7 +661,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#CLI_Recipes">13. CLI Recipes</a>
 <ul class="sectlevel2">
 <li><a href="#properties-2">13.1. Properties</a></li>
-<li><a href="#configuration-5">13.2. Configuration</a></li>
+<li><a href="#configuration-7">13.2. Configuration</a></li>
 <li><a href="#runtime">13.3. Runtime</a></li>
 <li><a href="#scripting">13.4. Scripting</a></li>
 <li><a href="#statistics">13.5. Statistics</a></li>
@@ -1046,8 +1049,8 @@ the <code>domain.xml</code> or <code>standalone.xml</code> file.</p>
 more (in <code>domain.xml</code>) "profiles". A profile is a named set of subsystem
 configurations. A subsystem is an added set of capabilities added to the
 core server by an extension (see "Extensions" above). A subsystem
-provides servlet handling capabilities; a subsystem provides an EJB
-container; a subsystem provides JTA, etc. A profile is a named list of
+provides servlet handling capabilities; a subsystem provides an Jakarta Enterprise Beans
+container; a subsystem provides Jakarta Transactions, etc. A profile is a named list of
 subsystems, along with the details of each subsystem&#8217;s configuration. A
 profile with a large number of subsystems results in a server with a
 large set of capabilities. A profile with a small, focused set of
@@ -1279,6 +1282,92 @@ precedence over a value specified directly under the <code>domain.xml</code> roo
 element.</p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="script-configuration-files"><a class="link" href="#script-configuration-files">2.2.7. Script Configuration Files</a></h4>
+<div class="paragraph">
+<p>Scripts are located in the <code>$JBOSS_HOME/bin</code> directory. Within this directory you will find script configuration files
+for standalone and domain startup scripts for each platform. These files can be used to configure your environment
+without having to edit the scripts themselves. For example, you can configure the <code>JAVA_OPTS</code> environment variable to
+configure the JVM before the container is launched.</p>
+</div>
+<div class="sect4">
+<h5 id="standalone-script-configuration-files"><a class="link" href="#standalone-script-configuration-files">Standalone Script Configuration Files:</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>standalone.conf</code> invoked from <code>standalone.sh</code></p>
+</li>
+<li>
+<p><code>standalone.conf.bat</code> invoked from <code>standalone.bat</code></p>
+</li>
+<li>
+<p><code>standalone.conf.ps1</code> invoked from <code>standalone.ps1</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="domain-script-configuration-files"><a class="link" href="#domain-script-configuration-files">Domain Script Configuration Files:</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>domain.conf</code> invoked from <code>domain.sh</code></p>
+</li>
+<li>
+<p><code>domain.conf.bat</code> invoked from <code>domain.bat</code></p>
+</li>
+<li>
+<p><code>domain.conf.ps1</code> invoked from <code>domain.ps1</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>By default, these are in the <code>$JBOSS_HOME/bin</code> directory. However, you can set the <code>STANDALONE_CONF</code> environment
+variable for standalone servers or <code>DOMAIN_CONF</code> environment variable for domain servers with a value of the
+absolute path to the file.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="common-script-configuration-files"><a class="link" href="#common-script-configuration-files">Common Script Configuration Files</a></h5>
+<div class="paragraph">
+<p>Starting with WildFly 23, common configuration files were introduced. These files are invoked from every script in the
+<code>$JBOSS_HOME/bin</code> directory. While these configuration files are not present in the directory by default, they
+can be added. You can simply just add the <code>common.conf</code> configuration file for the script type you want to
+execute and all scripts in the directory will invoke the configuration script.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>common.conf</code> for bash scripts</p>
+</li>
+<li>
+<p><code>common.conf.bat</code> for Windows batch scripts</p>
+</li>
+<li>
+<p><code>common.conf.ps1</code> for PowerShell scripts</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can also set the <code>COMMON_CONF</code> environment variable to have this configuration script live outside the
+<code>$JBOSS_HOME/bin</code> directory.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you provide a common configuration file it will be invoked before the standalone and domain script
+configuration files. For example invoking <code>standalone.sh</code> first invokes the <code>common.conf</code> then later invokes
+the <code>standalone.conf</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="management-resources"><a class="link" href="#management-resources">2.3. Management resources</a></h3>
@@ -1377,7 +1466,7 @@ invoked via the HTTP API, the JSON representation of a <code>ModelNode</code>.)<
 </div>
 <div class="paragraph">
 <p>Every resource except the root resource will have an <code>add</code> operation and
-should have a <code>remove</code> operation ("should" because in WildFly 22 many do
+should have a <code>remove</code> operation ("should" because in WildFly 23 many do
 not). The parameters for the <code>add</code> operation vary depending on the
 resource. The <code>remove</code> operation has no parameters.</p>
 </div>
@@ -3744,7 +3833,7 @@ address literals from IPv4 to IPv6 as required.</p>
 <div class="paragraph">
 <p>Within WildFly we make use of security realms to secure access to the
 management interfaces, these same realms are used to secure inbound
-access as exposed by JBoss Remoting such as remote JNDI and EJB access,
+access as exposed by JBoss Remoting such as remote JNDI and Jakarta Enterprise Beans access,
 the realms are also used to define an identity for the server - this
 identity can be used for both inbound connections to the server and
 outbound connections being established by the server.</p>
@@ -3812,7 +3901,7 @@ connection using a username and password.</p>
 <p><code>authorization</code> - This is the final optional element and is used to
 define how roles are loaded for an authenticated identity. At the moment
 this is more applicable for realms used for access to EE deployments
-such as web applications or EJBs but this will also become relevant as
+such as web applications or Jakarta Enterprise Beans but this will also become relevant as
 we add role based authorization checks to the management model.</p>
 </li>
 </ul>
@@ -3823,7 +3912,7 @@ we add role based authorization checks to the management model.</p>
 <div class="paragraph">
 <p>After a realm has been defined it needs to be associated with an inbound
 or outbound connection for it to be used, the following are some
-examples where these associations are used within the WildFly 22
+examples where these associations are used within the WildFly 23
 configuration.</p>
 </div>
 <div class="sect3">
@@ -3865,7 +3954,7 @@ will be able to control and administer the WildFly installation.
 <h5 id="remoting-subsystem"><a class="link" href="#remoting-subsystem">Remoting Subsystem</a></h5>
 <div class="paragraph">
 <p>The Remoting subsystem exposes a connector to allow for inbound
-comunications with JNDI and the EJB subsystem by default we associate
+comunications with JNDI and the Jakarta Enterprise Beans subsystem by default we associate
 the <code>ApplicationRealm</code> with this connection.</p>
 </div>
 <div class="listingblock">
@@ -3884,7 +3973,7 @@ the <code>ApplicationRealm</code> with this connection.</p>
 <h5 id="remoting-subsystem-2"><a class="link" href="#remoting-subsystem-2">Remoting Subsystem</a></h5>
 <div class="paragraph">
 <p>Outbound connections can also be defined within the Remoting subsystem,
-these are typically used for remote EJB invocations from one AS server
+these are typically used for remote Jakarta Enterprise Beans invocations from one AS server
 to another, in this scenario the security realm is used to obtain the
 server identity either it&#8217;s password for X.509 certificate and possibly
 a trust store to verify the certificate of the remote host.</p>
@@ -4656,7 +4745,7 @@ is disabled.</p>
 <div class="paragraph">
 <p>To enable remote access to JMX uncomment the <code>&lt;remoting-connector /&gt;</code>
 element however be aware that this will make the MBeanServer accessible
-over the same Remoting connector used for remote JNDI and EJB access -
+over the same Remoting connector used for remote JNDI and Jakarta Enterprise Beans access -
 this means that any user that can authenticate against the realm
 <code>ApplicationRealm</code> will be able to access the MBeanServer.</p>
 </div>
@@ -5289,7 +5378,7 @@ the <code>search-credential</code> attribute.  This element supports the followi
 <div class="sect2">
 <h3 id="Security_Realms_Plugins"><a class="link" href="#Security_Realms_Plugins">6.9. Plug Ins</a></h3>
 <div class="paragraph">
-<p>Within WildFly 22 for communication with the management interfaces and
+<p>Within WildFly 23 for communication with the management interfaces and
 for other services exposed using Remoting where username / password
 authentication is used the use of Digest authentication is preferred
 over the use of HTTP Basic or SASL Plain so that we can avoid the
@@ -5314,7 +5403,7 @@ support loading a users password, hash and roles from a custom store to
 allow different stores to be implemented without forcing the
 authentication back to plain text variant, this article describes the
 requirements for a plug in and shows a simple example plug-in for use
-with WildFly 22.</p>
+with WildFly 23.</p>
 </div>
 <div class="paragraph">
 <p>When implementing a plug in there are two steps to the authentication
@@ -5476,7 +5565,7 @@ used for the authorization step.</p>
 <h4 id="installing-and-configuring-a-plug-in"><a class="link" href="#installing-and-configuring-a-plug-in">6.9.4. Installing and Configuring a Plug-In</a></h4>
 <div class="paragraph">
 <p>The next step of this article describes the steps to implement a plug-in
-provider and how to make it available within WildFly 22 and how to
+provider and how to make it available within WildFly 23 and how to
 configure it. Example configuration and an example implementation are
 shown to illustrate this.</p>
 </div>
@@ -5590,7 +5679,7 @@ PlugInProvider implementation class.</p>
 <h5 id="package-as-a-module"><a class="link" href="#package-as-a-module">Package as a Module</a></h5>
 <div class="paragraph">
 <p>To make the <code>PlugInProvider</code> available to the application it is bundled
-as a module and added to the modules already shipped with WildFly 22.</p>
+as a module and added to the modules already shipped with WildFly 23.</p>
 </div>
 <div class="paragraph">
 <p>To add as a module we first need a <code>module.xml</code>: -</p>
@@ -6023,7 +6112,7 @@ configuration.</p>
 <p>Deployer – like a Maintainer, but with permission to modify persistent
 configuration constrained to resources that are considered to be
 "application resources". A deployment is an application resource. The
-messaging server is not. Items like datasources and JMS destinations are
+messaging server is not. Items like datasources and Jakarta Messaging destinations are
 not considered to be application resources by default, but this is
 <a href="#application-constraint">configurable</a>.</p>
 </li>
@@ -9098,6 +9187,7 @@ through the EE subsystem XML configuration:</p>
         <span class="attribute-name">context-service</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default</span><span class="delimiter">&quot;</span></span>
         <span class="attribute-name">thread-factory</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default</span><span class="delimiter">&quot;</span></span>
         <span class="attribute-name">hung-task-threshold</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">60000</span><span class="delimiter">&quot;</span></span>
+        <span class="attribute-name">hung-task-termination-period</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">60000</span><span class="delimiter">&quot;</span></span>
         <span class="attribute-name">core-threads</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">5</span><span class="delimiter">&quot;</span></span>
         <span class="attribute-name">max-threads</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">25</span><span class="delimiter">&quot;</span></span>
         <span class="attribute-name">keepalive-time</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">5000</span><span class="delimiter">&quot;</span></span>
@@ -9163,6 +9253,20 @@ created.</p>
 <p>The optional <code>hung-task-threshold</code> defines a runtime threshold value, in
 milliseconds, for tasks to be considered hung by the executor.
 A value of <code>0</code> will never consider tasks to be hung.</p>
+</div>
+<div class="paragraph">
+<p>The optional <code>hung-task-termination-period</code> defines the period, in
+milliseconds, for attempting the termination of hung tasks, by cancelling
+their execution, and interrupting their executing threads. Please note
+that the termination of a cancelled hung task is not guaranteed.
+A value of <code>0</code>, which is the default, deactivates the periodic
+cancellation of hung tasks. Management clients, such as the WildFly CLI,
+may still be used to manually attempt the termination of hung tasks:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=ee/managed-executor-service=other:terminate-hung-tasks</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>The optional <code>long-running-tasks</code> is a hint to optimize the execution of
@@ -9250,6 +9354,20 @@ milliseconds, for tasks to be considered hung by the executor.
 A value of <code>0</code> will never consider tasks to be hung.</p>
 </div>
 <div class="paragraph">
+<p>The optional <code>hung-task-termination-period</code> defines the period, in
+milliseconds, for attempting the termination of hung tasks, by cancelling
+their execution, and interrupting their executing threads. Please note
+that the termination of a cancelled hung task is not guaranteed.
+A value of <code>0</code>, which is the default, deactivates the periodic
+cancellation of hung tasks. Management clients, such as the WildFly CLI,
+may still be used to manually attempt the termination of hung tasks:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=ee/managed-scheduled-executor-service=other:terminate-hung-tasks</code></pre>
+</div>
+</div>
+<div class="paragraph">
 <p>The optional <code>long-running-tasks</code> is a hint to optimize the execution of
 long running tasks, and defaults to <code>false</code>.</p>
 </div>
@@ -9292,7 +9410,7 @@ for each of the following resources:</p>
 <p>Datasource</p>
 </li>
 <li>
-<p>JMS Connection Factory</p>
+<p>Jakarta Messaging Connection Factory</p>
 </li>
 <li>
 <p>Managed Executor Service</p>
@@ -9746,7 +9864,7 @@ you installed.</p>
 <div class="sect3">
 <h4 id="jdbc-driver-installation"><a class="link" href="#jdbc-driver-installation">9.3.1. JDBC Driver Installation</a></h4>
 <div class="paragraph">
-<p>The recommended way to install a JDBC driver into WildFly 22 is to deploy
+<p>The recommended way to install a JDBC driver into WildFly 23 is to deploy
 it as a regular JAR deployment. The reason for this is that when you run
 WildFly in domain mode, deployments are automatically propagated to all
 servers to which the deployment applies; thus distribution of the driver
@@ -10303,10 +10421,10 @@ There is also a <em>reset-statistics</em> operation provided.
 <div class="sect4">
 <h5 id="agroal-datasource-attributes"><a class="link" href="#agroal-datasource-attributes">DataSource specific attributes</a></h5>
 <div class="paragraph">
-<p>In addition to all the common attributes, a <em>datasource</em> definition may disable the JTA integration.</p>
+<p>In addition to all the common attributes, a <em>datasource</em> definition may disable the Jakarta Transactions integration.</p>
 </div>
 <div class="paragraph">
-<p>Deferred enlistment is not supported, meaning that if JTA is enabled a connection must always be obtained within the scope of a transaction. The connection will always be enlisted with that transaction (lazy enlistment is not supported).</p>
+<p>Deferred enlistment is not supported, meaning that if Jakarta Transactions is enabled a connection must always be obtained within the scope of a transaction. The connection will always be enlisted with that transaction (lazy enlistment is not supported).</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -11913,7 +12031,7 @@ of each</p>
   <span class="tag">&lt;/timer-service&gt;</span>
   <span class="tag">&lt;remote</span> <span class="attribute-name">connectors</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">remoting-connector</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">thread-pool-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
     <span class="tag">&lt;profiles&gt;</span>
-        <span class="tag">&lt;profile</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">profile</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;profile</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">profile</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">exclude-local-receiver</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">local-receiver-pass-by-value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
           <span class="tag">&lt;remoting-ejb-receiver</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">receiver</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">outbound-connection-ref</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">remote-ejb-connection</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
           <span class="tag">&lt;remote-http-connection</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">connection</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">uri</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://localhost:8180/wildfly-services</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
           <span class="tag">&lt;static-ejb-discovery&gt;</span>
@@ -12090,6 +12208,19 @@ provided by the administrator.</p>
 <p>Dynamic discovery is responsible for monitoring the available EJBs on all the
 nodes to which connections are configured and decides which remote node to
 connect to based on the gathered data.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>name</code> the name of the profile</p>
+</li>
+<li>
+<p><code>exclude-local-receiver</code> If set, no local receiver is used in this profile</p>
+</li>
+<li>
+<p><code>local-receiver-pass-by-value</code> If set, local receiver will pass ejb beans by value</p>
+</li>
+</ul>
 </div>
 <div class="sect5">
 <h6 id="static-ejb-discovery"><a class="link" href="#static-ejb-discovery">&lt;static-ejb-discovery&gt;</a></h6>
@@ -12281,19 +12412,19 @@ mark interceptor methods.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">package org.foo;
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">org.foo</span>;
 
-import javax.annotation.PostConstruct;
-import javax.interceptor.AroundInvoke;
-import javax.interceptor.InvocationContext;
+<span class="keyword">import</span> <span class="include">javax.annotation.PostConstruct</span>;
+<span class="keyword">import</span> <span class="include">javax.interceptor.AroundInvoke</span>;
+<span class="keyword">import</span> <span class="include">javax.interceptor.InvocationContext</span>;
 
-public class FooInterceptor {
+<span class="directive">public</span> <span class="type">class</span> <span class="class">FooInterceptor</span> {
 
-    @AroundInvoke
-    public Object bar(final InvocationContext invocationContext) throws Exception {
-        return invocationContext.proceed();
+    <span class="annotation">@AroundInvoke</span>
+    <span class="directive">public</span> <span class="predefined-type">Object</span> bar(<span class="directive">final</span> InvocationContext invocationContext) <span class="directive">throws</span> <span class="exception">Exception</span> {
+        <span class="keyword">return</span> invocationContext.proceed();
     }
-}</pre>
+}</code></pre>
 </div>
 </div>
 </div>
@@ -12340,24 +12471,36 @@ interface.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">package org.foo;
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">org.foo</span>;
 
-import org.jboss.ejb.client.EJBClientInterceptor;
-import org.jboss.ejb.client.EJBClientInvocationContext;
+<span class="keyword">import</span> <span class="include">org.jboss.ejb.client.EJBClientInterceptor</span>;
+<span class="keyword">import</span> <span class="include">org.jboss.ejb.client.EJBClientInvocationContext</span>;
 
-public class FooInterceptor implements EJBClientInterceptor {
+<span class="directive">public</span> <span class="type">class</span> <span class="class">FooInterceptor</span> <span class="directive">implements</span> EJBClientInterceptor {
 
-    @Override
-    public void handleInvocation(EJBClientInvocationContext context) throws Exception {
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> handleInvocation(EJBClientInvocationContext context) <span class="directive">throws</span> <span class="exception">Exception</span> {
         context.sendRequest();
     }
 
-    @Override
-    public Object handleInvocationResult(EJBClientInvocationContext context) throws Exception {
-        return context.getResult();
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">Object</span> handleInvocationResult(EJBClientInvocationContext context) <span class="directive">throws</span> <span class="exception">Exception</span> {
+        <span class="keyword">return</span> context.getResult();
     }
-}</pre>
+}</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -12390,10 +12533,8 @@ for most use cases and provides reasonable performance settings.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:domain:undertow:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-        <span class="tag">&lt;buffer-caches&gt;</span>
-            <span class="tag">&lt;buffer-cache</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">buffer-size</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">1024</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">buffers-per-region</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">1024</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">max-regions</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">10</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-        <span class="tag">&lt;/buffer-caches&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:domain:undertow:12.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;buffer-cache</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">buffer-size</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">1024</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">buffers-per-region</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">1024</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">max-regions</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">10</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
         <span class="tag">&lt;server</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default-server</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
             <span class="tag">&lt;http-listener</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">socket-binding</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
             <span class="tag">&lt;host</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default-host</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">localhost</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
@@ -12409,6 +12550,68 @@ for most use cases and provides reasonable performance settings.</p>
         <span class="tag">&lt;/handlers&gt;</span>
     <span class="tag">&lt;/subsystem&gt;</span></code></pre>
 </div>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">default-server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the default server to use for deployments</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">default-virtual-host</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the default virtual host to use for deployments</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">default-servlet-container</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the default servlet container to use for deployments</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">instance-id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the id of Undertow. Defaults to "${jboss.node.name}" if undefined</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="bookmark-obfuscate-session-route"></a>obfuscate-session-route</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">set this to <code>"true"</code> to indicate the
+<code>instance-id</code> should be obfuscated in routing. This prevents <code>instance-id</code> from being sent across
+HTTP connections when serving remote requests with the HTTP invoker.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">default-security-domain</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the default security domain used by web deployments</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">statistics-enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">set this to true to enable statistics gathering for Undertow subsystem</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>When setting <a href="#bookmark-obfuscate-session-route"><code>obfuscate-session-route</code></a> to <code>"true"</code>, the server&#8217;s
+<a href="#bookmark-server-name"><code>name</code></a> is used as a salt in the hashing algorithm that obfuscates the value of <code>instance-id</code>.
+For that reason, it is strongly advised that the value of the server be changed from <code>"default-server"</code> to something
+else, or else it would be easy to reverse engineer the obfuscated route to its original value, using <code>"default-server"</code>
+bytes as the salt.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p><strong>Dependencies on other subsystems:</strong></p>
@@ -12492,6 +12695,10 @@ a set of connectors and some configured handlers.</p>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="bookmark-server-name"></a>name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the name of this server</p></td>
+</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">default-host</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">the virtual host that will be used if an incoming request
@@ -12733,6 +12940,15 @@ be matched</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The name of a deployment that should be used to
 serve up requests that do not match anything.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">queue-requests-on-start</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If requests should be queued on start for this host. If this is set to false the default
+response code will be returned instead.</p>
+<p class="tableblock">Note: If a <a href="#non-graceful-startup">Non-graceful Startup</a> is requested, and the queue-requests-on-start attribute is not set, requests will NOT be
+queued despite the default value of true for the property. In the instance of a non-graceful startup, non-queued requests
+are required. However, if non-graceful is configured, but queue-requests-on-start is explicitly set to true, then requests
+will be queued, effectively disabling the non-graceful mode for requests to that host.</p></td>
+</tr>
 </tbody>
 </table>
 <div class="sect5">
@@ -12867,7 +13083,7 @@ point to the resource being forwarded to.</p></td>
 </tbody>
 </table>
 <div class="sect4">
-<h5 id="jsp-configuration"><a class="link" href="#jsp-configuration">JSP configuration</a></h5>
+<h5 id="Jakarta-Server-Pages-configuration"><a class="link" href="#Jakarta-Server-Pages-configuration">Jakarta Server Pages configuration</a></h5>
 
 </div>
 <div class="sect4">
@@ -13163,7 +13379,7 @@ the <a href="wildscribe/subsystem/undertow/index.html" target="_blank" rel="noop
 <div class="sect2">
 <h3 id="Messaging"><a class="link" href="#Messaging">9.8. Messaging configuration</a></h3>
 <div class="paragraph">
-<p>The JMS server configuration is done through the <em>messaging-activemq</em>
+<p>The Jakarta Messaging server configuration is done through the <em>messaging-activemq</em>
 subsystem. In this chapter we are going outline the frequently used
 configuration options. For a more detailed explanation please consult
 the Artemis user guide (See "Component Reference").</p>
@@ -13193,7 +13409,7 @@ element to the xml or by using the following CLI operation:</p>
 <h4 id="connectors"><a class="link" href="#connectors">9.8.2. Connectors</a></h4>
 <div class="paragraph">
 <p>There are three kind of connectors that can be used to connect to
-WildFly JMS Server</p>
+WildFly Jakarta Messaging Server</p>
 </div>
 <div class="ulist">
 <ul>
@@ -13213,21 +13429,21 @@ Server to upgrade from a HTTP connection)</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="jms-connection-factories"><a class="link" href="#jms-connection-factories">9.8.3. JMS Connection Factories</a></h4>
+<h4 id="Jakarta-Messaging-connection-factories"><a class="link" href="#Jakarta-Messaging-connection-factories">9.8.3. Jakarta Messaging Connection Factories</a></h4>
 <div class="paragraph">
-<p>There are three kinds of <em>basic</em> JMS <code>connection-factory</code> that depends
+<p>There are three kinds of <em>basic</em> Jakarta Messaging <code>connection-factory</code> that depends
 on the type of connectors that is used.</p>
 </div>
 <div class="paragraph">
 <p>There is also a <code>pooled-connection-factory</code> which is special in that it
 is essentially a configuration facade for <em>both</em> the inbound and
-outbound connectors of the the Artemis JCA Resource Adapter. An MDB can
+outbound connectors of the the Artemis Jakarta Connectors Resource Adapter. An MDB can
 be configured to use a <code>pooled-connection-factory</code> (e.g. using
 <code>@ResourceAdapter</code>). In this context, the MDB leverages the <em>inbound
-connector</em> of the Artemis JCA RA. Other kinds of clients can look up the
+connector</em> of the Artemis Jakarta Connectors RA. Other kinds of clients can look up the
 pooled-connection-factory in JNDI (or inject it) and use it to send
 messages. In this context, such a client would leverage the <em>outbound
-connector</em> of the Artemis JCA RA. A <code>pooled-connection-factory</code> is also
+connector</em> of the Artemis Jakarta Connectors RA. A <code>pooled-connection-factory</code> is also
 special because:</p>
 </div>
 <div class="ulist">
@@ -13252,16 +13468,16 @@ which it is pointing is secured.</p>
 </li>
 <li>
 <p>Resources acquired from it will be automatically enlisted any on-going
-JTA transaction. If you want to send a message from an EJB using CMT
+Jakarta Transactions. If you want to send a message from an Jakarta Enterprise Beans using CMT
 then this is likely the connection factory you want to use so the send
-operation will be atomically committed along with the rest of the EJB&#8217;s
+operation will be atomically committed along with the rest of the Jakarta Enterprise Beans&#8217;s
 transaction operations.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>To be clear, the <em>inbound connector</em> of the Artemis JCA RA (which is for
-consuming messages) is only used by MDBs and other JCA-based components.
+<p>To be clear, the <em>inbound connector</em> of the Artemis Jakarta Connectors RA (which is for
+consuming messages) is only used by MDBs and other Jakarta Connectors based components.
 It is not available to traditional clients.</p>
 </div>
 <div class="paragraph">
@@ -13362,12 +13578,12 @@ because a `pooled-connection-factory</code> is not suitable for remote
 clients.</p>
 </div>
 <div class="paragraph">
-<p>Since JMS 2.0, a default JMS connection factory is accessible to EE
-application under the JNDI name <code>java:comp/DefaultJMSConnectionFactory.</code>
-WildFly messaging subsystem defines a <code>pooled-connection-factory</code> that
+<p>Since Jakarta Messaging 2.0, a default Jakarta Messaging connection factory is accessible to Jakarta EE
+applications under the JNDI name <code>java:comp/DefaultJMSConnectionFactory.</code>
+The WildFly messaging subsystem defines a <code>pooled-connection-factory</code> that
 is used to provide this default connection factory. Any parameter change
 on this <code>pooled-connection-factory</code> will be take into account by any EE
-application looking the default JMS provider under the JNDI name
+application looking the default Jakarta Messaging provider under the JNDI name
 <code>java:comp/DefaultJMSConnectionFactory.</code></p>
 </div>
 <div class="listingblock">
@@ -13404,9 +13620,9 @@ application looking the default JMS provider under the JNDI name
 </div>
 </div>
 <div class="sect3">
-<h4 id="jms-queues-and-topics"><a class="link" href="#jms-queues-and-topics">9.8.4. JMS Queues and Topics</a></h4>
+<h4 id="Jakarta-Messaging-queues-and-topics"><a class="link" href="#Jakarta-Messaging-queues-and-topics">9.8.4. Jakarta Messaging Queues and Topics</a></h4>
 <div class="paragraph">
-<p>JMS queues and topics are sub resources of the messaging-actively
+<p>Jakarta Messaging queues and topics are sub resources of the messaging-actively
 subsystem. One can define either a <code>jms-queue</code> or <code>jms-topic</code>. Each
 destination <em>must</em> be given a <code>name</code> and contain at least one entry in
 its <code>entries</code> element (separated by whitespace).</p>
@@ -13441,7 +13657,7 @@ simply "jms/queue/test":</p>
 <p>~(See standalone/configuration/standalone-full.xml)~</p>
 </div>
 <div class="paragraph">
-<p>JMS endpoints can easily be created through the CLI:</p>
+<p>Jakarta Messaging endpoints can easily be created through the CLI:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -13479,7 +13695,7 @@ When a topic is paused, it will receive messages but will not deliver them. Newl
 </div>
 </div>
 <div class="paragraph">
-<p>A number of additional commands to maintain the JMS subsystem are
+<p>A number of additional commands to maintain the Jakarta Messaging subsystem are
 available as well:</p>
 </div>
 <div class="listingblock">
@@ -13515,7 +13731,7 @@ settings belong into this group:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="security-settings-for-artemis-addresses-and-jms-destinations"><a class="link" href="#security-settings-for-artemis-addresses-and-jms-destinations">9.8.6. Security Settings for Artemis addresses and JMS destinations</a></h4>
+<h4 id="security-settings-for-artemis-addresses-and-Jakarta-Messaging-destinations"><a class="link" href="#security-settings-for-artemis-addresses-and-Jakarta-Messaging-destinations">9.8.6. Security Settings for Artemis addresses and Jakarta Messaging destinations</a></h4>
 <div class="paragraph">
 <p>Security constraints are matched against an address wildcard, similar to
 the DLQ and redelivery settings.</p>
@@ -13631,8 +13847,8 @@ the command line.</p>
 <div class="sect3">
 <h4 id="deployment-of--jms.xml-files"><a class="link" href="#deployment-of--jms.xml-files">9.8.10. Deployment of -jms.xml files</a></h4>
 <div class="paragraph">
-<p>Starting with WildFly 22, you have the ability to deploy a -jms.xml file
-defining JMS destinations, e.g.:</p>
+<p>Starting with WildFly 23, you have the ability to deploy a -jms.xml file
+defining Jakarta Messaging destinations, e.g.:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -13665,31 +13881,31 @@ tools (e.g. console, CLI, etc).
 </div>
 </div>
 <div class="sect3">
-<h4 id="jms-bridge"><a class="link" href="#jms-bridge">9.8.11. JMS Bridge</a></h4>
+<h4 id="Jakarta-Messaging-bridge"><a class="link" href="#Jakarta-Messaging-bridge">9.8.11. Jakarta Messaging Bridge</a></h4>
 <div class="paragraph">
-<p>The function of a JMS bridge is to consume messages from a source JMS
-destination, and send them to a target JMS destination. Typically either
+<p>The function of a Jakarta Messaging bridge is to consume messages from a source Jakarta Messaging
+destination, and send them to a target Jakarta Messaging destination. Typically either
 the source or the target destinations are on different servers.
 The bridge can also be used to bridge messages from other non Artemis
-JMS servers, as long as they are JMS 1.1 compliant.</p>
+messaging servers, as long as they are JMS 1.1 compliant.</p>
 </div>
 <div class="paragraph">
-<p>The JMS Bridge is provided by the Artemis project. For a detailed
+<p>The Jakarta Messaging Bridge is provided by the Artemis project. For a detailed
 description of the available configuration properties, please consult
 the project documentation.</p>
 </div>
 <div class="sect4">
 <h5 id="modules-for-other-messaging-brokers"><a class="link" href="#modules-for-other-messaging-brokers">Modules for other messaging brokers</a></h5>
 <div class="paragraph">
-<p>Source and target JMS resources (destination and connection factories)
+<p>Source and target Jakarta Messaging resources (destination and connection factories)
 are looked up using JNDI.
 If either the source or the target resources are managed by another
 messaging server than WildFly, the required client classes must be
 bundled in a module. The name of the module must then be declared when
-the JMS Bridge is configured.</p>
+the Jakarta Messaging Bridge is configured.</p>
 </div>
 <div class="paragraph">
-<p>The use of a JMS bridges with any messaging provider will require to
+<p>The use of a Jakarta Messaging bridges with any messaging provider will require to
 create a module containing the jar of this provider.</p>
 </div>
 <div class="paragraph">
@@ -13699,10 +13915,10 @@ destination to a target destination on the local WildFly messaging
 server. To lookup AcmeMQ resources from JNDI, 2 jars are required,
 acmemq-1.2.3.jar, mylogapi-0.0.1.jar (please note these jars do not
 exist, this is just for the example purpose). We must <em>not</em> include a
-JMS jar since it will be provided by a WildFly module directly.</p>
+Jakarta Messaging jar since it will be provided by a WildFly module directly.</p>
 </div>
 <div class="paragraph">
-<p>To use these resources in a JMS bridge, we must bundle them in a WildFly
+<p>To use these resources in a Jakarta Messaging bridge, we must bundle them in a WildFly
 module:</p>
 </div>
 <div class="paragraph">
@@ -13740,7 +13956,7 @@ module:</p>
  
  
     <span class="tag">&lt;dependencies&gt;</span>
-       <span class="comment">&lt;!-- add the dependencies required by JMS Bridge code                --&gt;</span>
+       <span class="comment">&lt;!-- add the dependencies required by messaging Bridge code                --&gt;</span>
        <span class="tag">&lt;module</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">javax.api</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
        <span class="tag">&lt;module</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">javax.jms.api</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
        <span class="tag">&lt;module</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">javax.transaction.api</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
@@ -13756,7 +13972,7 @@ module:</p>
 <div class="sect4">
 <h5 id="configuration"><a class="link" href="#configuration">Configuration</a></h5>
 <div class="paragraph">
-<p>A JMS bridge is defined inside a <code>jms-bridge</code> section of the
+<p>A Jakarta Messaging bridge is defined inside a <code>jms-bridge</code> section of the
 <code>messaging-activemq</code> subsystem in the XML configuration files.</p>
 </div>
 <div class="listingblock">
@@ -13788,15 +14004,15 @@ module:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>source</code> and <code>target</code> sections contain the name of the JMS resource
+<p>The <code>source</code> and <code>target</code> sections contain the name of the Jakarta Messaging resource
 ( <code>connection-factory</code> and <code>destination</code>) that will be looked up in
 JNDI.
 It optionally defines the <code>user</code> and <code>password</code> credentials. If they are
-set, they will be passed as arguments when creating the JMS connection
+set, they will be passed as arguments when creating the Jakarta Messaging connection
 from the looked up ConnectionFactory.
 It is also possible to define JNDI context properties in the
 <code>source-context</code> and <code>target-context</code> sections. If these sections are
-absent, the JMS resources will be looked up in the local WildFly
+absent, the Jakarta Messaging resources will be looked up in the local WildFly
 instance (as it is the case in the <code>target</code> section in the example
 above).</p>
 </div>
@@ -13804,7 +14020,7 @@ above).</p>
 <div class="sect4">
 <h5 id="management-commands"><a class="link" href="#management-commands">Management commands</a></h5>
 <div class="paragraph">
-<p>A JMS Bridge can also be managed using the WildFly command line
+<p>A Jakarta Messaging Bridge can also be managed using the WildFly command line
 interface:</p>
 </div>
 <div class="listingblock">
@@ -13828,7 +14044,7 @@ interface:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>You can also see the complete JMS Bridge resource description from the
+<p>You can also see the complete Jakarta Messaging Bridge resource description from the
 CLI:</p>
 </div>
 <div class="listingblock">
@@ -13843,7 +14059,7 @@ CLI:</p>
         ],
         "outcome" =&gt; "success",
         "result" =&gt; {
-            "description" =&gt; "A JMS bridge instance.",
+            "description" =&gt; "A Jakarta Messaging bridge instance.",
             "attributes" =&gt; {
                 ...
         }
@@ -13853,9 +14069,9 @@ CLI:</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="jms-bridge-statistics"><a class="link" href="#jms-bridge-statistics">Statistics of a JMS Bridge</a></h5>
+<h5 id="Jakarta-Messaging-bridge-statistics"><a class="link" href="#Jakarta-Messaging-bridge-statistics">Statistics of a Jakarta Messaging Bridge</a></h5>
 <div class="paragraph">
-<p>Currently two statistics are available on a JMS bridge: the number of processed messages and the number of aborted/rolled back messages.
+<p>Currently two statistics are available on a Jakarta Messaging bridge: the number of processed messages and the number of aborted/rolled back messages.
 Those are available with the following command :</p>
 </div>
 <div class="listingblock">
@@ -13935,6 +14151,108 @@ This is done from the CLI:</p>
 </div>
 </div>
 </div>
+<div class="sect4">
+<h5 id="critical-analysis-of-the-broker"><a class="link" href="#critical-analysis-of-the-broker">Critical analysis of the broker</a></h5>
+<div class="paragraph">
+<p>When things go wrong on the broker, the critical analyzer may act as a safeguard shutting down the broker or the JVM.<br>
+If the response time goes beyond a configured timeout, the broker is considered unstable and an action can be taken to either shutdown the broker or halt the VM.
+Currently in WildFly this will only be logged but you can change that behaviour by setting the <code>critical-analyzer-policy</code> attribute to <strong>HALT</strong> or <strong>SHUTDOWN</strong>.
+For this, the critical analyzer measures the response time in:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Queue delivery (adding to the queue)</p>
+</li>
+<li>
+<p>Journal storage</p>
+</li>
+<li>
+<p>Paging operations</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can configure the critical analyzer on the broker using the CLI.
+To disable the critical analyzer, you can execute the following CLI command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default:write-attribute(name=critical-analyzer-enabled, value=false)
+{
+    "outcome" =&gt; "success",
+    "response-headers" =&gt; {
+        "operation-requires-reload" =&gt; true,
+        "process-state" =&gt; "reload-required"
+    }
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can configure the critical analyzer with the following attributes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>critical-analyzer-enabled</p>
+</li>
+<li>
+<p>critical-analyzer-timeout</p>
+</li>
+<li>
+<p>critical-analyzer-check-period</p>
+</li>
+<li>
+<p>critical-analyzer-policy</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="importing-exporting-the-journal"><a class="link" href="#importing-exporting-the-journal">Importing / Exporting the Journal</a></h5>
+<div class="paragraph">
+<p>WildFly provides an operation to <code>export</code> the journal to a file which <strong>MUST</strong> be run in <code>admin-mode</code>.
+This is done from the CLI:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default:export-journal()
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; "$JBOSS_HOME/standalone/data/activemq/journal-20210125-103331692+0100-dump.xml"
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can now import such a dump file, in <code>normal</code> mode, using the command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>[standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default:import-journal(file=$FILE_PATH/journal-20210125-103331692+0100-dump.xml)
+{
+    "outcome" =&gt; "success"
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you need to troubleshoot the journal you can use the <code>print-data</code> operation. Like the <code>export</code> operation, it needs to be executed in <code>admin-mode</code>.
+Also this will send back a file so it must be coupled with the <code>attachment</code> operation to display or save the result. Note that the <code>display</code> operation won&#8217;t work properly if you are asking for a zipped version of the data.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>[standalone@localhost:9990 /] attachment display --operation=/subsystem=messaging-activemq/server=default:print-data(secret)
+ATTACHMENT a69b87f3-ffeb-4596-be51-d73ebdc48b66:
+     _        _               _
+    / \  ____| |_  ___ __  __(_) _____
+   / _ \|  _ \ __|/ _ \  \/  | |/  __/
+  / ___ \ | \/ |_/  __/ |\/| | |\___ \
+ /_/   \_\|   \__\____|_|  |_|_|/___ /
+ Apache ActiveMQ Artemis 2.16.0
+
+ ....</code></pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect3">
 <h4 id="Messaging_Connect_a_pooled-connection-factory_to_a_Remote_Artemis_Server"><a class="link" href="#Messaging_Connect_a_pooled-connection-factory_to_a_Remote_Artemis_Server">9.8.13. Connect a pooled-connection-factory to a Remote Artemis Server</a></h4>
@@ -13990,9 +14308,9 @@ If you need to use destinations without those prefixes, you can configure your c
 </div>
 </div>
 <div class="sect4">
-<h5 id="configuration-of-a-mdb-using-a-pooled-connection-factory"><a class="link" href="#configuration-of-a-mdb-using-a-pooled-connection-factory">JMS Queues and Topics on a remote Artemis Server</a></h5>
+<h5 id="configuration-of-a-mdb-using-a-pooled-connection-factory"><a class="link" href="#configuration-of-a-mdb-using-a-pooled-connection-factory">Jakarta Messaging Queues and Topics on a remote Artemis Server</a></h5>
 <div class="paragraph">
-<p>You can also add queues and topics defined on a remote Artemis server to be used as if they were local to the server. This mean,s that you can make those remote destinations available viza JNDI just like local destinations. Those destinations are defined out-of the server element:</p>
+<p>You can also add queues and topics defined on a remote Artemis server to be used as if they were local to the server. This means that you can make those remote destinations available viza JNDI just like local destinations. Those destinations are defined out-of the server element:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -14005,7 +14323,7 @@ If you need to use destinations without those prefixes, you can configure your c
 </div>
 </div>
 <div class="paragraph">
-<p>JMS endpoints can easily be created through the CLI:</p>
+<p>Jakarta Messaging endpoints can easily be created through the CLI:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -14076,11 +14394,11 @@ bindings delegating to external bindings.</p>
 <div class="paragraph">
 <p>However there is a simpler solution to configure the destination when
 using the Artemis Resource Adapter.<br>
-Instead of using JDNI to lookup the JMS Destination resource, you can
+Instead of using JDNI to lookup the Jakarta Messaging Destination resource, you can
 just specify the <strong>name</strong> of the destination (as configured in the remote
 Artemis server) using the <code>destination</code> activation config property and
 set the <code>useJNDI</code> activation config property to false to let the Artemis
-Resource Adapter create automatically the JMS destination without
+Resource Adapter create automatically the Jakarta Messaging destination without
 requiring any JNDI lookup.</p>
 </div>
 <div class="listingblock">
@@ -14098,16 +14416,16 @@ requiring any JNDI lookup.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>These properties configure the MDB to consume messages from the JMS
+<p>These properties configure the MDB to consume messages from the Jakarta Messaging
 Queue named <code>myQueue</code> hosted on the remote Artemis server.<br>
 In most cases, such a MDB does not need to lookup other destinations to
 process the consumed messages and it can use the JMSReplyTo destination
 if it is defined on the message.<br>
-If the MDB needs any other JMS destinations defined on the remote
+If the MDB needs any other Jakarta Messaging destinations defined on the remote
 server, it must use client-side JNDI by following the
 <a href="http://http://activemq.apache.org/artemis/docs/2.6.0/using-jms.html#jndi-configuration">Artemis
 documentation</a> or configure external configuration context in the naming
-subsystem (which allows to inject the JMS resources using the
+subsystem (which allows to inject the Jakarta Messaging resources using the
 <code>@Resource</code> annotation).</p>
 </div>
 <div class="paragraph">
@@ -14134,36 +14452,35 @@ Please note that the destination is created remotely but won&#8217;t be removed 
 )</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>[[Messaging_Backward_&amp;_Forward_Compatibility]]
-= Backward &amp; Forward Compatibility</p>
 </div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Messaging_Backward_and_Forward_Compatibility"><a class="link" href="#Messaging_Backward_and_Forward_Compatibility">9.8.14. Backward &amp; Forward Compatibility</a></h4>
 <div class="paragraph">
-<p>WildFly 10 supports both backwards and forwards compatibility with
+<p>WildFly supports both backwards and forwards compatibility with
 legacy versions that were using HornetQ as their messaging brokers (such
-as JBoss AS7, WildFly 22 &amp; 9).<br>
+as JBoss AS7 or WildFly 8 and 9).<br>
 These two compatibility modes are provided by the ActiveMQ Artemis
-project that supports the HornetQ&#8217;s CORE protocol:</p>
+project that supports HornetQ&#8217;s CORE protocol:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>backward compatibility: WildFly 10 JMS clients (using Artemis) can
-connect to legacy app server (running HornetQ)</p>
+<p>backward compatibility: WildFly messaging clients (using Artemis) can
+connect to a legacy app server (running HornetQ)</p>
 </li>
 <li>
-<p>forward compatibility: legacy JMS clients (using HornetQ) can connect
-to WildFly 10 app server (running Artemis).</p>
+<p>forward compatibility: legacy messaging clients (using HornetQ) can connect
+to a WildFly 23 app server (running Artemis).</p>
 </li>
 </ul>
-</div>
-</div>
 </div>
 <div class="sect4">
 <h5 id="forward-compatibility"><a class="link" href="#forward-compatibility">Forward Compatibility</a></h5>
 <div class="paragraph">
-<p>Forward compatibility requires no code change in legacy JMS clients. It
-is provided by WildFly 10 messaging-activemq subsystem and its
+<p>Forward compatibility requires no code change in legacy messaging clients. It
+is provided by the WildFly messaging-activemq subsystem and its
 resources.</p>
 </div>
 <div class="ulist">
@@ -14171,7 +14488,7 @@ resources.</p>
 <li>
 <p><code>legacy-connection-factory</code> is a subresource of the
 <code>messaging-activemq&#8217;s `server</code> and can be used to store in JNDI a
-HornetQ-based JMS ConnectionFactory.</p>
+HornetQ-based ConnectionFactory.</p>
 </li>
 </ul>
 </div>
@@ -14190,7 +14507,7 @@ HornetQ-based JMS ConnectionFactory.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Legacy HornetQ-based JMS destinations can also be configured by
+<p>Legacy HornetQ-based messaging destinations can also be configured by
 providing a <code>legacy-entries</code> attribute to the <code>jms-queue</code> and
 <code>jms-topic</code> resource.</p>
 </li>
@@ -14207,20 +14524,20 @@ providing a <code>legacy-entries</code> attribute to the <code>jms-queue</code> 
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>legacy-entries</code> must be used by legacy JMS clients (using HornetQ)
-while the regular <code>entries</code> are for WildFly 10 JMS clients (using
+<p>The <code>legacy-entries</code> must be used by legacy clients (using HornetQ)
+while the regular <code>entries</code> are for WildFly 23 Jakarta Messaging clients (using
 Artemis).</p>
 </div>
 <div class="paragraph">
-<p>The legacy JMS client will then lookup this <code>legacy</code> JMS resources to
-communicate with WildFly 10.<br>
-To avoid any code change in the legacy JMS clients, the legacy JNDI
-entries must match the lookup expected by the legacy JMS client.</p>
+<p>The legacy client will then lookup these <code>legacy</code> messaging resources to
+communicate with WildFly.<br>
+To avoid any code change in the legacy messaging clients, the legacy JNDI
+entries must match the lookup expected by the legacy client.</p>
 </div>
 <div class="sect5">
 <h6 id="migration"><a class="link" href="#migration">Migration</a></h6>
 <div class="paragraph">
-<p>During migration, the legacy <code>messaging</code> subsystem will create
+<p>During migration, the legacy <code>messaging</code> subsystem will create a
 <code>legacy-connection-factory</code> resource and add <code>legacy-entries</code> to the
 <code>jms-queue</code> and <code>jms-topic</code> resource if the boolean attribute
 <code>add-legacy-entries</code> is set to <code>true</code> for its <code>migrate</code> operation. If
@@ -14230,7 +14547,7 @@ in the legacy <code>messaging</code> subsystem and the regular entries will be
 created with a <code>-new</code> suffix.<br>
 If <code>add-legacy-entries</code> is set to <code>false</code> during migration, no legacy
 resources will be created in the <code>messaging-activemq</code> subsystem and
-legacy JMS clients will not be able to communicate with WildFly 10
+legacy messaging clients will not be able to communicate with WildFly 23
 servers.</p>
 </div>
 </div>
@@ -14240,19 +14557,19 @@ servers.</p>
 <div class="paragraph">
 <p>Backward compatibility requires no configuration change in the legacy
 server.<br>
-WildFly 10 JMS clients do not look up resources on the legacy server but
-uses client-side JNDI to create their JMS resources. Artemis JMS client
-can then uses these resources to communicate with the legacy server
+WildFly 23 clients do not look up resources on the legacy server but
+use client-side JNDI to create their Jakarta Messaging resources. WildFly&#8217;s Artemis client
+can then use these resources to communicate with the legacy server
 using the HornetQ CORE protocol.</p>
 </div>
 <div class="paragraph">
 <p>Artemis supports
 <a href="http://activemq.apache.org/artemis/docs/1.1.0/using-jms.html#jndi-configuration">Client-side
-JNDI</a> to create JMS resources ( <code>ConnectionFactory</code> and <code>Destination</code>).</p>
+JNDI</a> to create Jakarta Messaging resources ( <code>ConnectionFactory</code> and <code>Destination</code>).</p>
 </div>
 <div class="paragraph">
-<p>For example, if a WidFly 10 JMS clients wants to communicate with a
-legacy server using a JMS queue named <code>myQueue</code>, it must use the
+<p>For example, if a WildFly 23 messaging client wants to communicate with a
+legacy server using a queue named <code>myQueue</code>, it must use the
 following properties to configure its JNDI <code>InitialContext</code>:</p>
 </div>
 <div class="listingblock">
@@ -14264,8 +14581,8 @@ queue.jms/myQueue=myQueue</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>It can then use the <code>jms/ConnectionFactory</code> name to create the JMS
-ConnectionFactory and <code>jms/myQueue</code> to create the JMS Queue.<br>
+<p>It can then use the <code>jms/ConnectionFactory</code> name to create the Jakarta Messaging
+ConnectionFactory and <code>jms/myQueue</code> to create the Jakarta Messaging Queue.<br>
 Note that the property
 <code>protocolManagerFactoryStr=org.apache.activemq.artemis.core.protocol.hornetq.client.HornetQClientProtocolManagerFactory</code>
 is mandatory when specifying the URL of the legacy connection factory so
@@ -14275,7 +14592,7 @@ the legacy server.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Mesaging_AIO_-_NIO_for_messaging_journal"><a class="link" href="#Mesaging_AIO_-_NIO_for_messaging_journal">9.8.14. AIO - NIO for messaging journal</a></h4>
+<h4 id="Mesaging_AIO_-_NIO_for_messaging_journal"><a class="link" href="#Mesaging_AIO_-_NIO_for_messaging_journal">9.8.15. AIO - NIO for messaging journal</a></h4>
 <div class="paragraph">
 <p>Apache ActiveMQ Artemis (like HornetQ beforehand) ships with a <strong>high
 performance journal</strong>. Since Apache ActiveMQ Artemis handles its own
@@ -14408,7 +14725,7 @@ trace in your server console :</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Messaging_JDBC_Store_for_Messaging_Journal"><a class="link" href="#Messaging_JDBC_Store_for_Messaging_Journal">9.8.15. JDBC Store for Messaging Journal</a></h4>
+<h4 id="Messaging_JDBC_Store_for_Messaging_Journal"><a class="link" href="#Messaging_JDBC_Store_for_Messaging_Journal">9.8.16. JDBC Store for Messaging Journal</a></h4>
 <div class="paragraph">
 <p>The Artemis server that are integrated to WildFly can be configured to
 use a JDBC store for its messaging journal instead of its file-based
@@ -14434,28 +14751,7 @@ server can use it for its JDBC store with the operation:</p>
 <p>Artemis JDBC store uses SQL commands to create the tables used to
 persist its information.<br>
 These SQL commands may differ depending on the type of database. The SQL
-commands used by the JDBC store are located in the file at:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>$JBOSS_HOME/modules/system/layers/base/org/wildfly/extension/messaging-activemq/main/database/journal-sql.properties</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>By default, "vanilla" SQL commands are used to communicate with the
-database. However some databases requires specific commands to create
-table, update content, etc.</p>
-</div>
-<div class="paragraph">
-<p>The journal-sql.properties can also specify these provider-specific
-commands. You can customize them by adding a suffix to the vanilla SQL
-properties.</p>
-</div>
-<div class="paragraph">
-<p>The suffix is determined based on information from the JDBC driver and
-the connection metadata. If the type of database is not supported by the
-code, you can specify it explicitly with the journal-database property
-on the server resource.</p>
+commands used by the JDBC store are located in <code>modules/system/layers/base/org/apache/activemq/artemis/main/artemis-jdbc-store-${ARTEMIS_VERSION}.jar/journal-sql.properties</code>.</p>
 </div>
 <div class="paragraph">
 <p>Artemis uses different JDBC tables to store its bindings information,
@@ -14467,6 +14763,32 @@ yet).</p>
 <code>journal-bindings-table</code>, <code>journal-messages-table</code>,
 <code>journal-page-store-table, and journal-large-messages-table</code>.</p>
 </div>
+<div class="paragraph">
+<p>Please note that the configuration of the underlying pool is something that you need to take care of.
+You  need at least four connections:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>one for the binding</p>
+</li>
+<li>
+<p>one for the messages journal</p>
+</li>
+<li>
+<p>one for the lease lock (if you use HA)</p>
+</li>
+<li>
+<p>one for the node manager shared state (if you use HA)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>So you should define a <a href="wildscribe/subsystem/datasources/xa-data-source/index.html#attr-min-pool-size"><code>min-pool-size</code></a> of 4 for the pool.<br>
+But one fact that you need to take into account is that paging and large messages can use an unbounded number of threads.
+The size, a.k.a. <a href="wildscribe/subsystem/datasources/xa-data-source/index.html#attr-max-pool-size"><code>max-pool-size</code></a>, of the pool should be defined according to the amount of concurrent threads that perform page/large message streaming operations. There is no defined rule for this as there is no 1-1 relation between the number of threads and the number of connections. The number of connections depend on the number of threads processing paging and large messages operations as well as the time you are willing to wait to get a connection (cf. <a href="https://docs.wildfly.org/22/wildscribe/subsystem/datasources/xa-data-source/index.html#attr-blocking-timeout-wait-millis"><code>blocking-timeout-wait-millis</code></a>). When new large messages or paging operations occur they will be in a dedicated thread and will try to get a connection, being enqueued until one is ready or the time to obtain one runs out which will create a failure.<br>
+You really need to tailor your configuration according to your needs and test it in your environment following the <a href="#DataSource">DataSource configuration</a> subsystem documentation and perform tests and peroformance runs before going to production.</p>
+</div>
 <div class="sect4">
 <h5 id="reference"><a class="link" href="#reference">Reference</a></h5>
 <div class="sidebarblock">
@@ -14477,6 +14799,14 @@ yet).</p>
 <p>Artemis JDBC Persistence -
 <a href="https://activemq.apache.org/components/artemis/documentation/latest/persistence.html#configuring-jdbc-persistence" class="bare">https://activemq.apache.org/components/artemis/documentation/latest/persistence.html#configuring-jdbc-persistence</a></p>
 </li>
+<li>
+<p>WildFly DataSource subsystem documentation -
+<a href="#DataSource">DataSource configuration</a></p>
+</li>
+<li>
+<p>WildFly datasource configuration model
+link:wildscribe/subsystem/datasources/xa-data-source/index.html</p>
+</li>
 </ul>
 </div>
 </div>
@@ -14484,7 +14814,7 @@ yet).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Messaging_Discovery_Configuration"><a class="link" href="#Messaging_Discovery_Configuration">9.8.16. Configuring Broadcast/Discovery</a></h4>
+<h4 id="Messaging_Discovery_Configuration"><a class="link" href="#Messaging_Discovery_Configuration">9.8.17. Configuring Broadcast/Discovery</a></h4>
 <div class="paragraph">
 <p>Each Artemis server can be configured to broadcast itself and/or discovery other Artemis servers within a cluster.
 Artemis supports two mechanisms for configuring broadcast/discovery:</p>
@@ -14627,7 +14957,7 @@ INFO  [org.apache.activemq.artemis.logs] (Network-Checker-0 (NetworkChecker)) AM
 <p>This subsystem exposes only base metrics from the WildFly Management Model and JVM MBeans.</p>
 </div>
 <div class="paragraph">
-<p>Support for <a href="https://microprofile.io/project/eclipse/microprofile-metrics">Eclipse MicroProfile Metrics</a> is provided by
+<p>Support for <a href="https://microprofile.io/project/eclipse/microprofile-metrics">MicroProfile Metrics</a> is provided by
 the <em>microprofile-metrics-smallrye</em> subsystem.</p>
 </div>
 </td>
@@ -14748,7 +15078,7 @@ This attribute will be exposed to Prometheus with the name <code>wildfly_underto
 Other information such as the name of the Servlet are added to the labels of the metrics.</p>
 </div>
 <div class="paragraph">
-<p>The [helloworld-rs quickstart](<a href="https://github.com/wildfly/quickstart/tree/master/helloworld-rs" class="bare">https://github.com/wildfly/quickstart/tree/master/helloworld-rs</a>) creates a JAX-RS application
+<p>The [helloworld-rs quickstart](<a href="https://github.com/wildfly/quickstart/tree/master/helloworld-rs" class="bare">https://github.com/wildfly/quickstart/tree/master/helloworld-rs</a>) creates a Jakarta RESTful Web Services application
 that can be deployed in WildFly.
 A corresponding metric will be exposed for it with the name and labels:</p>
 </div>
@@ -14789,7 +15119,7 @@ System property <code>-Dwildfly.statistics-enabled=true</code> to enable statist
 <td class="content">
 <div class="paragraph">
 <p>This subsystem exposes only healthiness checks for the WildFly runtime.
-Support for <a href="https://microprofile.io/project/eclipse/microprofile-health">Eclipse MicroProfile Health</a> is provided by
+Support for <a href="https://microprofile.io/project/eclipse/microprofile-health">MicroProfile Health</a> is provided by
 the <em>microprofile-health-smallrye</em> subsystem.</p>
 </div>
 </td>
@@ -14926,7 +15256,7 @@ This is informational only and the HTTP response code is the only relevant data 
 <div class="sect2">
 <h3 id="MicroProfile_Config_SmallRye"><a class="link" href="#MicroProfile_Config_SmallRye">9.11. MicroProfile Config Subsystem Configuration</a></h3>
 <div class="paragraph">
-<p>Support for <a href="https://microprofile.io/project/eclipse/microprofile-config">Eclipse MicroProfile Config</a> is provided by
+<p>Support for <a href="https://microprofile.io/project/eclipse/microprofile-config">MicroProfile Config</a> is provided by
  the <em>microprofile-config-smallrye</em> subsystem.</p>
 </div>
 <div class="sect3">
@@ -15124,21 +15454,21 @@ that is named <code>org.example.MyConfigSourceProvider</code> and provided by a 
 <div class="sect3">
 <h4 id="deployment"><a class="link" href="#deployment">9.11.3. Deployment</a></h4>
 <div class="paragraph">
-<p>Applications that are deployed in WildFly must have CDI enabled (e.g. with a <code>META-INF/beans.xml</code>
-or by having CDI Bean annotation) to be able to use MicroProfile Config in their code.</p>
+<p>Applications that are deployed in WildFly must have Jakarta Contexts and Dependency Injection enabled (e.g. with a <code>META-INF/beans.xml</code>
+or by having Jakarta Contexts and Dependency Injection Bean annotation) to be able to use MicroProfile Config in their code.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="component-reference-2"><a class="link" href="#component-reference-2">9.11.4. Component Reference</a></h4>
 <div class="paragraph">
-<p>The Eclipse MicroProfile Config is implemented by the SmallRye Config project.</p>
+<p>The MicroProfile Config implementation is provided by the SmallRye Config project.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://microprofile.io/project/eclipse/microprofile-config">Eclipse MicroProfile Config</a></p>
+<p><a href="https://microprofile.io/project/eclipse/microprofile-config">MicroProfile Config</a></p>
 </li>
 <li>
 <p><a href="http://github.com/smallrye/smallrye-config/">SmallRye Config</a></p>
@@ -15152,7 +15482,7 @@ or by having CDI Bean annotation) to be able to use MicroProfile Config in their
 <div class="sect2">
 <h3 id="MicroProfile_Health_SmallRye"><a class="link" href="#MicroProfile_Health_SmallRye">9.12. MicroProfile Health Subsystem Configuration</a></h3>
 <div class="paragraph">
-<p>Support for <a href="https://microprofile.io/project/eclipse/microprofile-health">Eclipse MicroProfile Health</a> is provided by
+<p>Support for <a href="https://microprofile.io/project/eclipse/microprofile-health">MicroProfile Health</a> is provided by
  the <em>microprofile-health-smallrye</em> subsystem.</p>
 </div>
 <div class="sect3">
@@ -15398,14 +15728,14 @@ will be added (which returns <code>UP</code>) and the <code>empty-readiness-chec
 <div class="sect3">
 <h4 id="component-reference-3"><a class="link" href="#component-reference-3">9.12.4. Component Reference</a></h4>
 <div class="paragraph">
-<p>The Eclipse MicroProfile Health is implemented by the SmallRye Health project.</p>
+<p>The MicroProfile Health implementation is provided by the SmallRye Health project.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://microprofile.io/project/eclipse/microprofile-health">Eclipse MicroProfile Health</a></p>
+<p><a href="https://microprofile.io/project/eclipse/microprofile-health">MicroProfile Health</a></p>
 </li>
 <li>
 <p><a href="http://github.com/smallrye/smallrye-health/">SmallRye Health</a></p>
@@ -15419,7 +15749,7 @@ will be added (which returns <code>UP</code>) and the <code>empty-readiness-chec
 <div class="sect2">
 <h3 id="MicroProfile_JWT_SmallRye"><a class="link" href="#MicroProfile_JWT_SmallRye">9.13. MicroProfile JWT Subsystem Configuration</a></h3>
 <div class="paragraph">
-<p>Support for <a href="https://microprofile.io/project/eclipse/microprofile-jwt-auth">Eclipse MicroProfile JWT RBAC</a> is provided by the <em>microprofile-jwt-smallrye</em> subsystem.</p>
+<p>Support for <a href="https://microprofile.io/project/eclipse/microprofile-jwt-auth">MicroProfile JWT RBAC</a> is provided by the <em>microprofile-jwt-smallrye</em> subsystem.</p>
 </div>
 <div class="paragraph">
 <p>The MicroProfile JWT specification describes how authentication can be performed using cryptographically signed JWT tokens and the contents of the token to be used to establish a resuting identity without relying on access to external repositories of identities such as databases or directory servers.</p>
@@ -15635,7 +15965,7 @@ mp.jwt.verify.issuer=quickstart-jwt-issuer</code></pre>
 <div class="sect2">
 <h3 id="MicroProfile_Metrics_SmallRye"><a class="link" href="#MicroProfile_Metrics_SmallRye">9.14. MicroProfile Metrics Subsystem Configuration</a></h3>
 <div class="paragraph">
-<p>Support for <a href="https://microprofile.io/project/eclipse/microprofile-metrics">Eclipse MicroProfile Metrics</a> is provided by
+<p>Support for <a href="https://microprofile.io/project/eclipse/microprofile-metrics">MicroProfile Metrics</a> is provided by
  the <em>microprofile-metrics-smallrye</em> subsystem.</p>
 </div>
 <div class="sect3">
@@ -15727,14 +16057,14 @@ endpoint with the Prometheus format.</p>
 <div class="sect3">
 <h4 id="component-reference-4"><a class="link" href="#component-reference-4">9.14.5. Component Reference</a></h4>
 <div class="paragraph">
-<p>The Eclipse MicroProfile Metrics is implemented by the SmallRye Metrics project.</p>
+<p>The MicroProfile Metrics implementation is provided by the SmallRye Metrics project.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://microprofile.io/project/eclipse/microprofile-metrics">Eclipse MicroProfile Metrics</a></p>
+<p><a href="https://microprofile.io/project/eclipse/microprofile-metrics">MicroProfile Metrics</a></p>
 </li>
 <li>
 <p><a href="http://github.com/smallrye/smallrye-metrics/">SmallRye Metrics</a></p>
@@ -15865,14 +16195,14 @@ $ curl -v -H'Accept: application/json' http://localhost:8080/openapi
 <div class="sect3">
 <h4 id="component-reference-5"><a class="link" href="#component-reference-5">9.15.4. Component Reference</a></h4>
 <div class="paragraph">
-<p>The Eclipse MicroProfile OpenAPI implementation is provided by the SmallRye OpenAPI project.</p>
+<p>The MicroProfile OpenAPI implementation is provided by the SmallRye OpenAPI project.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://microprofile.io/project/eclipse/microprofile-open-api">Eclipse MicroProfile OpenAPI</a></p>
+<p><a href="https://microprofile.io/project/eclipse/microprofile-open-api">MicroProfile OpenAPI</a></p>
 </li>
 <li>
 <p><a href="http://github.com/smallrye/smallrye-open-api/">SmallRye OpenAPI</a></p>
@@ -15881,12 +16211,24 @@ $ curl -v -H'Accept: application/json' http://localhost:8080/openapi
 </div>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+References in this document to Java API for RESTful Web Services(JAX-RS) refer to Jakarta RESTful Web Services unless otherwise noted.
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="MicroProfile_OpenTracing_SmallRye"><a class="link" href="#MicroProfile_OpenTracing_SmallRye">9.16. MicroProfile OpenTracing Subsystem Configuration</a></h3>
 <div class="paragraph">
-<p>Support for <a href="https://microprofile.io/project/eclipse/microprofile-opentracing">Eclipse MicroProfile OpenTracing</a> is
+<p>Support for <a href="https://microprofile.io/project/eclipse/microprofile-opentracing">MicroProfile OpenTracing</a> is
 provided as a Tech Preview feature by the <em>microprofile-opentracing-smallrye</em> subsystem.</p>
 </div>
 <div class="sect3">
@@ -15918,7 +16260,7 @@ element to the xml or by using the following CLI operation:</p>
 <div class="sect3">
 <h4 id="supported-instrumentation-libraries"><a class="link" href="#supported-instrumentation-libraries">9.16.2. Supported instrumentation libraries</a></h4>
 <div class="paragraph">
-<p>WildFly&#8217;s MicroProfile OpenTracing subsystem implements MicroProfile 1.3, which includes support for tracing JAX-RS and CDI.</p>
+<p>WildFly&#8217;s MicroProfile OpenTracing subsystem implements MicroProfile 1.3, which includes support for tracing Jakarta RESTful Web Services and Jakarta Contexts and Dependency Injection.</p>
 </div>
 <div class="paragraph">
 <p>Currently the subsystem allows the configuration of <a href="https://github.com/jaegertracing/jaeger-client-java">Jaeger Java Client</a>. You can then specify which tracer to use in your deployment by specifying a <code>smallrye.opentracing.tracer.configuration</code> init-parameter in your deployment descriptor. If this value is wrong the deployment will fail.
@@ -16006,17 +16348,17 @@ You can also set the default tracer to be injected by using the <code>default-tr
 <p>By default, the service name used with the Jaeger Client is derived from the deployment&#8217;s name, which is usually the WAR file name.</p>
 </div>
 <div class="paragraph">
-<p>As defined by the MicroProfile OpenTracing specification, CDI beans are traced if the annotation
+<p>As defined by the MicroProfile OpenTracing specification, Jakarta Contexts and Dependency Injection beans are traced if the annotation
 <code>org.eclipse.microprofile.opentracing.Traced</code> is present, either at the type or method level. Tracing can be disabled
 by setting the annotation&#8217;s value to <code>false</code>. Similarly, a custom operation name can be set by specifying the parameter
 <code>operationName</code> for that annotation. The semantics are ruled by the MicroProfile OpenTracing specification.</p>
 </div>
 <div class="paragraph">
-<p>Note that CDI support for the deployment is required in order to activate the MicroProfile OpenTracing support. A simple
-JAX-RS application with no CDI support will <strong>not</strong> be traced.</p>
+<p>Note that Jakarta Contexts and Dependency Injection support for the deployment is required in order to activate the MicroProfile OpenTracing support. A simple
+Jakarta RESTful Web Services application with no Jakarta Contexts and Dependency Injection support will <strong>not</strong> be traced.</p>
 </div>
 <div class="paragraph">
-<p>Managed beans with multiple facets, such as EJBs, can also be traced by annotating them with <code>@Traced</code>, but with
+<p>Managed beans with multiple facets, such as Jakarta Enterprise Beans, can also be traced by annotating them with <code>@Traced</code>, but with
 limitations. For instance, asynchronous invocations will yield a new trace, instead of having the span to join an
 existing trace.</p>
 </div>
@@ -16024,14 +16366,14 @@ existing trace.</p>
 <div class="sect3">
 <h4 id="component-reference-6"><a class="link" href="#component-reference-6">9.16.4. Component Reference</a></h4>
 <div class="paragraph">
-<p>The Eclipse MicroProfile OpenTracing is implemented by the SmallRye OpenTracing project.</p>
+<p>The MicroProfile OpenTracing implementation is provided by the SmallRye OpenTracing project.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://microprofile.io/project/eclipse/microprofile-opentracing">Eclipse MicroProfile OpenTracing</a></p>
+<p><a href="https://microprofile.io/project/eclipse/microprofile-opentracing">MicroProfile OpenTracing</a></p>
 </li>
 <li>
 <p><a href="https://github.com/smallrye/smallrye-opentracing/">SmallRye OpenTracing</a></p>
@@ -16045,7 +16387,7 @@ existing trace.</p>
 <div class="sect2">
 <h3 id="MicroProfile-Fault-Tolerance-SmallRye"><a class="link" href="#MicroProfile-Fault-Tolerance-SmallRye">9.17. MicroProfile Fault Tolerance Subsystem Configuration</a></h3>
 <div class="paragraph">
-<p>Support for <a href="https://microprofile.io/project/eclipse/microprofile-fault-tolerance">Eclipse MicroProfile Fault Tolerance</a> is
+<p>Support for <a href="https://microprofile.io/project/eclipse/microprofile-fault-tolerance">MicroProfile Fault Tolerance</a> is
 provided as by the <code>microprofile-fault-tolerance-smallrye</code> subsystem.</p>
 </div>
 <div class="sect3">
@@ -16060,10 +16402,10 @@ element to the XML or by using the following CLI operation:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code>[standalone@localhost:9990 /] /extension=org.wildfly.extension.microprofile.fault-tolerance-smallrye:add
+<pre class="CodeRay highlight nowrap"><code>[standalone@localhost:9990 /] /extension=org.wildfly.extension.microprofile.fault-tolerance-smallrye:add()
 {"outcome" =&gt; "success"}
 
-[standalone@localhost:9990 /] /subsystem=microprofile-fault-tolerance-smallrye:add
+[standalone@localhost:9990 /] /subsystem=microprofile-fault-tolerance-smallrye:add()
 {
     "outcome" =&gt; "success",
     "response-headers" =&gt; {
@@ -16081,7 +16423,7 @@ element to the XML or by using the following CLI operation:</p>
 <div class="sect3">
 <h4 id="specification"><a class="link" href="#specification">9.17.2. Specification</a></h4>
 <div class="paragraph">
-<p>WildFly&#8217;s MicroProfile Fault Tolerance subsystem implements MicroProfile 2.1.</p>
+<p>WildFly&#8217;s MicroProfile Fault Tolerance subsystem implements MicroProfile 3.0.</p>
 </div>
 <div class="paragraph">
 <p>This MicroProfile specification provides the following interceptor bindings:</p>
@@ -16109,7 +16451,7 @@ element to the XML or by using the following CLI operation:</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>For usage please refer to MicroProfile Fault Tolerance 2.1 <a href="https://download.eclipse.org/microprofile/microprofile-fault-tolerance-2.1/microprofile-fault-tolerance-spec.html">specification</a>.</p>
+<p>For usage please refer to MicroProfile Fault Tolerance 3.0 <a href="https://download.eclipse.org/microprofile/microprofile-fault-tolerance-3.0/microprofile-fault-tolerance-spec-3.0.html">specification</a>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -16134,14 +16476,14 @@ configuration properties:</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.smallrye.faulttolerance.globalThreadPoolSize</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.smallrye.faulttolerance.mainThreadPoolSize</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">100</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Number of threads used by the fault tolerance mechanisms. This does not include bulkhead thread pools.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum number of threads in the thread pool.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.smallrye.faulttolerance.timeoutExecutorThreads</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Size of the thread pool used for scheduling timeouts.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>io.smallrye.faulttolerance.mainThreadPoolQueueSize</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-1 (unbounded)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Size of the queue that the thread pool should use.</p></td>
 </tr>
 </tbody>
 </table>
@@ -16149,14 +16491,14 @@ configuration properties:</p>
 <div class="sect3">
 <h4 id="component-reference-7"><a class="link" href="#component-reference-7">9.17.4. Component Reference</a></h4>
 <div class="paragraph">
-<p>The Eclipse MicroProfile Fault Tolerance is implemented by the SmallRye Fault Tolerance project.</p>
+<p>The MicroProfile Fault Tolerance implementation is provided by the SmallRye Fault Tolerance project.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://microprofile.io/project/eclipse/microprofile-fault-tolerance">Eclipse MicroProfile Fault Tolerance</a></p>
+<p><a href="https://microprofile.io/project/eclipse/microprofile-fault-tolerance">MicroProfile Fault Tolerance</a></p>
 </li>
 <li>
 <p><a href="https://github.com/smallrye/smallrye-fault-tolerance">SmallRye Fault Tolerance</a></p>
@@ -16168,11 +16510,280 @@ configuration properties:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Security"><a class="link" href="#Security">9.18. Security subsystem configuration</a></h3>
+<h3 id="MicroProfile_Reactive_Streams_Operators_SmallRye"><a class="link" href="#MicroProfile_Reactive_Streams_Operators_SmallRye">9.18. MicroProfile Reactive Streams Operators Subsystem Configuration</a></h3>
+<div class="paragraph">
+<p>Support for <a href="https://microprofile.io/project/eclipse/microprofile-reactive-streams">MicroProfile Reactive Streams Operators</a> is
+provided as a Tech Preview feature by the <em>microprofile-reactive-streams-operators-smallrye</em> subsystem.</p>
+</div>
+<div class="sect3">
+<h4 id="required-extension-microprofile-reactive-streams-operators-smallrye"><a class="link" href="#required-extension-microprofile-reactive-streams-operators-smallrye">9.18.1. Required Extension</a></h4>
+<div class="paragraph">
+<p>This extension is <strong>not</strong> included in the standard configurations included in the WildFly distribution.</p>
+</div>
+<div class="paragraph">
+<p>You can add the extension to a configuration either by adding
+an <code>&lt;extension module="org.wildfly.extension.microprofile.reactive-streams-operators-smallrye"/&gt;</code>
+element to the xml or by using the following CLI operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>[standalone@localhost:9990 /] /extension=org.wildfly.extension.microprofile.reactive-streams-operators-smallrye:add
+{"outcome" =&gt; "success"}
+
+[standalone@localhost:9990 /] /subsystem=microprofile-reactive-streams-operators-smallrye:add
+{
+    "outcome" =&gt; "success",
+    "response-headers" =&gt; {
+        "operation-requires-reload" =&gt; true,
+        "process-state" =&gt; "reload-required"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you provision your own server and include the <code>microprofile-reactive-streams-operators</code> layer, you will get the required modules, and the extension and subsystem will be added to your configuration.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="specification-2"><a class="link" href="#specification-2">9.18.2. Specification</a></h4>
+<div class="paragraph">
+<p>WildFly&#8217;s MicroProfile Reactive Streams Operators subsystem implements MicroProfile Reactive Streams Operators 1.0, which adds support for asynchronous streaming of data. It essentially replicates the the interfaces, and their implementations, that were made available in the <a href="https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/Flow.html">java.util.concurrent.Flow</a> class introduced in Java 9. Thus MicroProfile Reactive Streams Operators can be considered a stop-gap until Java 9 and later is ubiquitous.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="configuration-5"><a class="link" href="#configuration-5">9.18.3. Configuration</a></h4>
+<div class="paragraph">
+<p>The <code>microprofile-reactive-streams-operators-smallrye</code> subsystem contains no configurable attributes or resources. Its presence makes the interfaces
+from the MicroProfile Reactive Streams Operators available to a deployment, and provides the implementation. Additionally it makes an instance of the <a href="https://github.com/eclipse/microprofile-reactive-streams-operators/blob/master/api/src/main/java/org/eclipse/microprofile/reactive/streams/operators/spi/ReactiveStreamsEngine.java">ReactiveStreamsEngine</a> class available for injection.</p>
+</div>
+<div class="sect4">
+<h5 id="activation-2"><a class="link" href="#activation-2">Activation</a></h5>
+<div class="paragraph">
+<p>If the subsystem is present, the MicroProfile Reactive Streams Operators functionality will be available for all deployments on the server.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="component-reference-8"><a class="link" href="#component-reference-8">9.18.4. Component Reference</a></h4>
+<div class="paragraph">
+<p>The MicroProfile Reactive Streams Operators implementation is provided by the SmallRye Mutiny project.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://microprofile.io/project/eclipse/microprofile-reactive-streams">MicroProfile Reactive Streams Operators</a></p>
+</li>
+<li>
+<p><a href="https://github.com/smallrye/smallrye-mutiny">SmallRye Mutiny</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="MicroProfile_Reactive_Messaging_SmallRye"><a class="link" href="#MicroProfile_Reactive_Messaging_SmallRye">9.19. MicroProfile Reactive Messaging Subsystem Configuration</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre>:smallrye-reactive-messaging-version:    2.5</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Support for <a href="https://microprofile.io/project/eclipse/microprofile-reactive-messaging">MicroProfile Reactive Messaging</a> is
+provided as a Tech Preview feature by the <em>microprofile-reactive-messaging-smallrye</em> subsystem.</p>
+</div>
+<div class="sect3">
+<h4 id="required-extension-microprofile-reactive-messaging-smallrye"><a class="link" href="#required-extension-microprofile-reactive-messaging-smallrye">9.19.1. Required Extension</a></h4>
+<div class="paragraph">
+<p>This extension is <strong>not</strong> included in the standard configurations included in the WildFly distribution.</p>
+</div>
+<div class="paragraph">
+<p>You can add the extension to a configuration either by adding
+an <code>&lt;extension module="org.wildfly.extension.microprofile.reactive-messaging-smallrye"/&gt;</code>
+element to the xml or by using the following CLI operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>[standalone@localhost:9990 /] /extension=org.wildfly.extension.microprofile.reactive-messaging-smallrye:add
+{"outcome" =&gt; "success"}
+
+[standalone@localhost:9990 /] /subsystem=microprofile-reactive-messaging-smallrye:add
+{
+    "outcome" =&gt; "success",
+    "response-headers" =&gt; {
+        "operation-requires-reload" =&gt; true,
+        "process-state" =&gt; "reload-required"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To use this subsystem, you must also enable the <a href="#MicroProfile_Reactive_Streams_Operators_SmallRye">MicroProfile Reactive Streams Operators</a> extension and subsystem.</p>
+</div>
+<div class="paragraph">
+<p>If you provision your own server and include the <code>microprofile-reactive-messaging</code> Galleon layer, you will get the required modules, and the extension and subsystem will be added to your configuration.</p>
+</div>
+<div class="paragraph">
+<p>If you provision the <code>microprofile-reactive-messaging-kafka</code> Galleon layer it includes the modules to enable the Kafka connector functionality. The <code>microprofile-reactive-messaging-kafka</code> layer includes the <code>microprofile-reactive-messaging</code> layer which provides the core MicroProfile Reactive Messaging functionality.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="specification-3"><a class="link" href="#specification-3">9.19.2. Specification</a></h4>
+<div class="paragraph">
+<p>WildFly&#8217;s MicroProfile Reactive Messaging subsystem implements MicroProfile Reactive Messaging 1.0, which adds support for asynchronous messaging support based on MicroProfile Reactive Streams Operators.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="configuration-6"><a class="link" href="#configuration-6">9.19.3. Configuration</a></h4>
+<div class="paragraph">
+<p>The <code>microprofile-reactive-messaging-smallrye</code> subsystem contains no configurable attributes or resources. For the core MicroProfile Reactive Messaging functionality there is no configuration. For configuration of the <a href="#microprofile-reactive-messaging-smallrye-config-connectors">connectors</a> to external brokers MicroProfile Config is used.</p>
+</div>
+<div class="sect4">
+<h5 id="activation-3"><a class="link" href="#activation-3">Activation</a></h5>
+<div class="paragraph">
+<p>The subsystem will scan all deployments to find classes containing methods with the <code>org.eclipse.microprofile.reactive.messaging.Incoming</code> or <code>org.eclipse.microprofile.reactive.messaging.Outgoing</code> annotations. If these annotations are found, Reactive Messaging will be enabled for the deployment.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="microprofile-reactive-messaging-smallrye-config-connectors"><a class="link" href="#microprofile-reactive-messaging-smallrye-config-connectors">Connectors</a></h5>
+<div class="paragraph">
+<p>MicroProfile Reactive Messaging is designed to be flexible enough to integrate with a wide variety of external messaging systems. This functionality is provided via 'connectors'.</p>
+</div>
+<div class="paragraph">
+<p>The only included connector at the moment is the Kafka connector.</p>
+</div>
+<div class="paragraph">
+<p>Connectors are configured using MicroProfile Config. The property keys for the methods have some prefixes mandated by the MicroProfile Reactive Messaging Specification which lists these as:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>mp.messaging.incoming.[channel-name].[attribute]=[value]</code></p>
+</li>
+<li>
+<p><code>mp.messaging.outgoing.[channel-name].[attribute]=[value]</code></p>
+</li>
+<li>
+<p><code>mp.messaging.connector.[connector-name].[attribute]=[value]</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Essentially <code>channel-name</code> is the <code>@Incoming.value()</code> or the  <code>@Outgoing.value()</code>.</p>
+</div>
+<div class="paragraph">
+<p>If we have the following pair of methods:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>@Outgoing("to")
+public int send() {
+    int i = // Randomly generated...
+}
+
+@Incoming("from")
+public void receive(int i) {
+    // Process payload
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then the property prefixes mandated by the MicroProfile Reactive Messaging specifications are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>mp.messaging.incoming.from.</code> - this would pick out the property as configuration of the <code>receive()</code> method.</p>
+</li>
+<li>
+<p><code>mp.messaging.outgoing.to.</code> - this would pick out the property as configuration of the <code>send()</code> method.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Note that although these prefixes are understood by the subsystem, the full set depends on the connector you want to configure. Different connectors understand different properties.</p>
+</div>
+<div class="sect5">
+<h6 id="kafka-connector"><a class="link" href="#kafka-connector">Kafka Connector</a></h6>
+<div class="paragraph">
+<p>An example of a minimal microprofile-config.properties file for Kafka for the example application shown previously:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>kafka.bootstrap.servers=kafka:9092
+
+mp.messaging.outgoing.to.connector=smallrye-kafka
+mp.messaging.outgoing.to.topic=my-topic
+mp.messaging.outgoing.to.value.serializer=org.apache.kafka.common.serialization.IntegerSerializer
+
+mp.messaging.incoming.from.connector=smallrye-kafka
+mp.messaging.incoming.from.topic=my-topic
+mp.messaging.incoming.from.value.deserializer=org.apache.kafka.common.serialization.IntegerDeserializer</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next we will briefly discuss each of these entries. Remember the <code>to</code> channel is on the <code>send()</code> method, and the <code>from</code> channel is on the <code>receive()</code> method.</p>
+</div>
+<div class="paragraph">
+<p><code>kafka.bootstrap.servers=kafka:9092</code> sets the URL of the Kafka broker to connect to for the whole application. It could also be done for just the <code>to</code> channel by setting <code>mp.messaging.outgoing.to.bootstrap.servers=kafka:9092</code> instead.</p>
+</div>
+<div class="paragraph">
+<p><code>mp.messaging.outgoing.to.connector=smallrye-kafka</code> says that we want to use Kafka to back the <code>to</code> channel. Note that the value <code>smallrye-kafka</code> is SmallRye Reactive Messaging specific, and will only be understood if the Kafka connector is enabled.</p>
+</div>
+<div class="paragraph">
+<p><code>mp.messaging.outgoing.to.topic=my-topic</code> says that we will send data to the Kafka topic called <code>my-topic</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>mp.messaging.outgoing.to.value.serializer=org.apache.kafka.common.serialization.IntegerSerializer</code> tells the connector to use <code>IntegerSerializer</code> to serialize the values output by the <code>send()</code> method when writing to the topic. Kafka provides serializers for the standard Java types. You may implement your own serializer by writing a class implementing <code>org.apache.kafka.common.serialization.Serializer</code> and including it in the deployment.</p>
+</div>
+<div class="paragraph">
+<p><code>mp.messaging.incoming.from.connector=smallrye-kafka</code> says that we want to use Kafka to back the <code>from</code> channel. As above, the value <code>smallrye-kafka</code> is SmallRye Reactive Messaging specific.</p>
+</div>
+<div class="paragraph">
+<p><code>mp.messaging.incoming.from.topic=my-topic</code> says that we will read data from the Kafka topic called <code>my-topic</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>mp.messaging.incoming.from.value.deserializer=org.apache.kafka.common.serialization.IntegerDeserializer</code> tells the connector to use <code>IntegerDeserializer</code> to deserialize the values from the topic before calling the <code>receive()</code> method. You may implement your own deserializer by writing a class implementing <code>org.apache.kafka.common.serialization.Deserializer</code> and including it in the deployment.</p>
+</div>
+<div class="paragraph">
+<p>In addition to the above, Apache Kafka, and SmallRye Reactive Messaging&#8217;s Kafka connector understand a lot more properties. These can be found in the SmallRye Reactive Messaging Kafka connector <a href="https://smallrye.io/smallrye-reactive-messaging/smallrye-reactive-messaging/{smallrye-reactive-messaging-version}/kafka/kafka.html">documentation</a>, and in the Apache Kafka documentation for the <a href="https://kafka.apache.org/documentation/#producerconfigs">producers</a> and the <a href="https://kafka.apache.org/documentation/#consumerconfigs">consumers</a>.</p>
+</div>
+<div class="paragraph">
+<p>The prefixes discussed above are stripped off before passing the property to Kafka.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="component-reference-9"><a class="link" href="#component-reference-9">9.19.4. Component Reference</a></h4>
+<div class="paragraph">
+<p>The MicroProfile Reactive Messaging implementation is provided by the SmallRye Reactive Messaging project.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/eclipse/microprofile-reactive-messaging">MicroProfile Reactive Messaging</a></p>
+</li>
+<li>
+<p><a href="https://github.com/smallrye/smallrye-reactive-messaging">SmallRye Reactive Messaging</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Security"><a class="link" href="#Security">9.20. Security subsystem configuration</a></h3>
 <div class="paragraph">
 <p>The security subsystem is the subsystem that brings the security
 services provided by <a href="http://www.jboss.org/picketbox">PicketBox</a> to the
-WildFly 22 server instances.</p>
+WildFly 23 server instances.</p>
 </div>
 <div class="paragraph">
 <p>If you are looking to secure the management interfaces for the
@@ -16182,7 +16793,7 @@ management interfaces themselves are not run within a WildFly process so
 use a custom configuration.</p>
 </div>
 <div class="sect3">
-<h4 id="structure-of-the-security-subsystem"><a class="link" href="#structure-of-the-security-subsystem">9.18.1. Structure of the Security Subsystem</a></h4>
+<h4 id="structure-of-the-security-subsystem"><a class="link" href="#structure-of-the-security-subsystem">9.20.1. Structure of the Security Subsystem</a></h4>
 <div class="paragraph">
 <p>When deploying applications to WildFly most of the time it is likely
 that you would be deploying a web application or EJBs and just require a
@@ -16235,7 +16846,7 @@ credentials, roles or attributes to the authenticated subject.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="security-subsystem-configuration"><a class="link" href="#security-subsystem-configuration">9.18.2. Security Subsystem Configuration</a></h4>
+<h4 id="security-subsystem-configuration"><a class="link" href="#security-subsystem-configuration">9.20.2. Security Subsystem Configuration</a></h4>
 <div class="paragraph">
 <p>By default a lot of defaults have already been selected for the security
 subsystem and unless there is a specific implementation detail you need
@@ -16341,7 +16952,7 @@ class name to use.</p></td>
 <div class="paragraph">
 <p>The subject factory is responsible for creating subject instances, this
 also makes use of the authentication manager to actually verify the
-caller. It is used mainly by JCA components to establish a subject. It
+caller. It is used mainly by Jakarta Connectors components to establish a subject. It
 is not likely this would need to be overridden but if it is required the
 "subject-factory-class-name" attribute can be specified on the
 subject-factory element.</p>
@@ -16567,8 +17178,8 @@ part</p>
 access control) but there are situations where a more fine grained
 authorization policy is required. The authorization element allows
 definition of different authorization modules to used, such that
-authorization can be checked with JACC (Java Authorization Contract for
-Containers) or XACML (eXtensible Access Control Markup Language). The
+authorization can be checked with Jakarta Authorization
+or XACML (eXtensible Access Control Markup Language). The
 structure of the authorization element is:</p>
 </div>
 <div class="listingblock">
@@ -16612,7 +17223,7 @@ abbreviated names from the following list:</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">org.jboss.security.authorization.modules.WebAuthorizationModule</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JACC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Authorization</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">org.jboss.security.authorization.modules.JACCAuthorizationModule</p></td>
 </tr>
 <tr>
@@ -16893,7 +17504,7 @@ need to be defined.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Security_Authentication_Modules"><a class="link" href="#Security_Authentication_Modules">9.18.3. Authentication Modules</a></h4>
+<h4 id="Security_Authentication_Modules"><a class="link" href="#Security_Authentication_Modules">9.20.3. Authentication Modules</a></h4>
 <div class="paragraph">
 <p>In this section we will describe each login module&#8217;s options available.</p>
 </div>
@@ -16989,7 +17600,7 @@ column value should always be "Roles" with capital R.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">suspendResume</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">optional</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A boolean flag that specifies that any
-existing JTA transaction be suspended during DB operations. The default
+existing Jakarta Transactions transaction be suspended during DB operations. The default
 is true</p></td>
 </tr>
 </tbody>
@@ -17136,7 +17747,7 @@ Role, RoleGroup from Roles where PrincipalID=?</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">suspendResume</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">optional</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A boolean flag that specifies that any
-existing JTA transaction be suspended during DB operations. The default
+existing Jakarta Transactions transaction be suspended during DB operations. The default
 is <strong>true</strong>
 select Role, RoleGroup from Roles where PrincipalID=?</p></td>
 </tr>
@@ -17146,7 +17757,7 @@ select Role, RoleGroup from Roles where PrincipalID=?</p></td>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Web_services"><a class="link" href="#Web_services">9.19. Web services configuration</a></h3>
+<h3 id="Web_services"><a class="link" href="#Web_services">9.21. Web services configuration</a></h3>
 <div class="paragraph">
 <p>JBossWS components are provided to the application server through the
 webservices subsystem. JBossWS components handle the processing of WS
@@ -17156,7 +17767,7 @@ subsystem is provided in the server&#8217;s domain and standalone
 configuration files.</p>
 </div>
 <div class="sect3">
-<h4 id="structure-of-the-webservices-subsystem"><a class="link" href="#structure-of-the-webservices-subsystem">9.19.1. Structure of the webservices subsystem</a></h4>
+<h4 id="structure-of-the-webservices-subsystem"><a class="link" href="#structure-of-the-webservices-subsystem">9.21.1. Structure of the webservices subsystem</a></h4>
 <div class="sect4">
 <h5 id="published-endpoint-address"><a class="link" href="#published-endpoint-address">Published endpoint address</a></h5>
 <div class="paragraph">
@@ -17252,8 +17863,8 @@ original path component of each &lt;soap:address&gt; URL.When
 <div class="paragraph">
 <p>JBossWS enables extra setup configuration data to be predefined and
 associated with an endpoint implementation. Predefined endpoint
-configurations can be used for JAX-WS client and JAX-WS endpoint setup.
-Endpoint configurations can include JAX-WS handlers and key/value
+configurations can be used for Jakarta XML Web Services client and Jakarta XML Web Services endpoint setup.
+Endpoint configurations can include Jakarta XML Web Services handlers and key/value
 properties declarations. This feature provides a convenient way to add
 handlers to WS endpoints and to set key/value properties that control
 JBossWS and Apache CXF internals (
@@ -17457,7 +18068,7 @@ deployment classloader must to be able to load the handler class.
 </div>
 </div>
 <div class="sect3">
-<h4 id="runtime-information"><a class="link" href="#runtime-information">9.19.2. Runtime information</a></h4>
+<h4 id="runtime-information"><a class="link" href="#runtime-information">9.21.2. Runtime information</a></h4>
 <div class="paragraph">
 <p>Each web service endpoint is exposed through the deployment that
 provides the endpoint implementation. Each endpoint can be queried as a
@@ -17490,7 +18101,7 @@ context and a WSDL Url:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ws-component-reference"><a class="link" href="#ws-component-reference">9.19.3. Component Reference</a></h4>
+<h4 id="ws-component-reference"><a class="link" href="#ws-component-reference">9.21.3. Component Reference</a></h4>
 <div class="paragraph">
 <p>The web service subsystem is provided by the JBossWS project. For a
 detailed description of the available configuration properties, please
@@ -17513,7 +18124,7 @@ consult the project documentation.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Resource_adapters"><a class="link" href="#Resource_adapters">9.20. Resource adapters</a></h3>
+<h3 id="Resource_adapters"><a class="link" href="#Resource_adapters">9.22. Resource adapters</a></h3>
 <div class="paragraph">
 <p>Resource adapters are configured through the <em>resource-adapters</em>
 subsystem. Declaring a new resource adapter consists of two separate
@@ -17521,7 +18132,7 @@ steps: You would need to deploy the .rar archive and define a resource
 adapter entry in the subsystem.</p>
 </div>
 <div class="sect3">
-<h4 id="resource-adapter-definitions"><a class="link" href="#resource-adapter-definitions">9.20.1. Resource Adapter Definitions</a></h4>
+<h4 id="resource-adapter-definitions"><a class="link" href="#resource-adapter-definitions">9.22.1. Resource Adapter Definitions</a></h4>
 <div class="paragraph">
 <p>The resource adapter itself is defined within the subsystem
 <em>resource-adapters</em>:</p>
@@ -17570,14 +18181,14 @@ adapter entry in the subsystem.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ra-using-security-domains"><a class="link" href="#ra-using-security-domains">9.20.2. Using security domains</a></h4>
+<h4 id="ra-using-security-domains"><a class="link" href="#ra-using-security-domains">9.22.2. Using security domains</a></h4>
 <div class="paragraph">
 <p>Information about using security domains can be found at
 <a href="https://community.jboss.org/wiki/JBossAS7SecurityDomainModel" class="bare">https://community.jboss.org/wiki/JBossAS7SecurityDomainModel</a></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="automatic-activation-of-resource-adapter-archives"><a class="link" href="#automatic-activation-of-resource-adapter-archives">9.20.3. Automatic activation of resource adapter archives</a></h4>
+<h4 id="automatic-activation-of-resource-adapter-archives"><a class="link" href="#automatic-activation-of-resource-adapter-archives">9.22.3. Automatic activation of resource adapter archives</a></h4>
 <div class="paragraph">
 <p>A resource adapter archive can be automatically activated with a
 configuration by including an META-INF/ironjacamar.xml in the archive.</p>
@@ -17588,7 +18199,7 @@ configuration by including an META-INF/ironjacamar.xml in the archive.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ra-component-reference"><a class="link" href="#ra-component-reference">9.20.4. Component Reference</a></h4>
+<h4 id="ra-component-reference"><a class="link" href="#ra-component-reference">9.22.4. Component Reference</a></h4>
 <div class="paragraph">
 <p>The resource adapter subsystem is provided by the
 <a href="http://www.jboss.org/ironjacamar">IronJacamar</a> project. For a detailed
@@ -17612,7 +18223,7 @@ the project documentation.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Batch_JSR-352"><a class="link" href="#Batch_JSR-352">9.21. Batch (JSR-352) Subsystem Configuration</a></h3>
+<h3 id="Jakarta_Batch"><a class="link" href="#Jakarta_Batch">9.23. Jakarta Batch Subsystem Configuration</a></h3>
 <div class="quoteblock abstract">
 <blockquote>
 The batch subsystem is used to configure an environment for running
@@ -17625,14 +18236,14 @@ is <code>subsystem=batch-jberet</code>.
 </blockquote>
 </div>
 <div class="sect3">
-<h4 id="default-subsystem-configuration"><a class="link" href="#default-subsystem-configuration">9.21.1. Default Subsystem Configuration</a></h4>
+<h4 id="default-subsystem-configuration"><a class="link" href="#default-subsystem-configuration">9.23.1. Default Subsystem Configuration</a></h4>
 <div class="paragraph">
 <p>For up to date information about subsystem configuration options see the
 <a href="wildscribe" target="_blank" rel="noopener">WildFly model reference</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="security"><a class="link" href="#security">9.21.2. Security</a></h4>
+<h4 id="security"><a class="link" href="#security">9.23.2. Security</a></h4>
 <div class="paragraph">
 <p>A new <code>security-domain</code> attribute was added to the <code>batch-jberet</code>
 subsystem to allow batch jobs to be executed under that security domain.
@@ -17672,7 +18283,7 @@ deployment resource, for example
 </div>
 </div>
 <div class="sect3">
-<h4 id="deployment-descriptors"><a class="link" href="#deployment-descriptors">9.21.3. Deployment Descriptors</a></h4>
+<h4 id="deployment-descriptors"><a class="link" href="#deployment-descriptors">9.23.3. Deployment Descriptors</a></h4>
 <div class="paragraph">
 <p>There are no deployment descriptors for configuring a batch environment
 defined by the <a href="https://www.jcp.org/en/jsr/detail?id=352">JSR-352
@@ -17714,7 +18325,7 @@ deployment descriptor.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="deployment-resources"><a class="link" href="#deployment-resources">9.21.4. Deployment Resources</a></h4>
+<h4 id="deployment-resources"><a class="link" href="#deployment-resources">9.23.4. Deployment Resources</a></h4>
 <div class="paragraph">
 <p>Some subsystems in <a href="http://wildfly.org">WildFly</a> register runtime
 resources for deployments. The batch subsystem registers jobs and
@@ -17904,28 +18515,28 @@ and attributes (arguments) on operations.
 </div>
 </div>
 <div class="sect2">
-<h3 id="JSF"><a class="link" href="#JSF">9.22. JSF Configuration</a></h3>
+<h3 id="Jakarta_Server_Faces"><a class="link" href="#Jakarta_Server_Faces">9.24. Jakarta Server Faces Configuration</a></h3>
 <div class="quoteblock abstract">
 <blockquote>
-JSF configuration is handled by the JSF subsystem. The JSF subsystem
-allows multiple JSF implementations to be installed on the same WildFly
+Jakarta Server Faces configuration is handled by the Jakarta Server Faces subsystem. The Jakarta Server Faces subsystem
+allows multiple Jakarta Server Faces implementations to be installed on the same WildFly
 server. In particular, any version of Mojarra or MyFaces that implements
-spec level 2.1 or higher can be installed. For each JSF implementation,
+spec level 2.1 or higher can be installed. For each Jakarta Server Faces implementation,
 a new slot needs to be created under <code>com.sun.jsf-impl</code>,
-<code>javax.faces.api</code>, and <code>org.jboss.as.jsf-injection</code>. When the JSF
-subsystem starts up, it scans the module path to find all of the JSF
-implementations that have been installed. The default JSF implementation
+<code>javax.faces.api</code>, and <code>org.jboss.as.jsf-injection</code>. When the Jakarta Server Faces
+subsystem starts up, it scans the module path to find all of the Jakarta Server Faces
+implementations that have been installed. The default Jakarta Server Faces implementation
 that WildFly should use is defined by the <code>default-jsf-impl-slot</code>
 attribute.
 </blockquote>
 </div>
 <div class="sect3">
-<h4 id="installing-a-new-jsf-implementation-manually"><a class="link" href="#installing-a-new-jsf-implementation-manually">9.22.1. Installing a new JSF implementation manually</a></h4>
+<h4 id="installing-a-new-jsf-implementation-manually"><a class="link" href="#installing-a-new-jsf-implementation-manually">9.24.1. Installing a new Jakarta Server Faces implementation manually</a></h4>
 <div class="paragraph">
-<p>A new JSF implementation can be manually installed as follows:</p>
+<p>A new Jakarta Server Faces implementation can be manually installed as follows:</p>
 </div>
 <div class="sect4">
-<h5 id="add-a-module-slot-for-the-new-jsf-implementation-jar"><a class="link" href="#add-a-module-slot-for-the-new-jsf-implementation-jar">Add a module slot for the new JSF implementation JAR</a></h5>
+<h5 id="add-a-module-slot-for-the-new-jsf-implementation-jar"><a class="link" href="#add-a-module-slot-for-the-new-jsf-implementation-jar">Add a module slot for the new Jakarta Server Faces implementation JAR</a></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -17937,21 +18548,21 @@ For example, for Mojarra 2.2.11, the above path would resolve to:<br>
 WILDFLY_HOME/modules/com/sun/jsf-impl/mojarra-2.2.11</p>
 </li>
 <li>
-<p>Place the JSF implementation JAR in the &lt;JSF_IMPL_NAME&gt;-&lt;JSF_VERSION&gt;
+<p>Place the Jakarta Server Faces implementation JAR in the &lt;JSF_IMPL_NAME&gt;-&lt;JSF_VERSION&gt;
 subdirectory. In the same subdirectory, add a <code>module.xml</code> file similar
 to the
 <a href="https://github.com/wildfly/wildfly/blob/master/jsf/multi-jsf-installer/src/main/resources/mojarra-impl-module.xml">Mojarra</a>
 or
 <a href="https://github.com/wildfly/wildfly/blob/master/jsf/multi-jsf-installer/src/main/resources/myfaces-impl-module.xml">MyFaces</a>
 template examples. Change the <code>resource-root-path</code> to the name of your
-JSF implementation JAR and fill in appropriate values for $\{
+Jakarta Server Faces implementation JAR and fill in appropriate values for $\{
 <code>jsf-impl-name</code>} and $\{ <code>jsf-version</code>}.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect4">
-<h5 id="add-a-module-slot-for-the-new-jsf-api-jar"><a class="link" href="#add-a-module-slot-for-the-new-jsf-api-jar">Add a module slot for the new JSF API JAR</a></h5>
+<h5 id="add-a-module-slot-for-the-new-jsf-api-jar"><a class="link" href="#add-a-module-slot-for-the-new-jsf-api-jar">Add a module slot for the new Jakarta Server Faces API JAR</a></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -17967,14 +18578,14 @@ to the
 or
 <a href="https://github.com/wildfly/wildfly/blob/master/jsf/multi-jsf-installer/src/main/resources/myfaces-api-module.xml">MyFaces</a>
 template examples. Change the <code>resource-root-path</code> to the name of your
-JSF API JAR and fill in appropriate values for $\{ <code>jsf-impl-name</code>} and
+Jakarta Server Faces API JAR and fill in appropriate values for $\{ <code>jsf-impl-name</code>} and
 $\{ <code>jsf-version</code>}.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect4">
-<h5 id="add-a-module-slot-for-the-jsf-injection-jar"><a class="link" href="#add-a-module-slot-for-the-jsf-injection-jar">Add a module slot for the JSF injection JAR</a></h5>
+<h5 id="add-a-module-slot-for-the-jsf-injection-jar"><a class="link" href="#add-a-module-slot-for-the-jsf-injection-jar">Add a module slot for the Jakarta Server Faces injection JAR</a></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -18026,8 +18637,8 @@ Fill in the appropriate value for $\{ <code>version.commons-digester</code>}.</p
 <h5 id="start-the-server"><a class="link" href="#start-the-server">Start the server</a></h5>
 <div class="paragraph">
 <p>After starting the server, the following CLI command can be used to
-verify that your new JSF implementation has been installed successfully.
-The new JSF implementation should appear in the output of this command.</p>
+verify that your new Jakarta Server Faces implementation has been installed successfully.
+The new Jakarta Server Faces implementation should appear in the output of this command.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -18037,10 +18648,10 @@ The new JSF implementation should appear in the output of this command.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="changing-the-default-jsf-implementation"><a class="link" href="#changing-the-default-jsf-implementation">9.22.2. Changing the default JSF implementation</a></h4>
+<h4 id="changing-the-default-jsf-implementation"><a class="link" href="#changing-the-default-jsf-implementation">9.24.2. Changing the default Jakarta Server Faces implementation</a></h4>
 <div class="paragraph">
-<p>The following CLI command can be used to make a newly installed JSF
-implementation the default JSF implementation used by WildFly:</p>
+<p>The following CLI command can be used to make a newly installed Jakarta Server Faces
+implementation the default Jakarta Server Faces implementation used by WildFly:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -18052,12 +18663,12 @@ implementation the default JSF implementation used by WildFly:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="configuring-a-jsf-app-to-use-a-non-default-jsf-implementation"><a class="link" href="#configuring-a-jsf-app-to-use-a-non-default-jsf-implementation">9.22.3. Configuring a JSF app to use a non-default JSF implementation</a></h4>
+<h4 id="configuring-a-jsf-app-to-use-a-non-default-jsf-implementation"><a class="link" href="#configuring-a-jsf-app-to-use-a-non-default-jsf-implementation">9.24.3. Configuring a Jakarta Server Faces app to use a non-default Jakarta Server Faces implementation</a></h4>
 <div class="paragraph">
-<p>A JSF app can be configured to use an installed JSF implementation
+<p>A Jakarta Server Faces app can be configured to use an installed Jakarta Server Faces implementation
 that&#8217;s not the default implementation by adding a
 <code>org.jboss.jbossfaces.JSF_CONFIG_NAME</code> context parameter to its
-<code>web.xml</code> file. For example, to indicate that a JSF app should use
+<code>web.xml</code> file. For example, to indicate that a Jakarta Server Faces app should use
 MyFaces 2.2.12 (assuming MyFaces 2.2.12 has been installed on the
 server), the following context parameter would need to be added:</p>
 </div>
@@ -18070,15 +18681,15 @@ server), the following context parameter would need to be added:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>If a JSF app does not specify this context parameter, the default JSF
+<p>If a Jakarta Server Faces app does not specify this context parameter, the default Jakarta Server Faces
 implementation will be used for that app.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="disallowing-doctype-declarations"><a class="link" href="#disallowing-doctype-declarations">9.22.4. Disallowing DOCTYPE declarations</a></h4>
+<h4 id="disallowing-doctype-declarations"><a class="link" href="#disallowing-doctype-declarations">9.24.4. Disallowing DOCTYPE declarations</a></h4>
 <div class="paragraph">
 <p>The following CLI commands can be used to disallow DOCTYPE declarations
-in JSF deployments:</p>
+in Jakarta Server Faces deployments:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -18087,7 +18698,7 @@ reload</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This setting can be overridden for a particular JSF deployment by
+<p>This setting can be overridden for a particular Jakarta Server Faces deployment by
 adding the <code>com.sun.faces.disallowDoctypeDecl</code> context parameter
 to the deployment&#8217;s <code>web.xml</code> file:</p>
 </div>
@@ -18102,7 +18713,7 @@ to the deployment&#8217;s <code>web.xml</code> file:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="JMX"><a class="link" href="#JMX">9.23. JMX subsystem configuration</a></h3>
+<h3 id="JMX"><a class="link" href="#JMX">9.25. JMX subsystem configuration</a></h3>
 <div class="paragraph">
 <p>The JMX subsystem registers a service with the Remoting endpoint so that
 remote access to JMX can be obtained over the exposed Remoting
@@ -18217,7 +18828,7 @@ dependencies</p></td>
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="audit-logging"><a class="link" href="#audit-logging">9.23.1. Audit logging</a></h4>
+<h4 id="audit-logging"><a class="link" href="#audit-logging">9.25.1. Audit logging</a></h4>
 <div class="paragraph">
 <p>Audit logging for the JMX MBean server managed by the JMX subsystem. The
 resource is at <code>/subsystem=jmx/configuration=audit-log</code> and its
@@ -18373,7 +18984,7 @@ field will be populated with Throwable.getMessage()</p></td>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Deployment_Scanner"><a class="link" href="#Deployment_Scanner">9.24. Deployment Scanner configuration</a></h3>
+<h3 id="Deployment_Scanner"><a class="link" href="#Deployment_Scanner">9.26. Deployment Scanner configuration</a></h3>
 <div class="paragraph">
 <p>The deployment scanner is only used in standalone mode. Its job is to
 monitor a directory for new files and to deploy those files. It can be
@@ -18532,7 +19143,7 @@ off scanning you can do</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Core_Management"><a class="link" href="#Core_Management">9.25. Core Management Subsystem Configuration</a></h3>
+<h3 id="Core_Management"><a class="link" href="#Core_Management">9.27. Core Management Subsystem Configuration</a></h3>
 <div class="paragraph">
 <p>The core management subsystem is composed services used to manage the
 server or monitor its status.<br>
@@ -18549,7 +19160,7 @@ The core management subsystem configuration may be used to:</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="lifecycle-listener"><a class="link" href="#lifecycle-listener">9.25.1. Lifecycle listener</a></h4>
+<h4 id="lifecycle-listener"><a class="link" href="#lifecycle-listener">9.27.1. Lifecycle listener</a></h4>
 <div class="paragraph">
 <p>You can create an implementation of
 <em>org.wildfly.extension.core.management.client.ProcessStateListener</em>
@@ -18633,7 +19244,7 @@ let&#8217;s add the module to the wildfly modules :</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="configuration-changes"><a class="link" href="#configuration-changes">9.25.2. Configuration changes</a></h4>
+<h4 id="configuration-changes"><a class="link" href="#configuration-changes">9.27.2. Configuration changes</a></h4>
 <div class="paragraph">
 <p>You can use the core management subsystem to enable and configure an
 <strong>in-memory</strong> history of the last configuration changes.<br>
@@ -18677,7 +19288,7 @@ For example to track the last 5 configuration changes let&#8217;s active this
 </div>
 </div>
 <div class="sect2">
-<h3 id="JAXRS"><a class="link" href="#JAXRS">9.26. JAXRS subsystem configuration</a></h3>
+<h3 id="JAXRS"><a class="link" href="#JAXRS">9.28. JAXRS subsystem configuration</a></h3>
 <div class="paragraph">
 <p>The jaxrs subsystem presents RESTful facilities as defined by the Jakarta RESTful Web Services
 project (<a href="https://projects.eclipse.org/projects/ee4j.jaxrs" class="bare">https://projects.eclipse.org/projects/ee4j.jaxrs</a>) and implemented
@@ -18686,6 +19297,18 @@ by the RESTEasy project (<a href="https://resteasy.github.io" class="bare">https
 <div class="paragraph">
 <p>jaxrs is a key facility and is implemented in the usual out of the box wildfly profiles, such as
 standalone.xml, standalone-full.xml, etc.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+References in this document to Java API for RESTful Web Services(JAX-RS) refer to Jakarta RESTful Web Services unless otherwise noted.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p><strong>Required extension:</strong></p>
@@ -18830,7 +19453,7 @@ See the RESTEasy User Guide chapter "Resteasy WebApplicationExceptions" for more
 </div>
 </div>
 <div class="sect2">
-<h3 id="Simple_configuration_subsystems"><a class="link" href="#Simple_configuration_subsystems">9.27. Simple configuration subsystems</a></h3>
+<h3 id="Simple_configuration_subsystems"><a class="link" href="#Simple_configuration_subsystems">9.29. Simple configuration subsystems</a></h3>
 <div class="paragraph">
 <p>The following subsystems currently have no configuration beyond its root
 element in the configuration</p>
@@ -19810,6 +20433,11 @@ overwrite the file when the management model is changed. However a full
 versioned history is maintained of the file.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--graceful-startup</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Start the servers in gracefully, queuing or cleanly rejecting incoming requests until the server is fully started.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">--git-repo</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">remote Git repository URL to use for configuration directory and content repository content or <code>local</code> if only a local repository is to be used.</p></td>
@@ -20184,7 +20812,7 @@ suspended it will immediately stop accepting new requests, but wait for
 existing requests to complete. A suspended server can be resumed at any
 point, and will begin processing requests immediately. Suspending and
 resuming has no effect on deployment state (e.g. if a server is
-suspended singleton EJB&#8217;s will not be destroyed). As of WildFly 11 it is
+suspended singleton Jakarta Enterprise Beans&#8217;s will not be destroyed). As of WildFly 11 it is
 also possible to start a server in suspended mode which means it will
 not accept requests until it has been resumed. Servers will also be
 suspended during the boot process, so no requests will be accepted until
@@ -20294,8 +20922,8 @@ request controller subsystem.</p>
 <div class="paragraph">
 <p>The following subsystems support graceful shutdown. Note that only
 subsystems that provide an external entry point to the server need
-graceful shutdown support. For example the JAX-RS subsystem does not
-require suspend/resume support as all access to JAX-RS is through the
+graceful shutdown support. For example the Jakarta RESTful Web Services subsystem does not
+require suspend/resume support as all access to Jakarta RESTful Web Services is through the
 web connector.</p>
 </div>
 <div class="ulist">
@@ -20308,9 +20936,10 @@ web connector.</p>
 balancer that the server is suspending in the PRE_SUSPEND phase.</p>
 </li>
 <li>
-<p><strong>EJB</strong> - EJB will wait for all remote EJB requests and MDB message
+<p><strong>Jakarta Enterprise Beans</strong> - Jakarta Enterprise Beans will wait
+for all remote Jakarta Enterprise Beans requests and MDB message
 deliveries to finish. Delivery to MDB&#8217;s is stopped in the PRE_SUSPEND
-phase. EJB timers are suspended, and missed timers will be activated
+phase. Jakarta Enterprise Beans timers are suspended, and missed timers will be activated
 when the server is resumed.</p>
 </li>
 <li>
@@ -20333,9 +20962,9 @@ started at the suspending server.</p>
 </ul>
 </div>
 <div class="sect4">
-<h5 id="transactions-and-ejbs"><a class="link" href="#transactions-and-ejbs">Transactions and EJBs</a></h5>
+<h5 id="transactions-and-Jakarta-Enterprise-Beans"><a class="link" href="#transactions-and-Jakarta-Enterprise-Beans">Transactions and Jakarta Enterprise Beans</a></h5>
 <div class="paragraph">
-<p>When you work with EJBs you have to enable the graceful shutdown
+<p>When you work with Jakarta Enterprise Beans you have to enable the graceful shutdown
 functionality by setting the attribute <code>enable-graceful-txn-shutdown</code> to
 <code>true</code>. For example, in the ejb3 subsystem section of <code>standalone.xml</code>:</p>
 </div>
@@ -20353,7 +20982,7 @@ finished. During that brief window of time, the client of a cluster may
 send a new request to a node that is shutting down and it will refuse the
 request because it is not related to an existing transaction.
 If this attribute <code>enable-graceful-txn-shutdown</code> is set to <code>false</code>, we
-disable the graceful behavior and EJB clients will not attempt to invoke
+disable the graceful behavior and Jakarta Enterprise Beans clients will not attempt to invoke
 the node when it suspends, regardless of active transactions.</p>
 </div>
 </div>
@@ -20481,10 +21110,55 @@ the proper way to control the lifecycle of a domain mode server process is via t
 management API and its managing Host Controller, not via direct signals to the server
 process.</p>
 </div>
-<div class="paragraph">
-<p>[[Starting_&amp;_stopping_Servers_in_a_Managed_Domain]]
-= Starting &amp; stopping Servers in a Managed Domain</p>
 </div>
+<div class="sect3">
+<h4 id="non-graceful-startup"><a class="link" href="#non-graceful-startup">11.2.8. Non-graceful Startup</a></h4>
+<div class="paragraph">
+<p>By default, WildFly starts up gracefully, meaning that incoming requests are queued or cleanly rejected
+until the server is ready to process them. In some instances, though, it may be desirable to allow the
+server to begin to process requests at the earliest possible moment. One such example might be
+when two deployed applications need to interact with one another during the deployment or
+application startup. In one such scenario, Application A needs to make a REST request to
+Application B to get information vital to its own startup. Under a graceful startup, the request
+to Application B will block until the server is fully started. However, the server can&#8217;t fully
+start, as Application A is waiting for data from Application B before its deploy/startup can
+complete. In this situation, a deadlock occurs, and the server startup times out.</p>
+</div>
+<div class="paragraph">
+<p>A non-graceful startup is intended to address this situation in that it will allow WildFly to
+begin attempting to answer requests as soon as possible. In the scenario above, assuming
+Application B has successfully deployed/started, Application A can also start immediately, as its
+request will be fulfilled. Note, however, that a race condition can occur: if Application B is
+not yet deployed (e.g., the deploy order is incorrect, or B has not finished starting), then
+Application A may still fail to start since Application B is not available. WildFly users making
+use of non-graceful startups must be aware of this and take steps to remedy those scenarios. With
+a non-graceful startup, however, WildFly will no longer be the cause of a deployment failure in
+such a configuration.</p>
+</div>
+<div class="paragraph">
+<p>Some discussion here of how this relates to reloading and restarting, as well as to suspended starts, is
+important. When reloading, the <code>ApplicationServerService</code> is stopped, and a new one started. It is equivalent
+to if it was being started the first time: all the same stuff happens, but it happens faster because a lot of
+classloading and static initialization doesn&#8217;t have to happen again. This includes honoring the value of
+<code>graceful-startup</code>, so if the server was initially started non-gracefully, it will be reloaded in the same manner.</p>
+</div>
+<div class="paragraph">
+<p>Restarting the server is similar. A restart means a new JVM, so all the initialization happens again, exactly
+as it did on the first start. When restarting in domain mode, the Host Controller simply rereads the config
+file and does the same thing it did the first time. In standalone, the restart is driven by <code>standalone.[sh|ps1|bat]</code>.
+The running JVM exits with a specific exit code, which the script recognizes and starts a new server, using the
+same parameters as the first start, so if you start a server non-gracefully, you will restart a server
+non-gracefully.</p>
+</div>
+<div class="paragraph">
+<p>Finally, there&#8217;s <code>start-mode=suspend</code>. In the event that an administrator specifies a suspended start as well as a
+non-graceful start, the suspended start will "win". That is to say, the server will start in a suspended mode,
+the <code>graceful-start=false</code> will be disregarded, and the server will log a message indicating that this is happening.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Starting_and_Stopping_Servers_in_a_Managed_Domain"><a class="link" href="#Starting_and_Stopping_Servers_in_a_Managed_Domain">11.3. Starting and Stopping Servers in a Managed Domain</a></h3>
 <div class="paragraph">
 <p>Starting a standalone server is done through the <code>bin/standalone.sh</code>
 script. However in a managed domain server instances are managed by the
@@ -20565,9 +21239,8 @@ the web interface.
 </table>
 </div>
 </div>
-</div>
 <div class="sect2">
-<h3 id="JVM_settings"><a class="link" href="#JVM_settings">11.3. JVM settings</a></h3>
+<h3 id="JVM_settings"><a class="link" href="#JVM_settings">11.4. JVM settings</a></h3>
 <div class="paragraph">
 <p>Configuration of the JVM settings is different for a managed domain and
 a standalone server. In a managed domain, the domain controller
@@ -20577,7 +21250,7 @@ responsibility of the process that started the server (e.g. passing them
 as command line arguments).</p>
 </div>
 <div class="sect3">
-<h4 id="managed-domain-5"><a class="link" href="#managed-domain-5">11.3.1. Managed Domain</a></h4>
+<h4 id="managed-domain-5"><a class="link" href="#managed-domain-5">11.4.1. Managed Domain</a></h4>
 <div class="paragraph">
 <p>In a managed domain the JVM settings can be declared at different
 scopes: For a specific server group, for a host or for a particular
@@ -20655,7 +21328,7 @@ heap size.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="standalone-server-4"><a class="link" href="#standalone-server-4">11.3.2. Standalone Server</a></h4>
+<h4 id="standalone-server-4"><a class="link" href="#standalone-server-4">11.4.2. Standalone Server</a></h4>
 <div class="paragraph">
 <p>For a standalone sever you have to pass in the JVM settings either as
 command line arguments when executing the
@@ -20667,7 +21340,7 @@ be declared in <code>%JBOSS_HOME%/bin/standalone.conf.bat.)</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Audit_logging"><a class="link" href="#Audit_logging">11.4. Audit logging</a></h3>
+<h3 id="Audit_logging"><a class="link" href="#Audit_logging">11.5. Audit logging</a></h3>
 <div class="paragraph">
 <p>WildFly comes with audit logging built in for management operations
 affecting the management model. By default it is turned off. The
@@ -20764,7 +21437,7 @@ step. Similarly if you are using a file handler, and want to change its
 </table>
 </div>
 <div class="sect3">
-<h4 id="audit-logging-json-formatter"><a class="link" href="#audit-logging-json-formatter">11.4.1. JSON Formatter</a></h4>
+<h4 id="audit-logging-json-formatter"><a class="link" href="#audit-logging-json-formatter">11.5.1. JSON Formatter</a></h4>
 <div class="paragraph">
 <p>The first thing that needs configuring is the formatter, we currently
 support outputting log records as JSON. You can define several
@@ -20919,7 +21592,7 @@ code in octal, e.g. "#012".</p></td>
 </table>
 </div>
 <div class="sect3">
-<h4 id="handlers-3"><a class="link" href="#handlers-3">11.4.2. Handlers</a></h4>
+<h4 id="handlers-3"><a class="link" href="#handlers-3">11.5.2. Handlers</a></h4>
 <div class="paragraph">
 <p>A handler is responsible for taking the formatted data and logging it to
 a location. There are currently two types of handlers, File and Syslog.
@@ -21270,7 +21943,7 @@ attribute is treated as relative to the path specified by this attribute</p></td
 </div>
 </div>
 <div class="sect3">
-<h4 id="logger-configuration"><a class="link" href="#logger-configuration">11.4.3. Logger configuration</a></h4>
+<h4 id="logger-configuration"><a class="link" href="#logger-configuration">11.5.3. Logger configuration</a></h4>
 <div class="paragraph">
 <p>The final part that needs configuring is the logger for the management
 operations. This references one or more handlers and is configured at
@@ -21311,7 +21984,7 @@ configured as <code>handler=*</code> children of the logger.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="domain-mode-host-specific-configuration"><a class="link" href="#domain-mode-host-specific-configuration">11.4.4. Domain Mode (host specific configuration)</a></h4>
+<h4 id="domain-mode-host-specific-configuration"><a class="link" href="#domain-mode-host-specific-configuration">11.5.4. Domain Mode (host specific configuration)</a></h4>
 <div class="paragraph">
 <p>In domain mode audit logging is configured for each host in its
 <code>host.xml</code> file. This means that when connecting to the DC, the
@@ -21380,13 +22053,13 @@ independently.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Canceling_Management_Operations"><a class="link" href="#Canceling_Management_Operations">11.5. Canceling Management Operations</a></h3>
+<h3 id="Canceling_Management_Operations"><a class="link" href="#Canceling_Management_Operations">11.6. Canceling Management Operations</a></h3>
 <div class="paragraph">
 <p>WildFly includes the ability to use the CLI to cancel management
 requests that are not proceeding normally.</p>
 </div>
 <div class="sect3">
-<h4 id="the-cancel-non-progressing-operation-operation"><a class="link" href="#the-cancel-non-progressing-operation-operation">11.5.1. The cancel-non-progressing-operation operation</a></h4>
+<h4 id="the-cancel-non-progressing-operation-operation"><a class="link" href="#the-cancel-non-progressing-operation-operation">11.6.1. The cancel-non-progressing-operation operation</a></h4>
 <div class="paragraph">
 <p>The <code>cancel-non-progressing-operation</code> operation instructs the target
 process to find any operation that isn&#8217;t proceeding normally and cancel
@@ -21458,7 +22131,7 @@ will be a failure response:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="the-find-non-progressing-operation-operation"><a class="link" href="#the-find-non-progressing-operation-operation">11.5.2. The find-non-progressing-operation operation</a></h4>
+<h4 id="the-find-non-progressing-operation-operation"><a class="link" href="#the-find-non-progressing-operation-operation">11.6.2. The find-non-progressing-operation operation</a></h4>
 <div class="paragraph">
 <p>To simply learn the id of an operation that isn&#8217;t proceeding normally,
 but not cancel it, use the <code>find-non-progressing-operation</code> operation:</p>
@@ -21482,7 +22155,7 @@ operation can be examined to learn more about its status.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="examining-the-status-of-an-active-operation"><a class="link" href="#examining-the-status-of-an-active-operation">11.5.3. Examining the status of an active operation</a></h4>
+<h4 id="examining-the-status-of-an-active-operation"><a class="link" href="#examining-the-status-of-an-active-operation">11.6.3. Examining the status of an active operation</a></h4>
 <div class="paragraph">
 <p>There is a management resource for any currently executing operation
 that can be queried:</p>
@@ -21642,7 +22315,7 @@ the <code>read-children-resources</code> operation:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="canceling-a-specific-operation"><a class="link" href="#canceling-a-specific-operation">11.5.4. Canceling a specific operation</a></h4>
+<h4 id="canceling-a-specific-operation"><a class="link" href="#canceling-a-specific-operation">11.6.4. Canceling a specific operation</a></h4>
 <div class="paragraph">
 <p>The <code>cancel-non-progressing-operation</code> operation is a convenience
 operation for identifying and canceling an operation. However, an
@@ -21661,7 +22334,7 @@ operation on the resource for the desired operation.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="controlling-operation-blocking-time"><a class="link" href="#controlling-operation-blocking-time">11.5.5. Controlling operation blocking time</a></h4>
+<h4 id="controlling-operation-blocking-time"><a class="link" href="#controlling-operation-blocking-time">11.6.5. Controlling operation blocking time</a></h4>
 <div class="paragraph">
 <p>As an operation executes, the execution thread may block at various
 points, particularly while waiting for the service container to
@@ -21694,7 +22367,7 @@ points during operation execution.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Configuration_file_history"><a class="link" href="#Configuration_file_history">11.6. Configuration file history</a></h3>
+<h3 id="Configuration_file_history"><a class="link" href="#Configuration_file_history">11.7. Configuration file history</a></h3>
 <div class="paragraph">
 <p>The management operations may modify the model. When this occurs the xml
 backing the model is written out again reflecting the latest changes. In
@@ -21780,7 +22453,7 @@ folder within the <code>standalone_xml_history</code>, and a new <code>current</
 is created. These timestamped folders are kept for 30 days.</p>
 </div>
 <div class="sect3">
-<h4 id="snapshots-file-history"><a class="link" href="#snapshots-file-history">11.6.1. Snapshots</a></h4>
+<h4 id="snapshots-file-history"><a class="link" href="#snapshots-file-history">11.7.1. Snapshots</a></h4>
 <div class="paragraph">
 <p>In addition to the backups taken by the server as described above you
 can manually take take snapshots which will be stored in the <code>snapshot</code>
@@ -21866,7 +22539,7 @@ to navigate to the host in question:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="subsequent-starts"><a class="link" href="#subsequent-starts">11.6.2. Subsequent Starts</a></h4>
+<h4 id="subsequent-starts"><a class="link" href="#subsequent-starts">11.7.2. Subsequent Starts</a></h4>
 <div class="paragraph">
 <p>For subsequent server starts it may be desirable to take the state of
 the server back to one of the previously known states, for a number of
@@ -21927,7 +22600,7 @@ configuration as an absolute path will be made.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Configuration_file_git_history"><a class="link" href="#Configuration_file_git_history">11.7. Git Configuration file history</a></h3>
+<h3 id="Configuration_file_git_history"><a class="link" href="#Configuration_file_git_history">11.8. Git Configuration file history</a></h3>
 <div class="paragraph">
 <p>To enhance the initial <a href="#Configuration_file_history">configuration file history</a> we have now a native Git support to manage the configuration history. This feature goes a little farther than the initial configuration file history in that it also manages content repository content and all the configuration files (such as properties). This feature only work for <strong>standalone servers</strong> using the default directory layout.</p>
 </div>
@@ -21961,7 +22634,7 @@ the model, for example adding a new system property using the CLI:</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="local_git_repository"><a class="link" href="#local_git_repository">11.7.1. Local Git Repository</a></h4>
+<h4 id="local_git_repository"><a class="link" href="#local_git_repository">11.8.1. Local Git Repository</a></h4>
 <div class="paragraph">
 <p>Starting the server with the option <code>--git-repo=local</code> will initiate a Git repository if none exists or use the current Git repository. When initiating the local Git repository a <code>.gitignore</code> file will be created and added to the initial commit.</p>
 </div>
@@ -21970,7 +22643,7 @@ the model, for example adding a new system property using the CLI:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="remote_git_repository"><a class="link" href="#remote_git_repository">11.7.2. Remote Git Repository</a></h4>
+<h4 id="remote_git_repository"><a class="link" href="#remote_git_repository">11.8.2. Remote Git Repository</a></h4>
 <div class="paragraph">
 <p>If a remote Git repository is provided then the server will try to pull from it at boot. If this is the first time we are pulling then local files will be deleted to avoid the pull to fail because of the need to overwrite those existing files.
 The parameter for <code>--git-repo</code> can be a URL or a remote alias provided you have manually added it to the local git configuration.</p>
@@ -22014,7 +22687,7 @@ The parameter for <code>--git-repo</code> can be a URL or a remote alias provide
 </div>
 </div>
 <div class="sect3">
-<h4 id="snapshots-git-history"><a class="link" href="#snapshots-git-history">11.7.3. Snapshots</a></h4>
+<h4 id="snapshots-git-history"><a class="link" href="#snapshots-git-history">11.8.3. Snapshots</a></h4>
 <div class="paragraph">
 <p>In addition to the commits taken by the server as described above you
 can manually take snapshots which will be stored as <code>tags</code> in the Git repository.
@@ -22063,7 +22736,7 @@ You can choose the tag name and the commit message attached to this tag.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="remote_push"><a class="link" href="#remote_push">11.7.4. Remote push</a></h4>
+<h4 id="remote_push"><a class="link" href="#remote_push">11.8.4. Remote push</a></h4>
 <div class="paragraph">
 <p>You may need to push your repository changes to a remote repository so you can share them.</p>
 </div>
@@ -22075,7 +22748,7 @@ You can choose the tag name and the commit message attached to this tag.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ssh_auth"><a class="link" href="#ssh_auth">11.7.5. SSH Authentication</a></h4>
+<h4 id="ssh_auth"><a class="link" href="#ssh_auth">11.8.5. SSH Authentication</a></h4>
 <div class="paragraph">
 <p>Users may also connect to an SSH git server. In order to connect to any SSH git server to manage your configuration file history, you must use an Elytron configuration
 file to specify your SSH credentials. The following example shows how to specify an SSH url and a <code>wildfly-config.xml</code> file
@@ -24583,7 +25256,7 @@ have to use <a href="http://localhost:9990/management/" class="bare">http://loca
 </div>
 </div>
 <div class="sect3">
-<h4 id="using-some-jax-rs-code"><a class="link" href="#using-some-jax-rs-code">12.4.5. Using some JAX-RS code</a></h4>
+<h4 id="using-some-Jakarta-RESTful-Web-Services-code"><a class="link" href="#using-some-Jakarta-RESTful-Web-Services-code">12.4.5. Using some Jakarta RESTful Web Services code</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="java">HttpAuthenticationFeature feature = HttpAuthenticationFeature.digest(<span class="string"><span class="delimiter">&quot;</span><span class="content">admin</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">admin</span><span class="delimiter">&quot;</span></span>);
@@ -24911,7 +25584,7 @@ to the process it was managing and release other resources:</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-request"><a class="link" href="#format-of-a-detyped-operation-request">12.5.3. Format of a Detyped Operation Request</a></h4>
 <div class="paragraph">
-<p>The basic method a user of the WildFly 22 programmatic management API
+<p>The basic method a user of the WildFly 23 programmatic management API
 would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -25431,7 +26104,7 @@ header just like this :</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-response"><a class="link" href="#format-of-a-detyped-operation-response">12.5.4. Format of a Detyped Operation Response</a></h4>
 <div class="paragraph">
-<p>As noted previously, the basic method a user of the WildFly 22
+<p>As noted previously, the basic method a user of the WildFly 23
 programmatic management API would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -26098,7 +26771,7 @@ properties and properties specified on command line using -D, -P or
 </div>
 </div>
 <div class="sect2">
-<h3 id="configuration-5"><a class="link" href="#configuration-5">13.2. Configuration</a></h3>
+<h3 id="configuration-7"><a class="link" href="#configuration-7">13.2. Configuration</a></h3>
 <div class="sect3">
 <h4 id="list-subsystems"><a class="link" href="#list-subsystems">13.2.1. List Subsystems</a></h4>
 <div class="listingblock">
@@ -26337,7 +27010,7 @@ script (e.g. 'bin/jboss-admin.bat --connect command=:shutdown').</p>
 <div class="paragraph">
 <p>To avoid "Press any key to continue &#8230;&#8203;" message you need to specify
 NOPAUSE variable. Call 'set NOPAUSE=true' in command line before running
-any WildFly 22 .bat script or include it in your custom script before
+any WildFly 23 .bat script or include it in your custom script before
 invoking scripts from WildFly.</p>
 </div>
 </div>
@@ -26898,8 +27571,8 @@ Thanks to the <em>config=&lt;config name&gt;</em> system property, the script ca
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 22.0.1.Final<br>
-Last updated 2020-11-10 16:51:30 PST
+Version 23.0.0.Final<br>
+Last updated 2020-12-01 21:12:38 CST
 </div>
 </div>
 </body>
