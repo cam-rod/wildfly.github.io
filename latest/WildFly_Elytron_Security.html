@@ -522,8 +522,8 @@ table.CodeRay td.code>pre{padding:0}
 <div id="header">
 <h1>WildFly Elytron Security</h1>
 <div class="details">
-<span id="revnumber">version 19.1.0.Final,</span>
-<span id="revdate">2020-05-04T20:24:20Z</span>
+<span id="revnumber">version 20.0.0.Final,</span>
+<span id="revdate">2020-06-05T20:49:23Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Elytron Security Guide</div>
@@ -622,7 +622,13 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#cli-examples-on-how-to-create-a-token-realm">13.5. CLI Examples on How to Create a Token Realm</a></li>
 </ul>
 </li>
-<li><a href="#OpenSSL">14. OpenSSL</a></li>
+<li><a href="#OpenSSL">14. OpenSSL</a>
+<ul class="sectlevel3">
+<li><a href="#configure-the-elytron-subsystem-to-use-the-openssl-tls-provider-by-default">14.1. Configure the Elytron subsystem to use the OpenSSL TLS provider by default</a></li>
+<li><a href="#configure-the-openssl-tls-provider-on-an-ssl-context">14.2. Configure the OpenSSL TLS provider on an SSL context</a></li>
+<li><a href="#openssl-library-location">14.3. OpenSSL Library Location</a></li>
+</ul>
+</li>
 <li><a href="#Web_Single_Sign_On">15. Web Single Sign-On</a>
 <ul class="sectlevel2">
 <li><a href="#create-a-server-configuration-template">15.1. Create a Server Configuration Template</a></li>
@@ -2317,6 +2323,17 @@ always returns the same constant.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Definition of a simple RoleDecoder that takes a
 single attribute and maps it directly to roles.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">source-address-role-decoder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Definition of a RoleDecoder that maps roles
+based on the IP address of the remote client.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">aggregate-role-decoder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A role decoder that is an aggregation of other
+role decoders. An aggregate role decoder combines the roles obtained using
+each role decoder.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -2367,6 +2384,12 @@ performs a logical operation using two referenced role mappers.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">mapped-role-mapper</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A role mapper definition for a role mapper that uses
 configured mapping of role names to map role names.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">regex-role-mapper</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A role mapper definition for a role mapper that
+performs a regex matching and maps matching roles with provided pattern.
+Regex can capture groups that replacement pattern can make use of.</p></td>
 </tr>
 </tbody>
 </table>
@@ -2667,6 +2690,7 @@ and openssl provider loaders.</p></td>
             <span class="string"><span class="delimiter">&quot;</span><span class="content">openssl</span><span class="delimiter">&quot;</span></span>
         ]}},
         <span class="string"><span class="delimiter">&quot;</span><span class="content">aggregate-realm</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">aggregate-role-decoder</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">aggregate-role-mapper</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">aggregate-sasl-server-factory</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">aggregate-security-event-listener</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
@@ -2808,6 +2832,7 @@ and openssl provider loaders.</p></td>
             }
         },
         <span class="string"><span class="delimiter">&quot;</span><span class="content">provider-sasl-server-factory</span><span class="delimiter">&quot;</span></span> =&gt; {<span class="string"><span class="delimiter">&quot;</span><span class="content">global</span><span class="delimiter">&quot;</span></span> =&gt; {<span class="string"><span class="delimiter">&quot;</span><span class="content">providers</span><span class="delimiter">&quot;</span></span> =&gt; undefined}},
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">regex-role-mapper</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">regex-principal-transformer</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">regex-validating-principal-transformer</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">sasl-authentication-factory</span><span class="delimiter">&quot;</span></span> =&gt; {
@@ -2907,6 +2932,7 @@ and openssl provider loaders.</p></td>
         <span class="string"><span class="delimiter">&quot;</span><span class="content">simple-regex-realm-mapper</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">simple-role-decoder</span><span class="delimiter">&quot;</span></span> =&gt; {<span class="string"><span class="delimiter">&quot;</span><span class="content">groups-to-roles</span><span class="delimiter">&quot;</span></span> =&gt; {<span class="string"><span class="delimiter">&quot;</span><span class="content">attribute</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">groups</span><span class="delimiter">&quot;</span></span>}},
         <span class="string"><span class="delimiter">&quot;</span><span class="content">size-rotating-file-audit-log</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">source-address-role-decoder</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">syslog-audit-log</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">token-realm</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">trust-manager</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
@@ -6312,7 +6338,7 @@ sections.</p>
 <p>A role decoder converts attributes from the identity provided by the
 security realm into roles. Role decoders are also specifically typed
 based on their functionality, for example <em>empty-role-decoder</em>,
-<em>simple-role-decoder</em>, and <em>custom-role-decoder</em>.</p>
+<em>simple-role-decoder</em>, <em>custom-role-decoder</em>, and <em>aggregate-role-decoder</em>.</p>
 </div>
 <div class="paragraph">
 <p>Adding a role decoder takes the general form:</p>
@@ -6320,6 +6346,103 @@ based on their functionality, for example <em>empty-role-decoder</em>,
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/ROLE-DECODER-TYPE=roleDeoderName:add(....)</code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="create-an-elytron-role-decoder-that-makes-use-of-the-ip-address-of-the-remote-client">Create an Elytron Role Decoder that makes use of the IP Address of the Remote Client</h5>
+<div class="paragraph">
+<p>A role decoder that is configured on a security realm assigns roles to
+an identity based on attributes provided by the security realm. It is
+also possible to configure a role decoder that makes use of the IP
+address of the remote client when determining the roles associated
+with an identity. As an example, we might want to make use of the IP
+address of the remote client in order to assign a user a particular
+role when establishing a connection to the server from a corporate
+network and a different role when establishing a connection to the
+server from a different network.</p>
+</div>
+<div class="paragraph">
+<p>Adding a role decoder that makes use of the remote client&#8217;s IP
+address takes the general form:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/source-address-role-decoder=roleDecoderName:add(source-address="...", pattern="...", roles=[...])</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In particular, a <em>source-address-role-decoder</em> has the following attributes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>source-address</em> - The IP address of the remote client.</p>
+</li>
+<li>
+<p><em>pattern</em> - A regular expression that specifies the IP address to match.</p>
+</li>
+<li>
+<p><em>roles</em> - The list of roles to assign if the source IP address matches the given address.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Only one of <em>source-address</em> and <em>pattern</em> should be specified.</p>
+</div>
+<div class="paragraph">
+<p>For example, the following <em>source-address-role-decoder</em> could be configured to specify
+that a user should be assigned the "Administrator" role when establishing a connection
+to the server from the 10.10.10.10 IP address:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/source-address-role-decoder=decoder1:add(source-address="10.10.10.10", roles=["Administrator"])</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once a <em>source-address-role-decoder</em> has been configured, it can be referenced from a <em>security-domain</em>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/security-domain=exampleSD:add(..., role-decoder=decoder1)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is also possible to assign permissions to an identity based on its roles using a
+<a href="Using_the_Elytron_Subsystem.html#create-an-elytron-permission-mapper">simple permission mapper</a>.</p>
+</div>
+<div class="paragraph">
+<p>Example configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/source-address-role-decoder=decoder1:add(source-address="10.10.10.10", roles=["Administrator"])
+/subsystem=elytron/simple-permission-mapper=ipPermissionMapper:add(permission-mappings=[{roles=["Administrator"], permission-sets=[{permission-set=login-permission}]}])
+/subsystem=elytron/security-domain=exampleSD:add(..., role-decoder=decoder1, permission-mapper=ipPermissionMapper)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above example configures a security domain with a source address role decoder that
+will assign the "Administrator" role when the IP address of the remote client matches
+the configured address and a simple permission mapper that only assigns the
+"LoginPermission" if the identity has the "Administrator" role. Thus, authentication
+will succeed if the IP address of the remote client matches the configured address.</p>
+</div>
+<div class="paragraph">
+<p>It is also possible to configure an <em>aggregate-role-decoder</em>. This consists of
+two or more <em>role-decoder</em> elements where each element is a reference to a configured
+role decoder. Each role decoder will be applied and the returned value will be a union of
+the roles returned by each decoder.</p>
+</div>
+<div class="paragraph">
+<p>Example configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/source-address-role-decoder=decoder1:add(source-address="10.10.10.10", roles=["Administrator"])
+/subsystem=elytron/source-address-role-decoder=decoder2:add(source-address="12.12.12.12", roles=["Users"])
+/subsystem=elytron/aggregate-role-decoder=aggregateDecoder:add(role-decoders=[decoder1, decoder2])</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -9300,7 +9423,53 @@ should be validated:</p>
 <div class="sect1">
 <h2 id="OpenSSL">14. OpenSSL</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>There are a couple ways you can configure WildFly to use the OpenSSL TLS provider.</p>
+</div>
+<div class="sect3">
+<h4 id="configure-the-elytron-subsystem-to-use-the-openssl-tls-provider-by-default">14.1. Configure the Elytron subsystem to use the OpenSSL TLS provider by default</h4>
+<div class="paragraph">
+<p>The following commands can be used to configure the Elytron subsystem so that the OpenSSL TLS
+provider is used by default:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron:write-attribute(name=initial-providers, value=combined-providers)
+/subsystem=elytron:undefine-attribute(name=final-providers)
+reload</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="configure-the-openssl-tls-provider-on-an-ssl-context">14.2. Configure the OpenSSL TLS provider on an SSL context</h4>
+<div class="paragraph">
+<p>Instead of configuring the Elytron subsystem to use the OpenSSL TLS provider by default,
+it is also possible to specify that the OpenSSL TLS provider should be used for a specific
+SSL context. For example, the following command can be used to create a <code>server-ssl-context</code>
+that will use the OpenSSL TLS provider:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/server-ssl-context=httpsSSC:add(providers=openssl, ...)
+reload</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="openssl-library-location">14.3. OpenSSL Library Location</h3>
+<div class="paragraph">
+<p>WildFly will search for the OpenSSL library using the standard system library search path. If you&#8217;d like to specify a
+custom location for the OpenSSL library, the <code>org.wildfly.openssl.path</code> property can be specified during WildFly startup.</p>
+</div>
+<div class="paragraph">
+<p>If OpenSSL was loaded successfully, a message similar to the one below will occur in the <code>server.log</code> file on startup:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>15:37:59,814 INFO [org.wildfly.openssl.SSL] (MSC service thread 1-7) WFOPENSSL0002 OpenSSL Version OpenSSL 1.1.1d FIPS  10 Sep 2019</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -9992,9 +10161,107 @@ Alias "example" has been successfully removed</code></pre>
 {"outcome" =&gt; "success"}</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>The above command assumes that the referenced credential already exists in the previously defined credential store.
+The next section will describe how credentials can automatically be added to the previously defined credential store.</p>
+</div>
 </div>
 <div class="sect3">
-<h4 id="wildfly-config-xml">16.4.2. wildfly-config.xml</h4>
+<h4 id="automatic-updates-of-credential-stores">16.4.2. Automatic Updates of Credential Stores</h4>
+<div class="paragraph">
+<p>Instead of needing to add a credential to a previously defined credential store in order to reference it from a <code>credential-reference</code>,
+it is possible to have the credential get added automatically to the previously defined credential store by specifying both
+the <code>store</code> and <code>clear-text</code> attributes for the <code>credential-reference</code>. In particular, when adding a new <code>credential-reference</code>
+with both the <code>store</code> and <code>clear-text</code> attributes specified:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If the <code>alias</code> attribute is also specified, then one of the following will then occur:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If the previously defined credential store does not contain an entry for the given alias, a new entry will be added
+to the credential store to hold the clear text password that was specified. The <code>clear-text</code> attribute will then be
+removed from the management model.</p>
+</li>
+<li>
+<p>If the credential store does contain an entry for the given alias, the existing credential will be replaced with the
+clear text password that was specified. The <code>clear-text</code> attribute will then be removed from the management model.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>If the <code>alias</code> attribute is not specified, an alias will be generated and a new entry will be added to the credential
+store to hold the clear text password that was specified. The <code>clear-text</code> attribute will then be removed from the
+management model.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>As an example, the following CLI command will result in a new entry being added to the previously defined credential
+store, <code>mycredstore</code>, with alias <code>myNewAlias</code> and credential <code>myNewPassword</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/key-store=exampleKS:add(relative-to=jboss.server.config.dir, path=example.keystore, type=JCEKS, credential-reference={store=mycredstore, alias=myNewAlias, clear-text=myNewPassword})
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; {"credential-store-update" =&gt; {
+        "status" =&gt; "new-entry-added",
+        "new-alias" =&gt; "myNewAlias"
+    }}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When updating an existing <code>credential-reference</code> that contains both the <code>alias</code> and <code>store</code> attributes to also specify
+the <code>clear-text</code> attribute:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The existing credential in the previously defined credential store will be replaced with the clear text password that
+was specified. The <code>clear-text</code> attribute will then be removed from the management model.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>As an example, the following CLI command will result in updating the credential for the <code>myNewAlias</code> entry that was just
+added to the previously defined credential store:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/key-store=exampleKS:write-attribute(name=credential-reference.clear-text,value=myUpdatedPassword)
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; {"credential-store-update" =&gt; {"status" =&gt; "existing-entry-updated"}},
+    "response-headers" =&gt; {
+        "operation-requires-reload" =&gt; true,
+        "process-state" =&gt; "reload-required"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If an operation that includes a <code><code>credential-reference</code></code> parameter fails for any reason,
+      no automatic credential store update will take place, i.e., any credential store that was
+      specified via the <code><code>credential-reference</code></code> attribute will contain the same contents as it
+      did before the operation was executed.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="wildfly-config-xml">16.4.3. wildfly-config.xml</h4>
 <div class="paragraph">
 <p>If you are making use of the <code>wildfly-config.xml</code> descriptor it is also possible to define a credential store within this descriptor to obtain credentials without requiring them to be in-lined within the configuration.</p>
 </div>
@@ -13396,8 +13663,8 @@ for example, Infinispan cache cannot be used, any others?</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 19.1.0.Final<br>
-Last updated 2020-04-23 18:23:29 CDT
+Version 20.0.0.Final<br>
+Last updated 2020-01-20 10:18:55 PST
 </div>
 </div>
 </body>

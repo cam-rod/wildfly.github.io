@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>Developer Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly developer team</span><br>
-<span id="revnumber">version 19.1.0.Final,</span>
-<span id="revdate">2020-05-04T20:24:20Z</span>
+<span id="revnumber">version 20.0.0.Final,</span>
+<span id="revdate">2020-06-05T20:49:23Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Developer guide</div>
@@ -599,6 +599,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#Securing_EJBs">9.12. Securing EJBs</a></li>
 <li><a href="#ejb-client-interceptors">9.13. EJB Client Interceptors</a></li>
 <li><a href="#EJB_on_Kubernetes">9.14. EJB on Kubernetes</a></li>
+<li><a href="#EJB_Deployment_Runtime_Resources">9.15. EJB Deployment Runtime Resources</a></li>
 </ul>
 </li>
 <li><a href="#JPA_Reference_Guide">10. JPA Reference Guide</a>
@@ -717,7 +718,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#example-applications-based-on-ee6">21.2. Example Applications Based on EE6</a></li>
 </ul>
 </li>
-<li><a href="#Migrate_Order_Application_from_EAP5">22. Porting the Order Application from EAP 5.1 to WildFly 19.1</a>
+<li><a href="#Migrate_Order_Application_from_EAP5">22. Porting the Order Application from EAP 5.1 to WildFly 20</a>
 <ul class="sectlevel2">
 <li><a href="#overview-of-the-application">22.1. Overview of the application</a></li>
 <li><a href="#summary-of-changes-migrate-order-application">22.2. Summary of changes</a></li>
@@ -1496,7 +1497,7 @@ deployment.</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>As explained in the <a href="#Class_Loading_in_WildFly">Class Loading in WildFly</a> article,
-WildFly 19.1 is based on module classloading. A class within a module B
+WildFly 20 is based on module classloading. A class within a module B
 isn&#8217;t visible to a class within a module A, unless module B adds a
 dependency on module A. Module dependencies can be explicitly (as
 explained in that classloading article) or can be "implicit". This
@@ -1885,7 +1886,7 @@ applications.</p>
 <h2 id="Application_Client_Reference">5. Application Client Reference</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As a Jakarta EE compliant server, WildFly 19.1 contains an application
+<p>As a Jakarta EE compliant server, WildFly 20 contains an application
 client. An application client is essentially a cut down server instance,
 that allow you to use EE features such as injection in a client side
 program.</p>
@@ -2140,7 +2141,7 @@ Guide</a><br>
 <div class="sect2">
 <h3 id="using-cdi-beans-from-outside-the-deployment">7.1. Using CDI Beans from outside the deployment</h3>
 <div class="paragraph">
-<p>For WildFly 19.1 onwards, it is now possible have classes outside the
+<p>For WildFly 20 onwards, it is now possible have classes outside the
 deployment be picked up as CDI beans. In order for this to work you must
 add a dependency on the external deployment that your beans are coming
 from, and make sure the META-INF directory of this deployment is
@@ -2720,7 +2721,7 @@ Executor Service instance&#8217;s JNDI name is
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter details the extensions that are available when developing
-Enterprise Java Beans <sup>tm</sup> on WildFly 19.1.</p>
+Enterprise Java Beans <sup>tm</sup> on WildFly 20.</p>
 </div>
 <div class="paragraph">
 <p>Currently there is no support for configuring the extensions using an
@@ -3224,19 +3225,16 @@ here
 will get invoked during the invocation on the bean. Here&#8217;s an example of
 the interceptor:</p>
 </div>
-<div class="paragraph">
-<div class="title">Example of container interceptor</div>
-<p>[source,java,options="nowrap"</p>
-</div>
 <div class="listingblock">
+<div class="title">Example of container interceptor</div>
 <div class="content">
-<pre>public class ClassLevelContainerInterceptor {
-    @AroundInvoke
-    private Object iAmAround(final InvocationContext invocationContext) throws Exception {
-        return this.getClass().getName() + " " + invocationContext.proceed();
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ClassLevelContainerInterceptor</span> {
+    <span class="annotation">@AroundInvoke</span>
+    <span class="directive">private</span> <span class="predefined-type">Object</span> iAmAround(<span class="directive">final</span> InvocationContext invocationContext) <span class="directive">throws</span> <span class="exception">Exception</span> {
+        <span class="keyword">return</span> <span class="local-variable">this</span>.getClass().getName() + <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="delimiter">&quot;</span></span> + invocationContext.proceed();
     }
- 
-}</pre>
+<span class="error"> </span>
+}</code></pre>
 </div>
 </div>
 </div>
@@ -3414,7 +3412,92 @@ in jboss-ejb3.xml:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="technical-details">9.7.3. Technical details</h4>
+<h4 id="programmatically-refresh-timer">9.7.3. Programmatically Refresh Timer</h4>
+<div class="paragraph">
+<p>In a clustered deployment, multiple nodes updating timer datastore may cause the in-memory timer state to be temporarily
+out of sync. Some application may find the <code>refresh-interval</code> configuration not sufficient in some cases, and
+need to programmatically refresh timers. This can be done with EE interceptors configured for those business methods
+that need this capability, as illustrated in the following steps:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Implement an EE interceptor that enables <code>wildfly.ejb.timer.refresh.enabled</code> to true. For example,</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="keyword">import</span> <span class="include">javax.interceptor.AroundInvoke</span>;
+<span class="keyword">import</span> <span class="include">javax.interceptor.Interceptor</span>;
+<span class="keyword">import</span> <span class="include">javax.interceptor.InvocationContext</span>;
+
+<span class="comment">/**
+ * An interceptor to enable programmatic timer refresh across multiple nodes.
+ */</span>
+<span class="annotation">@Interceptor</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">RefreshInterceptor</span> {
+    <span class="annotation">@AroundInvoke</span>
+    <span class="directive">public</span> <span class="predefined-type">Object</span> intercept(InvocationContext context) <span class="directive">throws</span> <span class="exception">Exception</span> {
+        context.getContextData().put(<span class="string"><span class="delimiter">&quot;</span><span class="content">wildfly.ejb.timer.refresh.enabled</span><span class="delimiter">&quot;</span></span>, <span class="predefined-type">Boolean</span>.TRUE);
+        <span class="keyword">return</span> context.proceed();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Configure the EE interceptor to the target stateless or singleton bean business methods.
+When <code>wildfly.ejb.timer.refresh.enabled</code> is set to true, calling <code>TimerService.getAllTimers()</code>
+will first refresh from timer datastore before returning timers. For example,</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="annotation">@Singleton</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">RefreshBean1</span> ... {
+
+    <span class="annotation">@Interceptors</span>(RefreshInterceptor.class)
+    <span class="directive">public</span> <span class="type">void</span> businessMethod1() {
+        ...
+        <span class="comment">// since wildfly.ejb.timer.refresh.enabled is set to true in interceptor for this business method,</span>
+        <span class="comment">// calling timerService.getAllTimers() will first refresh from timer datastore before returning timers.</span>
+        final <span class="predefined-type">Collection</span>&lt;<span class="predefined-type">Timer</span>&gt; allTimers = timerService.getAllTimers();
+        ...
+    }
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Applications may configure such an interceptor to certain business methods that require this capability.
+Alternatively, applications may implement a dedicated business method to programmatically refresh timers, to
+be invoked by other parts of the application when needed. For example,</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java">    <span class="annotation">@Interceptors</span>(RefreshInterceptor.class)
+    <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Timer</span>&gt; getAllTimerInfoWithRefresh() {
+        <span class="keyword">return</span> timerService.getAllTimers();
+    }
+
+    <span class="directive">public</span> <span class="type">void</span> businessMethod1() {
+        <span class="directive">final</span> LocalBusinessInterface businessObject = sessionContext.getBusinessObject(LocalBusinessInterface.class);
+        businessObject.getAllTimerInfoWithRefresh();
+
+        <span class="comment">// timer has been programmatically refreshed from datastore.</span>
+        <span class="comment">// continue with other business logic...</span>
+    }</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="technical-details">9.7.4. Technical details</h4>
 <div class="paragraph">
 <p>Internally every node that is allowed to execute timers schedules a
 timeout for every timer is knows about. When this timeout expires then
@@ -3692,7 +3775,7 @@ defined in the server configuration (i.e. <code>standalone.xml</code> or
 <div class="sect5">
 <h6 id="the-clustering-namespace-urnclustering1.0">The clustering namespace urn:clustering:1.0</h6>
 <div class="paragraph">
-<p>This namespace is deprecated and as of WildFly 19.1 its use has no effect.
+<p>This namespace is deprecated and as of WildFly 20 its use has no effect.
 The clustering behavior of EJBs is determined by the profile in use on
 the server.</p>
 </div>
@@ -4224,7 +4307,7 @@ specific extensions to the security configurations.</p>
 <div class="paragraph">
 <p>The Jakarta EE spec doesn&#8217;t mandate a specific way to configure security
 domain for a bean. It leaves it to the vendor implementations to allow
-such configurations, the way they wish. In WildFly 19.1, the use of
+such configurations, the way they wish. In WildFly 20, the use of
 <code>@org.jboss.ejb3.annotation.SecurityDomain</code> annotation allows the
 developer to configure the security domain for a bean. Here&#8217;s an
 example:</p>
@@ -4319,14 +4402,14 @@ of a .jar deployment or .war/WEB-INF folder of a .war deployment.
 <div class="paragraph">
 <p>As you can see the <code>doSomething</code> method is configured to be accessible
 for users with role "bar". However, the bean isn&#8217;t configured for any
-specific security domain. Prior to WildFly 19.1, the absence of an
+specific security domain. Prior to WildFly 20, the absence of an
 explicitly configured security domain on the bean would leave the bean
 unsecured, which meant that even if the <code>doSomething</code> method was
 configured with <code>@RolesAllowed("bar")</code> anyone even without the "bar"
 role could invoke on the bean.</p>
 </div>
 <div class="paragraph">
-<p>In WildFly 19.1, the presence of any security metadata (like @RolesAllowed,
+<p>In WildFly 20, the presence of any security metadata (like @RolesAllowed,
 @PermitAll, @DenyAll, @RunAs, @RunAsPrincipal) on the bean or any
 business method of the bean, makes the bean secure, even in the absence
 of an explicitly configured security domain. In such cases, the security
@@ -4367,7 +4450,7 @@ domain defaulted to "other"). However, notice that the method
 <code>helloWorld</code> doesn&#8217;t have any specific security configurations.</p>
 </div>
 <div class="paragraph">
-<p>In WildFly 19.1, such methods which have no explicit security
+<p>In WildFly 20, such methods which have no explicit security
 configurations, in a secured bean, will be treated similar to a method
 with <code>@DenyAll</code> configuration. What that means is, no one is allowed
 access to the <code>helloWorld</code> method. This behaviour can be controlled via
@@ -4592,6 +4675,379 @@ Then the caller WildFly uses the configuration in <code>wildfly-config.xml</code
   <span class="tag">&lt;/authentication-client&gt;</span>
 <span class="tag">&lt;/configuration&gt;</span></code></pre>
 </div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="EJB_Deployment_Runtime_Resources">9.15. EJB Deployment Runtime Resources</h3>
+<div class="paragraph">
+<p>Enterprise bean deployment exposes certain management runtime resources to help users inspect enterprise bean metadata
+and monitor invocation statistics. Bean metadata is configured in the application via deployment descriptor and
+annotations. Stateless, stateful, singleton session beans and message-driven beans support a common set of resources,
+and also resources specific to the bean type. For example, these are some of the common enterprise bean resources:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>jndi-names</p>
+</li>
+<li>
+<p>component-class-name</p>
+</li>
+<li>
+<p>declared-roles</p>
+</li>
+<li>
+<p>transaction-type</p>
+</li>
+<li>
+<p>stateful-timeout</p>
+</li>
+<li>
+<p>activation-config</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Users can view these enterprise bean resources via WildFly CLI or Administration Console. The following sections
+provides sample CLI and Administration Console output for each enterprise bean type. For complete details, refer to
+<a href="https://wildscribe.github.io/">WildFly Model Reference Documentation</a></p>
+</div>
+<div class="sect3">
+<h4 id="Stateless_Session_Bean_Runtime_Resources">9.15.1. Stateless Session Bean Runtime Resources</h4>
+<div class="paragraph">
+<p>To view the management runtime resources for a deployed stateless session bean in CLI, run the following CLI command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>/deployment=&lt;DEPLOYMENT-NAME&gt;/subsystem=ejb3/stateless-session-bean=&lt;BEAN-NAME&gt;:read-resource(include-runtime)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following is a sample output for a stateless session bean named <code>ManagedStatelessBean</code> in deployment <code>ejb-management.jar</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>/deployment=ejb-management.jar/subsystem=ejb3/stateless-session-bean=ManagedStatelessBean:read-resource(include-runtime)
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; {
+        "async-methods" =&gt; ["void async(int, int)"],
+        "business-local" =&gt; ["sample.ManagedStatelessBean"],
+        "business-remote" =&gt; ["sample.BusinessInterface"],
+        "component-class-name" =&gt; "sample.ManagedStatelessBean",
+        "declared-roles" =&gt; [
+            "Role3",
+            "Role2",
+            "Role1"
+        ],
+        "execution-time" =&gt; 160L,
+        "invocations" =&gt; 3L,
+        "jndi-names" =&gt; [
+            "java:global/ejb-management/ManagedStatelessBean!sample.BusinessInterface",
+            "java:module/ManagedStatelessBean!sample.BusinessInterface",
+            "java:app/ejb-management/ManagedStatelessBean!sample.BusinessInterface",
+            "java:global/ejb-management/ManagedStatelessBean!sample.ManagedStatelessBean",
+            "java:module/ManagedStatelessBean!sample.ManagedStatelessBean",
+            "java:app/ejb-management/ManagedStatelessBean!sample.ManagedStatelessBean"
+        ],
+        "methods" =&gt; {"doIt" =&gt; {
+            "execution-time" =&gt; 160L,
+            "invocations" =&gt; 3L,
+            "wait-time" =&gt; 10L
+        }},
+        "peak-concurrent-invocations" =&gt; 1L,
+        "pool-available-count" =&gt; 64,
+        "pool-create-count" =&gt; 1,
+        "pool-current-size" =&gt; 1,
+        "pool-max-size" =&gt; 64,
+        "pool-name" =&gt; "slsb-strict-max-pool",
+        "pool-remove-count" =&gt; 0,
+        "run-as-role" =&gt; "Role3",
+        "security-domain" =&gt; "other",
+        "timeout-method" =&gt; "public void sample.ManagedStatelessBean.timeout(javax.ejb.Timer)",
+        "timers" =&gt; [{
+            "time-remaining" =&gt; 4735224L,
+            "next-timeout" =&gt; 1577768415000L,
+            "calendar-timer" =&gt; true,
+            "persistent" =&gt; false,
+            "info" =&gt; "timer1",
+            "schedule" =&gt; {
+                "year" =&gt; "*",
+                "month" =&gt; "*",
+                "day-of-month" =&gt; "*",
+                "day-of-week" =&gt; "*",
+                "hour" =&gt; "0",
+                "minute" =&gt; "0",
+                "second" =&gt; "15",
+                "timezone" =&gt; undefined,
+                "start" =&gt; undefined,
+                "end" =&gt; undefined
+            }
+        }],
+        "transaction-type" =&gt; "CONTAINER",
+        "wait-time" =&gt; 10L,
+        "service" =&gt; {"timer-service" =&gt; undefined}
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To view it in WildFly Administration Console, go to the <code>Management Model</code> section of the target deployment. For example,</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/ejb/stateless-management-resource.png" alt="images/ejb/stateless-management-resource.png"></span></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Stateful_Session_Bean_Runtime_Resources">9.15.2. Stateful Session Bean Runtime Resources</h4>
+<div class="paragraph">
+<p>To view the management runtime resources for a deployed stateful session bean in CLI, run the following CLI command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>/deployment=&lt;DEPLOYMENT-NAME&gt;/subsystem=ejb3/stateful-session-bean=&lt;BEAN-NAME&gt;:read-resource(include-runtime)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following is a sample output for a stateful session bean named <code>ManagedStatefulBean2</code> in deployment <code>ejb-management.jar</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>/deployment=ejb-management.jar/subsystem=ejb3/stateful-session-bean=ManagedStatefulBean2:read-resource(include-runtime)
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; {
+        "after-begin-method" =&gt; "private void sample.ManagedStatefulBean2.afterBegin()",
+        "after-completion-method" =&gt; "private void sample.ManagedStatefulBean2.afterCompletion()",
+        "async-methods" =&gt; ["void async(int, int)"],
+        "before-completion-method" =&gt; "private void sample.ManagedStatefulBean2.beforeCompletion()",
+        "business-local" =&gt; ["sample.ManagedStatefulBean2"],
+        "business-remote" =&gt; ["sample.BusinessInterface"],
+        "cache-size" =&gt; 0,
+        "component-class-name" =&gt; "sample.ManagedStatefulBean2",
+        "declared-roles" =&gt; [
+            "Role3",
+            "Role2",
+            "Role1"
+        ],
+        "execution-time" =&gt; 163L,
+        "invocations" =&gt; 4L,
+        "jndi-names" =&gt; [
+            "java:app/ejb-management/ManagedStatefulBean2!sample.BusinessInterface",
+            "java:global/ejb-management/ManagedStatefulBean2!sample.BusinessInterface",
+            "java:module/ManagedStatefulBean2!sample.BusinessInterface",
+            "java:app/ejb-management/ManagedStatefulBean2!sample.ManagedStatefulBean2",
+            "java:global/ejb-management/ManagedStatefulBean2!sample.ManagedStatefulBean2",
+            "java:module/ManagedStatefulBean2!sample.ManagedStatefulBean2"
+        ],
+        "methods" =&gt; {
+            "doIt" =&gt; {
+                "execution-time" =&gt; 163L,
+                "invocations" =&gt; 3L,
+                "wait-time" =&gt; 3L
+            },
+            "remove" =&gt; {
+                "execution-time" =&gt; 0L,
+                "invocations" =&gt; 1L,
+                "wait-time" =&gt; 1L
+            }
+        },
+        "passivated-count" =&gt; 0,
+        "passivation-capable" =&gt; false,
+        "peak-concurrent-invocations" =&gt; 1L,
+        "remove-methods" =&gt; [
+            {
+                "bean-method" =&gt; "void remove()",
+                "retain-if-exception" =&gt; false
+            },
+            {
+                "bean-method" =&gt; "void removeTrue()",
+                "retain-if-exception" =&gt; true
+            },
+            {
+                "bean-method" =&gt; "void removeFalse()",
+                "retain-if-exception" =&gt; false
+            }
+        ],
+        "run-as-role" =&gt; "Role3",
+        "security-domain" =&gt; "other",
+        "stateful-timeout" =&gt; "2 HOURS",
+        "total-size" =&gt; 0,
+        "transaction-type" =&gt; "BEAN",
+        "wait-time" =&gt; 4L,
+        "service" =&gt; undefined
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To view it in WildFly Administration Console, go to the <code>Management Model</code> section of the target deployment. For example,</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/ejb/stateful-management-resource.png" alt="images/ejb/stateful-management-resource.png"></span></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Singleton_Bean_Runtime_Resources">9.15.3. Singleton Bean Runtime Resources</h4>
+<div class="paragraph">
+<p>To view the management runtime resources for a deployed singleton bean in CLI, run the following CLI command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>/deployment=&lt;DEPLOYMENT-NAME&gt;/subsystem=ejb3/singleton-bean=&lt;BEAN-NAME&gt;:read-resource(include-runtime)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following is a sample output for a singleton bean named <code>ManagedSingletonBean</code> in deployment <code>ejb-management.jar</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>/deployment=ejb-management.jar/subsystem=ejb3/singleton-bean=ManagedSingletonBean:read-resource(include-runtime)
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; {
+        "async-methods" =&gt; ["void async(int, int)"],
+        "business-local" =&gt; ["sample.ManagedSingletonBean"],
+        "business-remote" =&gt; ["sample.BusinessInterface"],
+        "component-class-name" =&gt; "sample.ManagedSingletonBean",
+        "concurrency-management-type" =&gt; undefined,
+        "declared-roles" =&gt; [
+            "Role3",
+            "Role2",
+            "Role1"
+        ],
+        "depends-on" =&gt; undefined,
+        "execution-time" =&gt; 156L,
+        "init-on-startup" =&gt; false,
+        "invocations" =&gt; 3L,
+        "jndi-names" =&gt; [
+            "java:module/ManagedSingletonBean!sample.ManagedSingletonBean",
+            "java:global/ejb-management/ManagedSingletonBean!sample.ManagedSingletonBean",
+            "java:app/ejb-management/ManagedSingletonBean!sample.ManagedSingletonBean",
+            "java:app/ejb-management/ManagedSingletonBean!sample.BusinessInterface",
+            "java:global/ejb-management/ManagedSingletonBean!sample.BusinessInterface",
+            "java:module/ManagedSingletonBean!sample.BusinessInterface"
+        ],
+        "methods" =&gt; {"doIt" =&gt; {
+            "execution-time" =&gt; 156L,
+            "invocations" =&gt; 3L,
+            "wait-time" =&gt; 0L
+        }},
+        "peak-concurrent-invocations" =&gt; 1L,
+        "run-as-role" =&gt; "Role3",
+        "security-domain" =&gt; "other",
+        "timeout-method" =&gt; "public void sample.ManagedSingletonBean.timeout(javax.ejb.Timer)",
+        "timers" =&gt; [{
+            "time-remaining" =&gt; 4304279L,
+            "next-timeout" =&gt; 1577768415000L,
+            "calendar-timer" =&gt; true,
+            "persistent" =&gt; false,
+            "info" =&gt; "timer1",
+            "schedule" =&gt; {
+                "year" =&gt; "*",
+                "month" =&gt; "*",
+                "day-of-month" =&gt; "*",
+                "day-of-week" =&gt; "*",
+                "hour" =&gt; "0",
+                "minute" =&gt; "0",
+                "second" =&gt; "15",
+                "timezone" =&gt; undefined,
+                "start" =&gt; undefined,
+                "end" =&gt; undefined
+            }
+        }],
+        "transaction-type" =&gt; "CONTAINER",
+        "wait-time" =&gt; 0L,
+        "service" =&gt; {"timer-service" =&gt; undefined}
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To view it in WildFly Administration Console, go to the <code>Management Model</code> section of the target deployment. For example,</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/ejb/singleton-management-resource.png" alt="images/ejb/singleton-management-resource.png"></span></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Message_Driven_Bean_Runtime_Resources">9.15.4. Message-driven Bean Runtime Resources</h4>
+<div class="paragraph">
+<p>To view the management runtime resources for a deployed message-driven bean in CLI, run the following CLI command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>/deployment=&lt;DEPLOYMENT-NAME&gt;/subsystem=ejb3/message-driven-bean=&lt;BEAN-NAME&gt;:read-resource(include-runtime)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following is a sample output for a message-driven bean named <code>ManagedMDB</code> in deployment <code>ejb-management.jar</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>/deployment=ejb-management.jar/subsystem=ejb3/message-driven-bean=ManagedMDB:read-resource(include-runtime)
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; {
+        "activation-config" =&gt; [
+            ("destinationType" =&gt; "javax.jms.Queue"),
+            ("destination" =&gt; "java:/queue/ManagedMDB-queue")
+        ],
+        "component-class-name" =&gt; "sample.ManagedMDB",
+        "declared-roles" =&gt; [
+            "Role3",
+            "Role2",
+            "Role1"
+        ],
+        "delivery-active" =&gt; true,
+        "execution-time" =&gt; 0L,
+        "invocations" =&gt; 0L,
+        "message-destination-link" =&gt; undefined,
+        "message-destination-type" =&gt; undefined,
+        "messaging-type" =&gt; "javax.jms.MessageListener",
+        "methods" =&gt; {},
+        "peak-concurrent-invocations" =&gt; 0L,
+        "pool-available-count" =&gt; 16,
+        "pool-create-count" =&gt; 0,
+        "pool-current-size" =&gt; 0,
+        "pool-max-size" =&gt; 16,
+        "pool-name" =&gt; "mdb-strict-max-pool",
+        "pool-remove-count" =&gt; 0,
+        "run-as-role" =&gt; "Role3",
+        "security-domain" =&gt; "other",
+        "timeout-method" =&gt; "public void sample.ManagedMDB.timeout(javax.ejb.Timer)",
+        "timers" =&gt; [{
+            "time-remaining" =&gt; 4213581L,
+            "next-timeout" =&gt; 1577768415000L,
+            "calendar-timer" =&gt; true,
+            "persistent" =&gt; false,
+            "info" =&gt; "timer1",
+            "schedule" =&gt; {
+                "year" =&gt; "*",
+                "month" =&gt; "*",
+                "day-of-month" =&gt; "*",
+                "day-of-week" =&gt; "*",
+                "hour" =&gt; "0",
+                "minute" =&gt; "0",
+                "second" =&gt; "15",
+                "timezone" =&gt; undefined,
+                "start" =&gt; undefined,
+                "end" =&gt; undefined
+            }
+        }],
+        "transaction-type" =&gt; "CONTAINER",
+        "wait-time" =&gt; 0L,
+        "service" =&gt; {"timer-service" =&gt; undefined}
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To view it in WildFly Administration Console, go to the <code>Management Model</code> section of the target deployment. For example,</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/ejb/mdb-management-resource.png" alt="images/ejb/mdb-management-resource.png"></span></p>
 </div>
 </div>
 </div>
@@ -5107,7 +5563,7 @@ native API hibernate.cfg.xml file:</p>
 <p><a href="http://infinispan.org/docs/9.4.x/user_guide/user_guide.html#integrations_jpa_hibernate">Infinispan
 Hibernate/JPA second level cache provider documentation</a> contains
 advanced configuration information but you should bear in mind that when
-Hibernate runs within WildFly 19.1, some of those configuration options,
+Hibernate runs within WildFly 20, some of those configuration options,
 such as region factory, are not needed. Moreover, the application server
 providers you with option of selecting a different cache container for
 Infinispan via <strong>hibernate.cache.infinispan.container</strong> persistence
@@ -5728,6 +6184,10 @@ wildfly.jpa.twophasebootstrap hint to false, disables the two phase
 bootstrap (for the persistence unit that contains the hint).</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">wildfly.jpa.applicationdatasource</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">set to true when using an application defined DataSource or resource reference to a global DataSource.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">wildfly.jpa.allowdefaultdatasourceuse</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">set to false to prevent
 persistence unit from using the default data source. Defaults to true.
@@ -5736,12 +6196,20 @@ datasource.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">jboss.as.jpa.deferdetach</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Controls whether transaction scoped
-persistence context used in non-JTA transaction thread, will detach
+<td class="tableblock halign-left valign-top"><p class="tableblock">Controls whether a transaction scoped
+persistence context used in a non-JTA transaction thread will detach
 loaded entities after each EntityManager invocation or when the
 persistence context is closed (e.g. business method ends). Defaults to
 false (entities are cleared after EntityManager invocation) and if set
 to true, the detach is deferred until the context is closed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">wildfly.jpa.skipquerydetach</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Controls whether a transaction scoped
+persistence context used in a non-JTA transaction thread will detach
+Query results immediately. Defaults to
+false (Query results are detached immediately) and if set
+to true, the detach is deferred until the persistence context is closed.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">wildfly.jpa.hibernate.search.module</p></td>
@@ -7087,7 +7555,7 @@ the <strong>required</strong> jboss ejb client setup, please see
 <div class="sectionbody">
 <div class="paragraph">
 <p>This page outlines the three options you have for deploying JAX-RS
-applications in WildFly 19.1. These three methods are specified in the
+applications in WildFly 20. These three methods are specified in the
 JAX-RS 2.0 specification in section 2.3.2.</p>
 </div>
 <div class="sect2">
@@ -7244,7 +7712,7 @@ project integration.</p>
 </div>
 <div class="paragraph">
 <p>This section covers the most relevant topics for the JBossWS version
-available on WildFly 19.1.</p>
+available on WildFly 20.</p>
 </div>
 <div class="sect2">
 <h3 id="JAX-WS_User_Guide">16.1. JAX-WS User Guide</h3>
@@ -20628,7 +21096,7 @@ their deployment and set module dependencies in it.</p>
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-WildFly 19.1 introduced the EJB client API for managing remote EJB
+WildFly 20 introduced the EJB client API for managing remote EJB
 invocations. The EJB client API works off EJBClientContext(s). An
 EJBClientContext can potentially contain any number of EJB receivers. An
 EJB receiver is a component which knows how to communicate with a server
@@ -20642,7 +21110,7 @@ applications can be classified into:
 <p>A remote client which runs as a standalone Java application</p>
 </li>
 <li>
-<p>A remote client which runs within another WildFly 19.1 instance</p>
+<p>A remote client which runs within another WildFly 20 instance</p>
 </li>
 </ul>
 </div>
@@ -20659,7 +21127,7 @@ than one EJBClientContext(s) and a EJB client context selector will be
 responsible for returning the appropriate context.</p>
 </div>
 <div class="paragraph">
-<p>In case of remote clients which run within another WildFly 19.1 instance,
+<p>In case of remote clients which run within another WildFly 20 instance,
 each deployed application will have a corresponding EJB client context.
 Whenever that application invokes on another EJB, the corresponding EJB
 client context will be used for finding the right EJB receiver and
@@ -20670,7 +21138,7 @@ letting it handle the invocation.</p>
 <div class="paragraph">
 <p>In the Overview section we briefly looked at the different types of
 remote clients. Let&#8217;s focus on the standalone remote clients (the ones
-that don&#8217;t run within another WildFly 19.1 instance) for some of the next
+that don&#8217;t run within another WildFly 20 instance) for some of the next
 sections. Like mentioned earlier, typically a remote standalone client
 has just one EJB client context backed by any number of EJB receivers.
 Consider this example:</p>
@@ -20705,7 +21173,7 @@ context is used by the above code to invoke the bean.</p>
 </div>
 <div class="paragraph">
 <p>Now let&#8217;s consider a case where the user application wants to invoke on
-the bean more than once, but wants to connect to the WildFly 19.1 server
+the bean more than once, but wants to connect to the WildFly 20 server
 using different security credentials. Let&#8217;s take a look at the following
 code:</p>
 </div>
@@ -20828,7 +21296,7 @@ context which typically is the one tied to the entire application.</p>
 have more control over which JNDI context "talks to" which server and
 connects to that server in "what way". This gives the user applications
 the flexibility that was associated with the JNP based JNDI invocations
-prior to WildFly 19.1 versions.</p>
+prior to WildFly 20 versions.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -22048,7 +22516,7 @@ as follows:</p>
 <div class="sect2">
 <h3 id="security">19.3. Security</h3>
 <div class="paragraph">
-<p>WildFly 19.1 is secure by default. What this means is that no communication
+<p>WildFly 20 is secure by default. What this means is that no communication
 can happen with an WildFly instance from a remote client (irrespective
 of whether it is a standalone client or another server instance) without
 passing the appropriate credentials. Remember that in this example, our
@@ -22578,7 +23046,7 @@ these projects is.</p>
 <div class="sect2">
 <h3 id="history">20.2. History</h3>
 <div class="paragraph">
-<p>Previous versions of JBoss AS (versions &lt; WildFly 19.1) used JNP project (
+<p>Previous versions of JBoss AS (versions &lt; WildFly 20) used JNP project (
 <a href="http://anonsvn.jboss.org/repos/jbossas/projects/naming/" class="bare">http://anonsvn.jboss.org/repos/jbossas/projects/naming/</a>) as the JNDI
 naming implementation. Developers of client applications of previous
 versions of JBoss AS will be familiar with the <code>jnp:// PROVIDER_URL</code> URL
@@ -22586,7 +23054,7 @@ they used to use in their applications for communicating with the JNDI
 server on the JBoss server.</p>
 </div>
 <div class="paragraph">
-<p>Starting WildFly 19.1, the JNP project is <em>not</em> used. Neither on the server
+<p>Starting WildFly 20, the JNP project is <em>not</em> used. Neither on the server
 side nor on the client side. The client side of the JNP project has now
 been replaced by jboss-remote-naming project (
 <a href="https://github.com/jbossas/jboss-remote-naming" class="bare">https://github.com/jbossas/jboss-remote-naming</a>). There were various
@@ -22648,7 +23116,7 @@ they used <code>jnp://localhost:1099</code> (just an example). In WildFly, the U
 protocol scheme for jboss-remote-naming project is <code>remote://</code>. The rest
 of the PROVIDER_URL part is the server hostname or IP and the port on
 which the remoting connector is exposed on the server side. By default
-the http-remoting connector port in WildFly 19.1 is 8080. That&#8217;s what we
+the http-remoting connector port in WildFly 20 is 8080. That&#8217;s what we
 have used in our example. The hostname we have used is localhost but
 that should point to the server IP or hostname where the server is
 running.</p>
@@ -22671,7 +23139,7 @@ version of that project (which is available in a WildFly release <strong>after</
 </table>
 </div>
 <div class="paragraph">
-<p>WildFly 19.1 can use the PROVIDER_URL like:</p>
+<p>WildFly 20 can use the PROVIDER_URL like:</p>
 </div>
 <div class="paragraph">
 <p>java.naming.provider.url=http-remoting://server1:8080,http-remoting://server2:8080</p>
@@ -22728,7 +23196,7 @@ port.</p>
 <div class="paragraph">
 <p>We previously mentioned that remote-naming, backed by jboss-remoting
 project, has increased support for security configurations. Starting
-WildFly 19.1, every service including the http remoting connector (which
+WildFly 20, every service including the http remoting connector (which
 listens by default on port 8080), is secured (see
 <a href="https://community.jboss.org/wiki/AS710Beta1-SecurityEnabledByDefault" class="bare">https://community.jboss.org/wiki/AS710Beta1-SecurityEnabledByDefault</a> for
 details). This means that when trying to do JNDI operations like a
@@ -22749,7 +23217,7 @@ named " `peter`" whose password is expected to be " `lois`".</p>
 <td class="content">
 Note: The server side configurations for the remoting connector to allow
 "peter" to access the connector, is out of the scope of this
-documentation. The WildFly 19.1 documentation already has chapters on how
+documentation. The WildFly 20 documentation already has chapters on how
 to set that up.
 </td>
 </tr>
@@ -22810,7 +23278,7 @@ exposed by the javax.naming.Context class. The remote-naming project
 only supports the read-only kind of methods (like the lookup() method)
 and does not support any write kind of methods (like the bind() method).
 The client applications are expected to use the remote-naming project
-mainly for lookups of JNDI objects. Neither WildFly 19.1 nor remote-naming
+mainly for lookups of JNDI objects. Neither WildFly 20 nor remote-naming
 project allows writing/binding to the JNDI server from a remote
 application.</p>
 </div>
@@ -23321,7 +23789,7 @@ application deployed on another JBoss instance</p>
 <h3 id="example-applications-migrated-from-previous-releases">21.1. Example Applications Migrated from Previous Releases</h3>
 <div class="paragraph">
 <p>The applications in this section were written for a previous version of
-the server but have been modified to run on WildFly 19.1. Changes were made
+the server but have been modified to run on WildFly 20. Changes were made
 to resolve issues that arose during deployment and runtime or to fix
 problems with application behaviour. Each example below documents the
 changes that were made to get the application to run successfully on
@@ -23332,7 +23800,7 @@ WildFly.</p>
 <div class="paragraph">
 <p>For details on how to migrate this demo application, see
 <a href="https://community.jboss.org/blogs/marek-novotny/2011/12/16/dvdstore-migration-for-jboss-as-710beta">Seam
-2 DVD Store example on WildFly 19.1</a> on Marek Novotny&#8217;s Blog.</p>
+2 DVD Store example on WildFly 20</a> on Marek Novotny&#8217;s Blog.</p>
 </div>
 </div>
 <div class="sect3">
@@ -23340,7 +23808,7 @@ WildFly.</p>
 <div class="paragraph">
 <p>For details on how to migrate this demo application, see
 <a href="http://community.jboss.org/blogs/marek-novotny/2011/07/29/seam-2-booking-example-on-jboss-as-7">Seam
-2 Booking example on WildFly 19.1</a> on Marek Novotny&#8217;s Blog.</p>
+2 Booking example on WildFly 20</a> on Marek Novotny&#8217;s Blog.</p>
 </div>
 </div>
 <div class="sect3">
@@ -23354,7 +23822,7 @@ and learn how debug and resolve them. See <a href="#Migrate_Seam_2_Booking_EAR_B
 <div class="sect3">
 <h4 id="jbpm-console-application">21.1.4. jBPM-Console application</h4>
 <div class="paragraph">
-<p>Kris Verlaenen migrated this application from AS 5 to WildFly 19.1. For
+<p>Kris Verlaenen migrated this application from AS 5 to WildFly 20. For
 details about this migration, see <a href="http://kverlaen.blogspot.com/2011/07/jbpm5-on-as7-lightning.html">jBPM5 on WildFly</a> on his Kris&#8217;s Blog.</p>
 </div>
 </div>
@@ -23369,7 +23837,7 @@ about this migration, see <a href="#Migrate_Order_Application_from_EAP5.1_to_Wil
 <h4 id="migrate-example-application">21.1.6. Migrate example application</h4>
 <div class="paragraph">
 <p>A step by step work through of issues, and their solutions, that might
-crop up when migrating applications to WildFly 19.1. See the following
+crop up when migrating applications to WildFly 20. See the following
 <a href="https://github.com/danbev/migrate">github project</a> for details.</p>
 </div>
 </div>
@@ -23395,11 +23863,11 @@ your own project. For more information about the quickstarts, see
 </div>
 </div>
 <div class="sect1">
-<h2 id="Migrate_Order_Application_from_EAP5">22. Porting the Order Application from EAP 5.1 to WildFly 19.1</h2>
+<h2 id="Migrate_Order_Application_from_EAP5">22. Porting the Order Application from EAP 5.1 to WildFly 20</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Andy Miller ported an example Order application that was used for
-performance testing from EAP 5.1 to WildFly 19.1. These are the notes he
+performance testing from EAP 5.1 to WildFly 20. These are the notes he
 made during the migration process.</p>
 </div>
 <div class="sect2">
@@ -23698,7 +24166,7 @@ changes that were made to the application.</p>
 </div>
 <div class="paragraph">
 <p>This is a step-by-step how-to guide on porting the Seam Booking
-application binaries from EAP5.1 to WildFly 19.1. Although there are better
+application binaries from EAP5.1 to WildFly 20. Although there are better
 approaches for migrating applications, the purpose of this document is
 to show the types of issues you might encounter when migrating an
 application and how to debug and resolve those issues.</p>
@@ -24247,7 +24715,7 @@ look that the text within the brackets after "missing".</p>
 <div class="sect4">
 <h5 id="how-to-resolve-it-6">How to resolve it:</h5>
 <div class="paragraph">
-<p>In WildFly 19.1, datasource configuration has changed and needs to be
+<p>In WildFly 20, datasource configuration has changed and needs to be
 defined in the <code>standalone/configuration/standalone.xml</code> file. Since
 WildFly ships with an example database that is already defined in the
 standalone.xml file, we will modify the <code>persistence.xml</code> file to use
@@ -24761,24 +25229,24 @@ and the EAR as modified to run on AS7
 <div class="paragraph">
 <p>This document details the main points that need to be considered by
 Spring developers that wish to develop new applications or to migrate
-existing applications to be run into WildFly 19.1.</p>
+existing applications to be run into WildFly 20.</p>
 </div>
 <div class="sect2">
 <h3 id="dependencies-and-modularity">24.1. Dependencies and Modularity</h3>
 <div class="paragraph">
-<p>WildFly 19.1 has a modular class loading strategy, different from previous
+<p>WildFly 20 has a modular class loading strategy, different from previous
 versions of JBoss AS, which enforces a better class loading isolation
 between deployments and the application server itself. A detailed
 description can be found in the documentation dedicated to
 <a href="https://docs.jboss.org/author/display/AS7/Class+Loading+in+AS7">class
-loading in WildFly 19.1</a>.</p>
+loading in WildFly 20</a>.</p>
 </div>
 <div class="paragraph">
 <p>This reduces significantly the risk of running into a class loading
 conflict and allows applications to package their own dependencies if
 they choose to do so. This makes it easier for Spring applications that
 package their own dependencies - such as logging frameworks or
-persistence providers to run on WildFly 19.1.</p>
+persistence providers to run on WildFly 20.</p>
 </div>
 <div class="paragraph">
 <p>At the same time, this does not mean that duplications and conflicts
@@ -24813,7 +25281,7 @@ depending on the type of deployment as shown
 through either one of LocalSessionFactoryBean or
 AnnotationSessionFactoryBean) may use a version of Hibernate 3 packaged
 inside the application. Hibernate 4 (which is provided through the
-'org.hibernate' module of WildFly 19.1) is not supported by Spring 3.0 and
+'org.hibernate' module of WildFly 20) is not supported by Spring 3.0 and
 Spring 3.1 (and may be supported by Spring 3.2 as described in
 <a href="https://jira.springsource.org/browse/SPR-8096">SPR-8096</a>), so adding this
 module as a dependency is not a solution.</p>
@@ -24906,7 +25374,7 @@ JNDI binding via persistence.xml properties is not supported in WildFly
 <div class="sect3">
 <h4 id="using-spring-managed-persistence-units">24.4.2. Using Spring-managed persistence units</h4>
 <div class="paragraph">
-<p>Spring applications running in WildFly 19.1 may also create persistence
+<p>Spring applications running in WildFly 20 may also create persistence
 units on their own, using the LocalContainerEntityManagerFactoryBean.
 This is what these applications need to consider:</p>
 </div>
@@ -26430,8 +26898,8 @@ applications to WildFly.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 19.1.0.Final<br>
-Last updated 2019-11-05 20:46:55 CST
+Version 20.0.0.Final<br>
+Last updated 2020-01-20 10:18:55 PST
 </div>
 </div>
 </body>

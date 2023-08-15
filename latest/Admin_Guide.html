@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>WildFly Admin Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly developer team</span><br>
-<span id="revnumber">version 19.1.0.Final,</span>
-<span id="revdate">2020-05-04T20:24:20Z</span>
+<span id="revnumber">version 20.0.0.Final,</span>
+<span id="revdate">2020-06-05T20:49:23Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Admin guide</div>
@@ -670,6 +670,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#downloading-files-with-the-cli">14.7. Downloading files with the CLI</a></li>
 <li><a href="#iteration-of-collections">14.8. Iteration of Collections</a></li>
 <li><a href="#cli-security-commands">14.9. Security Commands</a></li>
+<li><a href="#mp-cli-script">14.10. Evolving standard configurations with support for Microprofile</a></li>
 </ul>
 </li>
 </ul>
@@ -1380,7 +1381,7 @@ invoked via the HTTP API, the JSON representation of a <code>ModelNode</code>.)<
 </div>
 <div class="paragraph">
 <p>Every resource except the root resource will have an <code>add</code> operation and
-should have a <code>remove</code> operation ("should" because in WildFly 19.1 many do
+should have a <code>remove</code> operation ("should" because in WildFly 20 many do
 not). The parameters for the <code>add</code> operation vary depending on the
 resource. The <code>remove</code> operation has no parameters.</p>
 </div>
@@ -3826,7 +3827,7 @@ we add role based authorization checks to the management model.</p>
 <div class="paragraph">
 <p>After a realm has been defined it needs to be associated with an inbound
 or outbound connection for it to be used, the following are some
-examples where these associations are used within the WildFly 19.1
+examples where these associations are used within the WildFly 20
 configuration.</p>
 </div>
 <div class="sect3">
@@ -5292,7 +5293,7 @@ the <code>search-credential</code> attribute.  This element supports the followi
 <div class="sect2">
 <h3 id="Security_Realms_Plugins"><a class="link" href="#Security_Realms_Plugins">6.9. Plug Ins</a></h3>
 <div class="paragraph">
-<p>Within WildFly 19.1 for communication with the management interfaces and
+<p>Within WildFly 20 for communication with the management interfaces and
 for other services exposed using Remoting where username / password
 authentication is used the use of Digest authentication is preferred
 over the use of HTTP Basic or SASL Plain so that we can avoid the
@@ -5317,7 +5318,7 @@ support loading a users password, hash and roles from a custom store to
 allow different stores to be implemented without forcing the
 authentication back to plain text variant, this article describes the
 requirements for a plug in and shows a simple example plug-in for use
-with WildFly 19.1.</p>
+with WildFly 20.</p>
 </div>
 <div class="paragraph">
 <p>When implementing a plug in there are two steps to the authentication
@@ -5479,7 +5480,7 @@ used for the authorization step.</p>
 <h4 id="installing-and-configuring-a-plug-in"><a class="link" href="#installing-and-configuring-a-plug-in">6.9.4. Installing and Configuring a Plug-In</a></h4>
 <div class="paragraph">
 <p>The next step of this article describes the steps to implement a plug-in
-provider and how to make it available within WildFly 19.1 and how to
+provider and how to make it available within WildFly 20 and how to
 configure it. Example configuration and an example implementation are
 shown to illustrate this.</p>
 </div>
@@ -5593,7 +5594,7 @@ PlugInProvider implementation class.</p>
 <h5 id="package-as-a-module"><a class="link" href="#package-as-a-module">Package as a Module</a></h5>
 <div class="paragraph">
 <p>To make the <code>PlugInProvider</code> available to the application it is bundled
-as a module and added to the modules already shipped with WildFly 19.1.</p>
+as a module and added to the modules already shipped with WildFly 20.</p>
 </div>
 <div class="paragraph">
 <p>To add as a module we first need a <code>module.xml</code>: -</p>
@@ -9749,7 +9750,7 @@ you installed.</p>
 <div class="sect3">
 <h4 id="jdbc-driver-installation"><a class="link" href="#jdbc-driver-installation">9.3.1. JDBC Driver Installation</a></h4>
 <div class="paragraph">
-<p>The recommended way to install a JDBC driver into WildFly 19.1 is to deploy
+<p>The recommended way to install a JDBC driver into WildFly 20 is to deploy
 it as a regular JAR deployment. The reason for this is that when you run
 WildFly in domain mode, deployments are automatically propagated to all
 servers to which the deployment applies; thus distribution of the driver
@@ -11846,12 +11847,12 @@ of each</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:domain:ejb3:6.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:domain:ejb3:7.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
   <span class="tag">&lt;session-bean&gt;</span>
     <span class="tag">&lt;stateless&gt;</span>
       <span class="tag">&lt;bean-instance-pool-ref</span> <span class="attribute-name">pool-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">slsb-strict-max-pool</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
     <span class="tag">&lt;/stateless&gt;</span>
-    <span class="tag">&lt;stateful</span> <span class="attribute-name">default-access-timeout</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">5000</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">cache-ref</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">simple</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">clustered-cache-ref</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">clustered</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;stateful</span> <span class="attribute-name">default-session-timeout</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">600000</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">default-access-timeout</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">5000</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">cache-ref</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">simple</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">clustered-cache-ref</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">clustered</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
     <span class="tag">&lt;singleton</span> <span class="attribute-name">default-access-timeout</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">5000</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
   <span class="tag">&lt;/session-bean&gt;</span>
   <span class="tag">&lt;mdb&gt;</span>
@@ -11917,6 +11918,13 @@ themselves are configured in the <code>&lt;pools&gt;</code> element.</p>
 </div>
 <div class="ulist">
 <ul>
+<li>
+<p><code>default-session-timeout</code> This optional attribute specifies the default
+amount of time in milliseconds a stateful session bean can remain idle
+before it is eligible for removal by the container.
+It can be overridden via <code>ejb-jar.xml</code> deployment descriptor or via
+<code>javax.ejb.StatefulTimeout</code> annotation.</p>
+</li>
 <li>
 <p><code>default-access-timeout</code> This attribute specifies the default time
 concurrent invocations on the same bean instance will wait to acquire
@@ -12886,7 +12894,7 @@ to dynamically update the hosts.</p>
 <div class="sect4">
 <h5 id="general-overview"><a class="link" href="#general-overview">General Overview</a></h5>
 <div class="paragraph">
-<p>Wildly uses Undertow&#8217;s proxy capabilities to act as a load balancer.
+<p>WildFly uses Undertow&#8217;s proxy capabilities to act as a load balancer.
 Undertow will connect to the back end servers using its built in client,
 and proxies requests.</p>
 </div>
@@ -12896,16 +12904,16 @@ and proxies requests.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>http</p>
+<p><code>http</code></p>
 </li>
 <li>
-<p>ajp</p>
+<p><code>ajp</code></p>
 </li>
 <li>
-<p>http2</p>
+<p><code>http2</code></p>
 </li>
 <li>
-<p>h2c (clear text HTTP2)<br>
+<p><code>h2c</code> (clear text HTTP2)<br>
 Of these protocols h2c should give the best performance, if the back end
 servers support it.</p>
 </li>
@@ -12919,7 +12927,7 @@ removes the need for any thread safety constructs.<br>
 If both the front and back end servers support server push, and HTTP2 is
 in use then the proxy also supports pushing responses to the client. In
 cases where proxy and backend are capable of server push, but the client
-does not support it the server will send a X-Disable-Push header to let
+does not support it the server will send a <code>X-Disable-Push</code> header to let
 the backend know that it should not attempt to push for this request.</p>
 </div>
 <div class="sect5">
@@ -12931,27 +12939,31 @@ the backend know that it should not attempt to push for this request.</p>
 <h7 id="example-start-standalone-load-balancer"><a class="link" href="#example-start-standalone-load-balancer">Example: Start standalone load balancer</a></h7>
 <div class="listingblock">
 <div class="content">
-<pre># configure correct path to WildFly installation
+<pre class="CodeRay highlight nowrap"><code># configure correct path to WildFly installation
 WILDFLY_HOME=/path/to/wildfly
+
 # configure correct IP of the node
 MY_IP=192.168.1.1
 
 # run the load balancer profile
-$WILDFLY_HOME/bin/standalone.sh -b $MY_IP -bprivate $MY_IP -c standalone-load-balancer.xml</pre>
+$WILDFLY_HOME/bin/standalone.sh -b $MY_IP -bprivate $MY_IP -c standalone-load-balancer.xml</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>It&#8217;s highly recommended to use private/internal network for communication between load balancer and nodes. To do this set the correct IP address to the {{private}} interface ({{-bprivate}} argument).</p>
+<p>It&#8217;s highly recommended to use private/internal network for communication between load balancer and nodes.
+To do this set the correct IP address to the <code>private</code> interface (<code>-bprivate</code> argument).</p>
 </div>
 </div>
 <div class="sect6">
 <h7 id="example-start-worker-node"><a class="link" href="#example-start-worker-node">Example: Start worker node</a></h7>
 <div class="paragraph">
-<p>Run the server with the HA (or Full HA) profile, which has {{mod_cluster}} component included. If the UDP multicast is working in your environment, the workers should work out of the box without any change. If it&#8217;s not the case, then configure the IP address of the load-balancer statically.</p>
+<p>Run the server with the HA (or Full HA) profile, which has <code>mod_cluster</code> component included.
+If the UDP multicast is working in your environment, the workers should work out of the box without any change.
+If it&#8217;s not the case, then configure the IP address of the load balancer statically.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre># configure correct path to WildFly installation
+<pre class="CodeRay highlight nowrap"><code># configure correct path to WildFly installation
 WILDFLY_HOME=/path/to/wildfly
 # configure correct IP of the node
 MY_IP=192.168.1.2
@@ -12960,29 +12972,30 @@ MY_IP=192.168.1.2
 # This is necessary when UDP multicast doesn't work in your environment.
 LOAD_BALANCER_IP=192.168.1.1
 $WILDFLY_HOME/bin/jboss-cli.sh &lt;&lt;EOT
+
 embed-server -c=standalone-ha.xml
-/subsystem=modcluster/mod-cluster-config=configuration:write-attribute(name=advertise,value=false)
-/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=proxy1:add(host=$LOAD_BALANCER_IP,port=8090)
-/subsystem=modcluster/mod-cluster-config=configuration:list-add(name=proxies,value=proxy1)
+/subsystem=modcluster/proxy=default:write-attribute(name=advertise, value=false)
+/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=proxy1:add(host=$LOAD_BALANCER_IP, port=8090)
+/subsystem=modcluster/proxy=default:list-add(name=proxies, value=proxy1)
 EOT
 
 # start the woker node with HA profile
-$WILDFLY_HOME/bin/standalone.sh -c standalone-ha.xml -b $MY_IP -bprivate $MY_IP</pre>
+$WILDFLY_HOME/bin/standalone.sh -c standalone-ha.xml -b $MY_IP -bprivate $MY_IP</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Again, to make it safe, users should configure private/internal IP address into {{MY_IP}} variable.</p>
+<p>Again, to make it safe, users should configure private/internal IP address into <code>MY_IP</code> variable.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="using-wildly-as-a-static-load-balancer"><a class="link" href="#using-wildly-as-a-static-load-balancer">Using WildFly as a static load balancer</a></h5>
+<h5 id="using-wildfly-as-a-static-load-balancer"><a class="link" href="#using-wildfly-as-a-static-load-balancer">Using WildFly as a static load balancer</a></h5>
 <div class="paragraph">
 <p>To use WildFly as a static load balancer the first step is to create a
 proxy handler in the Undertow subsystem. For the purposes of this
 example we are going to assume that our load balancer is going to load
-balance between two servers, sv1.foo.com and sv2.foo.com, and will be
+balance between two servers, <code>sv1.foo.com</code> and <code>sv2.foo.com</code>, and will be
 using the AJP protocol.</p>
 </div>
 <div class="paragraph">
@@ -12995,16 +13008,16 @@ subsystem:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Then we need to define outbound socket bindings for remote hosts</p>
+<p>Then we need to define <code>outbound-socket-binding</code>-s for remote hosts:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code>/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=remote-host1/:add(host=sv1.foo.com, port=8009)
-/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=remote-host2/:add(host=sv2.foo.com, port=8009)</code></pre>
+<pre class="CodeRay highlight nowrap"><code>/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=remote-host1:add(host=sv1.foo.com, port=8009)
+/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=remote-host2:add(host=sv2.foo.com, port=8009)</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>and than we add them as hosts to reverse proxy handler</p>
+<p>and than we add them as hosts to reverse proxy handler:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -13013,8 +13026,8 @@ subsystem:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we need to actually add the reverse proxy to a location. I am going
-to assume we are serving the path <code>/app</code>:</p>
+<p>Now we need to actually add the reverse proxy to a location.
+Assuming we are serving the path <code>/app</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -13022,9 +13035,8 @@ to assume we are serving the path <code>/app</code>:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>This is all there is to it. If you point your browser to
-<code><a href="http://localhost:8080/app" class="bare">http://localhost:8080/app</a></code> you should be able to see the proxied
-content.</p>
+<p>This is all there is to it. If you point your browser to <a href="http://localhost:8080/app" class="bare">http://localhost:8080/app</a>
+you should be able to see the proxied content.</p>
 </div>
 <div class="paragraph">
 <p>The full details of all configuration options available can be found in
@@ -13487,7 +13499,7 @@ the command line.</p>
 <div class="sect3">
 <h4 id="deployment-of--jms.xml-files"><a class="link" href="#deployment-of--jms.xml-files">9.8.10. Deployment of -jms.xml files</a></h4>
 <div class="paragraph">
-<p>Starting with WildFly 19.1, you have the ability to deploy a -jms.xml file
+<p>Starting with WildFly 20, you have the ability to deploy a -jms.xml file
 defining JMS destinations, e.g.:</p>
 </div>
 <div class="listingblock">
@@ -13997,7 +14009,7 @@ Please note that the destination is created remotely but won&#8217;t be removed 
 <div class="paragraph">
 <p>WildFly 10 supports both backwards and forwards compatibility with
 legacy versions that were using HornetQ as their messaging brokers (such
-as JBoss AS7, WildFly 19.1 &amp; 9).<br>
+as JBoss AS7, WildFly 20 &amp; 9).<br>
 These two compatibility modes are provided by the ActiveMQ Artemis
 project that supports the HornetQ&#8217;s CORE protocol:</p>
 </div>
@@ -14397,9 +14409,9 @@ Now create your broadcast/discovery groups using this channel:</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="cluster-behind-an-http-load-balancer"><a class="link" href="#cluster-behind-an-http-load-balancer">Cluster behind an HTTP load-balancer</a></h5>
+<h5 id="cluster-behind-an-http-load-balancer"><a class="link" href="#cluster-behind-an-http-load-balancer">Cluster behind an HTTP load balancer</a></h5>
 <div class="paragraph">
-<p>If the cluster is behind an HTTP load-balancer we need to indicate to the clients that they must not use the cluster topology to connect to it but keep on using the initial connection to the load-balancer.
+<p>If the cluster is behind an HTTP load balancer we need to indicate to the clients that they must not use the cluster topology to connect to it but keep on using the initial connection to the load-balancer.
 For this you need to specify on the (pooled) connection factory not to use the topology by setting the attribute "use-topology-for-load-balancing" to false.</p>
 </div>
 <div class="listingblock">
@@ -15613,7 +15625,7 @@ configuration properties:</p>
 <div class="paragraph">
 <p>The security subsystem is the subsystem that brings the security
 services provided by <a href="http://www.jboss.org/picketbox">PicketBox</a> to the
-WildFly 19.1 server instances.</p>
+WildFly 20 server instances.</p>
 </div>
 <div class="paragraph">
 <p>If you are looking to secure the management interfaces for the
@@ -21566,7 +21578,7 @@ WildFly defined layers to assemble a custom configuration. <a href="#galleon-cli
 <p><em>bean-validation</em>: Support for Jakarta Bean Validation. Optionally depends on <em>cdi</em>.</p>
 </li>
 <li>
-<p><em>cdi</em>: Support for CDI.</p>
+<p><em>cdi</em>: Support for CDI. Optionally depends on <em>bean-validation</em>.</p>
 </li>
 <li>
 <p><em>datasources</em>: Support for datasources.</p>
@@ -24528,7 +24540,7 @@ to the process it was managing and release other resources:</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-request"><a class="link" href="#format-of-a-detyped-operation-request">13.5.3. Format of a Detyped Operation Request</a></h4>
 <div class="paragraph">
-<p>The basic method a user of the WildFly 19.1 programmatic management API
+<p>The basic method a user of the WildFly 20 programmatic management API
 would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -25048,7 +25060,7 @@ header just like this :</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-response"><a class="link" href="#format-of-a-detyped-operation-response">13.5.4. Format of a Detyped Operation Response</a></h4>
 <div class="paragraph">
-<p>As noted previously, the basic method a user of the WildFly 19.1
+<p>As noted previously, the basic method a user of the WildFly 20
 programmatic management API would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -25954,7 +25966,7 @@ script (e.g. 'bin/jboss-admin.bat --connect command=:shutdown').</p>
 <div class="paragraph">
 <p>To avoid "Press any key to continue &#8230;&#8203;" message you need to specify
 NOPAUSE variable. Call 'set NOPAUSE=true' in command line before running
-any WildFly 19.1 .bat script or include it in your custom script before
+any WildFly 20 .bat script or include it in your custom script before
 invoking scripts from WildFly.</p>
 </div>
 </div>
@@ -26452,13 +26464,71 @@ for a complete description of the command.</p>
 </ul>
 </div>
 </div>
+<div class="sect2">
+<h3 id="mp-cli-script"><a class="link" href="#mp-cli-script">14.10. Evolving standard configurations with support for Microprofile</a></h3>
+<div class="paragraph">
+<p>The CLI script <em>JBOSS_HOME/docs/examples/enable-microprofile.cli</em> can be applied to a default standalone configuration
+to add support for Microprofile.</p>
+</div>
+<div class="paragraph">
+<p>Impact on updated configuration:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Addition of Microprofile subsystems.</p>
+</li>
+<li>
+<p>Removal of <em>security</em> subsystem.</p>
+</li>
+<li>
+<p>Removal of <em>ManagementRealm</em>.</p>
+</li>
+<li>
+<p>Elytron security used for management and application entry points.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>By default the script updates <em>standalone.xml</em> configuration.
+Thanks to the <em>config=&lt;config name&gt;</em> system property, the script can be applied to another standalone configuration.</p>
+</div>
+<div class="paragraph">
+<p>NB: this script has to be applied <em>offline</em> with no server running.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>To update <em>standalone.xml</em> server configuration:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><em>./bin/jboss-cli.sh --file=docs/examples/enable-microprofile.cli</em></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>To update other standalone server configurations:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><em>./bin/jboss-cli.sh --file=docs/examples/enable-microprofile.cli
+-Dconfig=&lt;standalone-full.xml|standalone-ha.xml|standalone-full-ha.xml&gt;</em></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 19.1.0.Final<br>
-Last updated 2019-11-05 20:46:55 CST
+Version 20.0.0.Final<br>
+Last updated 2020-01-20 10:18:55 PST
 </div>
 </div>
 </body>
