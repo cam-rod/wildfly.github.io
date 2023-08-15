@@ -5,7 +5,7 @@
 |===
 |WildFly Release | Jakarta EE Version
 
-|link:29[29.0.0.Final]
+|link:latest[29.0.0.Final] _(link:29[permalink])_
 |https://jakarta.ee/specifications/platform/10/apidocs/[Jakarta EE 10]
 
 
