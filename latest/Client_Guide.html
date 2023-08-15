@@ -522,8 +522,8 @@ table.CodeRay td.code>pre{padding:0}
 <div id="header">
 <h1>WildFly Client Configuration</h1>
 <div class="details">
-<span id="revnumber">version 18.0.0.Final,</span>
-<span id="revdate">2019-10-02T18:46:03Z</span>
+<span id="revnumber">version 19.0.0.Final,</span>
+<span id="revdate">2020-03-17T23:46:04Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Client Configuration Guide</div>
@@ -536,6 +536,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#jboss-ejb-client">3.2. jboss-ejb-client</a></li>
 <li><a href="#Remoting_Client_Configuration">3.3. Remoting Client Configuration</a></li>
 <li><a href="#XNIO_Client_Configuration">3.4. XNIO Client Configuration</a></li>
+<li><a href="#webservices-client">3.5. webservices-client</a></li>
 </ul>
 </li>
 </ul>
@@ -589,7 +590,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="paragraph">
-<p><em>Note: A single wildfly-config.xml could be used by multiple projects using multiple versions of Wildfly Elytron, newer versions of WildFly Elytron will introduce new configuration using later namespace versions however they will still continue to support the previously released schemas until advertised otherwise.  For the configuration to be compatible with this either use a schema and namespace compatible with all the versions in use, or multiple authentication-client elements can be added, these should be added ordered by namespace youngest to oldest.  If a configuration with a later namespace is discovered by a newer WildFly Elytron client it will be used and parsing will not look for an older version as well.</em></p>
+<p><em>Note: A single wildfly-config.xml could be used by multiple projects using multiple versions of WildFly Elytron, newer versions of WildFly Elytron will introduce new configuration using later namespace versions however they will still continue to support the previously released schemas until advertised otherwise.  For the configuration to be compatible with this either use a schema and namespace compatible with all the versions in use, or multiple authentication-client elements can be added, these should be added ordered by namespace youngest to oldest.  If a configuration with a later namespace is discovered by a newer WildFly Elytron client it will be used and parsing will not look for an older version as well.</em></p>
 </div>
 <div class="paragraph">
 <p>The <em>&lt;authentication-client /&gt;</em> configuration can contain the following sections: -</p>
@@ -1178,13 +1179,13 @@ table.CodeRay td.code>pre{padding:0}
 <pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
 
 <span class="tag">&lt;configuration&gt;</span>
-    <span class="tag">&lt;authentication-client</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:elytron:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;authentication-client</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:elytron:1.4</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
         <span class="tag">&lt;ssl-contexts&gt;</span>
             <span class="tag">&lt;default-ssl-context</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
             <span class="tag">&lt;ssl-context</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
                 <span class="tag">&lt;key-store-ssl-certificate&gt;</span>...<span class="tag">&lt;/key-store-ssl-certificate&gt;</span>
                 <span class="tag">&lt;trust-store</span> <span class="attribute-name">key-store-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-                <span class="tag">&lt;cipher-suite</span> <span class="attribute-name">selector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                <span class="tag">&lt;cipher-suite</span> <span class="attribute-name">selector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">names</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
                 <span class="tag">&lt;protocol</span> <span class="attribute-name">names</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">... ...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
                 <span class="tag">&lt;provider-name</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
                 <span class="tag">&lt;providers&gt;</span>...<span class="tag">&lt;/providers&gt;</span>
@@ -1239,25 +1240,38 @@ table.CodeRay td.code>pre{padding:0}
 <dd>
 <p>A reference to a KeyStore that will be used to initialise the TrustManager.</p>
 </dd>
-<dt class="hdlist1">&lt;cipher-suite-selector /&gt;</dt>
+<dt class="hdlist1">&lt;cipher-suite selector="&#8230;&#8203;" names="&#8230;&#8203;" /&gt;</dt>
 <dd>
-<p>Configuration to filter the enabled cipher suites, the format of the selector is [org.wildfly.security.ssl.CipherSuiteSelector.fromString(selector)|http://wildfly-security.github.io/wildfly-elytron/1.1.x/org/wildfly/security/ssl/CipherSuiteSelector.html#fromString-java.lang.String-].</p>
+<p>Configuration to filter the enabled cipher suites. This element must contain at least one of the following two attributes: -</p>
+</dd>
+<dt class="hdlist1">selector</dt>
+<dd>
+<p><em>(Optional)</em> Used to configure the enabled cipher suites for TLSv1.2 and below. The format of the <code>selector</code> attribute is described in detail
+in <a href="http://wildfly-security.github.io/wildfly-elytron/master/org/wildfly/security/ssl/CipherSuiteSelector.html#fromString-java.lang.String-">org.wildfly.security.ssl.CipherSuiteSelector.fromString(selector)</a>.
+The default value is <code>DEFAULT</code>, which corresponds to all known cipher suites that do not have NULL encryption and excludes any cipher suites that have no authentication.</p>
+</dd>
+<dt class="hdlist1">names</dt>
+<dd>
+<p><em>(Optional)</em> Used to configure the enabled cipher suites for TLSv1.3. The format of the <code>names</code> attribute is a simple colon (":")
+separated list of TLSv1.3 cipher suite names (e.g., <code>TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256</code>).
+This attribute must be specified in order for TLSv1.3 to be enabled.</p>
 </dd>
 </dl>
 </div>
 <div class="paragraph">
-<p>The following would be a cipher suite selector performing the default filtering.</p>
+<p>The following example configuration specifies that the default filtering should be used for TLSv1.2 and below and specifies that the
+<code>TLS_AES_128_CCM_8_SHA256</code> and <code>TLS_AES_256_GCM_SHA384</code> cipher suites should be used for TLSv1.3.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;cipher-suite</span> <span class="attribute-name">selector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">DEFAULT</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span></code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;cipher-suite</span> <span class="attribute-name">selector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">DEFAULT</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">names</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">TLS_AES_128_CCM_8_SHA256:TLS_AES_256_GCM_SHA384</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span></code></pre>
 </div>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">&lt;protocol /&gt;</dt>
+<dt class="hdlist1">&lt;protocol names="&#8230;&#8203;"/&gt;</dt>
 <dd>
-<p>used to define a space separated list of the protocols to be supported.</p>
+<p>Used to define a space separated list of the protocols to be supported. The default value is <code>TLSv1 TLSv1.1 TLSv1.2 TLSv1.3</code>. Note that the TLSv1.3 protocol will only be usable when running against JDK 11 or higher.</p>
 </dd>
 <dt class="hdlist1">&lt;provider-name /&gt;</dt>
 <dd>
@@ -1958,13 +1972,51 @@ A list of the supported algorithm types can be found in
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="webservices-client">3.5. webservices-client</h3>
+<div class="paragraph">
+<p>&lt;webservices /&gt; - Webservices Client</p>
+</div>
+<div class="paragraph">
+<p>The <em>&lt;webservices /&gt;</em> element in a <code>wildfly-config.xml</code> file can be used to specify Web Services Client configuration that will apply during <a href="https://docs.jboss.org/author/display/JBWS/Predefined+client+and+endpoint+configurations">assigning of configurations</a> when building a client. This element is from the “urn:elytron:client:1.5” namespace. Below is the example of use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+
+<span class="tag">&lt;configuration&gt;</span>
+...
+    <span class="tag">&lt;webservices&gt;</span>
+       ...
+    <span class="tag">&lt;/webservices&gt;</span>
+...
+<span class="tag">&lt;/configuration&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <em>&lt;webservices /&gt;</em> element can optionally contain the following child elements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>&lt;set-http-mechanism name="BASIC"/&gt;</strong> This element is used to specify an HTTP mechanism that WS client should use to authenticate. Currently only the HTTP Basic authentication is supported and used as default.</p>
+</li>
+<li>
+<p><strong>&lt;set-ws-security-type name="UsernameToken"/&gt;</strong> This element is used to specify WS-Security type that WS client will use to authenticate with the server. Currently only Username Token Profile can be configured.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These elements will take effect only if both username and password are configured in Elytron client.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 18.0.0.Final<br>
-Last updated 2019-02-06 11:57:26 PST
+Version 19.0.0.Final<br>
+Last updated 2020-01-20 10:24:33 PST
 </div>
 </div>
 </body>

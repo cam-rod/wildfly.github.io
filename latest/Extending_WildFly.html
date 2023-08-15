@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>Extending WildFly</h1>
 <div class="details">
 <span id="author" class="author">WildFly code development team</span><br>
-<span id="revnumber">version 18.0.0.Final,</span>
-<span id="revdate">2019-10-02T18:46:03Z</span>
+<span id="revnumber">version 19.0.0.Final,</span>
+<span id="revdate">2020-03-17T23:46:04Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Extending WildFly</div>
@@ -2995,8 +2995,8 @@ of the management resource that registers the capability. For example,
 the management resource at the address
 '/socket-binding-group=standard-sockets/socket-binding=web' will
 register a dynamically named capability named
-'org.wildlfy.network.socket-binding.web'. The
-'org.wildlfy.network.socket-binding' portion is the static part of the
+'org.wildfly.network.socket-binding.web'. The
+'org.wildfly.network.socket-binding' portion is the static part of the
 name.</p>
 </div>
 <div class="paragraph">
@@ -4080,8 +4080,8 @@ release of WildFly, we <strong>must</strong> bump the version of the subsystem.<
 next Final release without more version bumps. It is also worth noting
 that a new WildFly release does not automatically mean a new version for
 the subsystem, the new version is only needed if something was changed.
-For example the <code>jaxrs</code> subsystem has remained on 1.0.0 for all versions
-of WildFly and JBoss AS 7.</p>
+For example the <code>jaxrs</code> subsystem remained on 1.0.0 for all versions
+of WildFly and JBoss AS 7 through Wildfly 18.</p>
 </div>
 <div class="paragraph">
 <p>You can find the <code>ModelVersion</code> of a subsystem by querying its
@@ -4186,7 +4186,7 @@ of 1.0.0, and its resource description was as follows:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>In WildFly 18, it has a ModelVersion of 2.0.0 and has added two
+<p>In WildFly 19, it has a ModelVersion of 2.0.0 and has added two
 attributes, <code>require-bean-descriptor</code> and <code>non-portable</code> mode:</p>
 </div>
 <div class="listingblock">
@@ -4252,7 +4252,7 @@ attributes, <code>require-bean-descriptor</code> and <code>non-portable</code> m
 </div>
 <div class="paragraph">
 <p>In the rest of this section we will assume that we are running a DC
-running WildFly 18 so it will have ModelVersion 2.0.0 of the weld
+running WildFly 19 so it will have ModelVersion 2.0.0 of the weld
 subsystem, and that we are running a slave using ModelVersion 1.0.0 of
 the weld subsystem.</p>
 </div>
@@ -4387,7 +4387,7 @@ rollback the operation across the whole domain.</p>
 <div class="paragraph">
 <p>Now for the <code>weld</code> example we have been using there is a slight twist.
 We have the new <code>require-bean-descriptor</code> and <code>non-portable-mode</code>
-attributes. These have been added in WildFly 18 which supports Jakarta EE,
+attributes. These have been added in WildFly 19 which supports Jakarta EE,
 and thus CDI.
 In CDI 1.1 the values of these attributes are tweakable, so they can be set
 to either <code>true</code> or <code>false</code>. The default behaviour for these in CDI 1.1,
@@ -4418,7 +4418,7 @@ the behavior assumed on the legacy slave HC.</p>
 </div>
 <div class="paragraph">
 <p>That way the older slave HCs will work fine. However, we might also have
-WildFly 18 slave HCs in our domain, and they are missing out on the new
+WildFly 19 slave HCs in our domain, and they are missing out on the new
 features introduced by the attributes introduced in ModelVersion 2.0.0.
 If we do</p>
 </div>
@@ -4464,9 +4464,9 @@ The solution is to put these in two different profiles in <code>domain.xml</code
 </div>
 </div>
 <div class="paragraph">
-<p>Then have the HCs using WildFly 18 make their servers reference the
+<p>Then have the HCs using WildFly 19 make their servers reference the
 <code>main-server-group</code> server group, and the HCs using older versions of
-WildFly 18 make their servers reference the <code>main-server-group-legacy</code>
+WildFly 19 make their servers reference the <code>main-server-group-legacy</code>
 server group.</p>
 </div>
 <div class="sect4">
@@ -6033,7 +6033,7 @@ transformers</a></p>
 <div class="sect3">
 <h4 id="the-old-way">4.6.1. The old way</h4>
 <div class="paragraph">
-<p>This is the way that has been used up to WildFly 18.x. However, in
+<p>This is the way that has been used up to WildFly 19.x. However, in
 WildFly 9 and later, it is strongly recommended to migrate to what is
 mentioned in
 <a href="#chained-transformers">#Chained
@@ -6268,7 +6268,7 @@ current subsystem version, and the jars in the WildFly checkout.</p>
 <div class="paragraph">
 <p>Next we configure a 'legacy' controller. This will run the version of
 the core libraries (e.g the <code>controller</code> module) as found in the
-targeted legacy version of JBoss AS/Wildfly), and the subsystem. We need
+targeted legacy version of JBoss AS/WildFly), and the subsystem. We need
 to pass in that it is using the core AS version 7.1.2.Final (i.e. the
 <code>ModelTestControllerVersion.V7_1_2_FINAL</code> part) and that that version is
 ModelVersion 1.0.0. Next we have some <code>addMavenResourceURL()</code> calls
@@ -6518,7 +6518,7 @@ Missing parameters <span class="keyword">for</span> operation <span class="strin
 <p>This difference also affects the <code>add</code> operation. Looking at the current
 model the valid values for the <code>protocol</code> attribute are <code>remote</code>,
 <code>http-remoting</code> and <code>https-remoting</code>. The last two are new protocols
-introduced in WildFly 18, meaning that the <em>implied behaviour</em> in JBoss
+introduced in WildFly 19, meaning that the <em>implied behaviour</em> in JBoss
 7.2.0 and earlier is the <code>remote</code> protocol. Since this attribute does
 not exist in the legacy model we want to discard this attribute if it is
 <code>undefined</code> or if it has the value <code>remote</code>, both of which are in line
@@ -8360,7 +8360,7 @@ developers to bind new resources easier.</p>
 </div>
 <div class="paragraph">
 <p>To support discussion in the community, the content includes a big focus
-on comparing WildFly 18 JNDI implementation with the new proposal, and
+on comparing WildFly 19 JNDI implementation with the new proposal, and
 should later evolve to the prime guide for WildFly developers needing to
 interact with JNDI at subsystem level.</p>
 </div>
@@ -8828,8 +8828,8 @@ the JAR file containing the classes above with value
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 18.0.0.Final<br>
-Last updated 2019-02-06 11:57:26 PST
+Version 19.0.0.Final<br>
+Last updated 2020-01-20 10:18:55 PST
 </div>
 </div>
 </body>

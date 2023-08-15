@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>WildFly Testsuite</h1>
 <div class="details">
 <span id="author" class="author">WildFly team</span><br>
-<span id="revnumber">version 18.0.0.Final,</span>
-<span id="revdate">2019-10-02T18:46:03Z</span>
+<span id="revnumber">version 19.0.0.Final,</span>
+<span id="revdate">2020-03-17T23:46:04Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly testsuite</div>
@@ -1023,8 +1023,8 @@ safely run, are:</p>
 <p>The <code>test</code> phase is not recommended to be used for scripted jobs as we
 are planning to switch to the <code>failsafe</code> plugin bound to the
 <code>integration-test</code> and <code>verify</code> phases. See
-<a href="https://issues.jboss.org/browse/WFLY-625">WFLY-625</a> and
-<a href="https://issues.jboss.org/browse/WFLY-228">WFLY-228</a>.</p>
+<a href="https://issues.redhat.com/browse/WFLY-625">WFLY-625</a> and
+<a href="https://issues.redhat.com/browse/WFLY-228">WFLY-228</a>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1291,7 +1291,7 @@ Arquillian).</p>
 <div class="sect4">
 <h5 id="running-against-a-running-jboss-as-instance">Running against a running JBoss AS instance</h5>
 <div class="paragraph">
-<p>Arquillian&#8217;s WildFly 18 container adapter allows specifying
+<p>Arquillian&#8217;s WildFly 19 container adapter allows specifying
 <code>allowConnectingToRunningServer</code> in <code>arquillian.xml</code>, which makes it
 check whether AS is listening at <code>managementAddress:managementPort</code>, and
 if so, it uses that server instead of launching a new one, and doesn&#8217;t
@@ -1653,7 +1653,7 @@ the pattern is <code>**/*TestCase.xml</code>, without need to specify <code>-Dal
 <div class="sect3">
 <h4 id="creating-coverage-reports">2.2.11. Creating coverage reports</h4>
 <div class="paragraph">
-<p><strong>Jira:</strong> <a href="https://issues.jboss.org/browse/WFLY-585" class="bare">https://issues.jboss.org/browse/WFLY-585</a></p>
+<p><strong>Jira:</strong> <a href="https://issues.redhat.com/browse/WFLY-585" class="bare">https://issues.redhat.com/browse/WFLY-585</a></p>
 </div>
 <div class="paragraph">
 <p>Coverage reports are created by
@@ -1747,7 +1747,7 @@ sed <span class="string"><span class="delimiter">&quot;</span><span class="conte
 </div>
 </div>
 <div class="paragraph">
-<p>See also <a href="https://issues.jboss.org/browse/WFLY-628" class="bare">https://issues.jboss.org/browse/WFLY-628</a>.</p>
+<p>See also <a href="https://issues.redhat.com/browse/WFLY-628" class="bare">https://issues.redhat.com/browse/WFLY-628</a>.</p>
 </div>
 </div>
 </div>
@@ -1760,7 +1760,7 @@ sed <span class="string"><span class="delimiter">&quot;</span><span class="conte
 <p><strong>Audience:</strong> Whoever wants to change the testsuite harness</p>
 </div>
 <div class="paragraph">
-<p><strong>JIRA</strong>: <a href="https://issues.jboss.org/browse/WFLY-576">WFLY-576</a></p>
+<p><strong>JIRA</strong>: <a href="https://issues.redhat.com/browse/WFLY-576">WFLY-576</a></p>
 </div>
 <div class="sect2">
 <h3 id="testsuite-requirements">3.1. Testsuite requirements</h3>
@@ -1794,7 +1794,7 @@ for testsuite modules.</a></p>
 <div class="paragraph">
 <p>﻿Propagated to tests through arquillian.xml:<br>
 <code>&lt;property name="javaVmArguments"&gt;${server.jvm.args}&lt;/property&gt;</code><br>
-TBD: <a href="https://issues.jboss.org/browse/ARQ-647" class="bare">https://issues.jboss.org/browse/ARQ-647</a></p>
+TBD: <a href="https://issues.redhat.com/browse/ARQ-647" class="bare">https://issues.redhat.com/browse/ARQ-647</a></p>
 </div>
 <div class="sect3">
 <h4 id="jboss-as-instance-dir">3.5.1. JBoss AS instance dir</h4>
@@ -3048,7 +3048,7 @@ timeouts.When this and specific are defined, both apply.</p>
 </div>
 <div class="paragraph">
 <p>Currently doesn&#8217;t work due to
-<a href="https://issues.jboss.org/browse/WFLY-673">WFLY-673</a>.</p>
+<a href="https://issues.redhat.com/browse/WFLY-673">WFLY-673</a>.</p>
 </div>
 <div class="paragraph">
 <p>optionally you might be able to catch it using the manual deployer</p>
@@ -3192,7 +3192,7 @@ your branch.</p>
 <p><em>(Please don&#8217;t (re)move - this is a landing page from a Jira link.)</em></p>
 </div>
 <div class="paragraph">
-<p><strong>Thank you for finding time to contribute to WildFly 18 quality.</strong><br>
+<p><strong>Thank you for finding time to contribute to WildFly 19 quality.</strong><br>
 Covering corner cases found by community users with tests is very
 important to increase stability.<br>
 If you&#8217;re providing a test case to support your bug report, it&#8217;s very
@@ -3205,7 +3205,7 @@ likely that your bug will be fixed much sooner.</p>
 file.</p>
 </div>
 <div class="paragraph">
-<p>Check WildFly 18
+<p>Check WildFly 19
 <a href="https://github.com/wildfly/wildfly/tree/master/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration">test
 suite test cases</a> for examples.</p>
 </div>
@@ -3215,7 +3215,7 @@ Developer Guide</a>. Check the requirements for a test to be included in
 the testsuite.</p>
 </div>
 <div class="paragraph">
-<p>Ask for help at WildFly 18 forum or at IRC - #wildfly @ FreeNode.</p>
+<p>Ask for help at WildFly 19 forum or at IRC - #wildfly @ FreeNode.</p>
 </div>
 </div>
 <div class="sect2">
@@ -3355,7 +3355,7 @@ IPv6 adress.<br>
 Always use the configurable values provided by Arquillian or as a system
 property.<br>
 If you come across a value which is not configurable but you think it
-should be, file an WildFly 18 jira issue with component "Test suite".<br>
+should be, file an WildFly 19 jira issue with component "Test suite".<br>
 See
 <a href="https://github.com/arquillian/arquillian/blob/master/examples/junit/src/test/java/com/acme/web/LocalRunServletTestCase.java">@ArquillianResourrce
 usage example</a>.</p>
@@ -3534,8 +3534,8 @@ dependency to a testsuite module:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 18.0.0.Final<br>
-Last updated 2019-02-06 11:57:26 PST
+Version 19.0.0.Final<br>
+Last updated 2020-01-20 10:18:55 PST
 </div>
 </div>
 </body>

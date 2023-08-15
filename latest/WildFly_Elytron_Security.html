@@ -522,8 +522,8 @@ table.CodeRay td.code>pre{padding:0}
 <div id="header">
 <h1>WildFly Elytron Security</h1>
 <div class="details">
-<span id="revnumber">version 18.0.0.Final,</span>
-<span id="revdate">2019-10-02T18:46:03Z</span>
+<span id="revnumber">version 19.0.0.Final,</span>
+<span id="revdate">2020-03-17T23:46:04Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Elytron Security Guide</div>
@@ -1918,7 +1918,7 @@ and the
 <div class="sect2">
 <h3 id="provided-components">3.2. Provided components</h3>
 <div class="paragraph">
-<p>Wildfly Elytron provides a default set of implementations in the
+<p>WildFly Elytron provides a default set of implementations in the
 <em>elytron</em> subsystem.</p>
 </div>
 <div class="sect3">
@@ -2449,14 +2449,14 @@ resources.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">authentication-configuration</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">An individual authentication
-configuration definition, which is used by clients deployed to Wildfly
+configuration definition, which is used by clients deployed to WildFly
 and other resources for authenticating when making a remote connection.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">authentication-context</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">An individual authentication context
 definition, which is used to supply an ssl-context and
-authentication-configuration when clients deployed to Wildfly and other
+authentication-configuration when clients deployed to WildFly and other
 resources make a remoting connection.</p></td>
 </tr>
 <tr>
@@ -5923,9 +5923,17 @@ by this SSLContext. The format of this attribute is described in detail in
 The default value is <code>DEFAULT</code>, which corresponds to all known cipher suites that do not have NULL encryption and
 excludes any cipher suites that have no authentication.</p>
 </dd>
+<dt class="hdlist1">cipher-suite-names</dt>
+<dd>
+<p><em>(Optional)</em> The enabled cipher suites for TLSv1.3. The format of this attribute is a simple colon
+(":") separated list of TLSv1.3 cipher suite names (e.g., <code>TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256</code>).
+This attribute must be specified in order for TLSv1.3 to be enabled.</p>
+</dd>
 <dt class="hdlist1">protocols</dt>
 <dd>
-<p><em>(Optional)</em> A space separated list of the protocols to be supported by this <code>SSLContext</code>.</p>
+<p><em>(Optional)</em> A space separated list of the protocols to be supported by this <code>SSLContext</code>. The default value
+is <code>TLSv1 TLSv1.1 TLSv1.2 TLSv1.3</code>. Note that the TLSv1.3 protocol will only be usable when running against JDK 11 or
+higher.</p>
 </dd>
 <dt class="hdlist1">want-client-auth</dt>
 <dd>
@@ -6027,9 +6035,16 @@ by this SSLContext. The format of this attribute is described in detail in
 The default value is <code>DEFAULT</code>, which corresponds to all known cipher suites that do not have NULL encryption and
 excludes any cipher suites that have no authentication.</p>
 </dd>
+<dt class="hdlist1">cipher-suite-names</dt>
+<dd>
+<p><em>(Optional)</em> The enabled cipher suites for TLSv1.3. The format of this attribute is a simple colon
+(":") separated list of TLSv1.3 cipher suite names (e.g., <code>TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256</code>).
+This attribute must be specified in order for TLSv1.3 to be enabled.</p>
+</dd>
 <dt class="hdlist1">protocols</dt>
 <dd>
-<p><em>(Optional)</em> A space separated list of the protocols to be supported by this <code>SSLContext</code>.</p>
+<p><em>(Optional)</em> A space separated list of the protocols to be supported by this <code>SSLContext</code>. The default value
+is <code>TLSv1 TLSv1.1 TLSv1.2 TLSv1.3</code>. Note that the TLSv1.3 protocol will only be usable when running against JDK 11 or higher.</p>
 </dd>
 <dt class="hdlist1">provider-name</dt>
 <dd>
@@ -6041,6 +6056,23 @@ passed to the <code>SSLContext</code>.</p>
 <p><em>(Optional)</em> The name of the providers to obtain the <code>Provider[]</code> to use to load the <code>SSLContext</code>.</p>
 </dd>
 </dl>
+</div>
+<div class="paragraph">
+<p><strong>WARNING</strong> It is possible to use TLSv1.3 with WildFly when running against JDK 11 or higher. However, if JDK 11
+is in use and if there is a very large number of TLSv1.3 requests being made, it is possible that a drop in
+performance (throughput and response time) will occur compared to TLSv1.2. Upgrading to newer JDK versions
+should improve performance. For this reason, the use of TLSv1.3 is currently disabled by default. TLSv1.3 can
+be enabled by configuring the new <code>cipher-suite-names</code> attribute in the SSL Context resource definition in the
+Elytron subsystem as described in the previous two sections. It is recommended to test for performance
+degradation prior to enabling TLSv1.3 in a production environment. See <a href="https://issues.redhat.com/browse/WFWIP-160">WFWIP-160</a>
+for more details.</p>
+</div>
+<div class="paragraph">
+<p><strong>Note:</strong> When using TLSv1.3, it is important to keep in mind that session IDs have become essentially obsolete.
+This means that the session ID can no longer reliably be used to test if a session was resumed. Instead,
+creation time can be used to test if a session was resumed. Currently, clients need to read from the server after
+the first handshake in order to receive the <code>NewSessionTicket</code> that can be used for resumption. However, this may
+change once <a href="https://bugs.openjdk.java.net/browse/JDK-8209953">JDK-8209953</a> is resolved.</p>
 </div>
 </div>
 <div class="sect3">
@@ -6634,10 +6666,10 @@ after authentication.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>Filesystem security realm can be added with Wildfly management CLI or with Elytron API.</p>
+<p>Filesystem security realm can be added with WildFly management CLI or with Elytron API.</p>
 </div>
 <div class="sect5">
-<h6 id="wildfly-management-cli">Wildfly management CLI</h6>
+<h6 id="wildfly-management-cli">WildFly management CLI</h6>
 <div class="paragraph">
 <p>The following command creates realm with name <code>fsRealm</code> that resides in directory <code>fs-realm-users</code> inside the base configuration directory defined by <code>jboss.server.config.dir</code> property. The levels number is 2 and encoded value is true.</p>
 </div>
@@ -6733,7 +6765,7 @@ if (!modifiableIdentity.exists()) {
 <p>Supported password types for identity in filesystem realm are <code>Bcrypt</code>, <code>Clear</code>, <code>Simple Digest</code>, <code>Salted Simple Digest</code>, <code>Scram Digest</code>, <code>Digest</code> and <code>OTP</code>.</p>
 </div>
 <div class="sect5">
-<h6 id="wildfly-management-cli-2">Wildfly management CLI</h6>
+<h6 id="wildfly-management-cli-2">WildFly management CLI</h6>
 <div class="paragraph">
 <p>To set clear password to the identity:</p>
 </div>
@@ -6780,7 +6812,7 @@ identity.setCredentials(Collections.singleton(clearPassword));</code></pre>
 <p>Attributes associated with identities can be read and updated through CLI as well as programmatically.</p>
 </div>
 <div class="sect5">
-<h6 id="wildfly-management-cli-3">Wildfly management CLI</h6>
+<h6 id="wildfly-management-cli-3">WildFly management CLI</h6>
 <div class="paragraph">
 <p>To add attribute to the identity, you have to specify the name of the attribute and its values (values are of type LIST):</p>
 </div>
@@ -6876,7 +6908,7 @@ modifiableIdentity.dispose();</code></pre>
 <div class="sect4">
 <h5 id="converting-legacy-properties-file-into-filesystem-realm">Converting legacy properties file into Filesystem realm</h5>
 <div class="paragraph">
-<p>Wildfly can use authentication with a properties file based identity store. One properties file maps users to passwords and another maps users to roles. You can use <code>Elytron Tool</code> to convert these properties files into a filesystem realm. Below is an example of how to run this tool from the command line:</p>
+<p>WildFly can use authentication with a properties file based identity store. One properties file maps users to passwords and another maps users to roles. You can use <code>Elytron Tool</code> to convert these properties files into a filesystem realm. Below is an example of how to run this tool from the command line:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -13364,8 +13396,8 @@ for example, Infinispan cache cannot be used, any others?</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 18.0.0.Final<br>
-Last updated 2019-08-21 11:00:49 PDT
+Version 19.0.0.Final<br>
+Last updated 2020-01-20 10:18:55 PST
 </div>
 </div>
 </body>
