@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>WildFly Admin Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly developer team</span><br>
-<span id="revnumber">version 25.0.0.Final,</span>
-<span id="revdate">2021-10-04T20:38:36Z</span>
+<span id="revnumber">version 26.0.0.Final,</span>
+<span id="revdate">2021-12-14T21:55:34Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Admin guide</div>
@@ -591,7 +591,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#MicroProfile_Config_SmallRye">7.13. MicroProfile Config Subsystem Configuration</a></li>
 <li><a href="#MicroProfile_Health_SmallRye">7.14. MicroProfile Health Subsystem Configuration</a></li>
 <li><a href="#MicroProfile_JWT_SmallRye">7.15. MicroProfile JWT Subsystem Configuration</a></li>
-<li><a href="#MicroProfile_Metrics_SmallRye">7.16. MicroProfile Metrics Subsystem Configuration</a></li>
+<li><a href="#MicroProfile_Metrics_SmallRye_Subsystem_Config">7.16. MicroProfile Metrics Subsystem Configuration</a></li>
 <li><a href="#MicroProfile_OpenAPI_SmallRye">7.17. MicroProfile OpenAPI Subsystem Configuration</a></li>
 <li><a href="#MicroProfile_OpenTracing_SmallRye">7.18. MicroProfile OpenTracing Subsystem Configuration</a></li>
 <li><a href="#MicroProfile-Fault-Tolerance-SmallRye">7.19. MicroProfile Fault Tolerance Subsystem Configuration</a></li>
@@ -1445,7 +1445,7 @@ invoked via the HTTP API, the JSON representation of a <code>ModelNode</code>.)<
 </div>
 <div class="paragraph">
 <p>Every resource except the root resource will have an <code>add</code> operation and
-should have a <code>remove</code> operation ("should" because in WildFly 25 many do
+should have a <code>remove</code> operation ("should" because in WildFly 26 many do
 not). The parameters for the <code>add</code> operation vary depending on the
 resource. The <code>remove</code> operation has no parameters.</p>
 </div>
@@ -1698,6 +1698,129 @@ configuration:</p>
 <p>See <a href="#descriptions">Descriptions</a>
 below for how to learn more about the attributes a particular resource
 exposes.</p>
+</div>
+<div class="sect4">
+<h5 id="overridden-attribute-value"><a class="link" href="#overridden-attribute-value">Override an Attribute Value with an Environment Variable</a></h5>
+<div class="paragraph">
+<p>It is possible to override the value of any simple attribute by providing an environment variable with a name
+that maps to the attribute (and its resource).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Complex attributes (which have their <code>type</code> set to <code>LIST, OBJECT</code>, or <code>PROPERTY</code>) can not be overridden using an environment variable.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If there is an environment variable with such a name, the management resource will use the value of this environment variable
+when the management resource validates and sets the attribute value.
+This takes place before the attribute value is resolved (if it contains an expression) or corrected.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This feature is disabled by default. To enable it, the environment variable <code>WILDFLY_OVERRIDING_ENV_VARS</code> must be set (its value is not relevant):</p>
+</div>
+<div class="paragraph">
+<p><code>export WILDFLY_OVERRIDING_ENV_VARS=1</code></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect5">
+<h6 id="mapping-between-the-resource-address-and-attribute-and-the-environment-variable"><a class="link" href="#mapping-between-the-resource-address-and-attribute-and-the-environment-variable">Mapping between the resource address and attribute and the environment variable</a></h6>
+<div class="paragraph">
+<p>The name of the environment variable is based on the address of the resource and the name of the attribute:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>take the address of the resource (e.g. <code>/subsystem=undertow/server=default-server/http-listener=default</code>)</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>/subsystem=undertow/server=default-server/http-listener=default</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>remove the leading slash (<code>/</code>)</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>subsystem=undertow/server=default-server/http-listener=default</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>append <strong>two underscores</strong> (<code>__</code>) and the name of the attribute (e.g. <code>proxy-address-forwarding</code>)</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>subsystem=undertow/server=default-server/http-listener=default__proxy-address-forwarding</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Replace all non-alphanumeric characters with an underscore (<code>_</code>) and put it in upper case</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>SUBSYSTEM_UNDERTOW_SERVER_DEFAULT_SERVER_HTTP_LISTENER_DEFAULT__PROXY_ADDRESS_FORWARDING</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>If WildFly is started with that environment variable, the value of the <code>proxy-address-forwarding</code> attribute on the
+<code>/subsystem=undertow/server=default-server/http-listener=default</code> will be set to the value of the environment variable:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="nowrap">$ WILDFLY_OVERRIDING_ENV_VARS=1 \
+  SUBSYSTEM_UNDERTOW_SERVER_DEFAULT_SERVER_HTTP_LISTENER_DEFAULT__PROXY_ADDRESS_FORWARDING=false \
+  ./bin/standalone.sh
+$ ./bin/jboss-cli.sh -c --command=&quot;/subsystem=undertow/server=default-server/http-listener=default:read-attribute(name=proxy-address-forwarding)&quot;
+{
+    &quot;outcome&quot; =&gt; &quot;success&quot;,
+    &quot;result&quot; =&gt; &quot;false&quot;</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If an attribute value is determined from an environment variable, the next time the configuration is persisted, that value from the environment variable will be persisted.
+Until an operation triggers such persistence of the configuration file, the configuration file will not reflect the current running configuration.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -7845,7 +7968,7 @@ you installed.</p>
 <div class="sect3">
 <h4 id="jdbc-driver-installation"><a class="link" href="#jdbc-driver-installation">7.3.1. JDBC Driver Installation</a></h4>
 <div class="paragraph">
-<p>The recommended way to install a JDBC driver into WildFly 25 is to deploy
+<p>The recommended way to install a JDBC driver into WildFly 26 is to deploy
 it as a regular JAR deployment. The reason for this is that when you run
 WildFly in domain mode, deployments are automatically propagated to all
 servers to which the deployment applies; thus distribution of the driver
@@ -11775,7 +11898,7 @@ the command line.</p>
 <div class="sect3">
 <h4 id="deployment-of--jms.xml-files"><a class="link" href="#deployment-of--jms.xml-files">7.8.9. Deployment of -jms.xml files</a></h4>
 <div class="paragraph">
-<p>Starting with WildFly 25, you have the ability to deploy a -jms.xml file
+<p>Starting with WildFly 26, you have the ability to deploy a -jms.xml file
 defining Jakarta Messaging destinations, e.g.:</p>
 </div>
 <div class="listingblock">
@@ -12236,7 +12359,7 @@ If you need to use destinations without those prefixes, you can configure your c
 </div>
 </div>
 <div class="sect4">
-<h5 id="configuration-of-a-mdb-using-a-pooled-connection-factory"><a class="link" href="#configuration-of-a-mdb-using-a-pooled-connection-factory">Jakarta Messaging Queues and Topics on a remote Artemis Server</a></h5>
+<h5 id="jakarta_messaging_queues_topics_on_remote_artemis_server"><a class="link" href="#jakarta_messaging_queues_topics_on_remote_artemis_server">Jakarta Messaging Queues and Topics on a remote Artemis Server</a></h5>
 <div class="paragraph">
 <p>You can also add queues and topics defined on a remote Artemis server to be used as if they were local to the server. This means that you can make those remote destinations available viza JNDI just like local destinations. Those destinations are defined out-of the server element:</p>
 </div>
@@ -12400,7 +12523,7 @@ connect to a legacy app server (running HornetQ)</p>
 </li>
 <li>
 <p>forward compatibility: legacy messaging clients (using HornetQ) can connect
-to a WildFly 25 app server (running Artemis).</p>
+to a WildFly 26 app server (running Artemis).</p>
 </li>
 </ul>
 </div>
@@ -12453,7 +12576,7 @@ providing a <code>legacy-entries</code> attribute to the <code>jms-queue</code> 
 </div>
 <div class="paragraph">
 <p>The <code>legacy-entries</code> must be used by legacy clients (using HornetQ)
-while the regular <code>entries</code> are for WildFly 25 Jakarta Messaging clients (using
+while the regular <code>entries</code> are for WildFly 26 Jakarta Messaging clients (using
 Artemis).</p>
 </div>
 <div class="paragraph">
@@ -12475,7 +12598,7 @@ in the legacy <code>messaging</code> subsystem and the regular entries will be
 created with a <code>-new</code> suffix.<br>
 If <code>add-legacy-entries</code> is set to <code>false</code> during migration, no legacy
 resources will be created in the <code>messaging-activemq</code> subsystem and
-legacy messaging clients will not be able to communicate with WildFly 25
+legacy messaging clients will not be able to communicate with WildFly 26
 servers.</p>
 </div>
 </div>
@@ -12485,7 +12608,7 @@ servers.</p>
 <div class="paragraph">
 <p>Backward compatibility requires no configuration change in the legacy
 server.<br>
-WildFly 25 clients do not look up resources on the legacy server but
+WildFly 26 clients do not look up resources on the legacy server but
 use client-side JNDI to create their Jakarta Messaging resources. WildFly&#8217;s Artemis client
 can then use these resources to communicate with the legacy server
 using the HornetQ CORE protocol.</p>
@@ -12496,7 +12619,7 @@ using the HornetQ CORE protocol.</p>
 JNDI</a> to create Jakarta Messaging resources ( <code>ConnectionFactory</code> and <code>Destination</code>).</p>
 </div>
 <div class="paragraph">
-<p>For example, if a WildFly 25 messaging client wants to communicate with a
+<p>For example, if a WildFly 26 messaging client wants to communicate with a
 legacy server using a queue named <code>myQueue</code>, it must use the
 following properties to configure its JNDI <code>InitialContext</code>:</p>
 </div>
@@ -12863,8 +12986,8 @@ This is configured using the following configuration attributes:</p>
 INFO  [org.apache.activemq.artemis.logs] (Network-Checker-0 (NetworkChecker)) AMQ201001: Network is unhealthy, stopping service ActiveMQServerImpl::serverUUID=76e64326-f78e-11ea-b7a5-3ce1a1c35439</code></pre>
 </div>
 </div>
-<div class="sect6">
-<h7 id="warning"><a class="link" href="#warning">Warning</a></h7>
+<div class="sect5">
+<h6 id="warning"><a class="link" href="#warning">Warning</a></h6>
 <div class="paragraph">
 <p>Make sure you understand your network topology as this is meant to validate your network. Using IPs that could eventually disappear or be partially visible may defeat the purpose. You can use a list of multiple IPs. Any successful ping will make the server OK to continue running</p>
 </div>
@@ -13666,20 +13789,20 @@ default values, so what you see in the configuration file may look different):</
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&lt;subsystem xmlns="urn:wildfly:opentelemetry:1.0"
-        service-name="example"&gt;
-    &lt;exporter
-        type="jaeger"
-        endpoint="http://localhost:14250"/&gt;
-    &lt;span-processor
-        type="batch"
-        batch-delay="4500"
-        max-queue-size="128"
-        max-export-batch-size="512"
-        export-timeout="45"/&gt;
-    &lt;sampler
-        type="on"/&gt;
-&lt;/subsystem&gt;</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:wildfly:opentelemetry:1.0</span><span class="delimiter">&quot;</span></span>
+        <span class="attribute-name">service-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">example</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;exporter</span>
+        <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jaeger</span><span class="delimiter">&quot;</span></span>
+        <span class="attribute-name">endpoint</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://localhost:14250</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;span-processor</span>
+        <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">batch</span><span class="delimiter">&quot;</span></span>
+        <span class="attribute-name">batch-delay</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">4500</span><span class="delimiter">&quot;</span></span>
+        <span class="attribute-name">max-queue-size</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">128</span><span class="delimiter">&quot;</span></span>
+        <span class="attribute-name">max-export-batch-size</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">512</span><span class="delimiter">&quot;</span></span>
+        <span class="attribute-name">export-timeout</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">45</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;sampler</span>
+        <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">on</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+<span class="tag">&lt;/subsystem&gt;</span></code></pre>
 </div>
 </div>
 </div>
@@ -13698,24 +13821,24 @@ default values, so what you see in the configuration file may look different):</
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>@Path("/myEndpoint")
-public class MyEndpoint {
-    @Inject
-    private Tracer tracer;
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="annotation">@Path</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">/myEndpoint</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MyEndpoint</span> {
+    <span class="annotation">@Inject</span>
+    <span class="directive">private</span> Tracer tracer;
 
-    @GET
-    public Response doSomeWork() {
-        final Span span = tracer.spanBuilder("Doing some work")
+    <span class="annotation">@GET</span>
+    <span class="directive">public</span> Response doSomeWork() {
+        <span class="directive">final</span> Span span = tracer.spanBuilder(<span class="string"><span class="delimiter">&quot;</span><span class="content">Doing some work</span><span class="delimiter">&quot;</span></span>)
                 .startSpan();
         span.makeCurrent();
         doSomeMoreWork();
-        span.addEvent("Make request to external system.");
+        span.addEvent(<span class="string"><span class="delimiter">&quot;</span><span class="content">Make request to external system.</span><span class="delimiter">&quot;</span></span>);
         makeExternalRequest();
-        span.addEvent("All the work is done.");
+        span.addEvent(<span class="string"><span class="delimiter">&quot;</span><span class="content">All the work is done.</span><span class="delimiter">&quot;</span></span>);
         span.end();
 
-        return Response.ok().build();
-}</pre>
+        <span class="keyword">return</span> Response.ok().build();
+}</code></pre>
 </div>
 </div>
 </div>
@@ -13763,7 +13886,7 @@ the <em>microprofile-health-smallrye</em> subsystem.</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="required-extension-metrics"><a class="link" href="#required-extension-metrics">7.12.1. Extension</a></h4>
+<h4 id="health_required-extension-metrics"><a class="link" href="#health_required-extension-metrics">7.12.1. Extension</a></h4>
 <div class="paragraph">
 <p>This <code>org.wildfly.extension.health</code> extension is included in all the standalone configurations included in the
 WildFly distribution as well as the <code>health</code> layer.</p>
@@ -14650,7 +14773,7 @@ mp.jwt.verify.issuer=quickstart-jwt-issuer</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="MicroProfile_Metrics_SmallRye"><a class="link" href="#MicroProfile_Metrics_SmallRye">7.16. MicroProfile Metrics Subsystem Configuration</a></h3>
+<h3 id="MicroProfile_Metrics_SmallRye_Subsystem_Config"><a class="link" href="#MicroProfile_Metrics_SmallRye_Subsystem_Config">7.16. MicroProfile Metrics Subsystem Configuration</a></h3>
 <div class="paragraph">
 <p>Support for <a href="https://microprofile.io/project/eclipse/microprofile-metrics">MicroProfile Metrics</a> is provided by
  the <em>microprofile-metrics-smallrye</em> subsystem.</p>
@@ -18917,14 +19040,11 @@ configurations to be communicate over multicast address <code>230.0.1.2</code>.<
 <pre>$JBOSS_HOME/bin/standalone.sh -u=230.0.1.2</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Be Careful</p>
-</div>
-<div class="admonitionblock note">
+<div class="admonitionblock important">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 As with the <code>-b</code> switch, the <code>-u</code> switch only controls the multicast
@@ -19382,7 +19502,7 @@ the web interface.
 <div class="paragraph">
 <p>Configuration of the JVM settings is different for a managed domain and
 a standalone server. In a managed domain, the domain controller
-components are responsible for starting and stoping server processes and
+components are responsible for starting and stopping server processes and
 hence determine the JVM settings. For a standalone server, it&#8217;s the
 responsibility of the process that started the server (e.g. passing them
 as command line arguments).</p>
@@ -19462,6 +19582,47 @@ heap size.</p>
        "max-heap-size" =&gt; "256m",
    }
 }</code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="using-filesystem-locations-as-jvm-options-on-domain-mode"><a class="link" href="#using-filesystem-locations-as-jvm-options-on-domain-mode">Using filesystem locations as JVM options on domain mode</a></h5>
+<div class="paragraph">
+<p>The <a href="Admin_Guide.html#controlling-filesystem-locations-with-system-properties">Controlling filesystem locations with system properties</a> section describes the available system properties associated with relevant WildFly file system paths. In addition to all the domain mode properties, the following server specific properties are also available for resolution as JVM options:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>jboss.server.base.dir</p>
+</li>
+<li>
+<p>jboss.server.log.dir</p>
+</li>
+<li>
+<p>jboss.server.data.dir</p>
+</li>
+<li>
+<p>jboss.server.temp.dir</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This ability is useful when you need to configure JVM settings without specifying a specific server name. For example, if you want to redirect the GC logging to a file to the default log server directory, you can configure the following JVM option at host level:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>[domain@localhost:9990 /] /host=master/jvm=default:add-jvm-option(jvm-option="-Xlog:gc:file=${jboss.server.log.dir}/gc.log")
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; undefined,
+    "server-groups" =&gt; {"main-server-group" =&gt; {"host" =&gt; {"master" =&gt; {"server-two" =&gt; {"response" =&gt; {
+        "outcome" =&gt; "success",
+        "response-headers" =&gt; {
+            "operation-requires-restart" =&gt; true,
+            "process-state" =&gt; "restart-required"
+        }
+    }}}}}}
+}</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -23788,7 +23949,7 @@ to the process it was managing and release other resources:</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-request"><a class="link" href="#format-of-a-detyped-operation-request">10.5.3. Format of a Detyped Operation Request</a></h4>
 <div class="paragraph">
-<p>The basic method a user of the WildFly 25 programmatic management API
+<p>The basic method a user of the WildFly 26 programmatic management API
 would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -24308,7 +24469,7 @@ header just like this :</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-response"><a class="link" href="#format-of-a-detyped-operation-response">10.5.4. Format of a Detyped Operation Response</a></h4>
 <div class="paragraph">
-<p>As noted previously, the basic method a user of the WildFly 25
+<p>As noted previously, the basic method a user of the WildFly 26
 programmatic management API would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -25214,7 +25375,7 @@ script (e.g. 'bin/jboss-admin.bat --connect command=:shutdown').</p>
 <div class="paragraph">
 <p>To avoid "Press any key to continue &#8230;&#8203;" message you need to specify
 NOPAUSE variable. Call 'set NOPAUSE=true' in command line before running
-any WildFly 25 .bat script or include it in your custom script before
+any WildFly 26 .bat script or include it in your custom script before
 invoking scripts from WildFly.</p>
 </div>
 </div>
@@ -25775,8 +25936,8 @@ Thanks to the <em>config=&lt;config name&gt;</em> system property, the script ca
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 25.0.0.Final<br>
-Last updated 2021-10-04 10:00:59 CDT
+Version 26.0.0.Final<br>
+Last updated 2021-10-15 17:05:18 CDT
 </div>
 </div>
 </body>

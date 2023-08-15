@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>Developer Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly developer team</span><br>
-<span id="revnumber">version 25.0.0.Final,</span>
-<span id="revdate">2021-10-04T20:38:36Z</span>
+<span id="revnumber">version 26.0.0.Final,</span>
+<span id="revdate">2021-12-14T21:55:34Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Developer guide</div>
@@ -634,7 +634,7 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel2">
 <li><a href="#transactions-in-enterprise-java-applications">11.1. Transactions in Enterprise Java applications</a></li>
 <li><a href="#classloading">11.2. Transactions subsystem class loading</a></li>
-<li><a href="#troubleshooting">11.3. Transactions troubleshooting</a></li>
+<li><a href="#jakarta_transactions_troubleshooting">11.3. Transactions troubleshooting</a></li>
 <li><a href="#transactions-configuration">11.4. Transactions configuration</a></li>
 </ul>
 </li>
@@ -711,42 +711,43 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#why-use-the-ejb-client-api-approach-then">20.5. Why use the EJB client API approach then?</a></li>
 </ul>
 </li>
-<li><a href="#Migrated_to_WildFly_Example_Applications">21. Example Applications - Migrated to WildFly</a>
+<li><a href="#h2-web-console">21. H2 Web Console Integration</a></li>
+<li><a href="#Migrated_to_WildFly_Example_Applications">22. Example Applications - Migrated to WildFly</a>
 <ul class="sectlevel2">
-<li><a href="#example-applications-migrated-from-previous-releases">21.1. Example Applications Migrated from Previous Releases</a></li>
-<li><a href="#example-applications-based-on-ee6">21.2. Example Applications Based on EE6</a></li>
+<li><a href="#example-applications-migrated-from-previous-releases">22.1. Example Applications Migrated from Previous Releases</a></li>
+<li><a href="#example-applications-based-on-ee6">22.2. Example Applications Based on EE6</a></li>
 </ul>
 </li>
-<li><a href="#Migrate_Order_Application_from_EAP5">22. Porting the Order Application from EAP 5.1 to JBoss AS 7</a>
+<li><a href="#Migrate_Order_Application_from_EAP5">23. Porting the Order Application from EAP 5.1 to JBoss AS 7</a>
 <ul class="sectlevel2">
-<li><a href="#overview-of-the-application">22.1. Overview of the application</a></li>
-<li><a href="#summary-of-changes-migrate-order-application">22.2. Summary of changes</a></li>
+<li><a href="#overview-of-the-application">23.1. Overview of the application</a></li>
+<li><a href="#summary-of-changes-migrate-order-application">23.2. Summary of changes</a></li>
 </ul>
 </li>
-<li><a href="#Spring_applications_development_and_migration_guide">23. Spring applications development and migration guide</a>
+<li><a href="#Spring_applications_development_and_migration_guide">24. Spring applications development and migration guide</a>
 <ul class="sectlevel2">
-<li><a href="#dependencies-and-modularity">23.1. Dependencies and Modularity</a></li>
-<li><a href="#persistence-usage-guide">23.2. Persistence usage guide</a></li>
-<li><a href="#native-springhibernate-applications">23.3. Native Spring/Hibernate applications</a></li>
-<li><a href="#Jakarta-Persistence-based-applications">23.4. Jakarta Persistence based applications</a></li>
+<li><a href="#dependencies-and-modularity">24.1. Dependencies and Modularity</a></li>
+<li><a href="#persistence-usage-guide">24.2. Persistence usage guide</a></li>
+<li><a href="#native-springhibernate-applications">24.3. Native Spring/Hibernate applications</a></li>
+<li><a href="#Jakarta-Persistence-based-applications">24.4. Jakarta Persistence based applications</a></li>
 </ul>
 </li>
-<li><a href="#How_do_I_migrate_my_application_from_AS7_to_WildFly">24. How do I migrate my application from JBoss AS 7  to WildFly 10</a>
+<li><a href="#How_do_I_migrate_my_application_from_AS7_to_WildFly">25. How do I migrate my application from JBoss AS 7  to WildFly 10</a>
 <ul class="sectlevel2">
-<li><a href="#about-this-document">24.1. About this Document</a></li>
-<li><a href="#overview-of-wildfly">24.2. Overview of WildFly</a></li>
-<li><a href="#server-migration">24.3. Server Migration</a></li>
-<li><a href="#application-migration">24.4. Application Migration</a></li>
+<li><a href="#about-this-document">25.1. About this Document</a></li>
+<li><a href="#overview-of-wildfly">25.2. Overview of WildFly</a></li>
+<li><a href="#server-migration">25.3. Server Migration</a></li>
+<li><a href="#application-migration">25.4. Application Migration</a></li>
 </ul>
 </li>
-<li><a href="#How_do_I_migrate_my_application_from_WebLogic_to_WildFly">25. How do I migrate my application from WebLogic to WildFly</a>
+<li><a href="#How_do_I_migrate_my_application_from_WebLogic_to_WildFly">26. How do I migrate my application from WebLogic to WildFly</a>
 <ul class="sectlevel2">
-<li><a href="#introduction-weblogic-migration">25.1. Introduction</a></li>
+<li><a href="#introduction-weblogic-migration">26.1. Introduction</a></li>
 </ul>
 </li>
-<li><a href="#How_do_I_migrate_my_application_from_WebSphere_to_WildFly">26. How do I migrate my application from WebSphere to WildFly</a>
+<li><a href="#How_do_I_migrate_my_application_from_WebSphere_to_WildFly">27. How do I migrate my application from WebSphere to WildFly</a>
 <ul class="sectlevel2">
-<li><a href="#introduction-websphere-migration">26.1. Introduction</a></li>
+<li><a href="#introduction-websphere-migration">27.1. Introduction</a></li>
 </ul>
 </li>
 </ul>
@@ -1433,7 +1434,7 @@ deployment.</p>
                   "import-services" =&gt; false
               },
               {
-                  "name" =&gt; "org.hibernate:4.1",
+                  "name" =&gt; "org.hibernate:5.3",
                   "optional" =&gt; false,
                   "export" =&gt; false,
                   "import-services" =&gt; false
@@ -1487,7 +1488,7 @@ deployment.</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>As explained in the <a href="#Class_Loading_in_WildFly">Class Loading in WildFly</a> article,
-WildFly 25 is based on module classloading. A class within a module B
+WildFly 26 is based on module classloading. A class within a module B
 isn&#8217;t visible to a class within a module A, unless module B adds a
 dependency on module A. Module dependencies can be explicitly (as
 explained in that classloading article) or can be "implicit". This
@@ -1892,7 +1893,7 @@ applications.</p>
 <h2 id="Application_Client_Reference">5. Application Client Reference</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As a Jakarta EE compliant server, WildFly 25 contains an application
+<p>As a Jakarta EE compliant server, WildFly 26 contains an application
 client. An application client is essentially a cut down server instance,
 that allows you to use EE features such as injection in a client side
 program.</p>
@@ -2147,7 +2148,7 @@ Guide</a><br>
 <div class="sect2">
 <h3 id="using-cdi-beans-from-outside-the-deployment">7.1. Using CDI Beans from outside the deployment</h3>
 <div class="paragraph">
-<p>For WildFly 25 onwards, it is now possible to have classes outside the
+<p>For WildFly 26 onwards, it is now possible to have classes outside the
 deployment be picked up as CDI beans. In order for this to work, you must
 add a dependency on the external deployment that your beans are coming
 from, and make sure the META-INF directory of this deployment is
@@ -2739,7 +2740,7 @@ Executor Service instance&#8217;s JNDI name is
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter details the extensions that are available when developing
-Enterprise Java Beans <sup>tm</sup> on WildFly 25.</p>
+Enterprise Java Beans <sup>tm</sup> on WildFly 26.</p>
 </div>
 <div class="paragraph">
 <p>Currently there is no support for configuring the extensions using an
@@ -3801,7 +3802,7 @@ defined in the server configuration (i.e. <code>standalone.xml</code> or
 <div class="sect5">
 <h6 id="the-clustering-namespace-urnclustering1.0">The clustering namespace urn:clustering:1.0</h6>
 <div class="paragraph">
-<p>This namespace is deprecated and as of WildFly 25 its use has no effect.
+<p>This namespace is deprecated and as of WildFly 26 its use has no effect.
 The clustering behavior of Jakarta Enterprise Beans are determined by the profile in use on
 the server.</p>
 </div>
@@ -4333,7 +4334,7 @@ specific extensions to the security configurations.</p>
 <div class="paragraph">
 <p>The Jakarta EE spec doesn&#8217;t mandate a specific way to configure security
 domain for a bean. It leaves it to the vendor implementations to allow
-such configurations, the way they wish. In WildFly 25, the use of
+such configurations, the way they wish. In WildFly 26, the use of
 <code>@org.jboss.ejb3.annotation.SecurityDomain</code> annotation allows the
 developer to configure the security domain for a bean. Here&#8217;s an
 example:</p>
@@ -4428,14 +4429,14 @@ of a .jar deployment or .war/WEB-INF folder of a .war deployment.
 <div class="paragraph">
 <p>As you can see the <code>doSomething</code> method is configured to be accessible
 for users with role "bar". However, the bean isn&#8217;t configured for any
-specific security domain. Prior to WildFly 25, the absence of an
+specific security domain. Prior to WildFly 26, the absence of an
 explicitly configured security domain on the bean would leave the bean
 unsecured, which meant that even if the <code>doSomething</code> method was
 configured with <code>@RolesAllowed("bar")</code> anyone even without the "bar"
 role could invoke on the bean.</p>
 </div>
 <div class="paragraph">
-<p>In WildFly 25, the presence of any security metadata (like @RolesAllowed,
+<p>In WildFly 26, the presence of any security metadata (like @RolesAllowed,
 @PermitAll, @DenyAll, @RunAs, @RunAsPrincipal) on the bean or any
 business method of the bean, makes the bean secure, even in the absence
 of an explicitly configured security domain. In such cases, the security
@@ -4476,7 +4477,7 @@ domain defaulted to "other"). However, notice that the method
 <code>helloWorld</code> doesn&#8217;t have any specific security configurations.</p>
 </div>
 <div class="paragraph">
-<p>In WildFly 25, such methods which have no explicit security
+<p>In WildFly 26, such methods which have no explicit security
 configurations, in a secured bean, will be treated similar to a method
 with <code>@DenyAll</code> configuration. What that means is, no one is allowed
 access to the <code>helloWorld</code> method. This behaviour can be controlled via
@@ -5601,7 +5602,7 @@ native API hibernate.cfg.xml file:</p>
 <p><a href="http://infinispan.org/docs/9.4.x/user_guide/user_guide.html#integrations_jpa_hibernate">Infinispan
 Hibernate/JPA second level cache provider documentation</a> contains
 advanced configuration information but you should bear in mind that when
-Hibernate runs within WildFly 25, some of those configuration options,
+Hibernate runs within WildFly 26, some of those configuration options,
 such as region factory, are not needed. Moreover, the application server
 providers you with option of selecting a different cache container for
 Infinispan via <strong>hibernate.cache.infinispan.container</strong> persistence
@@ -6913,7 +6914,7 @@ Dependencies: org.jboss.jts export services</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="troubleshooting">11.3. Transactions troubleshooting</h3>
+<h3 id="jakarta_transactions_troubleshooting">11.3. Transactions troubleshooting</h3>
 <div class="paragraph">
 <p>The Narayana component is configured to log only messages with level <code>WARN</code>
 (see category <code>com.arjuna</code> in the <code>standalone-*.xml</code>).
@@ -7631,7 +7632,7 @@ References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta En
 <div class="sectionbody">
 <div class="paragraph">
 <p>This page outlines the three options you have for deploying Jakarta RESTful Web Services
-applications in WildFly 25. These three methods are specified in the
+applications in WildFly 26. These three methods are specified in the
 JAX-RS 2.0 specification in section 2.3.2.</p>
 </div>
 <div class="sect2">
@@ -7800,7 +7801,7 @@ project integration.</p>
 </div>
 <div class="paragraph">
 <p>This section covers the most relevant topics for the JBossWS version
-available on WildFly 25.</p>
+available on WildFly 26.</p>
 </div>
 <div class="sect2">
 <h3 id="Jakarta_XML_Web_Services_User_Guide">16.1. Jakarta XML Web Services User Guide</h3>
@@ -20748,7 +20749,7 @@ their deployment and set module dependencies in it.</p>
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-WildFly 25 introduced the EJB client API for managing remote EJB
+WildFly 26 introduced the EJB client API for managing remote EJB
 invocations. The EJB client API works off EJBClientContext(s). An
 EJBClientContext can potentially contain any number of EJB receivers. An
 EJB receiver is a component which knows how to communicate with a server
@@ -20762,7 +20763,7 @@ applications can be classified into:
 <p>A remote client which runs as a standalone Java application</p>
 </li>
 <li>
-<p>A remote client which runs within another WildFly 25 instance</p>
+<p>A remote client which runs within another WildFly 26 instance</p>
 </li>
 </ul>
 </div>
@@ -20779,7 +20780,7 @@ than one EJBClientContext(s) and an EJB client context selector will be
 responsible for returning the appropriate context.</p>
 </div>
 <div class="paragraph">
-<p>In case of remote clients which run within another WildFly 25 instance,
+<p>In case of remote clients which run within another WildFly 26 instance,
 each deployed application will have a corresponding EJB client context.
 Whenever that application invokes on another EJB, the corresponding EJB
 client context will be used for finding the right EJB receiver and
@@ -20790,7 +20791,7 @@ letting it handle the invocation.</p>
 <div class="paragraph">
 <p>In the Overview section we briefly looked at the different types of
 remote clients. Let&#8217;s focus on the standalone remote clients (the ones
-that don&#8217;t run within another WildFly 25 instance) for some of the next
+that don&#8217;t run within another WildFly 26 instance) for some of the next
 sections. Like mentioned earlier, typically a remote standalone client
 has just one EJB client context backed by any number of EJB receivers.
 Consider this example:</p>
@@ -20825,7 +20826,7 @@ context is used by the above code to invoke the bean.</p>
 </div>
 <div class="paragraph">
 <p>Now let&#8217;s consider a case where the user application wants to invoke on
-the bean more than once, but wants to connect to the WildFly 25 server
+the bean more than once, but wants to connect to the WildFly 26 server
 using different security credentials. Let&#8217;s take a look at the following
 code:</p>
 </div>
@@ -20948,7 +20949,7 @@ context which typically is the one tied to the entire application.</p>
 have more control over which JNDI context "talks to" which server and
 connects to that server in "what way". This gives the user applications
 the flexibility that was associated with the JNP based JNDI invocations
-prior to WildFly 25 versions.</p>
+prior to WildFly 26 versions.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -22192,7 +22193,7 @@ as follows:</p>
 <div class="sect2">
 <h3 id="security">19.3. Security</h3>
 <div class="paragraph">
-<p>WildFly 25 is secure by default. What this means is that no communication
+<p>WildFly 26 is secure by default. What this means is that no communication
 can happen with an WildFly instance from a remote client (irrespective
 of whether it is a standalone client or another server instance) without
 passing the appropriate credentials. Remember that in this example, our
@@ -22774,7 +22775,7 @@ wildfly-naming-client project. The other property is the PROVIDER_URL.
 which is <code>remote+http://</code> for wildfly-naming-client. The rest
 of the PROVIDER_URL part is the server hostname or IP and the port on
 which the remoting connector is exposed on the server side. By default
-the http-remoting connector port in WildFly 25 is 8080. That&#8217;s what we
+the http-remoting connector port in WildFly 26 is 8080. That&#8217;s what we
 have used in our example. The hostname we have used is localhost but
 that should point to the server IP or hostname where the server is
 running.</p>
@@ -23402,10 +23403,54 @@ References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta En
 </div>
 </div>
 <div class="sect1">
-<h2 id="Migrated_to_WildFly_Example_Applications">21. Example Applications - Migrated to WildFly</h2>
+<h2 id="h2-web-console">21. H2 Web Console Integration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The H2 database library provided by WildFly&#8217;s <code>com.h2database.h2</code> module includes an implementation of the Jakarta Servlet <code>HttpServlet</code> interface (<code>org.h2.server.web.WebServlet</code>) that can be used to expose the H2 project&#8217;s web console tool. WildFly users could utilize this servlet in their own application by adding a dependency on the <code>com.h2database.h2</code> module to their application&#8217;s deployment and then adding the servlet to the application&#8217;s <code>web.xml</code>. This is certainly not recommended for production use&#8201;&#8212;&#8201;no use of H2 is recommended in production applications&#8201;&#8212;&#8201;but developers may find use of the H2 console useful.</p>
+</div>
+<div class="paragraph">
+<p>WildFly has historically integrated H2 in such a way that this is possible. But beginning with the 26 release, this no longer works out of the box, as the <code>com.h2database.h2</code> module no longer has out-of-the-box access to the module that exposes the Jakarta Servlet API. As of late 2021 the H2 project does not provide a variant of their <code>WebServlet</code> that will work on EE 9 or later, so in preparation for WildFly&#8217;s move to EE 10, out of the box support for this integration has been removed.</p>
+</div>
+<div class="paragraph">
+<p>However it is possible for users of an EE 8 WildFly to restore this integration by adding a JBoss Modules module named <code>javax.servlet.api.h2</code> to their server installation. The steps to do this are as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>cd $WILDFLY_HOME</code></p>
+</li>
+<li>
+<p><code>mkdir -p modules/javax/servlet/api/h2</code></p>
+</li>
+<li>
+<p>In that dir create a <code>module.xml</code> file with the following content:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="tag">&lt;module-alias</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:module:1.9</span><span class="delimiter">&quot;</span></span>
+              <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">javax.servlet.api:h2</span><span class="delimiter">&quot;</span></span>
+              <span class="attribute-name">target-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">javax.servlet.api</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>com.h2database.h2</code> module optionally depends on the <code>javax.servlet.api.h2</code> module, so if one exists and it exposes the Jakarta Servlet API, then H2 <code>WebServlet</code> integration will work.</p>
+</div>
+<div class="paragraph">
+<p>This will work so long as the <code>javax.servlet.api</code> module provides the EE 8 Jakarta Servlet API. As of the 26 release that is the case with standard WildFly but is not the case with WildFly Preview. H2 Web Console integration will not work with WildFly Preview.</p>
+</div>
+<div class="paragraph">
+<p>If in the future a version of the H2 database library becomes available that supports an EE 9 or later version of Jakarta Servlet, out of the box support for use of the H2 <code>WebServlet</code> may be restored.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Migrated_to_WildFly_Example_Applications">22. Example Applications - Migrated to WildFly</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="example-applications-migrated-from-previous-releases">21.1. Example Applications Migrated from Previous Releases</h3>
+<h3 id="example-applications-migrated-from-previous-releases">22.1. Example Applications Migrated from Previous Releases</h3>
 <div class="paragraph">
 <p>The applications in this section were written for a previous version of
 the server but have been modified to run on WildFly or JBoss AS 7,
@@ -23415,7 +23460,7 @@ problems with application behaviour. Each example below documents the
 changes that were made to get the application to run successfully.</p>
 </div>
 <div class="sect3">
-<h4 id="seam-2-dvd-store-example">21.1.1. Seam 2 DVD Store example</h4>
+<h4 id="seam-2-dvd-store-example">22.1.1. Seam 2 DVD Store example</h4>
 <div class="paragraph">
 <p>For details on how to migrate this demo application, see
 <a href="https://community.jboss.org/blogs/marek-novotny/2011/12/16/dvdstore-migration-for-jboss-as-710beta">Seam
@@ -23423,7 +23468,7 @@ changes that were made to get the application to run successfully.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="seam-2-booking-example">21.1.2. Seam 2 Booking example</h4>
+<h4 id="seam-2-booking-example">22.1.2. Seam 2 Booking example</h4>
 <div class="paragraph">
 <p>For details on how to migrate this demo application, see
 <a href="http://community.jboss.org/blogs/marek-novotny/2011/07/29/seam-2-booking-example-on-jboss-as-7">Seam
@@ -23431,30 +23476,30 @@ changes that were made to get the application to run successfully.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="jbpm-console-application">21.1.3. jBPM-Console application</h4>
+<h4 id="jbpm-console-application">22.1.3. jBPM-Console application</h4>
 <div class="paragraph">
 <p>Kris Verlaenen migrated this application from JBoss AS 5 to JBoss AS 7. For
 details about this migration, see <a href="http://kverlaen.blogspot.com/2011/07/jbpm5-on-as7-lightning.html">jBPM5 on JBoss AS 7</a> on his Kris&#8217;s Blog.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="order-application-used-for-performance-testing">21.1.4. Order application used for performance testing</h4>
+<h4 id="order-application-used-for-performance-testing">22.1.4. Order application used for performance testing</h4>
 <div class="paragraph">
 <p>Andy Miller migrated this application from JBoss AS 5 to JBoss AS 7. For details
 about this migration, see <a href="#Migrate_Order_Application_from_EAP5">Order Application Migration from EAP5.1 to JBoss AS 7</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="migrate-example-application">21.1.5. Migrate example application</h4>
+<h4 id="migrate-example-application">22.1.5. Migrate example application</h4>
 <div class="paragraph">
 <p>A step by step work through of issues, and their solutions, that might
-crop up when migrating applications to WildFly 25. See the following
+crop up when migrating applications to WildFly 26. See the following
 <a href="https://github.com/danbev/migrate">github project</a> for details.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="example-applications-based-on-ee6">21.2. Example Applications Based on EE6</h3>
+<h3 id="example-applications-based-on-ee6">22.2. Example Applications Based on EE6</h3>
 <div class="paragraph">
 <p>Applications in this section were designed and written specifically to
 use the features and functions of EE6.</p>
@@ -23474,7 +23519,7 @@ your own project. For more information about the quickstarts, see
 </div>
 </div>
 <div class="sect1">
-<h2 id="Migrate_Order_Application_from_EAP5">22. Porting the Order Application from EAP 5.1 to JBoss AS 7</h2>
+<h2 id="Migrate_Order_Application_from_EAP5">23. Porting the Order Application from EAP 5.1 to JBoss AS 7</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Andy Miller ported an example Order application that was used for
@@ -23482,7 +23527,7 @@ performance testing from EAP 5.1 to JBoss AS 7. These are the notes he
 made during the migration process.</p>
 </div>
 <div class="sect2">
-<h3 id="overview-of-the-application">22.1. Overview of the application</h3>
+<h3 id="overview-of-the-application">23.1. Overview of the application</h3>
 <div class="paragraph">
 <p>The application is relatively simple. it contains three servlets, some
 stateless session beans, a stateful session bean, and some entities.</p>
@@ -23494,9 +23539,9 @@ some proprietary features that were available in EAP 5.1.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="summary-of-changes-migrate-order-application">22.2. Summary of changes</h3>
+<h3 id="summary-of-changes-migrate-order-application">23.2. Summary of changes</h3>
 <div class="sect3">
-<h4 id="code-changes">22.2.1. Code Changes</h4>
+<h4 id="code-changes">23.2.1. Code Changes</h4>
 <div class="sect4">
 <h5 id="modify-jndi-lookup-code">Modify JNDI lookup code</h5>
 <div class="paragraph">
@@ -23574,7 +23619,7 @@ on the portable JNDI names described in EE 6.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="modify-logging-code">22.2.2. Modify logging code</h4>
+<h4 id="modify-logging-code">23.2.2. Modify logging code</h4>
 <div class="paragraph">
 <p>The next major change was to logging within the application. The old
 version was using the commons logging infrastructure and Log4J that is
@@ -23637,7 +23682,7 @@ Dependencies: org.jboss.logmanager</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="modify-the-code-to-use-infinispan-for-2nd-level-cache">22.2.3. Modify the code to use Infinispan for 2nd level cache</h4>
+<h4 id="modify-the-code-to-use-infinispan-for-2nd-level-cache">23.2.3. Modify the code to use Infinispan for 2nd level cache</h4>
 <div class="paragraph">
 <p>Jboss Cache has been replaced by Infinispan for 2nd level cache. This
 requires modification of the <code>persistence.xml</code> file.</p>
@@ -23683,7 +23728,7 @@ application to AS7.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ear-packaging-changes">22.2.4. EAR Packaging Changes</h4>
+<h4 id="ear-packaging-changes">23.2.4. EAR Packaging Changes</h4>
 <div class="paragraph">
 <p>Due to modular class loading changes, the structure of the existing EAR
 failed to deploy successfully in WildFly.</p>
@@ -23754,7 +23799,7 @@ Dependencies: org.jboss.logmanager
 </div>
 </div>
 <div class="sect3">
-<h4 id="summary-migrate-order-application">22.2.5. Summary</h4>
+<h4 id="summary-migrate-order-application">23.2.5. Summary</h4>
 <div class="paragraph">
 <p>Although the existing EAR structure could have worked with additional
 modifications to the <code>MANIFEST.MF</code> file, this approach seemed more
@@ -23782,29 +23827,29 @@ References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta En
 </div>
 </div>
 <div class="sect1">
-<h2 id="Spring_applications_development_and_migration_guide">23. Spring applications development and migration guide</h2>
+<h2 id="Spring_applications_development_and_migration_guide">24. Spring applications development and migration guide</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This document details the main points that need to be considered by
 Spring developers that wish to develop new applications or to migrate
-existing applications to be run into WildFly 25.</p>
+existing applications to be run into WildFly 26.</p>
 </div>
 <div class="sect2">
-<h3 id="dependencies-and-modularity">23.1. Dependencies and Modularity</h3>
+<h3 id="dependencies-and-modularity">24.1. Dependencies and Modularity</h3>
 <div class="paragraph">
-<p>WildFly 25 has a modular class loading strategy, different from previous
+<p>WildFly 26 has a modular class loading strategy, different from previous
 versions of JBoss AS, which enforces a better class loading isolation
 between deployments and the application server itself. A detailed
 description can be found in the documentation dedicated to
 <a href="https://docs.jboss.org/author/display/AS7/Class+Loading+in+AS7">class
-loading in WildFly 25</a>.</p>
+loading in WildFly 26</a>.</p>
 </div>
 <div class="paragraph">
 <p>This reduces significantly the risk of running into a class loading
 conflict and allows applications to package their own dependencies if
 they choose to do so. This makes it easier for Spring applications that
 package their own dependencies - such as logging frameworks or
-persistence providers to run on WildFly 25.</p>
+persistence providers to run on WildFly 26.</p>
 </div>
 <div class="paragraph">
 <p>At the same time, this does not mean that duplications and conflicts
@@ -23814,7 +23859,7 @@ depending on the type of deployment as shown
 </div>
 </div>
 <div class="sect2">
-<h3 id="persistence-usage-guide">23.2. Persistence usage guide</h3>
+<h3 id="persistence-usage-guide">24.2. Persistence usage guide</h3>
 <div class="paragraph">
 <p>Depending on the strategy being used, Spring applications can be:</p>
 </div>
@@ -23833,20 +23878,15 @@ depending on the type of deployment as shown
 </div>
 </div>
 <div class="sect2">
-<h3 id="native-springhibernate-applications">23.3. Native Spring/Hibernate applications</h3>
+<h3 id="native-springhibernate-applications">24.3. Native Spring/Hibernate applications</h3>
 <div class="paragraph">
 <p>Applications that use the Hibernate API directly with Spring (i.e.
 through either one of LocalSessionFactoryBean or
-AnnotationSessionFactoryBean) may use a version of Hibernate 3 packaged
-inside the application. Hibernate 4 (which is provided through the
-'org.hibernate' module of WildFly 25) is not supported by Spring 3.0 and
-Spring 3.1 (and may be supported by Spring 3.2 as described in
-<a href="https://jira.springsource.org/browse/SPR-8096">SPR-8096</a>), so adding this
-module as a dependency is not a solution.</p>
+AnnotationSessionFactoryBean) may need to use a different version of Hibernate than is provided by WildFly.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Jakarta-Persistence-based-applications">23.4. Jakarta Persistence based applications</h3>
+<h3 id="Jakarta-Persistence-based-applications">24.4. Jakarta Persistence based applications</h3>
 <div class="paragraph">
 <p>Spring applications using Jakarta Persistence may choose between:</p>
 </div>
@@ -23861,7 +23901,7 @@ module as a dependency is not a solution.</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="using-server-deployed-persistence-units">23.4.1. Using server-deployed persistence units</h4>
+<h4 id="using-server-deployed-persistence-units">24.4.1. Using server-deployed persistence units</h4>
 <div class="paragraph">
 <p>Applications that use a server-deployed persistence unit must observe
 the typical Jakarta EE rules in what concerns dependency management, i.e.
@@ -23930,9 +23970,9 @@ JNDI binding via persistence.xml properties is not supported in WildFly
 </div>
 </div>
 <div class="sect3">
-<h4 id="using-spring-managed-persistence-units">23.4.2. Using Spring-managed persistence units</h4>
+<h4 id="using-spring-managed-persistence-units">24.4.2. Using Spring-managed persistence units</h4>
 <div class="paragraph">
-<p>Spring applications running in WildFly 25 may also create persistence
+<p>Spring applications running in WildFly 26 may also create persistence
 units on their own, using the LocalContainerEntityManagerFactoryBean.
 This is what these applications need to consider:</p>
 </div>
@@ -23972,18 +24012,10 @@ META-INF/jpa-persistence.xml, the corresponding definition can be:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="managing-dependencies">23.4.3. Managing dependencies</h4>
+<h4 id="managing-dependencies">24.4.3. Managing dependencies</h4>
 <div class="paragraph">
-<p>Since the LocalContainerEntityManagerFactoryBean and the corresponding
-HibernateJpaVendorAdapter are based on Hibernate 3, it is required to
-use that version with the application. Therefore, the Hibernate 3 jars
-must be included in the deployment. At the same time, due the presence
-of @PersistenceUnit or @PersistenceContext annotations on the
-application classes, the application server will automatically add the
-'org.hibernate' module as a dependency.</p>
-</div>
-<div class="paragraph">
-<p>This can be avoided by instructing the server to exclude the module from
+<p>To ensure that Spring applications can use a specific version of Hibernate ORM, exclude the WildFly provided Hibernate ORM version,
+instruct the server to exclude the module from
 the deployment&#8217;s list of dependencies. In order to do so, include a
 META-INF/jboss-deployment-structure.xml or, for web applications,
 WEB-INF/jboss-deployment-structure.xml with the following content:</p>
@@ -24004,16 +24036,16 @@ WEB-INF/jboss-deployment-structure.xml with the following content:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="How_do_I_migrate_my_application_from_AS7_to_WildFly">24. How do I migrate my application from JBoss AS 7  to WildFly 10</h2>
+<h2 id="How_do_I_migrate_my_application_from_AS7_to_WildFly">25. How do I migrate my application from JBoss AS 7  to WildFly 10</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="about-this-document">24.1. About this Document</h3>
+<h3 id="about-this-document">25.1. About this Document</h3>
 <div class="paragraph">
 <p>The purpose of this guide is to document changes that are needed to successfully run and deploy JBoss AS 7 applications on WildFly 10. It provides information on to resolve deployment and runtime problems and how to prevent changes in application behavior. This is the first step in moving to the new platform. Once the application is successfully deployed and running on the new platform, plans can be made to upgrade individual components to use the new functions and features of WildFly.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="overview-of-wildfly">24.2. Overview of WildFly</h3>
+<h3 id="overview-of-wildfly">25.2. Overview of WildFly</h3>
 <div class="paragraph">
 <p>The list of WildFly new functionality is extensive, being the most relevant, with respect to server and application migrations:</p>
 </div>
@@ -24069,12 +24101,12 @@ WEB-INF/jboss-deployment-structure.xml with the following content:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="server-migration">24.3. Server Migration</h3>
+<h3 id="server-migration">25.3. Server Migration</h3>
 <div class="paragraph">
 <p>Migrating a JBoss AS 7 server to WildFly consists of migrating custom configuration files, and some persisted data that may exist.</p>
 </div>
 <div class="sect3">
-<h4 id="jacorb-subsystem">24.3.1. JacORB Subsystem</h4>
+<h4 id="jacorb-subsystem">25.3.1. JacORB Subsystem</h4>
 <div class="paragraph">
 <p>WildFly ORB support is provided by the JDK itself, instead of relying on JacORB. A subsystem configuration migration is required.</p>
 </div>
@@ -24179,7 +24211,7 @@ correctly without that behavior on the new server.Unsupported properties: <code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="jboss-web-subsystem">24.3.2. JBoss Web Subsystem</h4>
+<h4 id="jboss-web-subsystem">25.3.2. JBoss Web Subsystem</h4>
 <div class="paragraph">
 <p>JBoss Web is replaced by Undertow in WildFly, which means that the legacy subsystem configuration should be migrated to WildFly&#8217;s Undertow subsystem configuration.</p>
 </div>
@@ -24583,7 +24615,7 @@ able to operate correctly without that behavior on the new server. This warning 
 </div>
 </div>
 <div class="sect3">
-<h4 id="messaging-subsystem">24.3.3. Messaging Subsystem</h4>
+<h4 id="messaging-subsystem">25.3.3. Messaging Subsystem</h4>
 <div class="paragraph">
 <p>WildFly JMS support is provided by ActiveMQ Artemis, instead of HornetQ. It&#8217;s possible to do a migration of the legacy subsystem configuration, and related persisted data.</p>
 </div>
@@ -24858,12 +24890,12 @@ for instance:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="application-migration">24.4. Application Migration</h3>
+<h3 id="application-migration">25.4. Application Migration</h3>
 <div class="paragraph">
 <p>Before you migrate your application, you should be aware that some features that were available in previous releases are now deprecated or missing.</p>
 </div>
 <div class="sect3">
-<h4 id="ejbs">24.4.1. EJBs</h4>
+<h4 id="ejbs">25.4.1. EJBs</h4>
 <div class="sect4">
 <h5 id="cmp-entity-ejbs">CMP Entity EJBs</h5>
 <div class="paragraph">
@@ -24957,7 +24989,7 @@ remote.connection.default.connect.options.org.xnio.Options.SASL_POLICY_NOANONYMO
 </div>
 </div>
 <div class="sect3">
-<h4 id="Jakarta-Messaging">24.4.2. Jakarta Messaging</h4>
+<h4 id="Jakarta-Messaging">25.4.2. Jakarta Messaging</h4>
 <div class="sect4">
 <h5 id="proprietary-Jakarta-Messaging-resource-definitions">Proprietary Jakarta Messaging Resource Definitions</h5>
 <div class="paragraph">
@@ -24975,17 +25007,20 @@ remote.connection.default.connect.options.org.xnio.Options.SASL_POLICY_NOANONYMO
 </div>
 </div>
 <div class="sect3">
-<h4 id="Jakarta-Persistence-and-hibernate">24.4.3. Jakarta Persistence (and Hibernate)</h4>
+<h4 id="Jakarta-Persistence-and-hibernate">25.4.3. Jakarta Persistence (and Hibernate)</h4>
 <div class="sect4">
-<h5 id="applications-that-plan-to-use-hibernate-orm-5.0">Applications That Plan to Use Hibernate ORM 5.0</h5>
+<h5 id="applications-that-plan-to-use-hibernate-orm-5.0">Applications That Plan to Use Hibernate ORM 5.3.x</h5>
 <div class="paragraph">
-<p>WildFly ships with Hibernate ORM 5.0 and those libraries are implicitly added to the application classpath when a <code>persistence.xml</code> is detected during deployment. If your application uses Jakarta Persistence, it will default to using the Hibernate ORM 5.0 libraries.</p>
+<p>WildFly ships with Hibernate ORM 5.3.x and those libraries are implicitly added to the application classpath when a <code>persistence.xml</code> is detected during deployment. If your application uses Jakarta Persistence, it will default to using the Hibernate ORM 5.3.x libraries.</p>
 </div>
 <div class="paragraph">
-<p>Hibernate ORM 5.0 introduces:</p>
+<p>Hibernate ORM 5.3.x introduces:</p>
 </div>
 <div class="ulist">
 <ul>
+<li>
+<p>Jakarta Persistence 2.2 support</p>
+</li>
 <li>
 <p>Redesigned metamodel - Complete replacement for the current <code>org.hibernate.mapping</code> code</p>
 </li>
@@ -25004,7 +25039,7 @@ remote.connection.default.connect.options.org.xnio.Options.SASL_POLICY_NOANONYMO
 <div class="sect4">
 <h5 id="applications-that-currently-use-hibernate-orm-4.0---4.3">Applications that currently use Hibernate ORM 4.0 - 4.3</h5>
 <div class="paragraph">
-<p>If your application needs second-level cache enabled, you should migrate to Hibernate ORM 5.0, which is integrated with Infinispan 8.0. Applications written with Hibernate ORM 4.x can still use Hibernate 4.x if you define a custom JBoss module with Hibernate 4.x JARs and exclude the Hibernate 5 classes from your application. It is recommended that you migrate your application to use Hibernate 5.</p>
+<p>You should migrate to Hibernate ORM 5.3.x.</p>
 </div>
 <div class="paragraph">
 <p>For information about the changes implemented between Hibernate 4 and Hibernate 5, see
@@ -25014,13 +25049,12 @@ remote.connection.default.connect.options.org.xnio.Options.SASL_POLICY_NOANONYMO
 <div class="sect4">
 <h5 id="applications-that-currently-use-hibernate-3">Applications that currently use Hibernate 3</h5>
 <div class="paragraph">
-<p>The integration classes that made it easier to use Hibernate 3 in JBoss AS 7 were removed from WildFly 10. If your application still uses Hibernate 3 libraries, it is strongly recommended that you migrate your application to use Hibernate 5 as Hibernate 3 will no longer work in WildFly without
-a lot of effort. If you can not migrate to Hibernate 5, you must define a custom JBoss Module for the Hibernate 3 classes and exclude the Hibernate 5 classes from your application.</p>
+<p>You should migrate to Hibernate ORM 5.3.x.</p>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="web-applications">24.4.4. Web Applications</h4>
+<h4 id="web-applications">25.4.4. Web Applications</h4>
 <div class="sect4">
 <h5 id="jboss-web-valves">JBoss Web Valves</h5>
 <div class="paragraph">
@@ -25058,7 +25092,7 @@ a lot of effort. If you can not migrate to Hibernate 5, you must define a custom
 </div>
 </div>
 <div class="sect3">
-<h4 id="web-services">24.4.5. Web Services</h4>
+<h4 id="web-services">25.4.5. Web Services</h4>
 <div class="sect4">
 <h5 id="cxf-spring-webservices">CXF Spring Webservices</h5>
 <div class="paragraph">
@@ -25127,7 +25161,7 @@ a lot of effort. If you can not migrate to Hibernate 5, you must define a custom
 </div>
 </div>
 <div class="sect3">
-<h4 id="application-clustering">24.4.6. Application Clustering</h4>
+<h4 id="application-clustering">25.4.6. Application Clustering</h4>
 <div class="sect4">
 <h5 id="ha-singleton">HA Singleton</h5>
 <div class="paragraph">
@@ -25338,7 +25372,7 @@ whether any session attributes changed. In the new implementation, the timestamp
 </div>
 </div>
 <div class="sect3">
-<h4 id="other-specifications-and-frameworks">24.4.7. Other Specifications and Frameworks</h4>
+<h4 id="other-specifications-and-frameworks">25.4.7. Other Specifications and Frameworks</h4>
 <div class="sect4">
 <h5 id="remote-jndi-clients">Remote JNDI Clients</h5>
 <div class="paragraph">
@@ -25398,7 +25432,7 @@ References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta En
 </div>
 </div>
 <div class="sect1">
-<h2 id="How_do_I_migrate_my_application_from_WebLogic_to_WildFly">25. How do I migrate my application from WebLogic to WildFly</h2>
+<h2 id="How_do_I_migrate_my_application_from_WebLogic_to_WildFly">26. How do I migrate my application from WebLogic to WildFly</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The purpose of this guide is to document the application changes that
@@ -25419,9 +25453,9 @@ follow the template below. This is a work in progress.
 </table>
 </div>
 <div class="sect2">
-<h3 id="introduction-weblogic-migration">25.1. Introduction</h3>
+<h3 id="introduction-weblogic-migration">26.1. Introduction</h3>
 <div class="sect3">
-<h4 id="about-this-guide-weblogic-migration">25.1.1. About this Guide</h4>
+<h4 id="about-this-guide-weblogic-migration">26.1.1. About this Guide</h4>
 <div class="paragraph">
 <p>The purpose of this document is to guide you through the planning
 process and migration of fairly simple and standard Oracle WebLogic
@@ -25432,7 +25466,7 @@ applications to WildFly. O</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="How_do_I_migrate_my_application_from_WebSphere_to_WildFly">26. How do I migrate my application from WebSphere to WildFly</h2>
+<h2 id="How_do_I_migrate_my_application_from_WebSphere_to_WildFly">27. How do I migrate my application from WebSphere to WildFly</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The purpose of this guide is to document the application changes that
@@ -25453,9 +25487,9 @@ follow the template below. This is a work in progress.
 </table>
 </div>
 <div class="sect2">
-<h3 id="introduction-websphere-migration">26.1. Introduction</h3>
+<h3 id="introduction-websphere-migration">27.1. Introduction</h3>
 <div class="sect3">
-<h4 id="about-this-guide-websphere-migration">26.1.1. About this Guide</h4>
+<h4 id="about-this-guide-websphere-migration">27.1.1. About this Guide</h4>
 <div class="paragraph">
 <p>The purpose of this document is to guide you through the planning
 process and migration of fairly simple and standard Oracle WebLogic
@@ -25468,8 +25502,8 @@ applications to WildFly.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 25.0.0.Final<br>
-Last updated 2021-09-13 17:18:55 CDT
+Version 26.0.0.Final<br>
+Last updated 2021-12-10 15:53:12 CST
 </div>
 </div>
 </body>
