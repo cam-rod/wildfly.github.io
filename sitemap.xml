@@ -2,117 +2,117 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://docs.wildfly.org/</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/bootablejar/</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/galleon/</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/galleon-plugins/</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/latest/</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/latest/Admin_Guide.html</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/latest/Bootable_Guide.html</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/latest/Client_Guide.html</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/latest/Bootable_Guide.html</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/latest/Cloud_References.html</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/latest/Extending_WildFly.html</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/latest/Galleon_Guide.html</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/latest/Getting_Started_Developing_Applications_Guide.html</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/latest/Getting_Started_Guide.html</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/latest/Getting_Started_on_OpenShift.html</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/latest/Glossary.html</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/latest/High_Availability_Guide.html</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/latest/Installation_Guide.html</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/latest/Quickstarts.html</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/latest/Testsuite.html</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/latest/WildFly_Elytron_Security.html</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/latest/WildFly_and_WildFly_Preview.html</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://docs.wildfly.org/latest/wildscribe/</loc>
-    <lastmod>2023-08-15T21:23:46Z</lastmod>
+    <lastmod>2023-08-15T21:24:07Z</lastmod>
     <changefreq>monthly</changefreq>
   </url>
 </urlset>

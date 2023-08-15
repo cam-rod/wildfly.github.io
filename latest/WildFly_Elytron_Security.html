@@ -522,8 +522,8 @@ table.CodeRay td.code>pre{padding:0}
 <div id="header">
 <h1>WildFly Elytron Security</h1>
 <div class="details">
-<span id="revnumber">version 21.0.0.Final,</span>
-<span id="revdate">2020-10-13T16:11:32Z</span>
+<span id="revnumber">version 22.0.1.Final,</span>
+<span id="revdate">2021-02-12T19:04:12Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Elytron Security Guide</div>
@@ -612,7 +612,13 @@ table.CodeRay td.code>pre{padding:0}
 </li>
 </ul>
 </li>
-<li><a href="#KeyCloak_Integration">12. Using KeyCloak with WildFly Elytron</a></li>
+<li><a href="#Keycloak_Integration">12. Using Keycloak with WildFly Elytron</a>
+<ul class="sectlevel2">
+<li><a href="#zip-installation">12.1. Zip Installation</a></li>
+<li><a href="#galleon-installation">12.2. Galleon Installation</a></li>
+<li><a href="#bootable-jar">12.3. Bootable Jar</a></li>
+</ul>
+</li>
 <li><a href="#Bearer_Token_Authorization">13. Bearer Token Authorization</a>
 <ul class="sectlevel2">
 <li><a href="#how-it-works">13.1. How it Works</a></li>
@@ -623,11 +629,11 @@ table.CodeRay td.code>pre{padding:0}
 </ul>
 </li>
 <li><a href="#OpenSSL">14. OpenSSL</a>
-<ul class="sectlevel3">
-<li><a href="#configure-the-elytron-subsystem-to-use-the-openssl-tls-provider-by-default">14.1. Configure the Elytron subsystem to use the OpenSSL TLS provider by default</a></li>
-<li><a href="#configure-the-openssl-tls-provider-on-an-ssl-context">14.2. Configure the OpenSSL TLS provider on an SSL context</a></li>
-<li><a href="#openssl-library-location">14.3. OpenSSL Library Location</a></li>
-<li><a href="#enabling-tlsv1-3">14.4. Enabling TLSv1.3</a></li>
+<ul class="sectlevel2">
+<li><a href="#configuring-wildfly-to-use-the-openssl-tls-provider">14.1. Configuring WildFly to use the OpenSSL TLS provider</a></li>
+<li><a href="#openssl-library-location">14.2. OpenSSL Library Location</a></li>
+<li><a href="#enabling-tlsv1-3">14.3. Enabling TLSv1.3</a></li>
+<li><a href="#adding-additional-native-libraries">14.4. Adding Additional Native Libraries</a></li>
 </ul>
 </li>
 <li><a href="#Web_Single_Sign_On">15. Web Single Sign-On</a>
@@ -2045,6 +2051,11 @@ where the principal transformer is an aggregation of other principal
 transformers.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">case-principal-transformer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A principal transformer definition where
+the principal is adjusted to upper or lower case.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">chained-principal-transformer</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A principal transformer definition where
 the principal transformer is a chaining of other principal transformers.</p></td>
@@ -2666,6 +2677,14 @@ case, configured will match on JBOSS-LOCAL-USER and DIGEST-MD5. It also
 sets the wildfly.sasl.local-user.default-user to $local.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">applicationSSC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>applicationSSC</code> server SSL context can be used
+to automatically generate a self-signed certificate the first time
+the HTTPS interface is accessed. This server SSL context should only
+be used for testing purposes. It should never be used in a production
+environment.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">combined-providers</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Is an aggregate provider that aggregates the elytron
 and openssl provider loaders.</p></td>
@@ -2712,6 +2731,7 @@ and openssl provider loaders.</p></td>
         <span class="string"><span class="delimiter">&quot;</span><span class="content">authentication-configuration</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">authentication-context</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">caching-realm</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">case-principal-transformer</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">certificate-authority-account</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">chained-principal-transformer</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">client-ssl-context</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
@@ -2767,8 +2787,29 @@ and openssl provider loaders.</p></td>
         }},
         <span class="string"><span class="delimiter">&quot;</span><span class="content">jdbc-realm</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">kerberos-security-factory</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">key-manager</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">key-store</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">key-manager</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> {
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">applicationKM</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> {
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">algorithm</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">alias-filter</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">credential-reference</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> {<span class="string"><span class="delimiter">&quot;</span><span class="content">clear-text</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">password</span><span class="delimiter">&quot;</span></span>},
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">generate-self-signed-certificate-host</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">localhost</span><span class="delimiter">&quot;</span></span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">key-store</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">applicationKS</span><span class="delimiter">&quot;</span></span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">provider-name</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">providers</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>
+            }
+        }
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">key-store</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> {
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">applicationKS</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> {
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">alias-filter</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">credential-reference</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> {<span class="string"><span class="delimiter">&quot;</span><span class="content">clear-text</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">password</span><span class="delimiter">&quot;</span></span>},
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">path</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">application.keystore</span><span class="delimiter">&quot;</span></span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">relative-to</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">jboss.server.config.dir</span><span class="delimiter">&quot;</span></span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">required</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="value">false</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">provider-name</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">providers</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">type</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">JKS</span><span class="delimiter">&quot;</span></span>
+            }
+        },
         <span class="string"><span class="delimiter">&quot;</span><span class="content">key-store-realm</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">ldap-key-store</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">ldap-realm</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
@@ -2925,7 +2966,30 @@ and openssl provider loaders.</p></td>
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">trusted-security-domains</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>
             }
         },
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">server-ssl-context</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">server-ssl-context</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> {
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">applicationSSC</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> {
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">authentication-optional</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="value">false</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">cipher-suite-filter</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">DEFAULT</span><span class="delimiter">&quot;</span></span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">cipher-suite-names</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">final-principal-transformer</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">key-manager</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">applicationKM</span><span class="delimiter">&quot;</span></span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">maximum-session-cache-size</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="integer">-1</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">need-client-auth</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="value">false</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">post-realm-principal-transformer</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">pre-realm-principal-transformer</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">protocols</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">provider-name</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">providers</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">realm-mapper</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">security-domain</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">session-timeout</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="integer">-1</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">trust-manager</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">use-cipher-suites-order</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="value">true</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">want-client-auth</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="value">false</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">wrap</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="value">false</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">ssl-session</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>
+            }
+        },
         <span class="string"><span class="delimiter">&quot;</span><span class="content">service-loader-http-server-mechanism-factory</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">service-loader-sasl-server-factory</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> <span class="error">u</span><span class="error">n</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span>,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">simple-permission-mapper</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> {<span class="string"><span class="delimiter">&quot;</span><span class="content">default-permission-mapper</span><span class="delimiter">&quot;</span></span> <span class="error">=</span><span class="error">&gt;</span> {
@@ -2980,6 +3044,68 @@ domain.</p>
 </div>
 <div class="paragraph">
 <p>For more information on configuring an http-authentication-factory, see <a href="#configure-an-http-authentication-factory">configure an http-authentication-factory</a></p>
+</div>
+<div class="paragraph">
+<p>SSL/TLS</p>
+</div>
+<div class="paragraph">
+<p>Undertow can be configured to make use of the <code>applicationSSC</code> server SSL context for <strong>testing purposes</strong>,
+as shown below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">batch
+/subsystem=undertow/server=default-server/https-listener=https:undefine-attribute(name=security-realm)
+/subsystem=undertow/server=default-server/https-listener=https:write-attribute(name=ssl-context,value=applicationSSC)
+run-batch
+reload</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>applicationSSC</code> server SSL context references the <code>applicationKM</code> key manager:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/key-manager=applicationKM:read-resource()
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; {
+        "algorithm" =&gt; undefined,
+        "alias-filter" =&gt; undefined,
+        "credential-reference" =&gt; {"clear-text" =&gt; "password"},
+        "generate-self-signed-certificate-host" =&gt; "localhost",
+        "key-store" =&gt; "applicationKS",
+        "provider-name" =&gt; undefined,
+        "providers" =&gt; undefined
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When the <code>applicationSSC</code> server SSL context is used by Undertow, a self-signed certificate will automatically
+be generated the first time the HTTPS interface is accessed if the file that backs the <code>applicationKS</code> key store
+doesn&#8217;t exist. This self-signed certificate will then be persisted to the file that backs the <code>applicationKS</code> key
+store. The <code>generate-self-signed-certificate-host</code> value, <code>localhost</code>, will be used as the Common Name (CN) value
+in the generated self-signed certificate. The following messages will appear in the server log file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>13:21:39,197 WARN  [org.wildfly.extension.elytron] (MSC service thread 1-6) WFLYELY01083: KeyStore /wildfly/standalone/configuration/application.keystore not found, it will be auto generated on first use with a self-signed certificate for host localhost
+...
+13:39:57,152 WARN  [org.wildfly.extension.elytron] (default task-1) WFLYELY01084: Generated self-signed certificate at /wildfly/dist/target/wildfly-21.0.0.Beta1-SNAPSHOT/standalone/configuration/application.keystore. Please note that self-signed certificates are not secure and should only be used for testing purposes. Do not use this self-signed certificate in production.
+SHA-1 fingerprint of the generated key is fc:16:cf:bf:de:3a:6d:d6:fe:ec:f9:cd:9d:22:c9:3d:43:d7:e3:57
+SHA-256 fingerprint of the generated key is 38:69:00:4e:39:e2:40:e2:ef:b6:95:58:c6:ba:d0:0f:56:c5:7c:5d:fc:d5:c3:b9:b0:94:80:9c:f5:45:9d:40</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>NOTE</strong> To disable the automatic self-signed certificate generation, undefine the <code>generate-self-signed-certificate-host</code>
+attribute on the <code>applicationKM</code> key manager.</p>
+</div>
+<div class="paragraph">
+<p><strong>WARNING</strong> This self-signed certificate is only intended to be used for testing purposes. This self-signed certificate
+should never be used in a production environment. For more information on configuring an <code>ssl-context</code>,
+see <a href="#configuring-a-server-sslcontext">Configuring a server SSLContext</a>. For more information on how to
+easily obtain a signed certificate using the WildFly CLI, see <a href="#obtain-certificate">Obtain a signed certificate from Let&#8217;s Encrypt</a>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -6579,6 +6705,53 @@ default:</p>
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="create-an-elytron-case-principal-transformer">4.5.9. Create an Elytron Case Principal Transformer</h4>
+<div class="paragraph">
+<p>Principal transformers can take a name and map it to another representation of the name or perform
+some normalisation. A <code>case-principal-transformer</code> converts a principal to upper or lower case.
+As an example, we might want to convert our principal to upper case if the identities in our realm
+are stored in upper case.</p>
+</div>
+<div class="paragraph">
+<p>Adding a <code>case-principal-transformer</code> that converts a principal to upper/lower case takes the
+general form:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>/subsystem=elytron/case-principal-transformer=transformerName:add(upper-case="...")</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In particular, a <code>case-principal-transformer</code> has the following attribute:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>upper-case</code> - A boolean value to indicate whether the principal should be converted to upper case.
+Indicating <code>false</code> for this attribute converts the principal to lower case.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For example, the following <code>case-principal-transformer</code> could be configured to specify that
+a principal should be transformed to lower case:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/case-principal-transformer=transformer1:add(upper-case="false")</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>On the other hand, a <code>case-principal-transformer</code> could be configured by omitting the
+<code>upper-case</code> attribute, which is then set to <code>true</code> by default:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/case-principal-transformer=transformer2:add()</code></pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="component-documentation">4.6. Component Documentation</h3>
@@ -9201,10 +9374,150 @@ to enable JACC you can execute a command as follows:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="KeyCloak_Integration">12. Using KeyCloak with WildFly Elytron</h2>
+<h2 id="Keycloak_Integration">12. Using Keycloak with WildFly Elytron</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>TBD</p>
+<p>When securing deployments using a Keycloak server a set of client side adapters provided by Keycloak need to be
+installed to WildFly including a new subsystem to support configuring the client side adapters.  Depending on how
+you are installing WildFly you have some different options available to install the adapters.</p>
+</div>
+<div class="sect2">
+<h3 id="zip-installation">12.1. Zip Installation</h3>
+<div class="paragraph">
+<p>If you have installed a zip distribution of WildFly you can obtain a zip containing the Keycloak adapters directly
+from the Keycloak project at
+<a href="https://www.keycloak.org/docs/latest/securing_apps/index.html#_jboss_adapter">www.keycloak.org</a>.</p>
+</div>
+<div class="paragraph">
+<p>Please follow the instructions at the previous link for the installation and configuration, these will guide you to
+unzip the adapter distribution on top of your WildFly installation and to execute a CLI script to complete the set
+up and define the Keycloak subsystem.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="galleon-installation">12.2. Galleon Installation</h3>
+<div class="paragraph">
+<p>The Keycloak project now also publishes a Galleon feature pack which can be used to install the Keycloak client
+adapters onto a WildFly installation being maintained using Galleon.</p>
+</div>
+<div class="paragraph">
+<p>More information can be found in the <a href="Galleon_Guide.html#Galleon_Guide">Provisioning WildFly with Galleon</a> documentation, but
+assuming you have provisioned a WildFly installation containing the <code>web-server</code> layer with a command similar to
+the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>galleon.sh install wildfly:current \
+    --layers=web-server --dir=wildfly</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The Keycloak adapters can be added to the WildFly installation with the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>galleon.sh install org.keycloak:keycloak-adapter-galleon-pack:12.0.1 --layers=keycloak-client-oidc --dir=wildfly</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Unlike the WildFly feature pack the Keycloak feature pack is not part of a universe and so a fully
+qualified <code>group:artifact:version</code> reference to the feature pack is required.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>From this point applications can be configured as described on
+<a href="https://www.keycloak.org/docs/latest/securing_apps/index.html#_jboss_adapter">www.keycloak.org</a>
+in exactly the same way as if you had used the zip approach to install WildFly and the adapters.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="bootable-jar">12.3. Bootable Jar</h3>
+<div class="paragraph">
+<p>The third installation option is if you are creating a bootable jar for your deployment and wish to add the Keycloak
+client adapters to secure the deployment.  More details about bootable jar support can be found in the
+<a href="Bootable_Guide.html#wildfly_bootable_JAR_development">Bootable JAR Guide</a>.</p>
+</div>
+<div class="paragraph">
+<p>The following is an example plug-in configuration to create a bootable jar for a web application using both the
+<code>web-server</code> and <code>keycloak-client-oidc</code> layers:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;plugin&gt;</span>
+    <span class="tag">&lt;groupId&gt;</span>org.wildfly.plugins<span class="tag">&lt;/groupId&gt;</span>
+    <span class="tag">&lt;artifactId&gt;</span>wildfly-jar-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
+    <span class="tag">&lt;version&gt;</span>${version.wildfly.jar.maven.plugin}<span class="tag">&lt;/version&gt;</span>
+    <span class="tag">&lt;configuration&gt;</span>
+        <span class="tag">&lt;feature-packs&gt;</span>
+            <span class="tag">&lt;feature-pack&gt;</span>
+                <span class="tag">&lt;location&gt;</span>wildfly@maven(org.jboss.universe:community-universe):current<span class="tag">&lt;/location&gt;</span>
+            <span class="tag">&lt;/feature-pack&gt;</span>
+            <span class="tag">&lt;feature-pack&gt;</span>
+                <span class="tag">&lt;groupId&gt;</span>org.keycloak<span class="tag">&lt;/groupId&gt;</span>
+                <span class="tag">&lt;artifactId&gt;</span>keycloak-adapter-galleon-pack<span class="tag">&lt;/artifactId&gt;</span>
+                <span class="tag">&lt;version&gt;</span>12.0.1<span class="tag">&lt;/version&gt;</span>
+            <span class="tag">&lt;/feature-pack&gt;</span>
+        <span class="tag">&lt;/feature-packs&gt;</span>
+        <span class="tag">&lt;layers&gt;</span>
+            <span class="tag">&lt;layer&gt;</span>web-server<span class="tag">&lt;/layer&gt;</span>
+            <span class="tag">&lt;layer&gt;</span>keycloak-client-oidc<span class="tag">&lt;/layer&gt;</span>
+        <span class="tag">&lt;/layers&gt;</span>
+        <span class="tag">&lt;context-root&gt;</span>simple-webapp<span class="tag">&lt;/context-root&gt;</span>
+        <span class="tag">&lt;cli-sessions&gt;</span>
+            <span class="tag">&lt;cli-session&gt;</span>
+                <span class="tag">&lt;script</span><span class="attribute-name">-files</span><span class="tag">&gt;</span>
+<span class="inline">                    &lt;script&gt;configure-oidc.cli</span><span class="tag">&lt;/script&gt;</span>
+                <span class="tag">&lt;/script-files&gt;</span>
+            <span class="tag">&lt;/cli-session&gt;</span>
+        <span class="tag">&lt;/cli-sessions&gt;</span>
+    <span class="tag">&lt;/configuration&gt;</span>
+    <span class="tag">&lt;executions&gt;</span>
+        <span class="tag">&lt;execution&gt;</span>
+            <span class="tag">&lt;goals&gt;</span>
+                <span class="tag">&lt;goal&gt;</span>package<span class="tag">&lt;/goal&gt;</span>
+            <span class="tag">&lt;/goals&gt;</span>
+        <span class="tag">&lt;/execution&gt;</span>
+    <span class="tag">&lt;/executions&gt;</span>
+<span class="tag">&lt;/plugin&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A couple of points are worth mentioning here, as with using the CLI the latest version of WildFly in the universe can be
+dynamically selected but the Keycloak feature pack requires the complete <code>groupId</code>, <code>artifactId</code>, and <code>version</code> to be
+specified.</p>
+</div>
+<div class="paragraph">
+<p>The approaches to configure the web application are the same as described at
+<a href="https://www.keycloak.org/docs/latest/securing_apps/index.html#_jboss_adapter">www.keycloak.org</a>.  In this example a CLI script
+<code>configure-oidc.cli</code> is executed to update the Keycloak subsystem with the relevent configuration.</p>
+</div>
+<div class="paragraph">
+<p>The contents of this script are:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>/subsystem=keycloak/secure-deployment=simple-webapp.war:add( \
+    realm=WildFly, \
+    resource=simple-webapp, \
+    public-client=true, \
+    auth-server-url=http://localhost:8080/auth/, \
+    ssl-required=EXTERNAL)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively the <code>auth-method</code> of the web application could have been set to <code>KEYCLOAK</code> and adapter configuration
+provided in <code>keycloak.json</code> descriptor placed within the <code>WEB-INF</code> directory of the deployment.</p>
+</div>
 </div>
 </div>
 </div>
@@ -9477,11 +9790,13 @@ should be validated:</p>
 <div class="sect1">
 <h2 id="OpenSSL">14. OpenSSL</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="configuring-wildfly-to-use-the-openssl-tls-provider">14.1. Configuring WildFly to use the OpenSSL TLS provider</h3>
 <div class="paragraph">
 <p>There are a couple ways you can configure WildFly to use the OpenSSL TLS provider.</p>
 </div>
 <div class="sect3">
-<h4 id="configure-the-elytron-subsystem-to-use-the-openssl-tls-provider-by-default">14.1. Configure the Elytron subsystem to use the OpenSSL TLS provider by default</h4>
+<h4 id="configure-the-elytron-subsystem-to-use-the-openssl-tls-provider-by-default">14.1.1. Configure the Elytron subsystem to use the OpenSSL TLS provider by default</h4>
 <div class="paragraph">
 <p>The following commands can be used to configure the Elytron subsystem so that the OpenSSL TLS
 provider is used by default:</p>
@@ -9495,7 +9810,7 @@ reload</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="configure-the-openssl-tls-provider-on-an-ssl-context">14.2. Configure the OpenSSL TLS provider on an SSL context</h4>
+<h4 id="configure-the-openssl-tls-provider-on-an-ssl-context">14.1.2. Configure the OpenSSL TLS provider on an SSL context</h4>
 <div class="paragraph">
 <p>Instead of configuring the Elytron subsystem to use the OpenSSL TLS provider by default,
 it is also possible to specify that the OpenSSL TLS provider should be used for a specific
@@ -9509,8 +9824,9 @@ reload</code></pre>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="openssl-library-location">14.3. OpenSSL Library Location</h4>
+</div>
+<div class="sect2">
+<h3 id="openssl-library-location">14.2. OpenSSL Library Location</h3>
 <div class="paragraph">
 <p>WildFly will search for the OpenSSL library using the standard system library search path. If you&#8217;d like to specify a
 custom location for the OpenSSL library, the <code>org.wildfly.openssl.path</code> property can be specified during WildFly startup.</p>
@@ -9524,8 +9840,8 @@ custom location for the OpenSSL library, the <code>org.wildfly.openssl.path</cod
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="enabling-tlsv1-3">14.4. Enabling TLSv1.3</h4>
+<div class="sect2">
+<h3 id="enabling-tlsv1-3">14.3. Enabling TLSv1.3</h3>
 <div class="paragraph">
 <p><strong>WARNING</strong> It is possible to use TLSv1.3 with the OpenSSL TLS provider when using OpenSSL 1.1.1 or higher and
 when running against JDK 11 or higher. However, if JDK 11 is in use and if there is a very large number of
@@ -9535,6 +9851,70 @@ by configuring the <code>cipher-suite-names</code> attribute for an SSL context.
 <a href="#configuring-a-server-sslcontext">Configuring a server SSLContext</a> and
 <a href="#configuring-a-client-sslcontext">Configuring a client SSLContext</a> for more details. It is recommended to test
 for performance degradation prior to enabling TLSv1.3 in a production environment.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adding-additional-native-libraries">14.4. Adding Additional Native Libraries</h3>
+<div class="paragraph">
+<p>By default, WildFly includes WildFly OpenSSL native libraries for commonly used platforms (Linux x86_64, Windows x86_64,
+Mac OS X x86_64, and Linux s390). However, the <a href="https://github.com/wildfly-security/wildfly-openssl-natives">WildFly OpenSSL Natives project</a>
+contains modules that can be used to build WildFly OpenSSL native libraries for other platforms as well. The steps needed to build and make
+use of a WildFly OpenSSL native library for a different platform than the ones provided by default will be described below.</p>
+</div>
+<div class="sect3">
+<h4 id="building-the-native-library">14.4.1. Building the Native Library</h4>
+<div class="paragraph">
+<p>Make sure you have cloned the <a href="https://github.com/wildfly-security/wildfly-openssl-natives">WildFly OpenSSL Natives</a> project
+locally. We&#8217;ll use <code>$WILDFLY_OPENSSL_NATIVES</code> to denote the path to this project. Next, <code>cd</code> to the module that you want
+to build. In this example, we&#8217;ll use the <code>linux-i386</code> module but similar steps can be used to build and make use of another
+module instead.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">cd $WILDFLY_OPENSSL_NATIVES/linux-i386
+mvn clean install</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice that this now results in a <code>wildfly-openssl-linux-i386-VERSION.jar</code> in the <code>$WILDFLY_OPENSSL_NATIVES/linux-i386/target</code> directory.
+We&#8217;ll make use of this in the next step.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="overriding-the-existing-wildfly-openssl-module">14.4.2. Overriding the Existing WildFly OpenSSL Module</h4>
+<div class="paragraph">
+<p>We&#8217;re going to add a new module that will override the existing WildFly OpenSSL module that&#8217;s found in the
+<code>$WILDFLY_HOME/modules/system/layers/base/org/wildfly/openssl</code> directory. Notice that the existing module
+contains a Java artifact in its <code>main</code> directory and native libraries for the default platforms in its
+<code>main/lib</code> directory.</p>
+</div>
+<div class="paragraph">
+<p>First, create a new module that contains the WildFly OpenSSL Java artifact from the existing module:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">module add --name=org.wildfly.openssl --resources=$WILDFLY_HOME/modules/system/layers/base/org/wildfly/openssl/main/wildfly-openssl-java-VERSION.jar --dependencies=java.logging,jdk.unsupported</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next, add the native library that we already built to this newly created module:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">mkdir $WILDFLY_HOME/modules/org/wildfly/openssl/main/lib
+cd $WILDFLY_HOME/modules/org/wildfly/openssl/main/lib
+jar xvf $WILDFLY_OPENSSL_NATIVES/linux-i386/target/wildfly-openssl-linux-i386-VERSION.jar linux-i386</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should now see a <code>libwfssl.so</code> file in the <code>$WILDFLY_HOME/modules/org/wildfly/openssl/main/lib/linux-i386</code> directory.</p>
+</div>
+<div class="paragraph">
+<p>That&#8217;s it, WildFly will now make use of the newly added WildFly OpenSSL module instead of the existing one,
+allowing it to make use of the new native library when running on the Linux i386 platform. Additional
+native libraries can be added to the <code>$WILDFLY_HOME/modules/org/wildfly/openssl/main/lib</code> directory
+if desired.</p>
+</div>
 </div>
 </div>
 </div>
@@ -13882,8 +14262,8 @@ for example, Infinispan cache cannot be used, any others?</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 21.0.0.Final<br>
-Last updated 2020-08-24 11:18:46 PDT
+Version 22.0.1.Final<br>
+Last updated 2021-01-06 18:34:43 PST
 </div>
 </div>
 </body>

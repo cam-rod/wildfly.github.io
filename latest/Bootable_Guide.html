@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>Bootable JAR Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly team</span><br>
-<span id="revnumber">version 21.0.0.Final,</span>
-<span id="revdate">2020-10-13T16:11:32Z</span>
+<span id="revnumber">version 22.0.1.Final,</span>
+<span id="revdate">2021-02-12T19:04:12Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Bootable JAR Guide</div>
@@ -688,6 +688,24 @@ you would need to specify the server version, for example <code><code>wildfly@ma
 </div>
 <div class="sect2">
 <h3 id="wildfly_layers">2.1. WildFly Layers</h3>
+<div class="paragraph">
+<p>A Galleon layer is a name that identifies a server capability (e.g.: jaxrs,
+ejb, microprofile-config, jpa) or an aggregation of such capabilities. A layer captures a server capability in the form of:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A piece of server XML configuration (e.g.: extension, configured subsystem, interfaces) that describes the capability.</p>
+</li>
+<li>
+<p>A set of modules and other filesystem content that implements the capability.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When you are using a layer, it delivers these pieces of information in order for
+Galleon to assemble a server containing only the required configuration and modules.</p>
+</div>
 <div class="paragraph">
 <p>In the tables below we provide basic information about all of the layers WildFly provides.</p>
 </div>
@@ -946,7 +964,8 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jaxrs"></a>jaxrs</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for JAXRS.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.web-server">web-server</a><br></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.web-server">web-server</a><br>
+<a href="#gal.microprofile-rest-client">microprofile-rest-client</a> (optional)<br></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jdr"></a>jdr</p></td>
@@ -1082,6 +1101,12 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <a href="#gal.microprofile-config">microprofile-config</a><br></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-opentracing"></a>microprofile-opentracing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile OpenTracing.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br>
+<a href="#gal.microprofile-config">microprofile-config</a><br></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-platform"></a>microprofile-platform</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for available MicroProfile platform specifications.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.microprofile-config">microprofile-config</a> (optional)<br>
@@ -1090,7 +1115,13 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <a href="#gal.microprofile-jwt">microprofile-jwt</a> (optional)<br>
 <a href="#gal.microprofile-metrics">microprofile-metrics</a> (optional)<br>
 <a href="#gal.microprofile-openapi">microprofile-openapi</a> (optional)<br>
-<a href="#gal.open-tracing">open-tracing</a> (optional)<br></p></td>
+<a href="#gal.open-tracing">microprofile-opentracing</a> (optional)<br>
+<a href="#gal.microprofile-rest-client">microprofile-rest-client</a> (optional)<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-rest-client"></a>microprofile-rest-client</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile REST client.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.microprofile-config">microprofile-config</a><br></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.naming"></a>naming</p></td>
@@ -1107,7 +1138,7 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.open-tracing"></a>open-tracing</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile OpenTracing.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Deprecated</strong> Use <a href="#gal.microprofile-opentracing">microprofile-opentracing</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br>
 <a href="#gal.microprofile-config">microprofile-config</a><br></p></td>
 </tr>
@@ -1182,7 +1213,7 @@ Use <a href="#gal.web-server">web-server</a> for a servlet container with EE int
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.web-clustering"></a>web-clustering</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Infinispan-based web session clustering.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for distributable web applications. Configures a non-local Infinispan-based container web cache for data session handling suitable to clustering environments.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.transactions">transactions</a><br>
 <a href="#gal.web-server">web-server</a><br></p></td>
 </tr>
@@ -1192,6 +1223,12 @@ Use <a href="#gal.web-server">web-server</a> for a servlet container with EE int
 management interface. Not required to use a HAL console obtained independently
 and configured to connect to the server.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.management">management</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.web-passivation"></a>web-passivation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for distributable web applications. Configures a local Infinispan-based container web cache for data session handling suitable to single node environments.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.transactions">transactions</a><br>
+<a href="#gal.web-server">web-server</a><br></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.web-server"></a>web-server</p></td>
@@ -1333,8 +1370,8 @@ the Maven plugin offers a <em>development</em> mode that allows you to build and
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 21.0.0.Final<br>
-Last updated 2020-10-08 12:46:07 PDT
+Version 22.0.1.Final<br>
+Last updated 2020-11-10 16:51:30 PST
 </div>
 </div>
 </body>
