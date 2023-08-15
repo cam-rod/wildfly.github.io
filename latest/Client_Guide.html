@@ -522,8 +522,8 @@ table.CodeRay td.code>pre{padding:0}
 <div id="header">
 <h1>WildFly Client Configuration</h1>
 <div class="details">
-<span id="revnumber">version 20.0.0.Final,</span>
-<span id="revdate">2020-06-05T20:49:23Z</span>
+<span id="revnumber">version 21.0.0.Final,</span>
+<span id="revdate">2020-10-13T16:11:32Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Client Configuration Guide</div>
@@ -711,7 +711,15 @@ table.CodeRay td.code>pre{padding:0}
     <span class="tag">&lt;credential-store-reference</span> <span class="attribute-name">store</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">clear-text</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
     <span class="tag">&lt;clear-password</span> <span class="attribute-name">password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
     <span class="tag">&lt;masked-password</span> <span class="attribute-name">algorithm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">key-material</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">iteration-count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">salt</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">masked-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">initialization-vector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-    <span class="tag">&lt;key-pair</span> <span class="attribute-name">public-key-pem</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">private-key-pem</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;key-pair&gt;</span>
+        <span class="tag">&lt;public-key-pem&gt;</span>...<span class="tag">&lt;/public-key-pem&gt;</span>
+        <span class="tag">&lt;private-key-pem&gt;</span>...<span class="tag">&lt;/public-key-pem&gt;</span>
+        <span class="tag">&lt;openssh-private-key</span> <span class="attribute-name">pem</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;credential-store-reference</span> <span class="attribute-name">store</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">clear-text</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+            <span class="tag">&lt;clear-password</span> <span class="attribute-name">password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+            <span class="tag">&lt;masked-password</span> <span class="attribute-name">algorithm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">key-material</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">iteration-count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">salt</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">masked-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">initialization-vector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+        <span class="tag">&lt;/openssh-private-key&gt;</span>
+    <span class="tag">&lt;/key-pair&gt;</span>
     <span class="tag">&lt;certificate</span> <span class="attribute-name">private-key-pem</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">pem</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
     <span class="tag">&lt;public-key-pem&gt;</span>...<span class="tag">&lt;/public-key-pem&gt;</span>
     <span class="tag">&lt;bearer-token</span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
@@ -1124,7 +1132,20 @@ table.CodeRay td.code>pre{padding:0}
     <span class="tag">&lt;credential-store-reference</span> <span class="attribute-name">store</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">clear-text</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
     <span class="tag">&lt;clear-password</span> <span class="attribute-name">password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
     <span class="tag">&lt;masked-password</span> <span class="attribute-name">algorithm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">key-material</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">iteration-count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">salt</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">masked-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">initialization-vector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
-    <span class="tag">&lt;key-pair</span> <span class="attribute-name">public-key-pem</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">private-key-pem</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;key-pair&gt;</span>
+        <span class="tag">&lt;public-key-pem&gt;</span>...<span class="tag">&lt;/public-key-pem&gt;</span>
+        <span class="tag">&lt;private-key-pem&gt;</span>...<span class="tag">&lt;/public-key-pem&gt;</span>
+        <span class="tag">&lt;openssh-private-key</span> <span class="attribute-name">pem</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;credential-store-reference</span> <span class="attribute-name">store</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">clear-text</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+            <span class="tag">&lt;clear-password</span> <span class="attribute-name">password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+            <span class="tag">&lt;masked-password</span> <span class="attribute-name">algorithm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">key-material</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">iteration-count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">salt</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">masked-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">initialization-vector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+        <span class="tag">&lt;/openssh-private-key&gt;</span>
+    <span class="tag">&lt;/key-pair&gt;</span>
+    <span class="tag">&lt;ssh-credential</span> <span class="attribute-name">ssh-directory</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">private-key-file</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">known-hosts-file</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;credential-store-reference</span> <span class="attribute-name">store</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">clear-text</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+        <span class="tag">&lt;clear-password</span> <span class="attribute-name">password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+        <span class="tag">&lt;masked-password</span> <span class="attribute-name">algorithm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">key-material</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">iteration-count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">salt</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">masked-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">initialization-vector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;/ssh-credential&gt;</span>
     <span class="tag">&lt;certificate</span> <span class="attribute-name">private-key-pem</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">pem</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
     <span class="tag">&lt;public-key-pem&gt;</span>...<span class="tag">&lt;/public-key-pem&gt;</span>
     <span class="tag">&lt;bearer-token</span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
@@ -1426,135 +1447,110 @@ A list of the supported algorithm types can be found in
 <div class="sect2">
 <h3 id="jboss-ejb-client">3.2. jboss-ejb-client</h3>
 <div class="paragraph">
-<p>&lt;jboss-ejb-client /&gt; - EJB Client</p>
-</div>
-<div class="paragraph">
-<p>The <em>&lt;jboss-ejb-client /&gt;</em> element in a wildfly-config.xml file can be used to specify EJB Client configuration. This element is from the “urn:jboss:wildfly-client-ejb:3.0” namespace, e.g.</p>
+<p>The jboss-ejb-client.xml can be used to conifure EJB client from within a deployment. The file
+should be located in jar&#8217;s <code>META-INF</code> directory.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-
-<span class="tag">&lt;configuration&gt;</span>
-...
-    <span class="tag">&lt;jboss-ejb-client</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:wildfly-client-ejb:3.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-       ...
-    <span class="tag">&lt;/jboss-ejb-client&gt;</span>
-...
-<span class="tag">&lt;/configuration&gt;</span></code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;jboss-ejb-client</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:ejb-client:1.4</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;client-context</span> <span class="attribute-name">invocation-timeout</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">1000</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">deployment-node-selector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.foo.DeploymentNodeSelector</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">default-compression</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">5</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;ejb-receivers</span> <span class="attribute-name">exclude-local-receiver</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">local-receiver-pass-by-value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;remoting-ejb-receiver</span> <span class="attribute-name">outbound-connection-ref</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">connection</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">connection-timeout</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">3000</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;/ejb-receivers&gt;</span>
+        <span class="tag">&lt;http-connections&gt;</span>
+            <span class="tag">&lt;http-connection</span> <span class="attribute-name">uri</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://localhost:8180/wildfly-services</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;/http-connections&gt;</span>
+        <span class="tag">&lt;profile</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">test-profile</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/client-context&gt;</span>
+<span class="tag">&lt;/jboss-ejb-client&gt;</span></code></pre>
 </div>
 </div>
+<div class="sect3">
+<h4 id="client-context">3.2.1. &lt;client-context&gt;</h4>
 <div class="paragraph">
-<p>This section describes the child elements and attributes that can be configured within this element.</p>
-</div>
-<div class="paragraph">
-<p>The _&lt;jboss-ejb-client /&gt; element can optionally contain the following three child elements, as described in the next sections:</p>
+<p>Configurations that will be used to setup an EJB client context for the deployment.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>&lt;invocation-timeout /&gt;</strong></p>
+<p><code>invocation-timeout</code> A timeout, in milliseconds, that will be used for EJB invocations.
+A value of zero or a negative value will imply a "wait forever" semantic where the invocation
+will never timeout and the client will wait for the invocation result indefinitely.</p>
 </li>
 <li>
-<p><strong>&lt;global-interceptors /&gt;</strong></p>
+<p><code>deployment-node-selector</code> The fully qualified class name of the class which implements the
+<code>org.jboss.ejb.client.DeploymentNodeSelector</code> interface. The instance of this class will be used
+for selecting nodes, from among multiple eligible nodes within an EJB client context, which can
+handle a particular deployment.</p>
 </li>
 <li>
-<p><strong>&lt;connections /&gt;</strong></p>
+<p><code>default-compression</code> Default compression level (from 0 to 9) of request and response message
+payload.</p>
 </li>
 </ul>
 </div>
-<div class="sect3">
-<h4 id="invocation-timeout">3.2.1. &lt;invocation-timeout /&gt;</h4>
+<div class="sect4">
+<h5 id="ejb-receivers">&lt;ejb-receivers&gt;</h5>
 <div class="paragraph">
-<p>This element is used to specify an EJB invocation timeout. It has one attribute which is required:</p>
+<p>Configures a number of remoting based EJB receivers.</p>
 </div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Attribute</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">seconds</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The timeout, in seconds, for the EJB handshake or method invocation request/response cycle. The invocation of any method throws a {{java.util.concurrent.TimeoutException}} if the execution takes longer than the timeout period. The server side will not be interrupted. \\</p></td>
-</tr>
-</tbody>
-</table>
+<div class="ulist">
+<ul>
+<li>
+<p><code>exclude-local-receiver</code> Set to true if the local receiver which gets added to the EJB client
+context by default, has to be excluded from the context.</p>
+</li>
+<li>
+<p><code>local-receiver-pass-by-value</code> Set to false if the local receiver that&#8217;s available in the EJB
+client context, should use pass-by-reference (instead of pass-by-value) semantics for the EJB invocations.</p>
+</li>
+</ul>
 </div>
-<div class="sect3">
-<h4 id="global-interceptors">3.2.2. &lt;global-interceptors /&gt;</h4>
+<div class="sect5">
+<h6 id="remoting-ejb-receiver">&lt;remoting-ejb-receiver&gt;</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><code>outbound-connection-ref</code> Reference to an outbound connection configured in the remoting subsystem.</p>
+</li>
+<li>
+<p><code>connect-timeout</code> The timeout, in milliseconds, to be used while creating a connection.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="http-connections">&lt;http-connections&gt;</h5>
 <div class="paragraph">
-<p>This element is used to specify global EJB client interceptors. It can contain any number of <em>&lt;interceptor /&gt;</em> elements.</p>
+<p>Configures remote http-connection for EJB invocation</p>
 </div>
-</div>
-<div class="sect3">
-<h4 id="interceptor">3.2.3. &lt;interceptor /&gt;</h4>
+<div class="sect5">
+<h6 id="http-connection">&lt;http-connection&gt;</h6>
 <div class="paragraph">
-<p>This element is used to specify an EJB client interceptor. It has two attributes:</p>
+<p>HTTP Connection for EJB invocation.</p>
 </div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Attribute</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">class</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The name of a class that implements the {{org.jboss.ejb.client.EJBClientInterceptor}} interface.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">module</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The optional name of the module that should be used to load the interceptor class.</p></td>
-</tr>
-</tbody>
-</table>
+<div class="ulist">
+<ul>
+<li>
+<p><code>uri</code> Uniform Resource Identifier for the HTTP connection should be defined.</p>
+</li>
+</ul>
 </div>
-<div class="sect3">
-<h4 id="connections">3.2.4. &lt;connections /&gt;</h4>
+</div>
+</div>
+<div class="sect4">
+<h5 id="profile">&lt;profile&gt;</h5>
 <div class="paragraph">
-<p>This element is used to specify EJB client connections. It can contain any number of <em>&lt;connection /&gt;</em> elements.</p>
+<p>References a remoting profile configured in the remoting subsystem.</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>name</code> The name of the profile.</p>
+</li>
+</ul>
 </div>
-<div class="sect3">
-<h4 id="connection">3.2.5. &lt;connection /&gt;</h4>
-<div class="paragraph">
-<p>This element is used to specify an EJB client connection. It has one required attribute. It can also optionally contain an <em>&lt;interceptors /&gt;</em> element.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Attribute</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">uri</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The connection destination URI.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="interceptors">3.2.6. &lt;interceptors /&gt;</h4>
-<div class="paragraph">
-<p>This element is used to specify EJB client interceptors and can contain any number of <em>&lt;interceptor /&gt;</em> elements.</p>
 </div>
 </div>
 </div>
@@ -1664,12 +1660,12 @@ A list of the supported algorithm types can be found in
 </div>
 </div>
 <div class="sect4">
-<h5 id="connections-2">&lt;connections /&gt;</h5>
+<h5 id="connections">&lt;connections /&gt;</h5>
 <div class="paragraph">
 <p>This optional element specifies connections for the remote endpoint. It can contain any number of [#connection] elements.</p>
 </div>
 <div class="sect5">
-<h6 id="connection-2">&lt;connection /&gt;</h6>
+<h6 id="connection">&lt;connection /&gt;</h6>
 <div class="paragraph">
 <p>This element defines a connection for the remote endpoint. It has the following attributes.</p>
 </div>
@@ -2015,8 +2011,8 @@ A list of the supported algorithm types can be found in
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 20.0.0.Final<br>
-Last updated 2020-01-20 10:24:33 PST
+Version 21.0.0.Final<br>
+Last updated 2020-08-24 11:18:46 PDT
 </div>
 </div>
 </body>

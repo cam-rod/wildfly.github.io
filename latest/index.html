@@ -522,15 +522,16 @@ table.CodeRay td.code>pre{padding:0}
 <div id="header">
 <h1>WildFly Documentation</h1>
 <div class="details">
-<span id="revnumber">version 20.0.0.Final,</span>
-<span id="revdate">2020-06-05T20:49:23Z</span>
+<span id="revnumber">version 21.0.0.Final,</span>
+<span id="revdate">2020-10-13T16:11:32Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
+<li><a href="#installation-guides">Installation Guides</a></li>
 <li><a href="#administrator-guides">Administrator Guides</a></li>
-<li><a href="#model-reference">Model Reference</a></li>
 <li><a href="#developer-guides">Developer Guides</a></li>
+<li><a href="#model-reference">Model Reference</a></li>
 <li><a href="#security-guide">Security Guide</a></li>
 <li><a href="#client-guide">Client Guide</a></li>
 <li><a href="#quickstarts">Quickstarts</a></li>
@@ -545,22 +546,57 @@ table.CodeRay td.code>pre{padding:0}
 <p><span class="image"><img src="images/splash_wildflylogo_small.png" alt="WildFly"></span></p>
 </div>
 <div class="paragraph">
-<p>Welcome to the WildFly Documentation. The documentation for WildFly is
-split into two categories:</p>
+<p>Welcome to the WildFly documentation. The documentation for WildFly is
+split into multiple categories:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
+<p><em>Installation Guides</em> for those wanting to understand the flexibility
+that WildFly offers when it comes to server installation and application deployment.</p>
+</li>
+<li>
 <p><em>Administrator Guides</em> for those wanting to understand how to install
-and configure the server</p>
+and configure the server.</p>
 </li>
 <li>
 <p><em>Developer Guides</em> for those wanting to understand how to develop
-applications for the server</p>
+applications for the server.</p>
 </li>
 <li>
-<p><em>Model Reference</em> the WildFly Model Reference provides information about all subsystem
-configuration options generated directly from the management model.</p>
+<p><em>Model Reference</em> for those wanting information about all
+of configuration options available via the WildFly management model.</p>
+</li>
+<li>
+<p><em>Security Guide</em> for those wanting to understand how to secure the WildFly server and applications.</p>
+</li>
+<li>
+<p><em>Client Guide</em> for those wanting to understand configuration of WildFly clients.</p>
+</li>
+<li>
+<p><em>Quickstarts</em> for those wanting to jump into code and start using WildFly.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="installation-guides">Installation Guides</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>The <a href="Installation_Guide.html">Installation Guide</a> help you identify
+the kind of WildFly installation that best fits your application&#8217;s deployment needs:
+a WildFly zip installation, a WildFly server provisioned with Galleon or a WildFly bootable JAR.</p>
+</li>
+<li>
+<p>The <a href="Bootable_Guide.html">Bootable JAR Guide</a> shows you how to package your application and the WildFly server
+into a bootable JAR.</p>
+</li>
+<li>
+<p>The <a href="Galleon_Guide.html">Galleon Provisioning Guide</a> shows you how to
+provision a customized WildFly server using Galleon.</p>
 </li>
 </ul>
 </div>
@@ -575,31 +611,18 @@ configuration options generated directly from the management model.</p>
 <p>The <a href="Getting_Started_Guide.html">Getting Started Guide</a> shows you
 how to install and start the server, how to configure logging, how to
 deploy an application, how to deploy a datasource, and how to get
-started using the command line interface and web management interface</p>
+started using the command line interface and web management interface.</p>
 </li>
 <li>
 <p>The <a href="Admin_Guide.html">Admin Guide</a> provides detailed information
-on using the CLI and Web Management interface, how to use the domain
-configuration, and shows you how to configure key subsystems</p>
+on using the CLI and web management interface, shows you how to administer a WildFly managed
+domain, and shows you how to configure key subsystems.</p>
 </li>
 <li>
 <p>The <a href="High_Availability_Guide.html">High Availability Guide</a> shows
-you how to create a cluster, how configure the web container and EJB
-container for clustering, and shows you how to configure load balancing
-and failover</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="model-reference">Model Reference</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>The <a href="wildscribe" target="_blank" rel="noopener">WildFly model reference</a> provides information about all subsystem
-configuration options generated directly from the management model.</p>
+you how to create a cluster, how to configure the web container and EJB
+container for clustering and how to configure load balancing
+and failover.</p>
 </li>
 </ul>
 </div>
@@ -612,7 +635,7 @@ configuration options generated directly from the management model.</p>
 <ul>
 <li>
 <p>The <a href="Getting_Started_Developing_Applications_Guide.html">Getting
-Started Developing Applications Guide</a> shows you how to build Java EE
+Started Developing Applications Guide</a> shows you how to build Jakarta EE
 applications and deploy them to WildFly. The guide starts by showing you
 the simplest <em>helloworld</em> application using just Servlet and CDI, and
 then adds in JSF, persistence and transactions, EJB, Bean Validation,
@@ -647,12 +670,25 @@ into WildFly.</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="model-reference">Model Reference</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>The <a href="wildscribe" target="_blank" rel="noopener">WildFly model reference</a> provides information about all standalone server and managed domain
+configuration options, using information generated directly from the WildFly management model.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="security-guide">Security Guide</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p>The <a href="WildFly_Elytron_Security.html">WildFly Elytron Security</a> guide walks you through new security layer of of WildFly</p>
+<p>The <a href="WildFly_Elytron_Security.html">WildFly Elytron Security</a> guide walks you through WildFly&#8217;s new security layer.</p>
 </li>
 </ul>
 </div>
@@ -664,7 +700,7 @@ into WildFly.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>The <a href="Client_Guide.html">WildFly Client Configuration</a> guide walks you through new wildfly client and how to use it.</p>
+<p>The <a href="Client_Guide.html">WildFly Client Configuration</a> guide walks you through the new Wildfly client and how to use it.</p>
 </li>
 </ul>
 </div>
@@ -677,7 +713,7 @@ into WildFly.</p>
 <p>WildFly comes with a number of quickstarts, examples which introduce to
 a particular technology or feature of the application server. The
 <a href="https://github.com/jboss-developer/jboss-developer-shared-resources/blob/master/guides/CONTRIBUTING.md#contribute-a-quickstart">Contributing a Quickstart</a> section
-of the documentation details the available quickstarts</p>
+of the documentation details the available quickstarts.</p>
 </div>
 </div>
 </div>
@@ -711,8 +747,8 @@ of the documentation details the available quickstarts</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 20.0.0.Final<br>
-Last updated 2020-04-09 09:08:23 PDT
+Version 21.0.0.Final<br>
+Last updated 2020-10-08 12:46:07 PDT
 </div>
 </div>
 </body>
