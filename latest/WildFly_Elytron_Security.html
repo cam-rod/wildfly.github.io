@@ -522,8 +522,8 @@ table.CodeRay td.code>pre{padding:0}
 <div id="header">
 <h1>WildFly Elytron Security</h1>
 <div class="details">
-<span id="revnumber">version 16.0.0.Final,</span>
-<span id="revdate">2019-02-28T01:16:57Z</span>
+<span id="revnumber">version 17.0.0.Final,</span>
+<span id="revdate">2019-07-15T01:10:21Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Elytron Security Guide</div>
@@ -542,6 +542,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#sasl-authentication">2.2. SASL Authentication</a></li>
 <li><a href="#http-authentication">2.3. HTTP Authentication</a></li>
 <li><a href="#ssl-tls">2.4. SSL / TLS</a></li>
+<li><a href="#Passwords">2.5. Passwords</a></li>
 </ul>
 </li>
 <li><a href="#Elytron_Subsystem">3. Elytron Subsystem</a>
@@ -561,6 +562,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#configure-ssltls">4.3. Configure SSL/TLS</a></li>
 <li><a href="#configuring-the-elytron-and-security-subsystems">4.4. Configuring the Elytron and Security Subsystems</a></li>
 <li><a href="#creating-elytron-subsystem-components">4.5. Creating Elytron Subsystem Components</a></li>
+<li><a href="#component-documentation">4.6. Component Documentation</a></li>
 </ul>
 </li>
 <li><a href="#Using_WildFly_Elytron_with_WildFly">5. Using Elytron within WildFly</a>
@@ -1058,6 +1060,748 @@ the connection is opened and used for any invocations over the
 connection.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="Passwords">2.5. Passwords</h3>
+<div class="paragraph">
+<p>One of the core features of WildFly Elytron is the ability to work with many different formats for representing passwords, WildFly Elytron also contains APIs that can be used to convert from clear text passwords to these representations that can be stored in the underlying identity stores.</p>
+</div>
+<div class="paragraph">
+<p>This section will document how these APIs can be used to work with the different password types.</p>
+</div>
+<div class="sect3">
+<h4 id="passwordfactory">2.5.1. PasswordFactory</h4>
+<div class="paragraph">
+<p>Working with passwords will require interaction with the <code>org.wildfly.security.password.PasswordFactory</code> API, this obtains access to implementations from <code>java.security.Provider</code> instances, there are two different ways these can be identified: -</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>By querying the globally installed Providers</p>
+</li>
+<li>
+<p>By passing in the <code>Provider</code> to the <code>getInstance</code> method of the <code>PasswordFactory</code> API.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>In both cases the WildFly Elytron implementations are provided by the <code>org.wildfly.security.WildFlyElytronProvider</code> provider.</p>
+</div>
+<div class="paragraph">
+<p>When relying on the Provider being globally registered the <code>PasswordFactory</code> for a specific algorithm can be obtained as: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">PasswordFactory passwordFactory = PasswordFactory.getInstance(algorithm);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>However an alternative approach could be to manually instantiate the Provider and pass it in when obtaining an instance of the <code>PasswordFactory</code>: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Provider</span> ELYTRON_PROVIDER = <span class="keyword">new</span> WildFlyElytronProvider();
+...
+PasswordFactory passwordFactory = PasswordFactory.getInstance(algorithm, ELYTRON_PROVIDER);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="clear-password">2.5.2. Clear Password</h4>
+<div class="paragraph">
+<p>The simplest type of <code>Password</code> to obtain from the <code>PasswordFactory</code> is a clear text password, the following code illustrates how this can be obtained.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Provider</span> ELYTRON_PROVIDER = <span class="keyword">new</span> WildFlyElytronProvider();
+<span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> TEST_PASSWORD = <span class="string"><span class="delimiter">&quot;</span><span class="content">test_password</span><span class="delimiter">&quot;</span></span>;
+
+<span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) <span class="directive">throws</span> <span class="exception">Exception</span> {
+    PasswordFactory passwordFactory = PasswordFactory.getInstance(ClearPassword.ALGORITHM_CLEAR, ELYTRON_PROVIDER);
+
+    ClearPasswordSpec passwordSpec = <span class="keyword">new</span> ClearPasswordSpec(TEST_PASSWORD.toCharArray());
+    Password password = passwordFactory.generatePassword(passwordSpec);
+
+    <span class="predefined-type">System</span>.out.println(<span class="predefined-type">String</span>.format(<span class="string"><span class="delimiter">&quot;</span><span class="content">Password Verified '%b'</span><span class="delimiter">&quot;</span></span>, passwordFactory.verify(password, TEST_PASSWORD.toCharArray())));
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A second approach is to obtain a raw representation of the <code>ClearPassword</code>, however this will need to be translated into the <code>PasswordFactory</code> if it will be used for evidence validation but if the <code>Password</code> is not being used for verification this can be a suitable alternative provided the parameters have been pre-verified.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Provider</span> ELYTRON_PROVIDER = <span class="keyword">new</span> WildFlyElytronProvider();
+<span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> TEST_PASSWORD = <span class="string"><span class="delimiter">&quot;</span><span class="content">test_password</span><span class="delimiter">&quot;</span></span>;
+
+<span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) <span class="directive">throws</span> <span class="exception">Exception</span> {
+    PasswordFactory passwordFactory = PasswordFactory.getInstance(ClearPassword.ALGORITHM_CLEAR, ELYTRON_PROVIDER);
+
+    Password rawPassword = ClearPassword.createRaw(ClearPassword.ALGORITHM_CLEAR, TEST_PASSWORD.toCharArray());
+
+    Password password = passwordFactory.translate(rawPassword);
+
+    <span class="predefined-type">System</span>.out.println(<span class="predefined-type">String</span>.format(<span class="string"><span class="delimiter">&quot;</span><span class="content">Password Verified '%b'</span><span class="delimiter">&quot;</span></span>, passwordFactory.verify(password, TEST_PASSWORD.toCharArray())));
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The raw password can be used for other areas of the Elytron APIs however if it is used for validation an error similar to the following will be thrown.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="exception">Exception</span> in thread <span class="string"><span class="delimiter">&quot;</span><span class="content">main</span><span class="delimiter">&quot;</span></span> java.security.InvalidKeyException
+    at org.wildfly.security.password.impl.PasswordFactorySpiImpl.engineVerify(PasswordFactorySpiImpl.java:<span class="integer">762</span>)
+    at org.wildfly.security.password.PasswordFactory.verify(PasswordFactory.java:<span class="integer">210</span>)
+[source,java]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="simple-digest">2.5.3. Simple Digest</h4>
+<div class="paragraph">
+<p>The next type of password is the simple digest, for this password type the clear text password id digested using the specified algorithm however no salt is used.</p>
+</div>
+<div class="paragraph">
+<p>The following algorithms are applicable to this type of encoding.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>simple-digest-md2</p>
+</li>
+<li>
+<p>simple-digest-md5</p>
+</li>
+<li>
+<p>simple-digest-sha-1</p>
+</li>
+<li>
+<p>simple-digest-sha-256</p>
+</li>
+<li>
+<p>simple-digest-sha-384</p>
+</li>
+<li>
+<p>simple-digest-sha-512</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following example illustrates how the <code>Password</code> instance can be created starting from the clear text password,from this the digested representation of the password can be obtained which could be used to store the password.  The digested representation is then used to create a further <code>Password</code> instance.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Provider</span> ELYTRON_PROVIDER = <span class="keyword">new</span> WildFlyElytronProvider();
+<span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> TEST_PASSWORD = <span class="string"><span class="delimiter">&quot;</span><span class="content">test_password</span><span class="delimiter">&quot;</span></span>;
+
+<span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) <span class="directive">throws</span> <span class="exception">Exception</span> {
+    PasswordFactory passwordFactory = PasswordFactory.getInstance(SimpleDigestPassword.ALGORITHM_SIMPLE_DIGEST_SHA_512, ELYTRON_PROVIDER);
+
+    ClearPasswordSpec clearSpec = <span class="keyword">new</span> ClearPasswordSpec(TEST_PASSWORD.toCharArray());
+    SimpleDigestPassword original = (SimpleDigestPassword) passwordFactory.generatePassword(clearSpec);
+
+    <span class="type">byte</span><span class="type">[]</span> digest = original.getDigest();
+    HashPasswordSpec hashSpec = <span class="keyword">new</span> HashPasswordSpec(digest);
+
+    SimpleDigestPassword restored = (SimpleDigestPassword) passwordFactory.generatePassword(hashSpec);
+
+    <span class="predefined-type">System</span>.out.println(<span class="predefined-type">String</span>.format(<span class="string"><span class="delimiter">&quot;</span><span class="content">Password Verified '%b'</span><span class="delimiter">&quot;</span></span>, passwordFactory.verify(restored, TEST_PASSWORD.toCharArray())));
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Starting from the digest the raw APIs can be used as.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">SimpleDigestPassword rawPassword = SimpleDigestPassword.createRaw(SimpleDigestPassword.ALGORITHM_SIMPLE_DIGEST_SHA_512, digest);
+
+SimpleDigestPassword restored = (SimpleDigestPassword) passwordFactory.translate(rawPassword);
+
+<span class="predefined-type">System</span>.out.println(<span class="predefined-type">String</span>.format(<span class="string"><span class="delimiter">&quot;</span><span class="content">Password Verified '%b'</span><span class="delimiter">&quot;</span></span>, passwordFactory.verify(restored, TEST_PASSWORD.toCharArray())));</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="salted-digest">2.5.4. Salted Digest</h4>
+<div class="paragraph">
+<p>Two variations of salted digests are supported, these can either be digested with the salt first or the password first.  The following algorithms are supported: -</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>password-salt-digest-md5</p>
+</li>
+<li>
+<p>password-salt-digest-sha-1</p>
+</li>
+<li>
+<p>password-salt-digest-sha-256</p>
+</li>
+<li>
+<p>password-salt-digest-sha-384</p>
+</li>
+<li>
+<p>password-salt-digest-sha-512</p>
+</li>
+<li>
+<p>salt-password-digest-md5</p>
+</li>
+<li>
+<p>salt-password-digest-sha-1</p>
+</li>
+<li>
+<p>salt-password-digest-sha-256</p>
+</li>
+<li>
+<p>salt-password-digest-sha-384</p>
+</li>
+<li>
+<p>salt-password-digest-sha-512</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following example shows how using a generated salt the password can be created from a clear text password and then subsequently how the password can be recreated from the salt and digest.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Provider</span> ELYTRON_PROVIDER = <span class="keyword">new</span> WildFlyElytronProvider();
+<span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> TEST_PASSWORD = <span class="string"><span class="delimiter">&quot;</span><span class="content">test_password</span><span class="delimiter">&quot;</span></span>;
+
+<span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) <span class="directive">throws</span> <span class="exception">Exception</span> {
+    PasswordFactory passwordFactory = PasswordFactory.getInstance(SaltedSimpleDigestPassword.ALGORITHM_PASSWORD_SALT_DIGEST_SHA_512, ELYTRON_PROVIDER);
+
+    <span class="type">byte</span><span class="type">[]</span> salt = <span class="keyword">new</span> <span class="type">byte</span>[<span class="integer">32</span>];
+    <span class="predefined-type">SecureRandom</span> random = <span class="keyword">new</span> <span class="predefined-type">SecureRandom</span>();
+    random.nextBytes(salt);
+
+    SaltedPasswordAlgorithmSpec saltedSpec = <span class="keyword">new</span> SaltedPasswordAlgorithmSpec(salt);
+    EncryptablePasswordSpec encryptableSpec = <span class="keyword">new</span> EncryptablePasswordSpec(TEST_PASSWORD.toCharArray(), saltedSpec);
+
+    SaltedSimpleDigestPassword original = (SaltedSimpleDigestPassword) passwordFactory.generatePassword(encryptableSpec);
+
+    <span class="type">byte</span><span class="type">[]</span> digest = original.getDigest();
+
+    SaltedHashPasswordSpec saltedHashSpec = <span class="keyword">new</span> SaltedHashPasswordSpec(digest, salt);
+
+    SaltedSimpleDigestPassword restored = (SaltedSimpleDigestPassword) passwordFactory.generatePassword(saltedHashSpec);
+
+    <span class="predefined-type">System</span>.out.println(<span class="predefined-type">String</span>.format(<span class="string"><span class="delimiter">&quot;</span><span class="content">Password Verified '%b'</span><span class="delimiter">&quot;</span></span>, passwordFactory.verify(restored, TEST_PASSWORD.toCharArray())));
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively the salt could be generated automatically by using a <code>ClearPasswordSpec</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">ClearPasswordSpec clearSpec = <span class="keyword">new</span> ClearPasswordSpec(TEST_PASSWORD.toCharArray());
+SaltedSimpleDigestPassword original = (SaltedSimpleDigestPassword) passwordFactory.generatePassword(clearSpec);
+
+<span class="type">byte</span><span class="type">[]</span> salt = original.getSalt();
+<span class="type">byte</span><span class="type">[]</span> digest = original.getDigest();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Starting with the digest and salt the raw APIs can also be used.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">SaltedSimpleDigestPassword rawPassword = SaltedSimpleDigestPassword.createRaw(SaltedSimpleDigestPassword.ALGORITHM_PASSWORD_SALT_DIGEST_SHA_512, digest, salt);
+
+SaltedSimpleDigestPassword restored = (SaltedSimpleDigestPassword) passwordFactory.translate(rawPassword);
+
+<span class="predefined-type">System</span>.out.println(<span class="predefined-type">String</span>.format(<span class="string"><span class="delimiter">&quot;</span><span class="content">Password Verified '%b'</span><span class="delimiter">&quot;</span></span>, passwordFactory.verify(restored, TEST_PASSWORD.toCharArray())));</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="digest">2.5.5. Digest</h4>
+<div class="paragraph">
+<p>The Digest passwords are an alternative form of digest where the username, realm and password are digested together delimited with a ':', these are usable with clear text authentication mechanisms but also usable with the digest authentication mechanisms also eliminating the transmission of clear text passwords during authentication.  The following algorithms are supported: -</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>digest-md5</p>
+</li>
+<li>
+<p>digest-sha</p>
+</li>
+<li>
+<p>digest-sha-256</p>
+</li>
+<li>
+<p>digest-sha-384</p>
+</li>
+<li>
+<p>digest-sha-512</p>
+</li>
+<li>
+<p>digest-sha-512-256</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following example illustrates how a password can be created from the username, realm, and password and then how it can be recreated from the digest, realm, and password.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Provider</span> ELYTRON_PROVIDER = <span class="keyword">new</span> WildFlyElytronProvider();
+<span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> TEST_USERNAME = <span class="string"><span class="delimiter">&quot;</span><span class="content">test_username</span><span class="delimiter">&quot;</span></span>;
+<span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> TEST_REALM = <span class="string"><span class="delimiter">&quot;</span><span class="content">Test Realm</span><span class="delimiter">&quot;</span></span>;
+<span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> TEST_PASSWORD = <span class="string"><span class="delimiter">&quot;</span><span class="content">test_password</span><span class="delimiter">&quot;</span></span>;
+
+<span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) <span class="directive">throws</span> <span class="exception">Exception</span> {
+    PasswordFactory passwordFactory = PasswordFactory.getInstance(DigestPassword.ALGORITHM_DIGEST_MD5, ELYTRON_PROVIDER);
+
+    DigestPasswordAlgorithmSpec digestAlgorithmSpec = <span class="keyword">new</span> DigestPasswordAlgorithmSpec(TEST_USERNAME, TEST_REALM);
+    EncryptablePasswordSpec encryptableSpec = <span class="keyword">new</span> EncryptablePasswordSpec(TEST_PASSWORD.toCharArray(), digestAlgorithmSpec);
+
+    DigestPassword original = (DigestPassword) passwordFactory.generatePassword(encryptableSpec);
+
+    <span class="type">byte</span><span class="type">[]</span> digest = original.getDigest();
+
+    DigestPasswordSpec digestPasswordSpec = <span class="keyword">new</span> DigestPasswordSpec(TEST_USERNAME, TEST_REALM, digest);
+
+    DigestPassword restored = (DigestPassword) passwordFactory.generatePassword(digestPasswordSpec);
+
+    <span class="predefined-type">System</span>.out.println(<span class="predefined-type">String</span>.format(<span class="string"><span class="delimiter">&quot;</span><span class="content">Password Verified '%b'</span><span class="delimiter">&quot;</span></span>, passwordFactory.verify(restored, TEST_PASSWORD.toCharArray())));
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For this password type is not possible to create the password from the <code>ClearPasswordSpec</code> as additional information always needs to be specified and can not be dynamically or randomly generated, however the raw APIs can still be used.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">DigestPassword rawPassword = DigestPassword.createRaw(DigestPassword.ALGORITHM_DIGEST_MD5, TEST_USERNAME, TEST_REALM, digest);
+
+DigestPassword restored = (DigestPassword) passwordFactory.translate(rawPassword);
+
+<span class="predefined-type">System</span>.out.println(<span class="predefined-type">String</span>.format(<span class="string"><span class="delimiter">&quot;</span><span class="content">Password Verified '%b'</span><span class="delimiter">&quot;</span></span>, passwordFactory.verify(restored, TEST_PASSWORD.toCharArray())));</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="scram">2.5.6. SCRAM</h4>
+<div class="paragraph">
+<p>Another set of passwords more tightly tied to a specific authentication mechanism are the SCRAM password types, the following algorithms are supported: -</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>scram-sha-1</p>
+</li>
+<li>
+<p>scram-sha-256</p>
+</li>
+<li>
+<p>scram-sha-384</p>
+</li>
+<li>
+<p>scram-sha-512</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following demonstrates how a clear password can be converted to a scram password using a specified salt and iteration count and how this can be recreated from the digested value.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Provider</span> ELYTRON_PROVIDER = <span class="keyword">new</span> WildFlyElytronProvider();
+
+<span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> TEST_PASSWORD = <span class="string"><span class="delimiter">&quot;</span><span class="content">test_password</span><span class="delimiter">&quot;</span></span>;
+
+<span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) <span class="directive">throws</span> <span class="exception">Exception</span> {
+    PasswordFactory passwordFactory = PasswordFactory.getInstance(ScramDigestPassword.ALGORITHM_SCRAM_SHA_512, ELYTRON_PROVIDER);
+
+    <span class="type">byte</span><span class="type">[]</span> salt = <span class="keyword">new</span> <span class="type">byte</span>[<span class="integer">12</span>];
+    <span class="predefined-type">SecureRandom</span> random = <span class="keyword">new</span> <span class="predefined-type">SecureRandom</span>();
+    random.nextBytes(salt);
+
+    IteratedSaltedPasswordAlgorithmSpec iteratedAlgorithmSpec = <span class="keyword">new</span> IteratedSaltedPasswordAlgorithmSpec(<span class="integer">2000</span>, salt);
+    EncryptablePasswordSpec encryptableSpec = <span class="keyword">new</span> EncryptablePasswordSpec(TEST_PASSWORD.toCharArray(), iteratedAlgorithmSpec);
+
+    ScramDigestPassword original = (ScramDigestPassword) passwordFactory.generatePassword(encryptableSpec);
+
+    <span class="type">byte</span><span class="type">[]</span> digest = original.getDigest();
+
+    IteratedSaltedHashPasswordSpec scramPasswordSpec = <span class="keyword">new</span> IteratedSaltedHashPasswordSpec(digest, salt, <span class="integer">2000</span>);
+
+    ScramDigestPassword restored = (ScramDigestPassword) passwordFactory.generatePassword(scramPasswordSpec);
+
+    <span class="predefined-type">System</span>.out.println(<span class="predefined-type">String</span>.format(<span class="string"><span class="delimiter">&quot;</span><span class="content">Password Verified '%b'</span><span class="delimiter">&quot;</span></span>, passwordFactory.verify(restored, TEST_PASSWORD.toCharArray())));
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively instead of using the <code>IteratedSaltedPasswordAlgorithmSpec</code> is it also possible to use a <code>SaltedPasswordAlgorithmSpec</code> when converting from the clear text password and a default iteration count will be used instead, this is similar to how the conversion happens for <a href="#salted-digest">salted digest</a> passwords.</p>
+</div>
+<div class="paragraph">
+<p>It is also possible to omit the salt and iteration count and these will be generated.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">ClearPasswordSpec clearSpec = <span class="keyword">new</span> ClearPasswordSpec(TEST_PASSWORD.toCharArray());
+
+ScramDigestPassword original = (ScramDigestPassword) passwordFactory.generatePassword(clearSpec);
+
+<span class="type">byte</span><span class="type">[]</span> salt = original.getSalt();
+<span class="type">byte</span><span class="type">[]</span> digest = original.getDigest();
+<span class="type">int</span> iterationCount = original.getIterationCount();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Starting with a digest, salt, and iteration count the raw APIs can also be used.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">ScramDigestPassword rawPassword = ScramDigestPassword.createRaw(ScramDigestPassword.ALGORITHM_SCRAM_SHA_256, digest, salt, <span class="integer">2000</span>);
+
+ScramDigestPassword restored = (ScramDigestPassword) passwordFactory.translate(rawPassword);
+
+<span class="predefined-type">System</span>.out.println(<span class="predefined-type">String</span>.format(<span class="string"><span class="delimiter">&quot;</span><span class="content">Password Verified '%b'</span><span class="delimiter">&quot;</span></span>, passwordFactory.verify(restored, TEST_PASSWORD.toCharArray())));</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="otp">2.5.7. OTP</h4>
+<div class="paragraph">
+<p>One more type of mechanism specific password is the one time password type.  The following algorithms are supported: -</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>otp-md5</p>
+</li>
+<li>
+<p>otp-sha1</p>
+</li>
+<li>
+<p>otp-sha256</p>
+</li>
+<li>
+<p>otp-sha384</p>
+</li>
+<li>
+<p>otp-sha512</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following demonstrates how a clear password can be converted to a one time password using a specified seed and iteration count and how this can be recreated from the hashed value.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Provider</span> ELYTRON_PROVIDER = <span class="keyword">new</span> WildFlyElytronProvider();
+<span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> TEST_PASSWORD = <span class="string"><span class="delimiter">&quot;</span><span class="content">test_password</span><span class="delimiter">&quot;</span></span>;
+
+<span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) <span class="directive">throws</span> <span class="exception">Exception</span> {
+    PasswordFactory passwordFactory = PasswordFactory.getInstance(OneTimePassword.ALGORITHM_OTP_SHA_512, ELYTRON_PROVIDER);
+
+    <span class="predefined-type">String</span> seed = <span class="string"><span class="delimiter">&quot;</span><span class="content">ke1234</span><span class="delimiter">&quot;</span></span>;
+    <span class="type">int</span> sequenceNumber = <span class="integer">500</span>;
+
+    OneTimePasswordAlgorithmSpec oneTimeAlgorithmSpec = <span class="keyword">new</span> OneTimePasswordAlgorithmSpec(OneTimePassword.ALGORITHM_OTP_SHA_512, seed, sequenceNumber);
+    EncryptablePasswordSpec encryptableSpec = <span class="keyword">new</span> EncryptablePasswordSpec(TEST_PASSWORD.toCharArray(), oneTimeAlgorithmSpec);
+
+    OneTimePassword original = (OneTimePassword) passwordFactory.generatePassword(encryptableSpec);
+
+    <span class="type">byte</span><span class="type">[]</span> hash = original.getHash();
+
+    OneTimePasswordSpec oneTimeSpec = <span class="keyword">new</span> OneTimePasswordSpec(hash, seed, sequenceNumber);
+
+    OneTimePassword restored = (OneTimePassword) passwordFactory.generatePassword(oneTimeSpec);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This example does not include verification as that is handled by the SASL mechanism which also increments the sequence and replaces the hash, this does mean this password type needs to be used with a security realm which also supports updates.</p>
+</div>
+<div class="paragraph">
+<p>Starting with the hash and sequence number the raw APIs can also be used.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">OneTimePassword rawPassword = OneTimePassword.createRaw(OneTimePassword.ALGORITHM_OTP_SHA_512, original.getHash(), original.getSeed(), original.getSequenceNumber());
+
+OneTimePassword restored = (OneTimePassword) passwordFactory.translate(rawPassword);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="bcrypt">2.5.8. Other Iterated Salted Types</h4>
+<div class="paragraph">
+<p>The following algorithms are also supported for alternative iterated salted password types: -</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>bcrypt</p>
+</li>
+<li>
+<p>sun-crypt-md5</p>
+</li>
+<li>
+<p>sun-crypt-md5-bare-salt</p>
+</li>
+<li>
+<p>crypt-sha-256</p>
+</li>
+<li>
+<p>crypt-sha-512</p>
+</li>
+<li>
+<p>bsd-crypt-des</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The general pattern for working with these password types is the same as was used for <a href="#scram">Scram</a> password types if an iteraction count is specified or the same as <a href="#salted-digest">salted digest</a> password types if a default iteration count is to be used instead.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="other-salted-types">2.5.9. Other Salted Types</h4>
+<div class="paragraph">
+<p>The following agorithms are also supported for salted password types: -</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>crypt-md5</p>
+</li>
+<li>
+<p>crypt-des</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The general pattern for working with these password types is the same as was used for <a href="#salted-digest">salted digest</a> password types as no iteration count is required.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="masked-password-types">2.5.10. Masked Password Types</h4>
+<div class="paragraph">
+<p>Finally a set of masked password types are also supported to add support for legacy password types which were previously supported within PicketBox, the following algorithms are supported.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>masked-MD5-DES</p>
+</li>
+<li>
+<p>masked-MD5-DES-CBC-PKCS5</p>
+</li>
+<li>
+<p>masked-MD5-3DES</p>
+</li>
+<li>
+<p>masked-MD5-3DES-CBC-PKCS5</p>
+</li>
+<li>
+<p>masked-SHA1-DES-EDE</p>
+</li>
+<li>
+<p>masked-SHA1-DES-EDE-CBC-PKCS5</p>
+</li>
+<li>
+<p>masked-SHA1-RC2-40</p>
+</li>
+<li>
+<p>masked-SHA1-RC2-40-CBC-PKCS5</p>
+</li>
+<li>
+<p>masked-SHA1-RC2-128</p>
+</li>
+<li>
+<p>masked-SHA1-RC2-128-CBC-PKCS5</p>
+</li>
+<li>
+<p>masked-SHA1-RC4-40</p>
+</li>
+<li>
+<p>masked-SHA1-RC4-40-ECB</p>
+</li>
+<li>
+<p>masked-SHA1-RC4-128</p>
+</li>
+<li>
+<p>masked-SHA1-RC4-128-ECB</p>
+</li>
+<li>
+<p>masked-HMAC-SHA1-AES-128</p>
+</li>
+<li>
+<p>masked-HMAC-SHA224-AES-128</p>
+</li>
+<li>
+<p>masked-HMAC-SHA256-AES-128</p>
+</li>
+<li>
+<p>masked-HMAC-SHA384-AES-128</p>
+</li>
+<li>
+<p>masked-HMAC-SHA512-AES-128</p>
+</li>
+<li>
+<p>masked-HMAC-SHA1-AES-256</p>
+</li>
+<li>
+<p>masked-HMAC-SHA224-AES-256</p>
+</li>
+<li>
+<p>masked-HMAC-SHA256-AES-256</p>
+</li>
+<li>
+<p>masked-HMAC-SHA384-AES-256</p>
+</li>
+<li>
+<p>masked-HMAC-SHA512-AES-256</p>
+</li>
+<li>
+<p>masked-PBKDF-HMAC-SHA1</p>
+</li>
+<li>
+<p>masked-PBKDF-HMAC-SHA224</p>
+</li>
+<li>
+<p>masked-PBKDF-HMAC-SHA256</p>
+</li>
+<li>
+<p>masked-PBKDF-HMAC-SHA384</p>
+</li>
+<li>
+<p>masked-PBKDF-HMAC-SHA512</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Provider</span> ELYTRON_PROVIDER = <span class="keyword">new</span> WildFlyElytronProvider();
+
+<span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> TEST_PASSWORD = <span class="string"><span class="delimiter">&quot;</span><span class="content">test_password</span><span class="delimiter">&quot;</span></span>;
+
+<span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) <span class="directive">throws</span> <span class="exception">Exception</span> {
+    PasswordFactory passwordFactory = PasswordFactory.getInstance(MaskedPassword.ALGORITHM_MASKED_MD5_DES, ELYTRON_PROVIDER);
+
+    <span class="type">char</span><span class="type">[]</span> key = <span class="string"><span class="delimiter">&quot;</span><span class="content">my_secret_key</span><span class="delimiter">&quot;</span></span>.toCharArray();
+
+    <span class="type">byte</span><span class="type">[]</span> salt = <span class="keyword">new</span> <span class="type">byte</span>[<span class="integer">8</span>];
+    <span class="predefined-type">SecureRandom</span> random = <span class="keyword">new</span> <span class="predefined-type">SecureRandom</span>();
+    random.nextBytes(salt);
+
+    <span class="type">int</span> iterationCount = <span class="integer">100</span>;
+
+    MaskedPasswordAlgorithmSpec maskedAlgorithmSpec = <span class="keyword">new</span> MaskedPasswordAlgorithmSpec(key, iterationCount, salt);
+    EncryptablePasswordSpec encryptableSpec = <span class="keyword">new</span> EncryptablePasswordSpec(TEST_PASSWORD.toCharArray(), maskedAlgorithmSpec);
+
+    MaskedPassword original = (MaskedPassword) passwordFactory.generatePassword(encryptableSpec);
+
+    <span class="type">byte</span><span class="type">[]</span> masked = original.getMaskedPasswordBytes();
+
+    MaskedPasswordSpec maskedPasswordSpec = <span class="keyword">new</span> MaskedPasswordSpec(key, iterationCount, salt, masked);
+
+    MaskedPassword restored = (MaskedPassword) passwordFactory.generatePassword(maskedPasswordSpec);
+
+    <span class="predefined-type">System</span>.out.println(<span class="predefined-type">String</span>.format(<span class="string"><span class="delimiter">&quot;</span><span class="content">Password Verified '%b'</span><span class="delimiter">&quot;</span></span>, passwordFactory.verify(restored, TEST_PASSWORD.toCharArray())));
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As with the other password types the raw password APIs can also be used to recreate the password.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">MaskedPassword rawPassword = MaskedPassword.createRaw(MaskedPassword.ALGORITHM_MASKED_MD5_DES, key, iterationCount, salt, masked);
+
+MaskedPassword restored = (MaskedPassword) passwordFactory.translate(rawPassword);
+
+<span class="predefined-type">System</span>.out.println(<span class="predefined-type">String</span>.format(<span class="string"><span class="delimiter">&quot;</span><span class="content">Password Verified '%b'</span><span class="delimiter">&quot;</span></span>, passwordFactory.verify(restored, TEST_PASSWORD.toCharArray())));</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="modular-crypt">2.5.11. Modular Crypt Encoding</h4>
+<div class="paragraph">
+<p>A number of password types can be encoded using modular crypt allowing information such as the password type, the hash or digest, the salt, and the iteration count to be encoded in a single String, this can make storage and retrieval of passwords easier as multiple pieces of related data can be handled as one.</p>
+</div>
+<div class="paragraph">
+<p>Within the WildFly Elytron project the utility <code>org.wildfly.security.password.util.ModularCrypt</code> can be used to handle the encoding and decoding.</p>
+</div>
+<div class="paragraph">
+<p>The following password types can be encoded and decoded: -</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>BCryptPassword</code></p>
+</li>
+<li>
+<p><code>BSDUnixDESCryptPassword</code></p>
+</li>
+<li>
+<p><code>UnixDESCryptPassword</code></p>
+</li>
+<li>
+<p><code>UnixMD5CryptPassword</code></p>
+</li>
+<li>
+<p><code>SunUnixMD5CryptPassword</code></p>
+</li>
+<li>
+<p><code>UnixSHACryptPassword</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following code demonstrates this for a <code>BSDUnixDESCryptPassword</code>: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Provider</span> ELYTRON_PROVIDER = <span class="keyword">new</span> WildFlyElytronProvider();
+
+<span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> TEST_PASSWORD = <span class="string"><span class="delimiter">&quot;</span><span class="content">myPassword</span><span class="delimiter">&quot;</span></span>;
+
+<span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) <span class="directive">throws</span> <span class="exception">Exception</span> {
+    PasswordFactory passwordFactory = PasswordFactory.getInstance(BSDUnixDESCryptPassword.ALGORITHM_BSD_CRYPT_DES, ELYTRON_PROVIDER);
+
+    <span class="type">int</span> iterationCount = BSDUnixDESCryptPassword.DEFAULT_ITERATION_COUNT;
+
+    <span class="type">byte</span><span class="type">[]</span> salt = <span class="keyword">new</span> <span class="type">byte</span>[BSDUnixDESCryptPassword.BSD_CRYPT_DES_SALT_SIZE];
+    <span class="predefined-type">SecureRandom</span> random = <span class="keyword">new</span> <span class="predefined-type">SecureRandom</span>();
+    random.nextBytes(salt);
+
+    IteratedSaltedPasswordAlgorithmSpec iteratedAlgorithmSpec = <span class="keyword">new</span> IteratedSaltedPasswordAlgorithmSpec(iterationCount, salt);
+    EncryptablePasswordSpec encryptableSpec = <span class="keyword">new</span> EncryptablePasswordSpec(TEST_PASSWORD.toCharArray(), iteratedAlgorithmSpec);
+
+    BSDUnixDESCryptPassword original = (BSDUnixDESCryptPassword) passwordFactory.generatePassword(encryptableSpec);
+
+    <span class="predefined-type">String</span> modularCryptString = ModularCrypt.encodeAsString(original);
+
+    Password rawPassword = ModularCrypt.decode(modularCryptString);
+
+    BSDUnixDESCryptPassword restored = (BSDUnixDESCryptPassword) passwordFactory.translate(rawPassword);
+
+    <span class="predefined-type">System</span>.out.println(<span class="predefined-type">String</span>.format(<span class="string"><span class="delimiter">&quot;</span><span class="content">Password Verified '%b'</span><span class="delimiter">&quot;</span></span>, passwordFactory.verify(restored, TEST_PASSWORD.toCharArray())));
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>Password</code> returned from the call to <code>ModularCrypt.decode(&#8230;&#8203;)</code> is a raw password so needs translating by the <code>PasswordFactory</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1434,7 +2178,7 @@ on the realm will still be able to perform a type check and cast to gain
 access to the modification API.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">filesystem-realm</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#filesystem-security-realm">filesystem-realm</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A simple security realm definition backed by the
 filesystem.</p></td>
 </tr>
@@ -1444,7 +2188,7 @@ filesystem.</p></td>
 represented in the management model.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jdbc-realm</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#jdbc-security-realm">jdbc-realm</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A security realm definition backed by database using JDBC.</p></td>
 </tr>
 <tr>
@@ -3155,7 +3899,7 @@ some of the system properties below.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="configure-an-eltyron-security-realm-for-assigning-roles.">Configure an Eltyron security realm for assigning roles.</h5>
+<h5 id="configure-an-eltyron-security-realm-for-assigning-roles.">Configure an Elytron security realm for assigning roles.</h5>
 <div class="paragraph">
 <p>The the client&#8217;s Kerberos token will provide the principal, but you need
 a way to map that principal to a role for your application. There are
@@ -3166,8 +3910,8 @@ from the Kerberos token, and assigns roles to that user.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/filesystem-realm=exampleFsRealm:add(path=fs-realm-users,relative-to=jboss.server.config.dir)
-/subsystem=elytron/filesystem-realm=exampleFsRealm/identity=user1@REALM:add()
-/subsystem=elytron/filesystem-realm=exampleFsRealm/identity=user1@REALM:add-attribute(name=Roles, value=["Admin","Guest"])</code></pre>
+/subsystem=elytron/filesystem-realm=exampleFsRealm:add-identity(identity=user1@REALM)
+/subsystem=elytron/filesystem-realm=exampleFsRealm:add-identity-attribute(identity=user1@REALM,name=Roles,value=["Admin","Guest"])</code></pre>
 </div>
 </div>
 </div>
@@ -3275,9 +4019,9 @@ appropriate roles:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/filesystem-realm=exampleFsRealm/identity=fallbackUser1:add()
-/subsystem=elytron/filesystem-realm=exampleFsRealm/identity=fallbackUser1:set-password(clear={password="password123"})
-/subsystem=elytron/filesystem-realm=exampleFsRealm/identity=fallbackUser1:add-attribute(name=Roles, value=["Admin","Guest"])</code></pre>
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/filesystem-realm=exampleFsRealm:add-identity(identity=fallbackUser1)
+/subsystem=elytron/filesystem-realm=exampleFsRealm:set-password(identity=fallbackUser1,clear={password="password123"})
+/subsystem=elytron/filesystem-realm=exampleFsRealm:add-identity-attribute(identity=fallbackUser1,name=Roles,value=["Admin","Guest"])</code></pre>
 </div>
 </div>
 </div>
@@ -5208,6 +5952,894 @@ default:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/policy=policy-provider-a:add(custom-policy=\[{name=policy-provider-a, class-name=MyPolicyProviderA, module=x.y.z}\])</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="component-documentation">4.6. Component Documentation</h3>
+<div class="sect3">
+<h4 id="security-realms">4.6.1. Security Realms</h4>
+<div class="paragraph">
+<p>The primary responsibility of a security realm is the ability to load identities with associated attributes, these identities are then used within the authentication process for credential validation and subsequently wrapped to represent the <code>SecurityIdentity</code> instances using within applications for authorization.</p>
+</div>
+<div class="paragraph">
+<p>Generally a security realm operates in one of three modes, in the first mode on loading an identity from it&#8217;s store the security realm also loads one or more credential representations from the store and holds these within the identity.  During authentication the credentials within the identity can be used to verify the connection attempt.  The reason multiple credentials are loaded is because specific types may be applicable to specific mechanisms so an appropriate credential representation can be selected at the time of authentication.</p>
+</div>
+<div class="paragraph">
+<p>In the second mode the identity is loaded as in the first mode however no credentials are loaded, in this mode evidence can be passed in to the identity for verification.  This mode is sometimes the only mode available where it is not possible to load the representation of a credential from it&#8217;s store.</p>
+</div>
+<div class="paragraph">
+<p>In the third mode evidence is passed to the security realm and used to construct the resulting identity, this mode is predominantly used with certificate and token based authentication mechanisms where the verified certificate or token can be used to construct the resulting identity.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="jdbc-security-realm">4.6.2. JDBC Security Realm</h4>
+<div class="paragraph">
+<p>The JDBC security realm is a security realm developed to support loading identities from a database with the option of multiple credentials and multiple attributes each with the option of containing multiple values.</p>
+</div>
+<div class="paragraph">
+<p>When defining the JDBC security realm one or more principal queries can be defined, each of these can load a credential and / or attributes for the resulting identity.  Each defined principal query is associated with it&#8217;s own datasource, this means quite a complex configuration can be created loading the different aspects of an identity from multiple locations.</p>
+</div>
+<div class="paragraph">
+<p>Each of the examples documented within this section will be making use of pre-configured datasources, please refer to the datasources subsystem documentation for more information relating to how to define datasources.</p>
+</div>
+<div class="sect4">
+<h5 id="loading-a-single-clear-text-password">Loading a Single Clear Text Password</h5>
+<div class="paragraph">
+<p>The simplest configuration is to load a clear text password for an identity.  This approach would not be recommended at all in a production set up, however it does make a suitable starting point to illustrate how the JDBC security realm can be configured.</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 33%;">
+<caption class="title">Table 1. Example Table</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">NAME</th>
+<th class="tableblock halign-left valign-top">PASSWORD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">test</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">myPassword</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>A JDBC security realm can be defined as: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/jdbc-realm=demo-realm:add(
+    principal-query=[{data-source=Identities,
+                      sql="select PASSWORD from IDENTITIES where NAME = ?",
+                      clear-password-mapper={password-index=1}}])</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This realm is defined within a single <code>princpal-query</code> against the <code>Identities</code> datasource.  For the user <code>test</code> the result of the query would be: -</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 25%;">
+<caption class="title">Table 2. Query Results</caption>
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">myPassword</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The principal query can be defined with password mappers which define which columns should be used to construct the password for the identity being loaded, in this example a <code>clear-password-mapper</code> is used: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>clear-password-mapper={password-index=1}</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+The index of the first column is 1
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="alternative-password-mappers">Alternative Password Mappers</h5>
+<div class="paragraph">
+<p>The WildFly Elytron project supports a variety of password types as described within <a href="#Passwords">Passwords</a>, some of these password types require multiple values to be loaded from the database to reconstruct the password so alternative password mappers are made available.  More than one password mapper can be defined on a single <code>principal-query</code> to support loading multiple passwords simultaneously.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Where the various password mappers load encoded representations of passwords and salts from the database these can either be encoded using Base64 or Hexadecimal, by default unless specified Base64 is assumed.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect5">
+<h6 id="clear-password-mapper">clear-password-mapper</h6>
+<div class="paragraph">
+<p>This mapper is used to load a clear text password directly from the database.</p>
+</div>
+<div class="paragraph">
+<p>The following attribute is supported for this password mapper: -</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>password-index</code> - The index of the column containing the clear text password.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="bcrypt-password-mapper">bcrypt-password-mapper</h6>
+<div class="paragraph">
+<p>The <code>bcrypt-password-mapper</code> can be used for passwords to be loaded using the <a href="#bcrypt">bcrypt</a> algorithm, as an iterated salted password type the iteration count and salt are also loaded from the database query.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>password-index</code> - The index of the column containing the encoded password.</p>
+</li>
+<li>
+<p><code>hash-encoding</code> - The encoding of the hash, either <code>base64</code> or <code>hex</code>.</p>
+</li>
+<li>
+<p><code>salt-index</code> - The index of the column containing the encoded salt.</p>
+</li>
+<li>
+<p><code>salt-encoding</code> - The encoding of the salt, either <code>base64</code> or <code>hex</code>.</p>
+</li>
+<li>
+<p><code>iteration-count-index</code> - The index of the column containing the iteration count.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="modular-crypt-mapper">modular-crypt-mapper</h6>
+<div class="paragraph">
+<p>The <code>modular-crypt-mapper</code> can be used for passwords encoded using modular crypt, this encoding allows for multiple pieces of information to be encoded in single String such as the password type, the hash or digest, the salt, and the iteraction count.</p>
+</div>
+<div class="paragraph">
+<p>Information on how to encode and decode modular crypt representations can be seen in <a href="#modular-crypt">Modular Crypt Encoding</a>.</p>
+</div>
+<div class="paragraph">
+<p>The following attribute is supported for this password mapper: -</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>password-index</code> - The index of the column containing the modular crypt encoded password.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="salted-simple-digest-mapper">salted-simple-digest-mapper</h6>
+<div class="paragraph">
+<p>The <code>salted-simple-digest-mapper</code> supports the password types hashed with a salt as described in <a href="#salted-digest">Salted Digest</a>, for this type of password the encoded form of the password is loaded in addition to the salt.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>algorithm</code> - The algorithm of the password type, the supported values are listed at <a href="#salted-digest">Salted Digest</a>.</p>
+</li>
+<li>
+<p><code>password-index</code> - The index of the column containing the encoded password.</p>
+</li>
+<li>
+<p><code>hash-encoding</code> - The encoding of the hash, either <code>base64</code> or <code>hex</code>.</p>
+</li>
+<li>
+<p><code>salt-index</code> - The index of the column containing the encoded salt.</p>
+</li>
+<li>
+<p><code>salt-encoding</code> - The encoding of the salt, either <code>base64</code> or <code>hex</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="simple-digest-mapper">simple-digest-mapper</h6>
+<div class="paragraph">
+<p>The <code>simple-digest-mapper</code> supports the loading of passwords which have been simply hashed without any salt as described in <a href="#simple-digest">Simple Digest</a>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>algorithm</code> - The algorithm of the password type, the supported values are listed at <a href="#simple-digest">Simple Digest</a>.</p>
+</li>
+<li>
+<p><code>password-index</code> - The index of the column containing the encoded password.</p>
+</li>
+<li>
+<p><code>hash-encoding</code> - The encoding of the hash, either <code>base64</code> or <code>hex</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="scram-mapper">scram-mapper</h6>
+<div class="paragraph">
+<p>The <code>scram-mapper</code> supports the loading of SCRAM passwords which use both a salt and an interation count as described in <a href="#scram">Scram</a>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>algorithm</code> - The algorithm of the password type, the supported values are listed at <a href="#scram">Scram</a>.</p>
+</li>
+<li>
+<p><code>password-index</code> - The index of the column containing the encoded password.</p>
+</li>
+<li>
+<p><code>hash-encoding</code> - The encoding of the hash, either <code>base64</code> or <code>hex</code>.</p>
+</li>
+<li>
+<p><code>salt-index</code> - The index of the column containing the encoded salt.</p>
+</li>
+<li>
+<p><code>salt-encoding</code> - The encoding of the salt, either <code>base64</code> or <code>hex</code>.</p>
+</li>
+<li>
+<p><code>iteration-count-index</code> - The index of the column containing the iteration count.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="using-a-hashed-password-representation">Using a Hashed Password Representation</h5>
+<div class="paragraph">
+<p>The same approach can be taken for all hashed password representations, for illustration purposes this section will illustrate how a <a href="#bcrypt">bcrypt</a> password can be prepared to be stored in a database and the subsequent realm configuration to make use of it.  Examples uising the APIs for the different password types can be found in the <a href="#Passwords">Passwords</a> section of this documentation.</p>
+</div>
+<div class="paragraph">
+<p>The following example takes the password <code>myPassword</code>, generates a random salt an produces a <code>bcrypt</code> representation of the password.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Provider</span> ELYTRON_PROVIDER = <span class="keyword">new</span> WildFlyElytronProvider();
+
+<span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> TEST_PASSWORD = <span class="string"><span class="delimiter">&quot;</span><span class="content">myPassword</span><span class="delimiter">&quot;</span></span>;
+
+<span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) <span class="directive">throws</span> <span class="exception">Exception</span> {
+    PasswordFactory passwordFactory = PasswordFactory.getInstance(BCryptPassword.ALGORITHM_BCRYPT, ELYTRON_PROVIDER);
+
+    <span class="type">int</span> iterationCount = <span class="integer">10</span>;
+
+    <span class="type">byte</span><span class="type">[]</span> salt = <span class="keyword">new</span> <span class="type">byte</span>[BCryptPassword.BCRYPT_SALT_SIZE];
+    <span class="predefined-type">SecureRandom</span> random = <span class="keyword">new</span> <span class="predefined-type">SecureRandom</span>();
+    random.nextBytes(salt);
+
+    IteratedSaltedPasswordAlgorithmSpec iteratedAlgorithmSpec = <span class="keyword">new</span> IteratedSaltedPasswordAlgorithmSpec(iterationCount, salt);
+    EncryptablePasswordSpec encryptableSpec = <span class="keyword">new</span> EncryptablePasswordSpec(TEST_PASSWORD.toCharArray(), iteratedAlgorithmSpec);
+
+    BCryptPassword original = (BCryptPassword) passwordFactory.generatePassword(encryptableSpec);
+
+    <span class="type">byte</span><span class="type">[]</span> hash = original.getHash();
+
+    <span class="predefined-type">Encoder</span> encoder = Base64.getEncoder();
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Encoded Salt = </span><span class="delimiter">&quot;</span></span> + encoder.encodeToString(salt));
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Encoded Hash = </span><span class="delimiter">&quot;</span></span> + encoder.encodeToString(hash));
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This produces the following output, as the salt is randomly generated the output would differ each time the above code is executed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>Encoded Salt = 3bFOQwRU75to+yJ8Cv0g8w==
+Encoded Hash = x9P/0cxfNz+Pf3HCinZ3dLCbNMnBeiU=</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This could now be stored in a database table: -</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 33%;">
+<caption class="title">Table 3. Example Table</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">NAME</th>
+<th class="tableblock halign-left valign-top">PASSWORD</th>
+<th class="tableblock halign-left valign-top">SALT</th>
+<th class="tableblock halign-left valign-top">ITERATION_COUNT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">test</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x9P/0cxfNz+Pf3HCinZ3dLCbNMnBeiU=</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3bFOQwRU75to+yJ8Cv0g8w==</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The JDBC security realm can instead be created with the following CLI command: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/jdbc-realm=demo-realm:add(
+    principal-query=[{data-source=Identities,
+                      sql="select PASSWORD, SALT, ITERATION_COUNT from IDENTITIES where NAME = ?",
+                      bcrypt-mapper={password-index=1, salt-index=2, iteration-count-index=3}}])</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For the user <code>test</code> the result of the query would be: -</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 25%;">
+<caption class="title">Table 4. Query Results</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">1</th>
+<th class="tableblock halign-left valign-top">2</th>
+<th class="tableblock halign-left valign-top">3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x9P/0cxfNz+Pf3HCinZ3dLCbNMnBeiU=</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3bFOQwRU75to+yJ8Cv0g8w==</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The <code>bcrypt-password-mapper</code> is defined to load the encoded password, encoded salt and iteration count from the relevent columns in the query result.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>bcrypt-mapper={password-index=1, salt-index=2, iteration-count-index=3}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Had the values been encoding using hexadecimal instead of Base64 the <code>bcrypt-mapper</code> could have been defined as: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>bcrypt-mapper={password-index=1, hash-encoding=hex, salt-index=2, salt-encoding=hex, iteration-count-index=3}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+It is worth noting that as the <code>hash-encoding</code> and <code>salt-encoding</code> are specified separately one could use Base64 whilst the other uses hexadecimal.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="loading-passwords-from-different-queries-datasources">Loading Passwords from Different Queries / Datasources</h5>
+<div class="paragraph">
+<p>It is also possible to combine both of the example so far and define two separate <code>principal-query</code> instances to attempt to load both password types from different locations.</p>
+</div>
+<div class="paragraph">
+<p>Here is an example configuration loading a clear text password from one datasource / table and loading a bcrypt password from a second datasource / table.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/jdbc-realm=demo-realm:add(
+    principal-query=[
+        {data-source=LegacyIdentities,
+         sql="select PASSWORD from LEGACY_IDENTITIES where NAME = ?",
+         clear-password-mapper={password-index=1}},
+        {data-source=NewIdentities,
+         sql="select PASSWORD, SALT, ITERATION_COUNT from NEW_IDENTITIES where NAME = ?",
+         bcrypt-mapper={password-index=1, salt-index=2, iteration-count-index=3}}
+                    ])</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+It is not required that the identity is found from both of the queries, this can be useful in situations where identities are being migrated from one location to another or for aggregating two together.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="loading-attributes">Loading Attributes</h5>
+<div class="paragraph">
+<p>The examples so far have focussed on the loading of passwords from the database, the principal queries can also be used to load attributes for the resulting identities.</p>
+</div>
+<div class="paragraph">
+<p>The loading of attributes can either be defined to happen within the principal queries being used to load the passwords or attribute specific principal queries can be defined, as each <code>principal-query</code> can be defined with it&#8217;s own <code>datasource</code> reference this means attributes can also be loaded from alternative locations.</p>
+</div>
+<div class="paragraph">
+<p>The loaded attributes can then be used for mapping to roles and permissions which should be granted to the identity or they can be obtained programatically within the deployment to identify information about the currently authenticated identity.</p>
+</div>
+<div class="sect5">
+<h6 id="loading-attributes-with-passwords">Loading Attributes with Passwords</h6>
+<div class="paragraph">
+<p>For single valued attributes these can often be loaded using the same <code>principal-query</code> used to load an identities password, as an example if an identities e-mail address or department is to be loaded from the database these can be loaded at the same time as the password.</p>
+</div>
+<div class="paragraph">
+<p>A table for this example could look like: -</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 33%;">
+<caption class="title">Table 5. Example Table</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">NAME</th>
+<th class="tableblock halign-left valign-top">PASSWORD</th>
+<th class="tableblock halign-left valign-top">E_MAIL</th>
+<th class="tableblock halign-left valign-top">Department</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">test</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">myPassword</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="mailto:test@example.com">test@example.com</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sales</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The realm can now be defined as: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/jdbc-realm=demo-realm:add(
+    principal-query=[
+        {data-source=Identities,
+         sql="select PASSWORD, E_MAIL, DEPARTMENT from IDENTITIES where NAME = ?",
+         clear-password-mapper={password-index=1},
+         attribute-mapping=[{index=2, to=email},{index=3,to=department}]
+        }])</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For the user <code>test</code> the result of the query would be: -</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 25%;">
+<caption class="title">Table 6. Query Results</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">1</th>
+<th class="tableblock halign-left valign-top">2</th>
+<th class="tableblock halign-left valign-top">3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">myPassword</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="mailto:test@example.com">test@example.com</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sales</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The configuration contained the following attribute mappings: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>attribute-mapping=[{index=2, to=email},{index=3,to=department}]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This means the contents of column 2 will be mapped to the <code>email</code> attribute and the contents of column 3 will be mapped to the <code>department</code> attribute.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="loading-attributes-separately">Loading Attributes Separately.</h6>
+<div class="paragraph">
+<p>For multi-valued attributes such as a list of groups it can often make sense to define a separate principal query.</p>
+</div>
+<div class="paragraph">
+<p>A list of groups could be represented as follows in a table.</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 33%;">
+<caption class="title">Table 7. Example Table</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">NAME</th>
+<th class="tableblock halign-left valign-top">TEAM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">test</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">test</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisors</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>A realm can now be defined with a second principal query to load the groups into an attribute.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/jdbc-realm=demo-realm:add(
+    principal-query=[
+        {data-source=Identities,
+         sql="select PASSWORD from IDENTITIES where NAME = ?",
+         clear-password-mapper={password-index=1}
+        },{data-source=Identities,
+         sql="select TEAM from MEMBERSHIP where NAME = ?",
+         attribute-mapping=[{index=1, to=groups}]
+        }])</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Within this definition the second <code>principal-query</code> will load the attribute <code>groups</code>: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>{data-source=Identities,
+ sql="select TEAM from MEMBERSHIP where NAME = ?",
+ attribute-mapping=[{index=1, to=groups}]
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For the user <code>test</code> the results would be: -</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 25%;">
+<caption class="title">Table 8. Query Results</caption>
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisors</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The end result would be that the identity contains the attribute <code>groups</code> with the values <code>Users</code>, and <code>Supervisors</code></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="filesystem-security-realm">4.6.3. Filesystem Security Realm</h4>
+<div class="paragraph">
+<p>The filesystem security realm is a security realm developed to support storing of identities in a filesystem with the option of associating multiple credentials and multiple attributes with each identity. Both credentials and attributes can contain multiple values.</p>
+</div>
+<div class="sect4">
+<h5 id="create-and-populate-filesystem-security-realm">Create and Populate Filesystem Security Realm</h5>
+<div class="paragraph">
+<p>Every identity is stored in an XML file where the name of the file is the name of the identity. It is sufficient to just specify the path to the directory where identity files will be stored. There are other optional attributes.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>path</code> The actual filesystem path. Treated as an absolute path, unless the 'relative-to' attribute is specified, in which case the value is treated as relative to that path.</p>
+</li>
+<li>
+<p><code>relative-to</code> If 'relative-to' is provided, the value of the 'path' attribute is treated as relative to the path specified by this attribute.</p>
+</li>
+<li>
+<p><code>levels</code> The number of levels of directory hashing to apply. When this attribute is set to positive value, filesystem realm will store identities in directory structure where the name of subdirectories will be derived from first characters of identity name. For example, location of identity named "alex" could be <code>a/l/alex.xml</code>. This is useful not only because some filesystems can limit the amount of files that can be stored in a single directory, but also for performance reasons, because that might be influenced by the number of entries in a single directory as well. Default value is 2.</p>
+</li>
+<li>
+<p><code>encoded</code> When encoding is set to true, the identity names will be BASE32 encoded before they are used as filenames. This is beneficial, because some filesystems are case-insensitive or might restrict set of characters allowed in a filename. Default value is true.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Filesystem security realm can be added with Wildfly management CLI or with Elytron API.</p>
+</div>
+<div class="sect5">
+<h6 id="wildfly-management-cli">Wildfly management CLI</h6>
+<div class="paragraph">
+<p>The following command creates realm with name <code>fsRealm</code> that resides in directory <code>fs-realm-users</code> inside the base configuration directory defined by <code>jboss.server.config.dir</code> property. The levels number is 2 and encoded value is true.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/filesystem-realm=fsRealm:add(path=fs-realm-users, relative-to=jboss.server.config.dir)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To add identity with the name "alex" to this filesystem realm:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/filesystem-realm=fsRealm:add-identity(identity=alex)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To delete existing identity from filesystem realm:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/filesystem-realm=fsRealm:remove-identity(identity=alex)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="programmatic-approach">Programmatic approach</h6>
+<div class="paragraph">
+<p>When creating filesystem realm with Elytron API, you can specify <code>name rewriter</code> in the constructor. The name rewriter will be applied to identity names to transform them from one form to another. It can be used to normalize the case, trim extra whitespaces, map one naming scheme to another, remove realm component from identity name (e.g. "user@realm" to "user") or to perform validation step on the syntax of the name.</p>
+</div>
+<div class="paragraph">
+<p>Class <code>org.wildfly.security.auth.realm.FileSystemSecurityRealm</code> is used to instantiate the realm.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>FileSystemSecurityRealm fsRealm = new FileSystemSecurityRealm(fsRealmPath, NameRewriter.IDENTITY_REWRITER, 2, true);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>org.wildfly.security.auth.server.NameRewriter.IDENTITY_REWRITER</code> is a simple identity name rewriter that does no rewriting. You can implement the <code>NameRewriter</code> interface and use your own rewriter.</p>
+</div>
+<div class="paragraph">
+<p>Class <code>org.wildfly.security.auth.principal.NamePrincipal</code> represents principal comprised of a simple name. Handle for the identity can be obtained by passing the <code>NamePrincipal</code> instance to the <code>getRealmIdentity</code> or <code>getRealmIdentityForUpdate</code> method. Received identity for the given principal might or might not exist in the filesystem realm. Method <code>exists</code> can be called to check whether the received identity exists. If it does not, you cannot modify its credentials or attributes.</p>
+</div>
+<div class="paragraph">
+<p>To add non existent identity to the filesystem realm, <code>create</code> method must be called. After this call, credentials and roles of this identity are empty. The exception will be thrown if method <code>create</code> is called on an existing identity.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>ModifiableRealmIdentity modifiableIdentity = fsRealm.getRealmIdentityForUpdate(new NamePrincipal("alex"));
+if (!modifiableIdentity.exists()) {
+    modifiableIdentity.create();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To obtain read only instance of identity:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">RealmIdentity identity = fsRealm.getRealmIdentity(identityPrincipal);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To obtain identity that can be modified:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">ModifiableRealmIdentity modifiableIdentity = fsRealm.getRealmIdentityForUpdate(identityPrincipal);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ModifiableRealmIdentity handle must be cleaned up by a call to <code>dispose</code> when the modifying is done:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>modifiableIdentity.dispose();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To delete the identity from the realm:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>identity.delete();</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="credentials">Credentials</h5>
+<div class="paragraph">
+<p>Supported password types for identity in filesystem realm are <code>Bcrypt</code>, <code>Clear</code>, <code>Simple Digest</code>, <code>Salted Simple Digest</code>, <code>Scram Digest</code>, <code>Digest</code> and <code>OTP</code>.</p>
+</div>
+<div class="sect5">
+<h6 id="wildfly-management-cli-2">Wildfly management CLI</h6>
+<div class="paragraph">
+<p>To set clear password to the identity:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/filesystem-realm=fsRealm:set-password(clear={password="alexPassword"}, identity=alex)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above command will store password in clear text in identity&#8217;s file. It is not recommended to use clear passwords in a production set up.</p>
+</div>
+<div class="paragraph">
+<p>To set digest password to the identity:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/filesystem-realm=fsRealm:set-password(digest={algorithm=digest-md5,password="demoPassword",realm=demoRealm},identity=alex)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Note:</strong> Operation set-password` replaces any existing credential(s) with the new value.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="programmatic-approach-2">Programmatic approach</h6>
+<div class="paragraph">
+<p>When using Elytron API, working with passwords require interaction with the <code>org.wildfly.security.password.PasswordFactory</code> API. Here is the simplest example that will store password in clear text in identity&#8217;s file. Examples on how to work with other types of passwords can be found in <a href="#Passwords">Passwords</a> section of this documentation.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>PasswordFactory passwordFactory = PasswordFactory.getInstance(ClearPassword.ALGORITHM_CLEAR);
+PasswordCredential clearPassword = new PasswordCredential(passwordFactory.generatePassword(new ClearPasswordSpec("alexPassword".toCharArray())));
+identity.setCredentials(Collections.singleton(clearPassword));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Note:</strong> Operation <code>setCredentials</code> replaces any existing credential(s) with the new value.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="attributes">Attributes</h5>
+<div class="paragraph">
+<p>Attributes associated with identities can be read and updated through CLI as well as programmatically.</p>
+</div>
+<div class="sect5">
+<h6 id="wildfly-management-cli-3">Wildfly management CLI</h6>
+<div class="paragraph">
+<p>To add attribute to the identity, you have to specify the name of the attribute and its values (values are of type LIST):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/filesystem-realm=fsRealm:add-identity-attribute(
+    identity="alex",
+    name=Email,
+    value=["alex@email.com", "alex_email@email.com"])
+{"outcome" =&gt; "success"}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To read the identity with its attributes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/filesystem-realm=fsRealm:read-identity(identity="alex")
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; {
+        "name" =&gt; "alex",
+        "attributes" =&gt; {"Email" =&gt; [
+            "alex@email.com",
+            "alex_email@email.com"
+        ]}
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To remove individual values of the attribute:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/filesystem-realm=fsRealm:remove-identity-attribute(
+    identity=alex,
+    name=Email,
+    value=[alex@email.com])
+{"outcome" =&gt; "success"}
+/subsystem=elytron/filesystem-realm=fsRealm:read-identity(identity="alex")
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; {
+        "name" =&gt; "alex",
+        "attributes" =&gt; {"Email" =&gt; ["alex_email@email.com"]}
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To remove the whole attribute:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/filesystem-realm=fsRealm:remove-identity-attribute(identity=alex, name=Email)
+{"outcome" =&gt; "success"}
+/subsystem=elytron/filesystem-realm=fsRealm:read-identity(identity=alex)
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; {
+        "name" =&gt; "alex",
+        "attributes" =&gt; undefined
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="programmatic-approach-3">Programmatic approach</h6>
+<div class="paragraph">
+<p>Interface <code>org.wildfly.security.authz.Attributes</code> represents collection of string attributes. To get attributes associated with specific identity:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="predefined-type">Attributes</span> identityAttributes = identity.getAttributes();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To update attributes you can use <code>ModifiableRealmIdentity</code> instance. Class <code>org.wildfly.security.authz.MapAttributes</code> represents collection of attributes backed by <code>java.util.Map</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">ModifiableRealmIdentity modifiableIdentity = fsRealm.getRealmIdentityForUpdate(identityPrincipal);
+MapAttributes attributes = <span class="keyword">new</span> MapAttributes();
+attributes.addLast(<span class="string"><span class="delimiter">&quot;</span><span class="content">email</span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="content">alex@email.com</span><span class="delimiter">&quot;</span></span>);
+modifiableIdentity.setAttributes(attributes);
+modifiableIdentity.dispose();</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="converting-legacy-properties-file-into-filesystem-realm">Converting legacy properties file into Filesystem realm</h5>
+<div class="paragraph">
+<p>Wildfly can use authentication with a properties file based identity store. One properties file maps users to passwords and another maps users to roles. You can use <code>Elytron Tool</code> to convert these properties files into a filesystem realm. Below is an example of how to run this tool from the command line:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>$JBOSS_HOME/bin/elytron-tool.sh filesystem-realm -u conf/users.properties -r conf/roles.properties --output-location realms/example --summary -f example-fs-realm</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This command creates new filesystem realm with users taken from users.properties file and roles taken from roles.properties file. Script <code>example-fs-realm.sh</code> that contains the commands for WildFly CLI is generated as well. The script adds this filesystem realm to the Elytron subsystem and also adds new security domain that uses this filesystem realm as a default realm.</p>
 </div>
 </div>
 </div>
@@ -10019,8 +11651,8 @@ for example, Infinispan cache cannot be used, any others?</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 16.0.0.Final<br>
-Last updated 2019-02-06 11:57:26 PST
+Version 17.0.0.Final<br>
+Last updated 2019-05-10 20:15:16 CDT
 </div>
 </div>
 </body>

@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>High Availability Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly clustering team</span><br>
-<span id="revnumber">version 16.0.0.Final,</span>
-<span id="revdate">2019-02-28T01:16:57Z</span>
+<span id="revnumber">version 17.0.0.Final,</span>
+<span id="revdate">2019-07-15T01:10:21Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">High Availability Guide</div>
@@ -544,67 +544,75 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#Infinispan_Subsystem">4. Infinispan Subsystem</a>
 <ul class="sectlevel2">
 <li><a href="#cache-container">4.1. Cache container</a></li>
-<li><a href="#offloading_hotrod_store">4.2. Offloading session state to remote Infinispan Server cluster</a></li>
 </ul>
 </li>
-<li><a href="#JGroups_Subsystem">5. JGroups Subsystem</a>
+<li><a href="#Distributable_Web_Applications">5. Distributable Web Applications</a>
 <ul class="sectlevel2">
-<li><a href="#jgroups-purpose">5.1. Purpose</a></li>
-<li><a href="#jgroups-configuration-example">5.2. Configuration example</a></li>
-<li><a href="#jgroups-use-cases">5.3. Use Cases</a></li>
-<li><a href="#discovery-for-kubernetes">5.4. Discovery for Kubernetes</a></li>
+<li><a href="#distributable-web-subsystem">5.1. Distributable Web Subsystem</a></li>
+<li><a href="#overriding-default-behavior">5.2. Overriding default behavior</a></li>
+<li><a href="#distributable-shared-sessions">5.3. Distributable Shared Sessions</a></li>
+<li><a href="#optimizing-performance-of-distributed-web-applications">5.4. Optimizing performance of distributed web applications</a></li>
+<li><a href="#offloading_hotrod_store">5.5. Offloading session state to remote Infinispan Server cluster</a></li>
 </ul>
 </li>
-<li><a href="#mod_cluster_Subsystem">6. mod_cluster Subsystem</a>
+<li><a href="#JGroups_Subsystem">6. JGroups Subsystem</a>
 <ul class="sectlevel2">
-<li><a href="#configuration">6.1. Configuration</a></li>
-<li><a href="#runtime-operations">6.2. Runtime Operations</a></li>
-<li><a href="#SSL_Configuration_using_Elytron_Subsystem">6.3. SSL Configuration using Elytron Subsystem</a></li>
+<li><a href="#jgroups-purpose">6.1. Purpose</a></li>
+<li><a href="#jgroups-configuration-example">6.2. Configuration example</a></li>
+<li><a href="#jgroups-use-cases">6.3. Use Cases</a></li>
+<li><a href="#discovery-for-kubernetes">6.4. Discovery for Kubernetes</a></li>
 </ul>
 </li>
-<li><a href="#EJB_Services">7. EJB Services</a>
+<li><a href="#mod_cluster_Subsystem">7. mod_cluster Subsystem</a>
 <ul class="sectlevel2">
-<li><a href="#ejb-subsystem">7.1. EJB Subsystem</a></li>
-<li><a href="#ejb-timer">7.2. EJB Timer</a></li>
+<li><a href="#configuration">7.1. Configuration</a></li>
+<li><a href="#runtime-operations">7.2. Runtime Operations</a></li>
+<li><a href="#SSL_Configuration_using_Elytron_Subsystem">7.3. SSL Configuration using Elytron Subsystem</a></li>
 </ul>
 </li>
-<li><a href="#Clustering_API">8. Clustering API</a>
+<li><a href="#EJB_Services">8. EJB Services</a>
 <ul class="sectlevel2">
-<li><a href="#group">8.1. Group membership</a></li>
-<li><a href="#command-dispatcher">8.2. Command Dispatcher</a></li>
-<li><a href="#service-provider-registry">8.3. Service Provider Registry</a></li>
-<li><a href="#registry">8.4. Registry</a></li>
+<li><a href="#ejb-subsystem">8.1. EJB Subsystem</a></li>
+<li><a href="#ejb-timer">8.2. EJB Timer</a></li>
 </ul>
 </li>
-<li><a href="#HA_Singleton_Features">9. HA Singleton Features</a></li>
-<li><a href="#Singleton_subsystem">10. Singleton subsystem</a>
+<li><a href="#Clustering_API">9. Clustering API</a>
 <ul class="sectlevel2">
-<li><a href="#singleton-configuration">10.1. Configuration</a></li>
-<li><a href="#non-ha-environments">10.2. Non-HA environments</a></li>
+<li><a href="#group">9.1. Group membership</a></li>
+<li><a href="#command-dispatcher">9.2. Command Dispatcher</a></li>
+<li><a href="#service-provider-registry">9.3. Service Provider Registry</a></li>
+<li><a href="#registry">9.4. Registry</a></li>
 </ul>
 </li>
-<li><a href="#Singleton_deployments">11. Singleton deployments</a>
+<li><a href="#HA_Singleton_Features">10. HA Singleton Features</a></li>
+<li><a href="#Singleton_subsystem">11. Singleton subsystem</a>
 <ul class="sectlevel2">
-<li><a href="#usage-singleton-deployments">11.1. Usage</a></li>
-<li><a href="#singleton-deployment-metrics">11.2. Singleton Deployment metrics</a></li>
+<li><a href="#singleton-configuration">11.1. Configuration</a></li>
+<li><a href="#non-ha-environments">11.2. Non-HA environments</a></li>
 </ul>
 </li>
-<li><a href="#Singleton_MSC_services">12. Singleton MSC services</a>
+<li><a href="#Singleton_deployments">12. Singleton deployments</a>
 <ul class="sectlevel2">
-<li><a href="#installing-an-msc-service-using-an-existing-singleton-policy">12.1. Installing an MSC service using an existing singleton policy</a></li>
-<li><a href="#singleton-msc-service-metrics">12.2. Singleton MSC Service metrics</a></li>
-<li><a href="#installing-an-msc-service-using-dynamic-singleton-policy">12.3. Installing an MSC service using dynamic singleton policy</a></li>
+<li><a href="#usage-singleton-deployments">12.1. Usage</a></li>
+<li><a href="#singleton-deployment-metrics">12.2. Singleton Deployment metrics</a></li>
 </ul>
 </li>
-<li><a href="#Clustering_and_Domain_Setup_Walkthrough">13. Clustering and Domain Setup Walkthrough</a>
+<li><a href="#Singleton_MSC_services">13. Singleton MSC services</a>
 <ul class="sectlevel2">
-<li><a href="#preparation-scenario">13.1. Preparation &amp; Scenario</a></li>
-<li><a href="#download-wildfly">13.2. Download WildFly</a></li>
-<li><a href="#domain-configuration">13.3. Domain Configuration</a></li>
-<li><a href="#deployment">13.4. Deployment</a></li>
-<li><a href="#cluster-configuration">13.5. Cluster Configuration</a></li>
-<li><a href="#testing">13.6. Testing</a></li>
-<li><a href="#special-thanks">13.7. Special Thanks</a></li>
+<li><a href="#installing-an-msc-service-using-an-existing-singleton-policy">13.1. Installing an MSC service using an existing singleton policy</a></li>
+<li><a href="#singleton-msc-service-metrics">13.2. Singleton MSC Service metrics</a></li>
+<li><a href="#installing-an-msc-service-using-dynamic-singleton-policy">13.3. Installing an MSC service using dynamic singleton policy</a></li>
+</ul>
+</li>
+<li><a href="#Clustering_and_Domain_Setup_Walkthrough">14. Clustering and Domain Setup Walkthrough</a>
+<ul class="sectlevel2">
+<li><a href="#preparation-scenario">14.1. Preparation &amp; Scenario</a></li>
+<li><a href="#download-wildfly">14.2. Download WildFly</a></li>
+<li><a href="#domain-configuration">14.3. Domain Configuration</a></li>
+<li><a href="#deployment">14.4. Deployment</a></li>
+<li><a href="#cluster-configuration">14.5. Cluster Configuration</a></li>
+<li><a href="#testing">14.6. Testing</a></li>
+<li><a href="#special-thanks">14.7. Special Thanks</a></li>
 </ul>
 </li>
 </ul>
@@ -1396,8 +1404,541 @@ While this prevents timeouts due to large state transfers, cache operations on t
 </div>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Distributable_Web_Applications">5. Distributable Web Applications</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In a standard web application, session state does not survive beyond the lifespan of the servlet container.
+A distributable web application allows session state to survive beyond the lifespan of a single server, either via persistence or by replicating state to other nodes in the cluster.
+A web application indicates its intention to be distributable via the <code>&lt;distributable/&gt;</code> element within the web application&#8217;s deployment descriptor.</p>
+</div>
+<div class="paragraph">
+<p>e.g.</p>
+</div>
+<div class="listingblock">
+<div class="title">/WEB-INF/web.xml:</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;web-app</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://xmlns.jcp.org/xml/ns/javaee</span><span class="delimiter">&quot;</span></span>
+         <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span>
+         <span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd</span><span class="delimiter">&quot;</span></span>
+         <span class="attribute-name">version</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">4.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;distributable</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;/web-app&gt;</span></code></pre>
+</div>
+</div>
 <div class="sect2">
-<h3 id="offloading_hotrod_store">4.2. Offloading session state to remote Infinispan Server cluster</h3>
+<h3 id="distributable-web-subsystem">5.1. Distributable Web Subsystem</h3>
+<div class="paragraph">
+<p>The distributable-web subsystem manages a set of session management profiles that encapsulate the configuration of a distributable session manager.
+One of these profiles will be designated as the default profile (via the "default-session-management" attribute) and thus defines the default behavior of a distributable web application.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>[standalone@embedded /] /subsystem=distributable-web:read-attribute(name=default-session-management)
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; "default"
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The default session management stores web session data within an Infinispan cache.
+We can introspect its configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>[standalone@embedded /] /subsystem=distributable-web/infinispan-session-management=default:read-resource
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; {
+        "cache" =&gt; undefined,
+        "cache-container" =&gt; "web",
+        "granularity" =&gt; "SESSION",
+        "affinity" =&gt; {"primary-owner" =&gt; undefined}
+    }
+}</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">cache-container</dt>
+<dd>
+<p>This references a cache-container defined in the Infinispan subsystem into which session data will be stored.</p>
+</dd>
+<dt class="hdlist1">cache</dt>
+<dd>
+<p>This references a cache within associated cache-container upon whose configuration the web application&#8217;s cache will be based.
+If undefined, the default cache of the associated cache container will be used.</p>
+</dd>
+<dt class="hdlist1">granularity</dt>
+<dd>
+<p>This defines how the session manager will map a session into individual cache entries.
+Possible values are:</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">SESSION</dt>
+<dd>
+<p>Stores all session attributes within a single cache entry.
+This is generally more expensive than ATTRIBUTE granularity, but preserves any cross-attribute object references.</p>
+</dd>
+<dt class="hdlist1">ATTRIBUTE</dt>
+<dd>
+<p>Stores each session attribute within a separate cache entry.
+This is generally more efficient than SESSION granularity, but does not preserve any cross-attribute object references.</p>
+</dd>
+</dl>
+</div>
+</dd>
+<dt class="hdlist1">affinity</dt>
+<dd>
+<p>This resource defines the affinity that a web request should have for a given server.
+The affinity of the associated web session determines the algorithm for generating the route to be appended onto the session ID (within the JSESSIONID cookie, or when encoding URLs).
+This annotation of the session ID is used by load balancers to advise how future requests for existing sessions should be directed.
+Routing is designed to be opaque to application code such that calls to <code>HttpSession.getId()</code> always return an unmodified session ID.
+This is only generated when creating/updating the JSESSIONID cookie, or when encoding URLs via <code>HttpServletResponse.encodeURL()</code> and <code>encodeRedirectURL()</code>.
+Possible values are:</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">affinity=none</dt>
+<dd>
+<p>Web requests will have no affinity to any particular node.
+This option is intended for use cases where web session state is not maintained within the application server.</p>
+</dd>
+<dt class="hdlist1">affinity=local</dt>
+<dd>
+<p>Web requests will have an affinity to the server that last handled a request for a given session.
+This option corresponds to traditional sticky session behavior.</p>
+</dd>
+<dt class="hdlist1">affinity=primary-owner</dt>
+<dd>
+<p>Web requests will have an affinity to the primary owner of a given session.
+This is the default affinity for this distributed session manager.
+Behaves the same as affinity=local if the backing cache is not distributed nor replicated.</p>
+</dd>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>e.g. Creating a new session management profile, using ATTRIBUTE granularity with local session affinity:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>[standalone@embedded /] /subsystem=distributable-web/infinispan-session-management=foo:add(cache-container=web, granularity=ATTRIBUTE)
+{
+    "outcome" =&gt; "success"
+}
+[standalone@embedded /] /subsystem=distributable-web/infinispan-session-management=foo/affinity=local:add(){allow-resource-service-restart=true}
+{
+    "outcome" =&gt; "success"
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The subsystem also supports session management where session data is stored in a remote infinispan-server cluster via the HotRod protocol.</p>
+</div>
+<div class="paragraph">
+<p>e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>[standalone@embedded /] /subsystem=distributable-web/hotrod-session-management=foo:add(remote-cache-container=datagrid, cache-configuration=foo, granularity=ATTRIBUTE)
+{
+    "outcome" =&gt; "success"
+}</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">remote-cache-container</dt>
+<dd>
+<p>This references a <a href="#remote_cache_container">remote-cache-container</a> defined in the Infinispan subsystem into which session data will be stored.</p>
+</dd>
+<dt class="hdlist1">cache-configuration</dt>
+<dd>
+<p>If a remote cache whose name matches the deployment name does not exist, this attribute defines a cache configuration within the remote infinispan server, from which an application-specific cache will be created.</p>
+</dd>
+<dt class="hdlist1">granularity</dt>
+<dd>
+<p>This defines how the session manager will map a session into individual cache entries.
+Possible values are:</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">SESSION</dt>
+<dd>
+<p>Stores all session attributes within a single cache entry.
+This is generally more expensive than ATTRIBUTE granularity, but preserves any cross-attribute object references.</p>
+</dd>
+<dt class="hdlist1">ATTRIBUTE</dt>
+<dd>
+<p>Stores each session attribute within a separate cache entry.
+This is generally more efficient than SESSION granularity, but does not preserve any cross-attribute object references.</p>
+</dd>
+</dl>
+</div>
+</dd>
+<dt class="hdlist1">affinity</dt>
+<dd>
+<p>This resource defines the affinity that a web request should have for a given server.
+The affinity of the associated web session determines the algorithm for generating the route to be appended onto the session ID (within the JSESSIONID cookie, or when encoding URLs).
+This annotation of the session ID is used by load balancers to advise how future requests for existing sessions should be directed.
+Routing is designed to be opaque to application code such that calls to <code>HttpSession.getId()</code> always return an unmodified session ID.
+This is only generated when creating/updating the JSESSIONID cookie, or when encoding URLs via <code>HttpServletResponse.encodeURL()</code> and <code>encodeRedirectURL()</code>.
+Possible values are:</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">affinity=none</dt>
+<dd>
+<p>Web requests will have no affinity to any particular node.
+This option is intended for use cases where web session state is not maintained within the application server.</p>
+</dd>
+<dt class="hdlist1">affinity=local</dt>
+<dd>
+<p>Web requests will have an affinity to the server that last handled a request for a given session.
+This option corresponds to traditional sticky session behavior.</p>
+</dd>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="overriding-default-behavior">5.2. Overriding default behavior</h3>
+<div class="paragraph">
+<p>A web application can override the default distributable session management behavior in 1 of 2 ways:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Reference a session-management profile by name</p>
+</li>
+<li>
+<p>Provide deployment-specific session management configuration</p>
+</li>
+</ol>
+</div>
+<div class="sect3">
+<h4 id="referencing-an-existing-session-management-profile">5.2.1. Referencing an existing session management profile</h4>
+<div class="paragraph">
+<p>To use an existing distributed session management profile, a web application should include a distributable-web.xml deployment descriptor located within the application&#8217;s /WEB-INF directory.</p>
+</div>
+<div class="paragraph">
+<p>e.g.</p>
+</div>
+<div class="listingblock">
+<div class="title">/WEB-INF/distributable-web.xml</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="tag">&lt;distributable-web</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:distributable-web:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;session-management</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+<span class="tag">&lt;/distributable-web&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, the target distributed session management profile can be defined within an existing jboss-all.xml deployment descriptor:</p>
+</div>
+<div class="paragraph">
+<p>e.g.</p>
+</div>
+<div class="listingblock">
+<div class="title">/META-INF/jboss-all.xml</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="tag">&lt;jboss</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;distributable-web</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:distributable-web:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;session-management</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/distributable-web&gt;</span>
+<span class="tag">&lt;/jboss&gt;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="using-a-deployment-specific-session-management-profile">5.2.2. Using a deployment-specific session management profile</h4>
+<div class="paragraph">
+<p>If custom session management configuration will only be used by a single web application, you may find it more convenient to define the configuration within the deployment descriptor itself.
+Ad hoc configuration looks identical to the configuration used by the distributable-web subsystem.</p>
+</div>
+<div class="paragraph">
+<p>e.g.</p>
+</div>
+<div class="listingblock">
+<div class="title">/WEB-INF/distributable-web.xml</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="tag">&lt;distributable-web</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:distributable-web:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;infinispan-session-management</span> <span class="attribute-name">cache-container</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">cache</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">bar</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">granularity</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">SESSION</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;primary-owner-affinity</span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/infinispan-session-management&gt;</span>
+<span class="tag">&lt;/distributable-web&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, session management configuration can be defined within an existing jboss-all.xml deployment descriptor:</p>
+</div>
+<div class="paragraph">
+<p>e.g.</p>
+</div>
+<div class="listingblock">
+<div class="title">/META-INF/jboss-all.xml</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="tag">&lt;jboss</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;distributable-web</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:distributable-web:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;infinispan-session-management</span> <span class="attribute-name">cache-container</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">cache</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">bar</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">granularity</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">ATTRIBUTE</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;local-affinity</span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;/infinispan-session-management&gt;</span>
+    <span class="tag">&lt;/distributable-web&gt;</span>
+<span class="tag">&lt;/jboss&gt;</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="distributable-shared-sessions">5.3. Distributable Shared Sessions</h3>
+<div class="paragraph">
+<p>WildFly supports the ability to share sessions across web applications within an enterprise archive.
+In previous releases, WildFly always presumed distributable session management of shared sessions.
+Version 2.0 of the shared-session-config deployment descriptor was updated to allow an EAR to opt-in to this behavior using the familiar <code>&lt;distributable/&gt;</code> element.
+Additionally, you can customize the behavior of the distributable session manager used for session sharing via the same configuration mechanism described in the above sections.</p>
+</div>
+<div class="paragraph">
+<p>e.g.</p>
+</div>
+<div class="listingblock">
+<div class="title">/META-INF/jboss-all.xml</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="tag">&lt;jboss</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;shared-session-config</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:shared-session-config:2.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;distributable</span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;session-config&gt;</span>
+            <span class="tag">&lt;cookie-config&gt;</span>
+                <span class="tag">&lt;path&gt;</span>/<span class="tag">&lt;/path&gt;</span>
+            <span class="tag">&lt;/cookie-config&gt;</span>
+        <span class="tag">&lt;/session-config&gt;</span>
+    <span class="tag">&lt;/shared-session-config&gt;</span>
+    <span class="tag">&lt;distributable-web</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:distributable-web:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;session-management</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/distributable-web&gt;</span>
+<span class="tag">&lt;/jboss&gt;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="optimizing-performance-of-distributed-web-applications">5.4. Optimizing performance of distributed web applications</h3>
+<div class="paragraph">
+<p>One of the primary design goals of WildFly&#8217;s distributed session manager was the parity of HttpSession semantics between distributable and non-distributable web applications.
+In order to provide predictable behavior suitable for most web applications, the default distributed session manager configuration is quite conservative, generally favoring consistency over availability.
+However, these defaults may not be appropriate for your application.
+In general, the effective performance of the distributed session manager is constrained by:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Replication/persistence payload size</p>
+</li>
+<li>
+<p>Locking/isolation of a given session</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>To optimize the configuration of the distributed session manager for your application, you can address the above constraints by tuning one or more of the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#session_granularity">Granularity</a></p>
+</li>
+<li>
+<p><a href="#session_concurrency">Concurrency</a></p>
+</li>
+<li>
+<p><a href="#session_attribute_immutability">Immutability</a></p>
+</li>
+<li>
+<p><a href="#session_attribute_marshalling">Marshalling</a></p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="session_granularity">5.4.1. Session granularity</h4>
+<div class="paragraph">
+<p>By default, WildFly&#8217;s distributed session manager uses SESSION granularity, meaning that all session attributes are stored within a single cache entry.
+While this ensures that any object references shared between session attributes are preserved following replication/persistence, it means that a change to a single attribute results in the replication/persistence of <strong>all</strong> attributes.</p>
+</div>
+<div class="paragraph">
+<p>If your application does not share any object references between attributes, users are strongly advised to use ATTRIBUTE granularity.
+Using ATTRIBUTE granularity, each session attribute is stored in a separate cache entry.
+This means that a given request is only required to replicate/persist those attributes that were added/modified/removed/mutated in a given request.
+For read-heavy applications, this can dramatically reduce the replication/persistence payload per request.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="session_concurrency">5.4.2. Session concurrency</h4>
+<div class="paragraph">
+<p>WildFly&#8217;s default distributed session manager behavior is also conservative with respect to concurrent access to a given session.
+By default, a request acquires exclusive access to its associated session for the duration of a request, and until any async child context is complete.
+This maximizes the performance of a single request, as each request corresponds to a single cache transaction; allows for repeatable read semantics to the session; and ensures that subsequent requests are not prone to stale reads, even when handled by another cluster member.</p>
+</div>
+<div class="paragraph">
+<p>However, if multiple requests attempt to access the same session concurrently, their processing will be effectively serialized.  This might not be feasible, especially for heavily asynchronous web applications.</p>
+</div>
+<div class="paragraph">
+<p>Relaxing transaction isolation from REPEATABLE_READ to READ_COMMITTED on the associated cache configuration will allow concurrent requests to perform lock-free (but potentially stale) reads by deferring locking to the first attempt to write to the session.
+This improves the throughput of requests for the same session for highly asynchronous web applications whose session access is read-heavy.</p>
+</div>
+<div class="paragraph">
+<p>e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>/subsystem=infinispan/cache-container=web/distributed-cache=dist/component=locking:write-attribute(name=isolation, value=READ_COMMITTED)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For asynchronous web applications whose session access is write-heavy, merely relaxing transaction isolation is not likely to be sufficient.
+These web applications will likely benefit from disabling cache transactions altogether.
+When transactions are disabled, cache entries are locked and released for every write to the session, resulting in last-write-wins semantics.
+For write-heavy applications, this typically improves the throughput of concurrent requests for the same session, at the cost of longer response times for individual requests.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>/subsystem=infinispan/cache-container=web/distributed-cache=dist/component=transaction:write-attribute(name=mode, value=NONE)</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Relaxing transaction isolation currently prevents WildFly from enforcing that a given session is handled by one JVM at a time, a constraint dictated by the servlet specification.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="session_attribute_immmutability">5.4.3. Session attribute immutability</h4>
+<div class="paragraph">
+<p>In WildFly, distributed session attributes are presumed to be mutable objects, unless of a known immutable type, or unless otherwise specified.</p>
+</div>
+<div class="paragraph">
+<p>Take the following session access pattern:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">HttpSession session = request.getSession();
+MutableObject object = session.getAttribute(<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span>);
+object.mutate();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By default, WildFly replicates/persists the mutable session attributes at the end of the request, ensuring that a subsequent request will read the mutated value, not the original value.
+However, the replication/persistence of mutable session attributes at the end of the request happens whether or not these objects were actually mutated.
+To avoid redundant session writes, users are strongly encouraged to store immutable objects in the session whenever possible.
+This allows the application more control over when session attributes will replicate/persist, since immutable session attributes will only update upon explicit calls to <code>HttpSession.setAttribute(&#8230;&#8203;)</code>.</p>
+</div>
+<div class="paragraph">
+<p>WildFly can determine whether most JDK types are immutable, but any unrecognized/custom types are presumed to be mutable.
+To indicate that a given session attribute of a custom type should be treated as immutable by the distributed session manager, annotate the class with one of the following annotations:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>@org.wildfly.clustering.web.annotation.Immutable</code></p>
+</li>
+<li>
+<p><code>@net.jcip.annotations.Immutable</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Immutable</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">ImmutableClass</span> <span class="directive">implements</span> <span class="predefined-type">Serializable</span> {
+    <span class="comment">// ...</span>
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, immutable classes can be enumerated via the distributable-web deployment descriptor.</p>
+</div>
+<div class="paragraph">
+<p>e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;distributable-web</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:distributable-web:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;session-management&gt;</span>
+        <span class="tag">&lt;immutable-class&gt;</span>foo.bar.ImmutableClass<span class="tag">&lt;/immutable-class&gt;</span>
+        <span class="tag">&lt;immutable-class&gt;</span>...<span class="tag">&lt;/immutable-class&gt;</span>
+    <span class="tag">&lt;/session-management&gt;</span>
+<span class="tag">&lt;/distributable-web&gt;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="session_attribute_marshalling">5.4.4. Session attribute marshalling</h4>
+<div class="paragraph">
+<p>Minimizing the replication/persistence payload for individual session attributes has a direct impact on performance by reducing the number of bytes sent over the network or persisted to storage.
+A web application can optimize the marshalling of a given session attribute, either through custom JDK serialization logic, or by implementing a custom externalizer.
+An externalizer is an implementation of the <code>org.wildfly.clustering.marshalling.Externalizer</code> interface, which dictates how a given class should be marshalled.
+An externalizer reads/writes the state of an object directly from/to an input/output stream, but also:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Allows an application to store an object in the session that does not implement <code>java.io.Serializable</code></p>
+</li>
+<li>
+<p>Eliminates the need to serialize the class descriptor of an object along with its state</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">MyObjectExternalizer</span> <span class="directive">implements</span> org.wildfly.clustering.marshalling.Externalizer&lt;MyObject&gt; {
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="predefined-type">Class</span>&lt;MyObject&gt; getTargetClass() {
+        <span class="keyword">return</span> MyObject.class;
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> writeObject(<span class="predefined-type">ObjectOutput</span> output, MyObject object) <span class="directive">throws</span> <span class="exception">IOException</span> {
+        <span class="comment">// Write object state to stream</span>
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> MyObject readObject(<span class="predefined-type">ObjectInput</span> input) <span class="directive">throws</span> <span class="exception">IOException</span>, <span class="exception">ClassNotFoundException</span> {
+        <span class="comment">// Construct and read object state from stream</span>
+        <span class="keyword">return</span> ...;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Externalizers are dynamically loaded during deployment via the service loader mechanism.
+Implementations should be enumerated within a file named:
+<code>/META-INF/services/org.wildfly.clustering.marshalling.Externalizer</code></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="offloading_hotrod_store">5.5. Offloading session state to remote Infinispan Server cluster</h3>
 <div class="paragraph">
 <p>While Infinispan project is used as a library internally by WildFly to provide data distribution, Infinispan project is also distributed in a standalone server mode.
 The Infinispan Server cluster operates as a language-independent service accessed remotely over a number of protocols (HotRod, REST, etc).</p>
@@ -1427,7 +1968,7 @@ refer to <a href="http://infinispan.org/documentation/">Infinispan documentation
 and integrating with security features provided by WildFly&#8217;s Elytron subsystem.</p>
 </div>
 <div class="sect3">
-<h4 id="remote_cache_container">4.2.1. Configuring remote cache container</h4>
+<h4 id="remote_cache_container">5.5.1. Configuring remote cache container</h4>
 <div class="paragraph">
 <p>To configure <code>remote-cache-container</code> ensure you have a list of available Infinispan Server nodes.
 The following example CLI script first adds socket bindings to two known Infinispan Server nodes,
@@ -1455,7 +1996,7 @@ A HotRod client can be injected directly into Java EE applications using the <co
 </div>
 </div>
 <div class="sect3">
-<h4 id="hotrod_store">4.2.2. Configuring HotRod store</h4>
+<h4 id="hotrod_store">5.5.2. Configuring HotRod store</h4>
 <div class="paragraph">
 <p>The HotRod store uses one dedicated remote cache for each cache created by the server.
 For Infinispan Server versions supporting protocol version 2.7 and above (Infinispan Server version 9.2)
@@ -1484,7 +2025,7 @@ Session data is then maintained in the cache for performance and also written to
 </div>
 </div>
 <div class="sect3">
-<h4 id="hotrod_store_security">4.2.3. Security</h4>
+<h4 id="hotrod_store_security">5.5.3. Security</h4>
 <div class="paragraph">
 <p>Securing the store is just a matter of configuring the <code>remote-cache-container</code> with SSL context.
 Please follow the Elytron security guide on how to configure new SSL context
@@ -1503,10 +2044,10 @@ and <a href="http://infinispan.org/documentation/">Infinispan documentation</a> 
 </div>
 </div>
 <div class="sect1">
-<h2 id="JGroups_Subsystem">5. JGroups Subsystem</h2>
+<h2 id="JGroups_Subsystem">6. JGroups Subsystem</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="jgroups-purpose">5.1. Purpose</h3>
+<h3 id="jgroups-purpose">6.1. Purpose</h3>
 <div class="paragraph">
 <p>The JGroups subsystem provides group communication support for HA
 services in the form of JGroups channels.</p>
@@ -1558,7 +2099,7 @@ session replication or transmission of SSO contexts around the cluster).
 </div>
 </div>
 <div class="sect2">
-<h3 id="jgroups-configuration-example">5.2. Configuration example</h3>
+<h3 id="jgroups-configuration-example">6.2. Configuration example</h3>
 <div class="paragraph">
 <p>What follows is a sample JGroups subsystem configuration showing all of
 the possible elements and attributes which may be configured. We shall
@@ -1620,7 +2161,7 @@ directory.
 </div>
 </div>
 <div class="sect3">
-<h4 id="subsystem">5.2.1. &lt;subsystem&gt;</h4>
+<h4 id="subsystem">6.2.1. &lt;subsystem&gt;</h4>
 <div class="paragraph">
 <p>This element is used to configure the subsystem within a WildFly system
 profile.</p>
@@ -1640,7 +2181,7 @@ is required but no stack is specified.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="stack">5.2.2. &lt;stack&gt;</h4>
+<h4 id="stack">6.2.2. &lt;stack&gt;</h4>
 <div class="paragraph">
 <p>This element is used to configure a JGroups protocol stack.</p>
 </div>
@@ -1653,7 +2194,7 @@ is required but no stack is specified.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="jgroups-transport">5.2.3. &lt;transport&gt;</h4>
+<h4 id="jgroups-transport">6.2.3. &lt;transport&gt;</h4>
 <div class="paragraph">
 <p>This element is used to configure the transport layer (required) of the
 protocol stack.</p>
@@ -1744,7 +2285,7 @@ value is provided as text for the property element.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="protocol">5.2.4. &lt;protocol&gt;</h4>
+<h4 id="protocol">6.2.4. &lt;protocol&gt;</h4>
 <div class="paragraph">
 <p>This element is used to configure a (non-transport) protocol layer in
 the JGroups stack. Protocol layers are ordered within the stack.</p>
@@ -1765,7 +2306,7 @@ sockets internally for this protocol instance.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="relay">5.2.5. &lt;relay&gt;</h4>
+<h4 id="relay">6.2.5. &lt;relay&gt;</h4>
 <div class="paragraph">
 <p>This element is used to configure the RELAY protocol for a JGroups
 stack. RELAY is a protocol which provides cross-site replication between
@@ -1810,7 +2351,7 @@ use for communication between this site and the remote site.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="jgroups-use-cases">5.3. Use Cases</h3>
+<h3 id="jgroups-use-cases">6.3. Use Cases</h3>
 <div class="paragraph">
 <p>In many cases, channels will be configured via XML as in the example
 above, so that the channels will be available upon server startup.
@@ -1850,7 +2391,7 @@ available in the JGroups subsystem interface used in these examples.
 </table>
 </div>
 <div class="sect3">
-<h4 id="add-a-stack">5.3.1. Add a stack</h4>
+<h4 id="add-a-stack">6.3.1. Add a stack</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code>/subsystem=jgroups/stack=mystack:add(transport={}, protocols={})</code></pre>
@@ -1858,7 +2399,7 @@ available in the JGroups subsystem interface used in these examples.
 </div>
 </div>
 <div class="sect3">
-<h4 id="add-a-protocol-to-a-stack">5.3.2. Add a protocol to a stack</h4>
+<h4 id="add-a-protocol-to-a-stack">6.3.2. Add a protocol to a stack</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code>/subsystem=jgroups/stack=mystack/transport=TRANSPORT:add(type=&lt;type&gt;, socket-binding=&lt;socketbinding&gt;)</code></pre>
@@ -1871,7 +2412,7 @@ available in the JGroups subsystem interface used in these examples.
 </div>
 </div>
 <div class="sect3">
-<h4 id="add-a-property-to-a-protocol">5.3.3. Add a property to a protocol</h4>
+<h4 id="add-a-property-to-a-protocol">6.3.3. Add a property to a protocol</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code>/subsystem=jgroups/stack=mystack/transport=TRANSPORT/property=&lt;property&gt;:add(value=&lt;value&gt;)</code></pre>
@@ -1880,7 +2421,7 @@ available in the JGroups subsystem interface used in these examples.
 </div>
 </div>
 <div class="sect2">
-<h3 id="discovery-for-kubernetes">5.4. Discovery for Kubernetes</h3>
+<h3 id="discovery-for-kubernetes">6.4. Discovery for Kubernetes</h3>
 <div class="paragraph">
 <p><code>KUBE_PING</code> is a discovery protocol for JGroups cluster nodes managed by Kubernetes.
 Since Kubernetes is in charge of launching nodes, it knows the addresses of all pods it started,
@@ -1919,15 +2460,15 @@ To be able to query the Kubernetes server ensure view permissions are granted on
 </div>
 </div>
 <div class="sect1">
-<h2 id="mod_cluster_Subsystem">6. mod_cluster Subsystem</h2>
+<h2 id="mod_cluster_Subsystem">7. mod_cluster Subsystem</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The mod_cluster integration is done via the <code>mod_cluster</code> subsystem.</p>
 </div>
 <div class="sect2">
-<h3 id="configuration">6.1. Configuration</h3>
+<h3 id="configuration">7.1. Configuration</h3>
 <div class="sect3">
-<h4 id="instance-id-or-jvmroute">6.1.1. Instance ID or JVMRoute</h4>
+<h4 id="instance-id-or-jvmroute">7.1.1. Instance ID or JVMRoute</h4>
 <div class="paragraph">
 <p>The instance-id or JVMRoute defaults to <code>jboss.node.name</code> property passed
 on server startup (e.g. via <code>-Djboss.node.name=XYZ</code>).</p>
@@ -1959,7 +2500,7 @@ property in Undertow subsystem:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="proxies">6.1.2. Proxies</h4>
+<h4 id="proxies">7.1.2. Proxies</h4>
 <div class="paragraph">
 <p>By default, mod_cluster is configured for multicast-based discovery. To
 specify a static list of proxies, create a remote-socket-binding for
@@ -1996,7 +2537,7 @@ following example for configuration in the domain mode:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="multiple-mod_cluster-configurations">6.1.3. Multiple mod_cluster Configurations</h4>
+<h4 id="multiple-mod_cluster-configurations">7.1.3. Multiple mod_cluster Configurations</h4>
 <div class="paragraph">
 <p>Since WildFly 14 mod_cluster subsystem supports multiple named proxy configurations also allowing for registering
 non-default Undertow servers with the reverse proxies. Moreover, this allows single application server node to register with
@@ -2024,7 +2565,7 @@ reload</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="runtime-operations">6.2. Runtime Operations</h3>
+<h3 id="runtime-operations">7.2. Runtime Operations</h3>
 <div class="paragraph">
 <p>The modcluster subsystem supports several operations:</p>
 </div>
@@ -2073,7 +2614,7 @@ of the subsystem, the one that just modify the behaviour temporarily and
 the ones that display information from the httpd part.</p>
 </div>
 <div class="sect3">
-<h4 id="operations-displaying-httpd-informations">6.2.1. operations displaying httpd information</h4>
+<h4 id="operations-displaying-httpd-informations">7.2.1. operations displaying httpd information</h4>
 <div class="paragraph">
 <p>There are 2 operations that display how Apache httpd sees the node:</p>
 </div>
@@ -2199,7 +2740,7 @@ attribute.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="context-related-operations">6.2.2. Context related operations</h4>
+<h4 id="context-related-operations">7.2.2. Context related operations</h4>
 <div class="paragraph">
 <p>Those operations allow to send context related commands to Apache httpd.
 They are send automatically when deploying or undeploying webapps.</p>
@@ -2244,7 +2785,7 @@ virtualhost.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="node-related-operations">6.2.3. Node related operations</h4>
+<h4 id="node-related-operations">7.2.3. Node related operations</h4>
 <div class="paragraph">
 <p>Those operations are like the context operation but they apply to all
 webapps running on the node and operation that affect the whole node.</p>
@@ -2263,7 +2804,7 @@ webapps running on the node and operation that affect the whole node.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="configuration-1">6.2.4. Configuration</h4>
+<h4 id="configuration-1">7.2.4. Configuration</h4>
 <div class="sect4">
 <h5 id="metric-configuration">Metric configuration</h5>
 <div class="paragraph">
@@ -2365,7 +2906,7 @@ which can be specified</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="SSL_Configuration_using_Elytron_Subsystem">6.3. SSL Configuration using Elytron Subsystem</h3>
+<h3 id="SSL_Configuration_using_Elytron_Subsystem">7.3. SSL Configuration using Elytron Subsystem</h3>
 <div class="quoteblock abstract">
 <blockquote>
 This document provides information how to configure mod_cluster
@@ -2374,7 +2915,7 @@ using SSL/TLS using <a href="WildFly_Elytron_Security.html#Elytron_Subsystem">El
 </blockquote>
 </div>
 <div class="sect3">
-<h4 id="overview">6.3.1. Overview</h4>
+<h4 id="overview">7.3.1. Overview</h4>
 <div class="paragraph">
 <p>Elytron subsystem provides a powerful and flexible model to configure
 different security aspects for applications and the application server
@@ -2403,7 +2944,7 @@ balancer&#8217;s certificate</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="defining-a-trust-store-with-the-trusted-certificates">6.3.2. Defining a Trust Store with the Trusted Certificates</h4>
+<h4 id="defining-a-trust-store-with-the-trusted-certificates">7.3.2. Defining a Trust Store with the Trusted Certificates</h4>
 <div class="paragraph">
 <p>To define a trust store in Elytron you can execute the following CLI
 command:</p>
@@ -2430,7 +2971,7 @@ ROOT and Intermediary CAs.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="defining-a-trust-manager-to-validate-certificates">6.3.3. Defining a Trust Manager To Validate Certificates</h4>
+<h4 id="defining-a-trust-manager-to-validate-certificates">7.3.3. Defining a Trust Manager To Validate Certificates</h4>
 <div class="paragraph">
 <p>To define a trust manager in Elytron you can execute the following CLI
 command:</p>
@@ -2446,7 +2987,7 @@ certificates that the application server trusts.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="defining-a-client-ssl-context-and-configuring-mod_cluster-subsystem">6.3.4. Defining a Client SSL Context and Configuring mod_cluster Subsystem</h4>
+<h4 id="defining-a-client-ssl-context-and-configuring-mod_cluster-subsystem">7.3.4. Defining a Client SSL Context and Configuring mod_cluster Subsystem</h4>
 <div class="paragraph">
 <p>Finally, you can create the Client SSL Context that is going to be used
 by the mod_cluster subsystem when connecting to the load balancer using
@@ -2476,7 +3017,7 @@ mod_cluster subsystem as follows:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="using-a-certificate-revocation-list">6.3.5. Using a Certificate Revocation List</h4>
+<h4 id="using-a-certificate-revocation-list">7.3.5. Using a Certificate Revocation List</h4>
 <div class="paragraph">
 <p>In case you want to validate the load balancer certificate against a
 Certificate Revocation List (CRL), you can configure the <code>trust-manager</code>
@@ -2507,23 +3048,23 @@ embedded in your certificates. For that, you need to configure a
 </div>
 </div>
 <div class="sect1">
-<h2 id="EJB_Services">7. EJB Services</h2>
+<h2 id="EJB_Services">8. EJB Services</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter explains how clustering of EJBs works in WildFly.</p>
 </div>
 <div class="sect2">
-<h3 id="ejb-subsystem">7.1. EJB Subsystem</h3>
+<h3 id="ejb-subsystem">8.1. EJB Subsystem</h3>
 
 </div>
 <div class="sect2">
-<h3 id="ejb-timer">7.2. EJB Timer</h3>
+<h3 id="ejb-timer">8.2. EJB Timer</h3>
 <div class="paragraph">
 <p>WildFly now supports clustered database backed timers. For details have
 a look to the <a href="Developer_Guide.html#EJB3_Clustered_Database_Timers">EJB3 reference section</a>.</p>
 </div>
 <div class="sect3">
-<h4 id="deploying-clustered-ejbs">7.2.1. Deploying clustered EJBs</h4>
+<h4 id="deploying-clustered-ejbs">8.2.1. Deploying clustered EJBs</h4>
 <div class="paragraph">
 <p>Clustering support is available in the HA profiles of WildFly. In this
 chapter we&#8217;ll be using the standalone server for explaining the details.
@@ -2588,7 +3129,7 @@ features.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="failover-for-clustered-ejbs">7.2.2. Failover for clustered EJBs</h4>
+<h4 id="failover-for-clustered-ejbs">8.2.2. Failover for clustered EJBs</h4>
 <div class="paragraph">
 <p>Clustered EJBs have failover capability. The state of the @Stateful
 @Clustered EJBs is replicated across the cluster nodes so that if one of
@@ -2745,7 +3286,7 @@ another WildFly instance act similar in terms of failover.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="Clustering_API">8. Clustering API</h2>
+<h2 id="Clustering_API">9. Clustering API</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>WildFly exposes a public API to deployments for performing common clustering operations, such as:</p>
@@ -2770,7 +3311,7 @@ another WildFly instance act similar in terms of failover.</p>
 <p>This zero-dependency API allows an application to perform basic clustering tasks, while remaining decoupled from the libraries that implement WildFly&#8217;s clustering logic.</p>
 </div>
 <div class="sect2">
-<h3 id="group">8.1. Group membership</h3>
+<h3 id="group">9.1. Group membership</h3>
 <div class="paragraph">
 <p>The Group abstraction represents a logical cluster of nodes.
 The Group service provides the following capabilities:</p>
@@ -2851,7 +3392,7 @@ Most users should use the "default" alias, which references either:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="node">8.1.1. Node</h4>
+<h4 id="node">9.1.1. Node</h4>
 <div class="paragraph">
 <p>A Node encapsulates a member of a group (i.e. a JGroups address).
 A Node has the following distinct characteristics, which will be unique for each member of the group:</p>
@@ -2873,7 +3414,7 @@ This will be null if the group is non-clustered.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="membership">8.1.2. Membership</h4>
+<h4 id="membership">9.1.2. Membership</h4>
 <div class="paragraph">
 <p>A Membership is an immutable encapsulation of a group membership (i.e. a JGroups view).
 Membership exposes the following properties:</p>
@@ -2896,7 +3437,7 @@ Membership exposes the following properties:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="usage">8.1.3. Usage</h4>
+<h4 id="usage">9.1.3. Usage</h4>
 <div class="paragraph">
 <p>The Group abstract is effectively a volatile reference to the current membership, and provides a facility for notification of membership changes.
 It exposes the following properties and operations:</p>
@@ -2927,7 +3468,7 @@ It exposes the following properties and operations:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="example">8.1.4. Example</h4>
+<h4 id="example">9.1.4. Example</h4>
 <div class="paragraph">
 <p>A distributed "Hello world" example that prints joiners and leavers of a group membership:</p>
 </div>
@@ -2980,12 +3521,12 @@ It exposes the following properties and operations:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="command-dispatcher">8.2. Command Dispatcher</h3>
+<h3 id="command-dispatcher">9.2. Command Dispatcher</h3>
 <div class="paragraph">
 <p>A command dispatcher is a mechanism for dispatching commands to be executed on members of a group.</p>
 </div>
 <div class="sect3">
-<h4 id="commanddispatcherfactory">8.2.1. CommandDispatcherFactory</h4>
+<h4 id="commanddispatcherfactory">9.2.1. CommandDispatcherFactory</h4>
 <div class="paragraph">
 <p>A command dispatcher is created from a CommandDispatcherFactory, an instance of which is created for every defined channel defined in the JGroups subsystem, as well as a local implementation.
 e.g.</p>
@@ -3049,7 +3590,7 @@ Most users should use the "default" alias, which references either:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="command">8.2.2. Command</h4>
+<h4 id="command">9.2.2. Command</h4>
 <div class="paragraph">
 <p>A Command encapsulates logic to be executed on a group member.
 A Command can leverage 2 type of parameters during execution:</p>
@@ -3070,7 +3611,7 @@ The command dispatcher passes the local context as a parameter to the Command.ex
 </div>
 </div>
 <div class="sect3">
-<h4 id="commanddispatcher">8.2.3. CommandDispatcher</h4>
+<h4 id="commanddispatcher">9.2.3. CommandDispatcher</h4>
 <div class="paragraph">
 <p>The CommandDispatcherFactory creates a CommandDispatcher using a service identifier and a local context.
 This service identifier is used to segregate commands from multiple command dispatchers.
@@ -3100,7 +3641,7 @@ Once closed, a CommandDispatcher is no longer allowed to dispatch commands.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="example-2">8.2.4. Example</h4>
+<h4 id="example-2">9.2.4. Example</h4>
 <div class="paragraph">
 <p>To demonstrate how to use a CommandDispatcher, let&#8217;s create a distributed "hello world" application.</p>
 </div>
@@ -3205,7 +3746,7 @@ For demonstration purposes, let&#8217;s make this a separate interface:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="service-provider-registry">8.3. Service Provider Registry</h3>
+<h3 id="service-provider-registry">9.3. Service Provider Registry</h3>
 <div class="paragraph">
 <p>A service provider registry is a specialized cache that tracks the group members that provide a given service.
 The ServiceProviderRegistry might be used in concert with a CommandDispatcher to communicate between a subset of group members on which a given service is installed.
@@ -3216,7 +3757,7 @@ WildFly uses this internally in its Singleton service/deployment implementation 
 <p>WildFly exposes a ServiceProviderRegistry (from which a ServiceProviderRegistration is created) for each cache defined by the Infinispan subsystem.</p>
 </div>
 <div class="sect3">
-<h4 id="example-3">8.3.1. Example</h4>
+<h4 id="example-3">9.3.1. Example</h4>
 <div class="paragraph">
 <p>The following is an example of using a ServiceProviderRegistry to publish the availability of a given singleton EJB.
 The getProviders() method will return the set of nodes on which the ServiceProviderRegistrationBean is deployed.</p>
@@ -3278,7 +3819,7 @@ public class ServiceProviderRegistrationBean implements ServiceProviderRegistrat
 </div>
 </div>
 <div class="sect2">
-<h3 id="registry">8.4. Registry</h3>
+<h3 id="registry">9.4. Registry</h3>
 <div class="paragraph">
 <p>A registry is a specialized cache for storing a unique key/value pair for each member of a group.
 This is useful to bridge WildFly&#8217;s Group members to an internal identification system used by an application.
@@ -3288,7 +3829,7 @@ The Registry service includes a facility for notifying group members of new, upd
 <p>WildFly exposes a RegistryFactory (from which a Registry is created) for each cache defined by the Infinispan subsystem.</p>
 </div>
 <div class="sect3">
-<h4 id="example-4">8.4.1. Example</h4>
+<h4 id="example-4">9.4.1. Example</h4>
 <div class="paragraph">
 <p>The following Registry example assigns a UUID to each group member, allowing each member to query the identifier of any other member:</p>
 </div>
@@ -3351,7 +3892,7 @@ public class RegistryBean implements Registry&lt;UUID, Void&gt; {
 </div>
 </div>
 <div class="sect1">
-<h2 id="HA_Singleton_Features">9. HA Singleton Features</h2>
+<h2 id="HA_Singleton_Features">10. HA Singleton Features</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In general, an HA or clustered singleton is a service that exists on
@@ -3364,7 +3905,7 @@ service is always running on one node.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="Singleton_subsystem">10. Singleton subsystem</h2>
+<h2 id="Singleton_subsystem">11. Singleton subsystem</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>WildFly 10 introduced a "singleton" subsystem, which defines a set of
@@ -3373,7 +3914,7 @@ policy can be used to instrument singleton deployments or to create
 singleton MSC services.</p>
 </div>
 <div class="sect2">
-<h3 id="singleton-configuration">10.1. Configuration</h3>
+<h3 id="singleton-configuration">11.1. Configuration</h3>
 <div class="paragraph">
 <p>The
 <a href="https://github.com/wildfly/wildfly/blob/10.0.0.Final/clustering/singleton/extension/src/main/resources/schema/wildfly-singleton_1_0.xsd">default
@@ -3420,7 +3961,7 @@ operation:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="cache-configuration">10.1.1. Cache configuration</h4>
+<h4 id="cache-configuration">11.1.1. Cache configuration</h4>
 <div class="paragraph">
 <p>The cache-container and cache attributes of a singleton policy must
 reference a valid cache from the Infinispan subsystem. If no specific
@@ -3430,7 +3971,7 @@ service and will typically use a replicated-cache configuration.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="election-policies">10.1.2. Election policies</h4>
+<h4 id="election-policies">11.1.2. Election policies</h4>
 <div class="paragraph">
 <p>WildFly includes two singleton election policy implementations:</p>
 </div>
@@ -3480,7 +4021,7 @@ e.g.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="quorum">10.1.3. Quorum</h4>
+<h4 id="quorum">11.1.3. Quorum</h4>
 <div class="paragraph">
 <p>Network partitions are particularly problematic for singleton services,
 since they can trigger multiple singleton providers for the same service
@@ -3500,7 +4041,7 @@ e.g.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="non-ha-environments">10.2. Non-HA environments</h3>
+<h3 id="non-ha-environments">11.2. Non-HA environments</h3>
 <div class="paragraph">
 <p>The singleton subsystem can be used in a non-HA profile, so long as the
 cache that it references uses a local-cache configuration. In this
@@ -3514,7 +4055,7 @@ configuration.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="Singleton_deployments">11. Singleton deployments</h2>
+<h2 id="Singleton_deployments">12. Singleton deployments</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>WildFly 10 resurrected the ability to start a given deployment on a
@@ -3528,7 +4069,7 @@ a.k.a. "
 feature of AS6 and earlier.</p>
 </div>
 <div class="sect2">
-<h3 id="usage-singleton-deployments">11.1. Usage</h3>
+<h3 id="usage-singleton-deployments">12.1. Usage</h3>
 <div class="paragraph">
 <p>A deployment indicates that it should be deployed as a singleton via a
 deployment descriptor. This can either be a standalone
@@ -3561,7 +4102,7 @@ e.g.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="singleton-deployment-metrics">11.2. Singleton Deployment metrics</h3>
+<h3 id="singleton-deployment-metrics">12.2. Singleton Deployment metrics</h3>
 <div class="paragraph">
 <p>The singleton subsystem registers a set of runtime metrics for each singleton deployment installed on the server.</p>
 </div>
@@ -3593,7 +4134,7 @@ e.g.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="Singleton_MSC_services">12. Singleton MSC services</h2>
+<h2 id="Singleton_MSC_services">13. Singleton MSC services</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The singleton service facility exposes a mechanism for installing an MSC service such that the service only starts on a single member of a cluster at a time.
@@ -3601,7 +4142,7 @@ If the member providing the singleton service is shutdown or crashes, the facili
 In general, a singleton election happens in response to any change of membership, where the membership is defined as the set of cluster nodes on which the given service was installed.</p>
 </div>
 <div class="sect2">
-<h3 id="installing-an-msc-service-using-an-existing-singleton-policy">12.1. Installing an MSC service using an existing singleton policy</h3>
+<h3 id="installing-an-msc-service-using-an-existing-singleton-policy">13.1. Installing an MSC service using an existing singleton policy</h3>
 <div class="paragraph">
 <p>While singleton MSC services have been around since AS7, WildFly adds the ability to leverage the singleton subsystem to create singleton MSC services from existing singleton policies.</p>
 </div>
@@ -3634,7 +4175,7 @@ e.g.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="singleton-msc-service-metrics">12.2. Singleton MSC Service metrics</h3>
+<h3 id="singleton-msc-service-metrics">13.2. Singleton MSC Service metrics</h3>
 <div class="paragraph">
 <p>The singleton subsystem registers a set of runtime metrics for each singleton MSC service installed via a given singleton policy.</p>
 </div>
@@ -3664,14 +4205,18 @@ e.g.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="installing-an-msc-service-using-dynamic-singleton-policy">12.3. Installing an MSC service using dynamic singleton policy</h3>
+<h3 id="installing-an-msc-service-using-dynamic-singleton-policy">13.3. Installing an MSC service using dynamic singleton policy</h3>
 <div class="paragraph">
 <p>Alternatively, you can configure a singleton policy dynamically, which is particularly useful if you want to use a custom singleton election policy.
 <code>org.wildfly.clustering.singleton.service.SingletonPolicy</code> is a generalization of the <code>org.wildfly.clustering.singleton.service.SingletonServiceConfiguratorFactory</code> interface,
-which includes support for specifying an election policy and, optionally, a quorum.</p>
+which includes support for specifying an election policy, an election listener, and, optionally, a quorum.</p>
 </div>
 <div class="paragraph">
-<p>The 'SingletonServiceConfiguratorFactory' capability may be references using the following capability name:
+<p>The SingletonElectionPolicy is responsible for electing a member to operate as the primary singleton service provider following any change in the set of singleton service providers.
+Following the election of a new primary singleton service provider, any registered SingletonElectionListener is triggered on every member of the cluster.</p>
+</div>
+<div class="paragraph">
+<p>The 'SingletonServiceConfiguratorFactory' capability may be referenced using the following capability name:
 "org.wildfly.clustering.cache.singleton-service-configurator-factory" + <em>container-name</em> + "." + <em>cache-name</em></p>
 </div>
 <div class="paragraph">
@@ -3683,19 +4228,36 @@ which includes support for specifying an election policy and, optionally, a quor
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">MyServiceActivator</span> <span class="directive">implements</span> ServiceActivator {
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">MySingletonElectionPolicy</span> <span class="directive">implements</span> SingletonElectionPolicy {
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> Node elect(<span class="predefined-type">List</span>&lt;Node&gt; candidates) {
+        <span class="comment">// ...</span>
+        <span class="keyword">return</span> ...;
+    }
+}
+
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MySingletonElectionListener</span> <span class="directive">implements</span> SingletonElectionListener {
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> elected(<span class="predefined-type">List</span>&lt;Node&gt; candidates, Node primary) {
+        <span class="comment">// ...</span>
+    }
+}
+
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MyServiceActivator</span> <span class="directive">implements</span> ServiceActivator {
     <span class="annotation">@Override</span>
     <span class="directive">public</span> <span class="type">void</span> activate(ServiceActivatorContext context) {
         <span class="predefined-type">String</span> containerName = <span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span>;
-        ElectionPolicy policy = <span class="keyword">new</span> MySingletonElectionPolicy();
+        SingletonElectionPolicy policy = <span class="keyword">new</span> MySingletonElectionPolicy();
+        SingletonElectionListener listener = <span class="keyword">new</span> MySingletonElectionListener();
         <span class="type">int</span> quorum = <span class="integer">3</span>;
         ServiceName name = ServiceName.parse(<span class="string"><span class="delimiter">&quot;</span><span class="content">my.service.name</span><span class="delimiter">&quot;</span></span>);
         <span class="comment">// Use a SingletonServiceConfiguratorFactory backed by default cache of &quot;foo&quot; container</span>
         Supplier&lt;SingletonServiceConfiguratorFactory&gt; factory = <span class="keyword">new</span> ActiveServiceSupplier&lt;&gt;(context.getServiceTarget(), ServiceName.parse(SingletonDefaultCacheRequirement.SINGLETON_SERVICE_CONFIGURATOR_FACTORY.resolve(containerName).getName()));
         ServiceBuilder&lt;?&gt; builder = factory.get().createSingletonServiceConfigurator(name)
+                .electionListener(listener)
                 .electionPolicy(policy)
                 .requireQuorum(quorum)
-                        .build(context.getServiceTarget());
+                .build(context.getServiceTarget());
         Service service = <span class="keyword">new</span> MyService();
         builder.setInstance(service).install();
     }
@@ -3706,7 +4268,7 @@ which includes support for specifying an election policy and, optionally, a quor
 </div>
 </div>
 <div class="sect1">
-<h2 id="Clustering_and_Domain_Setup_Walkthrough">13. Clustering and Domain Setup Walkthrough</h2>
+<h2 id="Clustering_and_Domain_Setup_Walkthrough">14. Clustering and Domain Setup Walkthrough</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In this article, I&#8217;d like to show you how to setup WildFly in domain
@@ -3715,9 +4277,9 @@ among the nodes. It&#8217;s a step to step guide so you can follow the
 instructions in this article and build the sandbox by yourself.</p>
 </div>
 <div class="sect2">
-<h3 id="preparation-scenario">13.1. Preparation &amp; Scenario</h3>
+<h3 id="preparation-scenario">14.1. Preparation &amp; Scenario</h3>
 <div class="sect3">
-<h4 id="preparation">13.1.1. Preparation</h4>
+<h4 id="preparation">14.1.1. Preparation</h4>
 <div class="paragraph">
 <p>We need to prepare two hosts (or virtual hosts) to do the experiment. We
 will use these two hosts as following:</p>
@@ -3740,7 +4302,7 @@ or they will cause network problems).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="scenario">13.1.2. Scenario</h4>
+<h4 id="scenario">14.1.2. Scenario</h4>
 <div class="paragraph">
 <p>Here are some details on what we are going to do:</p>
 </div>
@@ -3801,7 +4363,7 @@ move on and you will get the points step by step.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="download-wildfly">13.2. Download WildFly</h3>
+<h3 id="download-wildfly">14.2. Download WildFly</h3>
 <div class="paragraph">
 <p>First we should download WildFly from the <a href="http://wildfly.org/downloads/">WildFly website</a>.</p>
 </div>
@@ -3810,8 +4372,8 @@ move on and you will get the points step by step.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>unzip wildfly-16.0.0.Final.zip
-cd wildfly-16.0.0.Final/bin
+<pre class="CodeRay highlight"><code>unzip wildfly-17.0.0.Final.zip
+cd wildfly-17.0.0.Final/bin
 ./domain.sh</code></pre>
 </div>
 </div>
@@ -3821,12 +4383,12 @@ mode:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>wildfly-16.0.0.Final/bin$ ./domain.sh
+<pre class="CodeRay highlight"><code>wildfly-17.0.0.Final/bin$ ./domain.sh
 =========================================================================
  
   JBoss Bootstrap Environment
  
-  JBOSS_HOME: /Users/weli/Downloads/wildfly-16.0.0.Final
+  JBOSS_HOME: /Users/weli/Downloads/wildfly-17.0.0.Final
  
   JAVA: /Library/Java/Home/bin/java
  
@@ -3835,7 +4397,7 @@ mode:</p>
 =========================================================================
 ...
  
-[Server:server-two] 14:46:12,375 INFO  [org.jboss.as] (Controller Boot Thread) JBAS015874: WildFly 16.0.0.Final "Kenny" started in 8860ms - Started 210 of 258 services (816 services are lazy, passive or on-demand)</code></pre>
+[Server:server-two] 14:46:12,375 INFO  [org.jboss.as] (Controller Boot Thread) JBAS015874: WildFly 17.0.0.Final "Kenny" started in 8860ms - Started 210 of 258 services (817 services are lazy, passive or on-demand)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3845,9 +4407,9 @@ next step.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="domain-configuration">13.3. Domain Configuration</h3>
+<h3 id="domain-configuration">14.3. Domain Configuration</h3>
 <div class="sect3">
-<h4 id="interface-config-on-master">13.3.1. Interface config on master</h4>
+<h4 id="interface-config-on-master">14.3.1. Interface config on master</h4>
 <div class="paragraph">
 <p>In this section we&#8217;ll setup both master and slave for them to run in
 domain mode. And we will configure master to be the domain controller.</p>
@@ -3902,7 +4464,7 @@ config to:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="interface-config-on-slave">13.3.2. Interface config on slave</h4>
+<h4 id="interface-config-on-slave">14.3.2. Interface config on slave</h4>
 <div class="paragraph">
 <p>Now we will setup interfaces on slave. Let&#8217;s edit host.xml. Similar to
 the steps on master, open host.xml first:</p>
@@ -3999,7 +4561,7 @@ you need to enable the firewall and allow access to the following ports:
 </div>
 </div>
 <div class="sect3">
-<h4 id="security-configuration">13.3.3. Security Configuration</h4>
+<h4 id="security-configuration">14.3.3. Security Configuration</h4>
 <div class="paragraph">
 <p>If you start WildFly on both master and slave now, you will see the
 slave cannot be started with following error:</p>
@@ -4039,8 +4601,8 @@ The username 'admin' is easy to guess
 Are you sure you want to add user 'admin' yes/no? yes
 About to add user 'admin' for realm 'ManagementRealm'
 Is this correct yes/no? yes
-Added user 'admin' to file '/home/weli/projs/wildfly-16.0.0.Final/standalone/configuration/mgmt-users.properties'
-Added user 'admin' to file '/home/weli/projs/wildfly-16.0.0.Final/domain/configuration/mgmt-users.properties'</code></pre>
+Added user 'admin' to file '/home/weli/projs/wildfly-17.0.0.Final/standalone/configuration/mgmt-users.properties'
+Added user 'admin' to file '/home/weli/projs/wildfly-17.0.0.Final/domain/configuration/mgmt-users.properties'</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4063,10 +4625,10 @@ Re-enter Password : passw0rd!
 What groups do you want this user to belong to? (Please enter a comma separated list, or leave blank for none)[  ]:
 About to add user 'slave' for realm 'ManagementRealm'
 Is this correct yes/no? yes
-Added user 'slave' to file '/home/weli/projs/wildfly-16.0.0.Final/standalone/configuration/mgmt-users.properties'
-Added user 'slave' to file '/home/weli/projs/wildfly-16.0.0.Final/domain/configuration/mgmt-users.properties'
-Added user 'slave' with groups  to file '/home/weli/projs/wildfly-16.0.0.Final/standalone/configuration/mgmt-groups.properties'
-Added user 'slave' with groups  to file '/home/weli/projs/wildfly-16.0.0.Final/domain/configuration/mgmt-groups.properties'
+Added user 'slave' to file '/home/weli/projs/wildfly-17.0.0.Final/standalone/configuration/mgmt-users.properties'
+Added user 'slave' to file '/home/weli/projs/wildfly-17.0.0.Final/domain/configuration/mgmt-users.properties'
+Added user 'slave' with groups  to file '/home/weli/projs/wildfly-17.0.0.Final/standalone/configuration/mgmt-groups.properties'
+Added user 'slave' with groups  to file '/home/weli/projs/wildfly-17.0.0.Final/domain/configuration/mgmt-groups.properties'
 Is this new user going to be used for one AS process to connect to another AS process?
 e.g. for a slave host controller connecting to the master or for a Remoting connection for server to server EJB calls.
 yes/no? yes
@@ -4146,7 +4708,7 @@ domain mode now as expected. Hurrah!</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="deployment">13.4. Deployment</h3>
+<h3 id="deployment">14.4. Deployment</h3>
 <div class="paragraph">
 <p>Now we can deploy a demo project into the domain. I have created a
 simple project located at:</p>
@@ -4450,7 +5012,7 @@ go on cluster configuration.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="cluster-configuration">13.5. Cluster Configuration</h3>
+<h3 id="cluster-configuration">14.5. Cluster Configuration</h3>
 <div class="paragraph">
 <p>We will use mod_cluster + apache httpd on master as our cluster
 controller here. Because WildFly has been configured to support
@@ -4614,7 +5176,7 @@ For more details on mod_cluster configurations please see this document:
 </div>
 </div>
 <div class="sect2">
-<h3 id="testing">13.6. Testing</h3>
+<h3 id="testing">14.6. Testing</h3>
 <div class="paragraph">
 <p>If everything goes fine we can start httpd service now:</p>
 </div>
@@ -4701,7 +5263,7 @@ is redirect from one host to another and the session is held.
 </div>
 </div>
 <div class="sect2">
-<h3 id="special-thanks">13.7. Special Thanks</h3>
+<h3 id="special-thanks">14.7. Special Thanks</h3>
 <div class="paragraph">
 <p><a href="https://community.jboss.org/people/wdfink">Wolf-Dieter Fink</a> has
 contributed the updated add-user.sh usages and configs in host.xml from
@@ -4717,8 +5279,8 @@ this document readable.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 16.0.0.Final<br>
-Last updated 2019-02-06 11:57:26 PST
+Version 17.0.0.Final<br>
+Last updated 2019-05-10 20:15:16 CDT
 </div>
 </div>
 </body>

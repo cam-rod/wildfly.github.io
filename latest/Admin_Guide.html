@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>WildFly Admin Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly developer team</span><br>
-<span id="revnumber">version 16.0.0.Final,</span>
-<span id="revdate">2019-02-28T01:16:57Z</span>
+<span id="revnumber">version 17.0.0.Final,</span>
+<span id="revdate">2019-07-15T01:10:21Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Admin guide</div>
@@ -769,7 +769,7 @@ Controller. See <a href="#Domain_Setup">Domain Setup</a> for details.</p>
 <p>The following is an example managed domain topology:</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/DC-HC-Server.png" alt="DC-HC-Server"></span></p>
+<p><span class="image"><img src="images/DC-HC-Server.png" alt="images/DC-HC-Server.png"></span></p>
 </div>
 <div class="sect4">
 <h5 id="host"><a class="link" href="#host">Host</a></h5>
@@ -1372,7 +1372,7 @@ invoked via the HTTP API, the JSON representation of a <code>ModelNode</code>.)<
 </div>
 <div class="paragraph">
 <p>Every resource except the root resource will have an <code>add</code> operation and
-should have a <code>remove</code> operation ("should" because in WildFly 16 many do
+should have a <code>remove</code> operation ("should" because in WildFly 17 many do
 not). The parameters for the <code>add</code> operation vary depending on the
 resource. The <code>remove</code> operation has no parameters.</p>
 </div>
@@ -1631,7 +1631,7 @@ exposes.</p>
 <h4 id="children"><a class="link" href="#children">2.3.4. Children</a></h4>
 <div class="paragraph">
 <p>Management resources may support child resources. The
-<a href="#children"><em>types</em> of children</a> a
+<a href="#address"><em>types</em> of children</a> a
 resource supports (e.g. <code>connector</code> for the web subsystem resource) can
 be obtained by querying the resource&#8217;s description (see
 <a href="#descriptions">Descriptions</a> below)
@@ -3118,7 +3118,7 @@ default user in the distribution.</p>
 user to the server you will be presented with the following screen.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/no-users.png" alt="no-users.png"></span></p>
+<p><span class="image"><img src="images/no-users.png" alt="images/no-users.png"></span></p>
 </div>
 <div class="paragraph">
 <p>The user are stored in a properties file called mgmt-users.properties
@@ -3146,7 +3146,7 @@ the same password.
 <p>To manipulate the files and add users we provide a utility add-user.sh
 and add-user.bat to add the users and generate the hashes, to add a user
 you should execute the script and follow the guided process.
-<span class="image"><img src="images/images/add-user.png" alt="Add User"></span><br>
+<span class="image"><img src="images/add-user.png" alt="images/add-user.png"></span><br>
 The full details of the add-user utility are described later but for the
 purpose of accessing the management interface you need to enter the
 following values: -</p>
@@ -3728,7 +3728,7 @@ we add role based authorization checks to the management model.</p>
 <div class="paragraph">
 <p>After a realm has been defined it needs to be associated with an inbound
 or outbound connection for it to be used, the following are some
-examples where these associations are used within the WildFly 16
+examples where these associations are used within the WildFly 17
 configuration.</p>
 </div>
 <div class="sect3">
@@ -4361,7 +4361,7 @@ unless you have switched to a different realm.
 <div class="sect5">
 <h6 id="interactive-mode"><a class="link" href="#interactive-mode">Interactive Mode</a></h6>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/add-mgmt-user-interactive.png" alt="Add mgmt user interactive"></span></p>
+<p><span class="image"><img src="images/add-mgmt-user-interactive.png" alt="images/add-mgmt-user-interactive.png"></span></p>
 </div>
 <div class="paragraph">
 <p>Here we have added a new Management User called <code>adminUser</code>, as you can
@@ -4381,7 +4381,7 @@ management chapter.</p>
 <code>./add-user.sh {username} {password</code>} can be used.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/add-mgmt-user-non-interactive.png" alt="add-mgmt-user-non-interactive.png"></span></p>
+<p><span class="image"><img src="images/add-mgmt-user-non-interactive.png" alt="images/add-mgmt-user-non-interactive.png"></span></p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -4411,7 +4411,7 @@ user.</p>
 <div class="sect5">
 <h6 id="interactive-mode-1"><a class="link" href="#interactive-mode-1">Interactive Mode</a></h6>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/add-app-user-interactive.png" alt="add-app-user-interactive.png"></span></p>
+<p><span class="image"><img src="images/add-app-user-interactive.png" alt="images/add-app-user-interactive.png"></span></p>
 </div>
 <div class="paragraph">
 <p>Here a new user called <code>appUser</code> has been added, in this case a comma
@@ -4430,7 +4430,7 @@ a connection from one server to another.</p>
 <code>./add-user.sh -a {username} {password</code>}.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/add-app-user-non-interactive.png" alt="add-app-user-non-interactive.png"></span></p>
+<p><span class="image"><img src="images/add-app-user-non-interactive.png" alt="images/add-app-user-non-interactive.png"></span></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -4461,7 +4461,7 @@ your intention.</p>
 <div class="sect5">
 <h6 id="interactive-mode-2"><a class="link" href="#interactive-mode-2">Interactive Mode</a></h6>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/update-mgmt-user-interactive.png" alt="update-mgmt-user-interactive.png"></span></p>
+<p><span class="image"><img src="images/update-mgmt-user-interactive.png" alt="images/update-mgmt-user-interactive.png"></span></p>
 </div>
 </div>
 <div class="sect5">
@@ -4477,7 +4477,7 @@ with no confirmation prompt.</p>
 <div class="sect5">
 <h6 id="interactive-mode-3"><a class="link" href="#interactive-mode-3">Interactive Mode</a></h6>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/update-app-user-interactive.png" alt="images/update-app-user-interactive.png"></span></p>
+<p><span class="image"><img src="images/update-app-user-interactive.png" alt="images/update-app-user-interactive.png"></span></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -5179,7 +5179,7 @@ the <code>search-credential</code> attribute.  This element supports the followi
 <div class="sect2">
 <h3 id="Security_Realms_Plugins"><a class="link" href="#Security_Realms_Plugins">6.9. Plug Ins</a></h3>
 <div class="paragraph">
-<p>Within WildFly 16 for communication with the management interfaces and
+<p>Within WildFly 17 for communication with the management interfaces and
 for other services exposed using Remoting where username / password
 authentication is used the use of Digest authentication is preferred
 over the use of HTTP Basic or SASL Plain so that we can avoid the
@@ -5204,7 +5204,7 @@ support loading a users password, hash and roles from a custom store to
 allow different stores to be implemented without forcing the
 authentication back to plain text variant, this article describes the
 requirements for a plug in and shows a simple example plug-in for use
-with WildFly 16.</p>
+with WildFly 17.</p>
 </div>
 <div class="paragraph">
 <p>When implementing a plug in there are two steps to the authentication
@@ -5366,7 +5366,7 @@ used for the authorization step.</p>
 <h4 id="installing-and-configuring-a-plug-in"><a class="link" href="#installing-and-configuring-a-plug-in">6.9.4. Installing and Configuring a Plug-In</a></h4>
 <div class="paragraph">
 <p>The next step of this article describes the steps to implement a plug-in
-provider and how to make it available within WildFly 16 and how to
+provider and how to make it available within WildFly 17 and how to
 configure it. Example configuration and an example implementation are
 shown to illustrate this.</p>
 </div>
@@ -5480,7 +5480,7 @@ PlugInProvider implementation class.</p>
 <h5 id="package-as-a-module"><a class="link" href="#package-as-a-module">Package as a Module</a></h5>
 <div class="paragraph">
 <p>To make the <code>PlugInProvider</code> available to the application it is bundled
-as a module and added to the modules already shipped with WildFly 16.</p>
+as a module and added to the modules already shipped with WildFly 17.</p>
 </div>
 <div class="paragraph">
 <p>To add as a module we first need a <code>module.xml</code>: -</p>
@@ -6139,7 +6139,7 @@ admin console.</p>
 individual user mappings can be added, removed, or edited.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/usermapping.png" alt="images/usermapping.png" width="450"></span></p>
+<p><span class="image"><img src="images/usermapping.png" alt="images/usermapping.png" width="450"></span></p>
 </div>
 <div class="paragraph">
 <p>The CLI can also be used to map individuals users to roles.</p>
@@ -6241,7 +6241,7 @@ console.</p>
 group mappings can be added, removed, or edited.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/groupmapping.png" alt="images/groupmapping.png" width="450"></span></p>
+<p><span class="image"><img src="images/groupmapping.png" alt="images/groupmapping.png" width="450"></span></p>
 </div>
 <div class="paragraph">
 <p>The CLI can also be used to map groups to roles. The only difference to
@@ -6306,7 +6306,7 @@ functions, not even reads.
 click on the "Include All" checkbox:</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/includeall.png" alt="images/includeall.png" width="450"></span></p>
+<p><span class="image"><img src="images/includeall.png" alt="images/includeall.png" width="450"></span></p>
 </div>
 <div class="paragraph">
 <p>The same change can be made using the CLI:</p>
@@ -6337,7 +6337,7 @@ where the <code>include-all</code> attribute is set to true for a role.</p>
 In the add dialog, simply change the "Type" pulldown to "Exclude".</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/excludemapping.png" alt="images/excludemapping.png" width="450"></span></p>
+<p><span class="image"><img src="images/excludemapping.png" alt="images/excludemapping.png" width="450"></span></p>
 </div>
 <div class="paragraph">
 <p>In the CLI, excludes are identical to includes, except the resource
@@ -6540,7 +6540,7 @@ via the admin console. Select "Scoped Roles" from the "Administration"
 tab, "Roles" subtab:</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/scopedroles.png" alt="images/scopedroles.png" width="450"></span></p>
+<p><span class="image"><img src="images/scopedroles.png" alt="images/scopedroles.png" width="450"></span></p>
 </div>
 <div class="paragraph">
 <p>When adding a new scoped role, use the dialogue&#8217;s "Type" pull down to
@@ -6549,7 +6549,7 @@ place the names of the relevant hosts or server groups in the "Scope"
 text are.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/addscopedrole.png" alt="images/addscopedrole.png" width="450"></span></p>
+<p><span class="image"><img src="images/addscopedrole.png" alt="images/addscopedrole.png" width="450"></span></p>
 </div>
 </div>
 </div>
@@ -7261,7 +7261,7 @@ click on your name in the top right corner; the roles you are in will be
 shown.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/callersroles.png" alt="images/callersroles.png" width="450"></span></p>
+<p><span class="image"><img src="images/callersroles.png" alt="images/callersroles.png" width="450"></span></p>
 </div>
 <div class="paragraph">
 <p>CLI users should use the <code>whoami</code> operation with the <code>verbose</code> attribute
@@ -7348,13 +7348,13 @@ clicking on their name in the top right corner and clicking on the "Run
 as&#8230;&#8203;" link.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/callersroles.png" alt="images/callersroles.png" width="450"></span></p>
+<p><span class="image"><img src="images/callersroles.png" alt="images/callersroles.png" width="450"></span></p>
 </div>
 <div class="paragraph">
 <p>Then select the role in which you wish to operate:</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/runasrole.png" alt="images/runasrole.png" width="450"></span></p>
+<p><span class="image"><img src="images/runasrole.png" alt="images/runasrole.png" width="450"></span></p>
 </div>
 <div class="paragraph">
 <p>The console will need to be restarted in order for the change to take
@@ -9490,7 +9490,7 @@ you installed.</p>
 <div class="sect3">
 <h4 id="jdbc-driver-installation"><a class="link" href="#jdbc-driver-installation">9.3.1. JDBC Driver Installation</a></h4>
 <div class="paragraph">
-<p>The recommended way to install a JDBC driver into WildFly 16 is to deploy
+<p>The recommended way to install a JDBC driver into WildFly 17 is to deploy
 it as a regular JAR deployment. The reason for this is that when you run
 WildFly in domain mode, deployments are automatically propagated to all
 servers to which the deployment applies; thus distribution of the driver
@@ -10346,7 +10346,7 @@ subdirectory of the distribution:</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">deny</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">deny</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">enies all log messages.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Denies all log messages.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">deny</p></td>
 </tr>
@@ -10733,11 +10733,10 @@ pattern formatter.</p>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">%h</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The host name. A precision specifier can be used to alter the dot delimited host name.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The short host name. This will be the first portion of the qualified host name.</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="listingblock">
 <div class="content">
-<pre>%h     localhost
-%h{2}  localdomain.localhost</pre>
+<pre>%h     localhost</pre>
 </div>
 </div></div></td>
 </tr>
@@ -10747,7 +10746,7 @@ pattern formatter.</p>
 <td class="tableblock halign-left valign-top"><div><div class="listingblock">
 <div class="content">
 <pre>%H    developer.jboss.org
-%H{2} jboss.org</pre>
+%H{1} developer</pre>
 </div>
 </div></div></td>
 </tr>
@@ -12170,6 +12169,67 @@ serve up requests that do not match anything.</p></td>
 </tr>
 </tbody>
 </table>
+<div class="sect5">
+<h6 id="console-access-logging"><a class="link" href="#console-access-logging">Console Access Logging</a></h6>
+<div class="paragraph">
+<p>Each host allows for access logging to the console which writes structured data in JSON format. This only writes to
+<code>stdout</code> and is a single line of JSON structured data.</p>
+</div>
+<div class="paragraph">
+<p>The <code>attributes</code> management model attribute is used to determine which exchange attributes should be logged. This is
+similar to the <code>pattern</code> used for traditional access logging. The main difference being since the data is structured
+the ability to use defined keys is essential.</p>
+</div>
+<div class="paragraph">
+<p>A <code>metadata</code> attribute also exists which allows extra metadata to be added to the output. The value of the attribute is
+a set of arbitrary key/value pairs. The values can include management model expressions, which must be resolvable when
+the console access log service is started. The value is resolved once per start or reload of the server.</p>
+</div>
+<div class="sect6">
+<h7 id="cli-examples"><a class="link" href="#cli-examples">CLI Examples</a></h7>
+<div class="listingblock">
+<div class="title">add-console-access-logging.cli</div>
+<div class="content">
+<pre>/subsystem=undertow/server=default-server/host=default-host/setting=console-access-log:add</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">complex-add-console-access-logging.cli</div>
+<div class="content">
+<pre>/subsystem=undertow/server=default-server/host=default-host/setting=console-access-log:add(metadata={"@version"="1", "qualifiedHostName"=${jboss.qualified.host.name:unknown}}, attributes={bytes-sent={}, date-time={key="@timestamp", date-format="yyyy-MM-dd'T'HH:mm:ssSSS"}, remote-host={}, request-line={}, response-header={key-prefix="responseHeader", names=["Content-Type"]}, response-code={}, remote-user={}})</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">eventSource</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">web-access</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">hostName</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">default-host</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">@version</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">qualifiedHostName</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">localhost.localdomain</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">bytesSent</span><span class="delimiter">&quot;</span></span>:<span class="integer">1504</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">@timestamp</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">2019-05-02T11:57:37123</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">remoteHost</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">127.0.0.1</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">remoteUser</span><span class="delimiter">&quot;</span></span>:<span class="value">null</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">requestLine</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">GET / HTTP/2.0</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">responseCode</span><span class="delimiter">&quot;</span></span>:<span class="integer">200</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">responseHeaderContent-Type</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">text/html</span><span class="delimiter">&quot;</span></span>
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The above JSON is formatted only for readability. The output will be on a single line.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -12516,7 +12576,7 @@ content.</p>
 </div>
 <div class="paragraph">
 <p>The full details of all configuration options available can be found in
-the <a href="https://wildscribe.github.io/WildFly/16/subsystem/undertow/index.html">subsystem reference</a>.</p>
+the <a href="https://wildscribe.github.io/WildFly/17/subsystem/undertow/index.html">subsystem reference</a>.</p>
 </div>
 </div>
 </div>
@@ -12975,7 +13035,7 @@ the command line.</p>
 <div class="sect3">
 <h4 id="deployment-of--jms.xml-files"><a class="link" href="#deployment-of--jms.xml-files">9.8.10. Deployment of -jms.xml files</a></h4>
 <div class="paragraph">
-<p>Starting with WildFly 16, you have the ability to deploy a -jms.xml file
+<p>Starting with WildFly 17, you have the ability to deploy a -jms.xml file
 defining JMS destinations, e.g.:</p>
 </div>
 <div class="listingblock">
@@ -13300,6 +13360,17 @@ created at step (2).</p>
 </li>
 </ol>
 </div>
+<div class="paragraph">
+<p>In Artemis 1.x topics and queues used had a prefix(jms.topic. and jms.queue.) that were prepended to the destination name.
+In Artemis 2.x this is no longer the case, but for compatibility reasons WildFly still prepend those prefixes and tells Artemis to run in compatibility mode.
+If you  are connecting to a remote Artemis 2.x, it may not be in compatibility mode and thus the old prefixes may not be used anymore.
+If you need to use destinations without those prefixes, you can configure your connection factory not to use them by setting the attribute <code>enable-amq1-prefix</code> to false.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=messaging-activemq/pooled-connection-factory=remote-artemis:write-attribute(name="enable-amq1-prefix", value="false")</code></pre>
+</div>
+</div>
 <div class="sect4">
 <h5 id="configuration-of-a-mdb-using-a-pooled-connection-factory"><a class="link" href="#configuration-of-a-mdb-using-a-pooled-connection-factory">JMS Queues and Topics on a remote Artemis Server</a></h5>
 <div class="paragraph">
@@ -13452,7 +13523,7 @@ Please note that the destination is created remotely but won&#8217;t be removed 
 <div class="paragraph">
 <p>WildFly 10 supports both backwards and forwards compatibility with
 legacy versions that were using HornetQ as their messaging brokers (such
-as JBoss AS7, WildFly 16 &amp; 9).<br>
+as JBoss AS7, WildFly 17 &amp; 9).<br>
 These two compatibility modes are provided by the ActiveMQ Artemis
 project that supports the HornetQ&#8217;s CORE protocol:</p>
 </div>
@@ -13838,6 +13909,18 @@ Now create your broadcast/discovery groups using this channel:</p>
 
 [standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/broadcast-group=bg-group3:add(socket-binding=messaging, connectors=http-connector)
 [standalone@localhost:9990 /] /subsystem=messaging-activemq/server=default/discovery-group=dg-group3:add(socket-binding=messaging)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="cluster-behind-an-http-load-balancer"><a class="link" href="#cluster-behind-an-http-load-balancer">Cluster behind an HTTP load-balancer</a></h5>
+<div class="paragraph">
+<p>If the cluster is behind an HTTP load-balancer we need to indicate to the clients that they must not use the cluster topology to connect to it but keep on using the initial connection to the load-balancer.
+For this you need to specify on the (pooled) connection factory not to use the topology by setting the attribute "use-topology-for-load-balancing" to false.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=messaging-activemq/pooled-connection-factory=remote-artemis:write-attribute(name="use-topology-for-load-balancing", value="false")</code></pre>
 </div>
 </div>
 </div>
@@ -14486,7 +14569,7 @@ existing trace.</p>
 <div class="paragraph">
 <p>The security subsystem is the subsystem that brings the security
 services provided by <a href="http://www.jboss.org/picketbox">PicketBox</a> to the
-WildFly 16 server instances.</p>
+WildFly 17 server instances.</p>
 </div>
 <div class="paragraph">
 <p>If you are looking to secure the management interfaces for the
@@ -20672,8 +20755,8 @@ every resource.</p>
 <h4 id="the-read-resource-operation"><a class="link" href="#the-read-resource-operation">13.1.1. The read-resource operation</a></h4>
 <div class="paragraph">
 <p>Reads a management resource&#8217;s attribute values along with either basic
-or complete information about any child resources. Supports the<br>
-following parameters, none of which are required:</p>
+or complete information about any child resources. Supports the following
+parameters, none of which are required:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -21004,8 +21087,7 @@ Management Model</a> for details on the result of this operation.</p>
 <h4 id="the-read-children-types-operation"><a class="link" href="#the-read-children-types-operation">13.1.16. The read-children-types operation</a></h4>
 <div class="paragraph">
 <p>Returns a list of the
-<a href="Management_resources.html#src-557064_Managementresources-Address">types
-of child resources</a> the resource supports. Takes two optional
+<a href="#address"><em>types</em> of child resources</a> the resource supports. Takes two optional
 parameters:</p>
 </div>
 <div class="ulist">
@@ -21030,7 +21112,7 @@ discussion around this topic</a>.</p>
 <h4 id="the-read-children-names-operation"><a class="link" href="#the-read-children-names-operation">13.1.17. The read-children-names operation</a></h4>
 <div class="paragraph">
 <p>Returns a list of the names of all child resources of a given
-<a href="Management_resources.html#src-557064_Managementresources-Address">type</a>.
+<a href="#address">type</a>.
 Takes a single, required, parameter:</p>
 </div>
 <div class="ulist">
@@ -21045,8 +21127,7 @@ Takes a single, required, parameter:</p>
 <h4 id="the-read-children-resources-operation"><a class="link" href="#the-read-children-resources-operation">13.1.18. The read-children-resources operation</a></h4>
 <div class="paragraph">
 <p>Returns information about all of a resource&#8217;s children that are of a
-given
-<a href="Management_resources.html#src-557064_Managementresources-Address">type</a>.
+given <a href="#address">type</a>.
 For each child resource, the returned information is equivalent to
 executing the <code>read-resource</code> operation on that resource. Takes the
 following parameters, of which only \{{child-type} is required:</p>
@@ -21092,8 +21173,7 @@ will include the default value for such parameters.</p>
 <h4 id="the-read-attribute-group-operation"><a class="link" href="#the-read-attribute-group-operation">13.1.19. The read-attribute-group operation</a></h4>
 <div class="paragraph">
 <p>Returns a list of attributes of a
-<a href="Management_resources.html#src-557064_Managementresources-Address">type</a>
-for a given attribute group name. For each attribute the returned
+<a href="#address">type</a> for a given attribute group name. For each attribute the returned
 information is equivalent to executing the <code>read-attribute</code> operation of
 that resource. Takes the following parameters, of which only \{{name}
 is required:</p>
@@ -21127,8 +21207,7 @@ response.</p>
 <div class="sect3">
 <h4 id="the-read-attribute-group-names-operation"><a class="link" href="#the-read-attribute-group-names-operation">13.1.20. The read-attribute-group-names operation</a></h4>
 <div class="paragraph">
-<p>Returns a list of attribute groups names for a given
-<a href="Management_resources.html#src-557064_Managementresources-Address">type</a>.
+<p>Returns a list of attribute groups names for a given <a href="#address">type</a>.
 Takes no parameters.</p>
 </div>
 </div>
@@ -21983,7 +22062,7 @@ make up the management model provided by an individual WildFly instance
 or by any Domain Controller or slave Host Controller process can be
 queried using the <code>read-resource-description</code>, <code>read-operation-names</code>,
 <code>read-operation-description</code> and <code>read-child-types</code> operations described
-in the <a href="Global_operations.html">Global operations</a> section. In this
+in the <a href="#Global_operations">Global operations</a> section. In this
 section we provide details on what&#8217;s included in those descriptions.</p>
 </div>
 <div class="sect3">
@@ -21991,7 +22070,7 @@ section we provide details on what&#8217;s included in those descriptions.</p>
 <div class="paragraph">
 <p>All portions of the management model exposed by WildFly are addressable
 via an ordered list of key/value pairs. For each addressable
-<a href="Management_resources.html#management-resources">Management Resource</a>, the following
+<a href="#management-resources">Management Resource</a>, the following
 descriptive information will be available:</p>
 </div>
 <div class="ulist">
@@ -22072,7 +22151,7 @@ possible future use.</p>
 <div class="paragraph">
 <p>An attribute is a portion of the management model that is not directly
 addressable. Instead, it is conceptually a property of an addressable
-<a href="../Management_resources.html">management resource</a>. For
+<a href="#management-resources">management resource</a>. For
 each attribute in the model, the following descriptive information will
 be available:</p>
 </div>
@@ -23320,7 +23399,7 @@ to the process it was managing and release other resources:</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-request"><a class="link" href="#format-of-a-detyped-operation-request">13.5.3. Format of a Detyped Operation Request</a></h4>
 <div class="paragraph">
-<p>The basic method a user of the WildFly 16 programmatic management API
+<p>The basic method a user of the WildFly 17 programmatic management API
 would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -23840,7 +23919,7 @@ header just like this :</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-response"><a class="link" href="#format-of-a-detyped-operation-response">13.5.4. Format of a Detyped Operation Response</a></h4>
 <div class="paragraph">
-<p>As noted previously, the basic method a user of the WildFly 16
+<p>As noted previously, the basic method a user of the WildFly 17
 programmatic management API would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -24746,7 +24825,7 @@ script (e.g. 'bin/jboss-admin.bat --connect command=:shutdown').</p>
 <div class="paragraph">
 <p>To avoid "Press any key to continue &#8230;&#8203;" message you need to specify
 NOPAUSE variable. Call 'set NOPAUSE=true' in command line before running
-any WildFly 16 .bat script or include it in your custom script before
+any WildFly 17 .bat script or include it in your custom script before
 invoking scripts from WildFly.</p>
 </div>
 </div>
@@ -25233,8 +25312,8 @@ for a complete description of the command.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 16.0.0.Final<br>
-Last updated 2019-02-27 17:10:07 PST
+Version 17.0.0.Final<br>
+Last updated 2019-05-10 20:15:16 CDT
 </div>
 </div>
 </body>
