@@ -522,8 +522,8 @@ table.CodeRay td.code>pre{padding:0}
 <div id="header">
 <h1>WildFly Client Configuration</h1>
 <div class="details">
-<span id="revnumber">version 23.0.0.Final,</span>
-<span id="revdate">2021-03-10T23:27:43Z</span>
+<span id="revnumber">version 24.0.0.Final,</span>
+<span id="revdate">2021-06-17T00:13:37Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Client Configuration Guide</div>
@@ -1306,7 +1306,82 @@ This attribute must be specified in order for TLSv1.3 to be enabled.</p>
 <dd>
 <p>The presence of this element enabled checking the peer&#8217;s certificate against a certificate revocation list, this element defines both a path to the certificate revocation list and also specifies the maximum number of non-self-issued intermediate certificates that may exist in a certification path</p>
 </dd>
+<dt class="hdlist1">&lt;certificate-revocation-lists /&gt;</dt>
+<dd>
+<p>This element enables checking the peer&#8217;s certificate against multiple certificate revocation lists. This element defines a list of certificate revocation list objects which define a path to the certificate revocation list,
+and also the base path of the certificate revocation list file.</p>
+</dd>
 </dl>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The certificate-revocation-list element can be substituted by a certificate-revocation-lists element which in turn allows the
+configuration of multiple certificate revocation lists as follows.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;configuration&gt;</span>
+    <span class="tag">&lt;authentication-client</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:elytron:1.4</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;ssl-contexts&gt;</span>
+            <span class="tag">&lt;default-ssl-context</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+            <span class="tag">&lt;ssl-context</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                ...
+                <span class="tag">&lt;certificate-revocation-lists&gt;</span>
+                    <span class="tag">&lt;certificate-revocation-list</span> <span class="attribute-name">path</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">relative-to</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                    <span class="tag">&lt;certificate-revocation-list</span> <span class="attribute-name">path</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">relative-to</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                <span class="tag">&lt;/certificate-revocation-lists&gt;</span>
+            <span class="tag">&lt;/ssl-context&gt;</span>
+        <span class="tag">&lt;/ssl-contexts&gt;</span>
+    <span class="tag">&lt;/authentication-client&gt;</span>
+<span class="tag">&lt;/configuration&gt;</span></code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="configuring-sslv2hello">Configuring SSLv2Hello</h5>
+<div class="paragraph">
+<p>Older JDK versions use <code>SSLv2Hello</code> during the initial SSL handshake message
+where the SSL/TLS version that will be used for the rest of the communication is
+negotiated.</p>
+</div>
+<div class="paragraph">
+<p>Using <code>SSLv2Hello</code> is discouraged, therefore newer JDK versions disable this protocol
+on the client by default. However, they do provide the ability to re-enable it if necessary.</p>
+</div>
+<div class="paragraph">
+<p><code>SSLv2Hello</code> can be configured as a supported protocol for the SSL context as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>&lt;protocol names="SSLv2Hello TLSv1"&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="warning">WARNING:</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The use of <code>SSLv2Hello</code> is strongly discouraged.</p>
+</li>
+<li>
+<p><code>SSLv2Hello</code> cannot be configured by itself, as its purpose is to determine
+which encryption protocols are supported by the server it connects to. It always
+needs to be configured along side another encryption protocol.</p>
+</li>
+<li>
+<p>Additionally, IBM JDK does not support specifying <code>SSLv2Hello</code> in its client, although a
+server side connection always accepts this protocol.</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -2023,8 +2098,8 @@ References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta En
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 23.0.0.Final<br>
-Last updated 2021-03-09 09:07:24 PST
+Version 24.0.0.Final<br>
+Last updated 2021-06-16 12:05:21 CDT
 </div>
 </div>
 </body>

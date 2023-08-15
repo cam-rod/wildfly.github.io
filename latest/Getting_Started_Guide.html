@@ -524,27 +524,50 @@ table.CodeRay td.code>pre{padding:0}
 <h1>Getting Started Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly team</span><br>
-<span id="revnumber">version 23.0.0.Final,</span>
-<span id="revdate">2021-03-10T23:27:43Z</span>
+<span id="revnumber">version 24.0.0.Final,</span>
+<span id="revdate">2021-06-17T00:13:37Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Getting Started Guide</div>
 <ul class="sectlevel1">
-<li><a href="#getting-started-with-wildfly">1. Getting Started with WildFly 23</a>
+<li><a href="#getting-started-with-wildfly">1. Getting Started with WildFly 24</a></li>
+<li><a href="#requirements">2. Requirements</a></li>
+<li><a href="#installation-options">3. Installation Options</a>
 <ul class="sectlevel2">
-<li><a href="#download">1.1. Download</a></li>
-<li><a href="#requirements">1.2. Requirements</a></li>
-<li><a href="#installation">1.3. Installation</a></li>
-<li><a href="#wildfly---a-quick-tour">1.4. WildFly - A Quick Tour</a>
-<ul class="sectlevel3">
-<li><a href="#wildfly-directory-structure">1.4.1. WildFly Directory Structure</a></li>
-<li><a href="#wildfly-10-configurations">1.4.2. WildFly 23 Configurations</a></li>
-<li><a href="#starting-wildfly-10">1.4.3. Starting WildFly 23</a></li>
-<li><a href="#starting-wildfly-with-an-alternate-configuration">1.4.4. Starting WildFly with an Alternate Configuration</a></li>
-<li><a href="#managing-your-wildfly-10">1.4.5. Managing your WildFly 23</a></li>
-<li><a href="#modifying-the-example-datasource">1.4.6. Modifying the Example DataSource</a></li>
+<li><a href="#download">3.1. Download</a></li>
+<li><a href="#installation">3.2. Installation</a></li>
 </ul>
 </li>
+<li><a href="#wildfly---a-quick-tour">4. WildFly - A Quick Tour</a>
+<ul class="sectlevel2">
+<li><a href="#wildfly-directory-structure">4.1. WildFly Directory Structure</a>
+<ul class="sectlevel3">
+<li><a href="#standalone-directory-structure">4.1.1. Standalone Directory Structure</a></li>
+<li><a href="#domain-directory-structure">4.1.2. Domain Directory Structure</a></li>
+</ul>
+</li>
+<li><a href="#wildfly-configurations">4.2. WildFly 24 Configurations</a>
+<ul class="sectlevel3">
+<li><a href="#standalone-server-configurations">4.2.1. Standalone Server Configurations</a></li>
+<li><a href="#domain-server-configurations">4.2.2. Domain Server Configurations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#starting-wildfly-10">5. Starting WildFly 24</a>
+<ul class="sectlevel2">
+<li><a href="#starting-wildfly-with-an-alternate-configuration">5.1. Starting WildFly with an Alternate Configuration</a></li>
+<li><a href="#test-your-installation">5.2. Test Your Installation</a></li>
+</ul>
+</li>
+<li><a href="#managing-your-wildfly-10">6. Managing your WildFly 24</a>
+<ul class="sectlevel2">
+<li><a href="#authentication">6.1. Authentication</a></li>
+<li><a href="#administration-console">6.2. Administration Console</a></li>
+<li><a href="#command-line-interface">6.3. Command-Line Interface</a></li>
+<li><a href="#deploying-an-application">6.4. Deploying an Application</a></li>
+<li><a href="#modifying-the-example-datasource">6.5. Modifying the Example DataSource</a></li>
+<li><a href="#configure-logging-in-wildfly">6.6. Configure Logging in WildFly</a></li>
 </ul>
 </li>
 </ul>
@@ -560,15 +583,15 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect1">
-<h2 id="getting-started-with-wildfly">1. Getting Started with WildFly 23</h2>
+<h2 id="getting-started-with-wildfly">1. Getting Started with WildFly 24</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>WildFly 23 is the latest release in a series of JBoss open-source
-application server offerings. WildFly 23 is an exceptionally fast,
+<p>WildFly 24 is the latest release in a series of JBoss open-source
+application server offerings. WildFly 24 is an exceptionally fast,
 lightweight and powerful implementation of the Jakarta
 Platform specifications. The state-of-the-art architecture built on the
 Modular Service Container enables services on-demand when your
-application requires them. The table below lists the technologies available in WildFly 23
+application requires them. The table below lists the technologies available in WildFly 24
 server configuration profiles.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -585,8 +608,8 @@ server configuration profiles.</p>
 <th class="tableblock halign-left valign-top">Jakarta EE Full Platform</th>
 <th class="tableblock halign-left valign-top">Jakarta EE Web
 Profile</th>
-<th class="tableblock halign-left valign-top">WildFly 23 Full Platform</th>
-<th class="tableblock halign-left valign-top">WildFly 23 Web Profile</th>
+<th class="tableblock halign-left valign-top">WildFly 24 Full Platform</th>
+<th class="tableblock halign-left valign-top">WildFly 24 Web Profile</th>
 </tr>
 </thead>
 <tbody>
@@ -848,43 +871,27 @@ Profile</th>
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-The WildFly Web Profile doesn&#8217;t include Jakarta Messaging (provided by ActiveMQ Artemis) by
-default. If you want to use messaging, make sure you start the server
- using the "Full Platform" configuration.
+WildFly&#8217;s default configuration provides Jakarta EE Web Profile support and thus
+doesn&#8217;t include Jakarta Messaging (provided by ActiveMQ Artemis). As noted in the
+<a href="#wildfly-configurations">WildFly Configurations</a> section, other configuration
+profiles do provide all features required by the Jakarta EE Full Platform. If you
+want to use messaging, make sure you
+<a href="#starting-wildfly-with-an-alternate-configuration">start the server using an alternate configuration</a>
+that provides the Jakarta EE Full Platform.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
 <p>This document provides a quick overview on how to download and get
-started using WildFly 23 for your application development. For in-depth
-content on administrative features, refer to the WildFly 23 Admin Guide.</p>
-</div>
-<div class="sect2">
-<h3 id="download">1.1. Download</h3>
-<div class="paragraph">
-<p>WildFly 23 distributions can be obtained from:</p>
-</div>
-<div class="paragraph">
-<p><a href="http://www.wildfly.org/downloads/">wildfly.org/downloads</a></p>
-</div>
-<div class="paragraph">
-<p>WildFly 23 provides a single distribution available in zip or tar file
-formats.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>wildfly-23.0.0.Final.zip</strong></p>
-</li>
-<li>
-<p><strong>wildfly-23.0.0.Final.tar.gz</strong></p>
-</li>
-</ul>
+started using WildFly 24 for your application development. For in-depth
+content on administrative features, refer to the WildFly 24 <a href="Admin_Guide.html">Admin Guide</a>.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="requirements">1.2. Requirements</h3>
+</div>
+<div class="sect1">
+<h2 id="requirements">2. Requirements</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
@@ -894,26 +901,62 @@ of the current long-term support Java release.</p>
 </ul>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="installation-options">3. Installation Options</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are a number of ways you can install WildFly, including unzipping our traditional download zip, provisioning a
+custom installation using Galleon, or building a bootable jar. The <a href="Installation_Guide.html">Installation Guide</a>
+helps you identify the kind of WildFly installation that best fits your application&#8217;s deployment needs. In this guide
+we&#8217;ll focus on the common approach of installing the download zip.</p>
+</div>
 <div class="sect2">
-<h3 id="installation">1.3. Installation</h3>
+<h3 id="download">3.1. Download</h3>
+<div class="paragraph">
+<p>WildFly 24 distributions can be obtained from:</p>
+</div>
+<div class="paragraph">
+<p><a href="http://www.wildfly.org/downloads/">wildfly.org/downloads</a></p>
+</div>
+<div class="paragraph">
+<p>WildFly 24 provides a single distribution available in zip or tar file
+formats.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>wildfly-24.0.0.Final.zip</strong></p>
+</li>
+<li>
+<p><strong>wildfly-24.0.0.Final.tar.gz</strong></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="installation">3.2. Installation</h3>
 <div class="paragraph">
 <p>Simply extract your chosen download to the directory of your choice. You
-can install WildFly 23 on any operating system that supports the zip or
+can install WildFly 24 on any operating system that supports the zip or
 tar formats. Refer to the Release Notes for additional information
 related to the release.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="wildfly---a-quick-tour">1.4. WildFly - A Quick Tour</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="wildfly---a-quick-tour">4. WildFly - A Quick Tour</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Now that you&#8217;ve downloaded WildFly 23, the next thing to discuss is the
+<p>Now that you&#8217;ve downloaded WildFly 24, the next thing to discuss is the
 layout of the distribution and explore the server directory structure,
 key configuration files, log files, user deployments and so on. It&#8217;s
 worth familiarizing yourself with the layout so that you&#8217;ll be able to
 find your way around when it comes to deploying your own applications.</p>
 </div>
-<div class="sect3">
-<h4 id="wildfly-directory-structure">1.4.1. WildFly Directory Structure</h4>
+<div class="sect2">
+<h3 id="wildfly-directory-structure">4.1. WildFly Directory Structure</h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 50%;">
@@ -971,10 +1014,10 @@ used by the single standalone server run from this installation.</p></td>
 </tr>
 </tbody>
 </table>
-<div class="sect4">
-<h5 id="standalone-directory-structure">Standalone Directory Structure</h5>
+<div class="sect3">
+<h4 id="standalone-directory-structure">4.1.1. Standalone Directory Structure</h4>
 <div class="paragraph">
-<p>In " <strong><em>standalone</em></strong> " mode each WildFly 23 server instance is an
+<p>In " <strong><em>standalone</em></strong> " mode each WildFly 24 server instance is an
 independent process (similar to previous JBoss AS versions; e.g., 3, 4,
 5, or 6). The configuration files, deployment content and writable areas
 used by the single standalone server run from a WildFly installation are
@@ -1035,10 +1078,10 @@ process.</p></td>
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="domain-directory-structure">Domain Directory Structure</h5>
+<div class="sect3">
+<h4 id="domain-directory-structure">4.1.2. Domain Directory Structure</h4>
 <div class="paragraph">
-<p>A key feature of WildFly 23 is the managing multiple servers from a
+<p>A key feature of WildFly 24 is the managing multiple servers from a
 single control point. A collection of multiple servers are referred to
 as a " <strong><em>domain</em></strong> ". Domains can span multiple physical (or virtual)
 machines with all WildFly instances on a given host under the control of
@@ -1111,10 +1154,10 @@ process.</p></td>
 </table>
 </div>
 </div>
+<div class="sect2">
+<h3 id="wildfly-configurations">4.2. WildFly 24 Configurations</h3>
 <div class="sect3">
-<h4 id="wildfly-10-configurations">1.4.2. WildFly 23 Configurations</h4>
-<div class="sect4">
-<h5 id="standalone-server-configurations">Standalone Server Configurations</h5>
+<h4 id="standalone-server-configurations">4.2.1. Standalone Server Configurations</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1189,8 +1232,8 @@ web sessions and distributed Hibernate second level caching.</p>
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="domain-server-configurations">Domain Server Configurations</h5>
+<div class="sect3">
+<h4 id="domain-server-configurations">4.2.2. Domain Server Configurations</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1213,10 +1256,13 @@ provide.</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="starting-wildfly-10">1.4.3. Starting WildFly 23</h4>
+</div>
+</div>
+<div class="sect1">
+<h2 id="starting-wildfly-10">5. Starting WildFly 24</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>To start WildFly 23 using the default web profile configuration in "
+<p>To start WildFly 24 using the default web profile configuration in "
 <em>standalone</em>" mode, change directory to $JBOSS_HOME/bin.</p>
 </div>
 <div class="listingblock">
@@ -1233,9 +1279,8 @@ capabilities,</p>
 <pre class="CodeRay highlight nowrap"><code>./domain.sh</code></pre>
 </div>
 </div>
-</div>
-<div class="sect3">
-<h4 id="starting-wildfly-with-an-alternate-configuration">1.4.4. Starting WildFly with an Alternate Configuration</h4>
+<div class="sect2">
+<h3 id="starting-wildfly-with-an-alternate-configuration">5.1. Starting WildFly with an Alternate Configuration</h3>
 <div class="paragraph">
 <p>If you choose to start your server with one of the other provided
 configurations, they can be accessed by passing the --server-config
@@ -1262,8 +1307,9 @@ syntax from $JBOSS_HOME/bin:</p>
 <p>Alternatively, you can create your own selecting the additional
 subsystems you want to add, remove, or modify.</p>
 </div>
-<div class="sect4">
-<h5 id="test-your-installation">Test Your Installation</h5>
+</div>
+<div class="sect2">
+<h3 id="test-your-installation">5.2. Test Your Installation</h3>
 <div class="paragraph">
 <p>After executing one of the above commands, you should see output similar
 to what&#8217;s shown below.</p>
@@ -1304,33 +1350,39 @@ discussion in the user forum and access the enhanced web-based
 Administration Console. Or, if you uncover a defect while using WildFly,
 report an issue to inform us (attached patches will be reviewed). This
 landing page is recommended for convenient access to information about
-WildFly 23 but can easily be replaced with your own if desired.</p>
+WildFly 24 but can easily be replaced with your own if desired.</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="managing-your-wildfly-10">1.4.5. Managing your WildFly 23</h4>
+</div>
+<div class="sect1">
+<h2 id="managing-your-wildfly-10">6. Managing your WildFly 24</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>WildFly 23 offers two administrative mechanisms for managing your
+<p>WildFly 24 offers two administrative mechanisms for managing your
 running instance:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>web-based Administration Console</p>
+<p>a web-based Administration Console</p>
 </li>
 <li>
-<p>command-line interface</p>
+<p>a command-line interface</p>
 </li>
 </ul>
 </div>
-<div class="sect4">
-<h5 id="authentication">Authentication</h5>
 <div class="paragraph">
-<p>By default WildFly 23 is now distributed with security enabled for the
-management interfaces, this means that before you connect using the
+<p>The <a href="Admin_Guide.html">Admin Guide</a> covers the details on managing your WildFly
+installation. Here we&#8217;ll just touch on some of the basics.</p>
+</div>
+<div class="sect2">
+<h3 id="authentication">6.1. Authentication</h3>
+<div class="paragraph">
+<p>By default WildFly 24 is distributed with security enabled for the
+management interfaces. This means that before you connect using the
 administration console or remotely using the CLI you will need to add a
-new user, this can be achieved simply by using the <em>add-user.sh</em> script
+new user. This can be achieved simply by using the <em>add-user.sh</em> script
 in the bin folder.</p>
 </div>
 <div class="paragraph">
@@ -1365,9 +1417,22 @@ Re-enter Password :</code></pre>
 </div>
 <div class="paragraph">
 <p>It is important to leave the name of the realm as 'ManagementRealm' as
-this needs to match the name used in the server&#8217;s configuration, for the
+this needs to match the name used in the server&#8217;s configuration. For the
 remaining fields enter the new username, password and password
 confirmation.</p>
+</div>
+<div class="paragraph">
+<p>Users can be associated with arbitrary groups of your choosing, so you will be prompted if you would like
+to do this.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>What groups do you want this user to belong to? (Please enter a comma separated list, or leave blank for none)[  ]:</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Groups can be useful for simplified administration of things like access permissions, but for simply getting
+started, leaving this blank is fine.</p>
 </div>
 <div class="paragraph">
 <p>Provided there are no errors in the values entered you will then be
@@ -1377,12 +1442,26 @@ message will be displayed.</p>
 </div>
 <div class="paragraph">
 <p>The modified time of the properties files are inspected at the time of
-authentication and the files reloaded if they have changed, for this
+authentication and the files reloaded if they have changed. For this
 reason you do not need to re-start the server after adding a new user.</p>
 </div>
+<div class="paragraph">
+<p>Finally, you will be asked whether the account you&#8217;ve added is going to be to used
+to identify one WildFly process to another, typically in a WildFly managed domain:</p>
 </div>
-<div class="sect4">
-<h5 id="administration-console">Administration Console</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>Is this new user going to be used for one AS process to connect to another AS process?
+e.g. for a slave host controller connecting to the master or for a Remoting connection for server to server Jakarta Enterprise Beans calls.
+yes/no?</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The answer for this should be <code>no</code>; the account you are adding here is for use by a human administrator.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="administration-console">6.2. Administration Console</h3>
 <div class="paragraph">
 <p>To access the web-based Administration Console, simply follow the link
 from the Welcome Screen. To directly access the Management Console,
@@ -1428,8 +1507,8 @@ added you can click on the 'Try Again' link at the bottom of the error
 page to try connecting to the administration console again.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="command-line-interface">Command-Line Interface</h5>
+<div class="sect2">
+<h3 id="command-line-interface">6.3. Command-Line Interface</h3>
 <div class="paragraph">
 <p>If you prefer to manage your server from the command line (or batching),
 the <em>jboss-cli.sh</em> script provides the same capabilities available via
@@ -1460,9 +1539,35 @@ undeploy applications. For a complete list of commands and command
 syntax, type <strong><em>help</em></strong> once connected.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="deploying-an-application">6.4. Deploying an Application</h3>
+<div class="paragraph">
+<p>WildFly provides a number of ways you can deploy your application into the server.
+These are covered in detail in the <a href="Admin_Guide.html#application-deployment">Admin Guide</a>.</p>
 </div>
-<div class="sect3">
-<h4 id="modifying-the-example-datasource">1.4.6. Modifying the Example DataSource</h4>
+<div class="paragraph">
+<p>If you are running a standalone WildFly server, the simplest way to deploy
+your application is to copy the application archive (war/ear/jar) into the <code>$JBOSS_HOME/standalone/deployments</code>
+directory in the server installation. The server&#8217;s <code>deployment-scanner</code> subsystem will detect
+the new file and deploy it.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you are running a WildFly managed domain, the <code>deployment-scanner</code> subsystem is not
+available so you will need to use the CLI or web console to deploy your application. For more,
+see the <a href="Admin_Guide.html#application-deployment">Admin Guide</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="modifying-the-example-datasource">6.5. Modifying the Example DataSource</h3>
 <div class="paragraph">
 <p>As with previous JBoss application server releases, a default data
 source, <strong><em>ExampleDS</em></strong> , is configured using the embedded H2 database for
@@ -1543,15 +1648,16 @@ the project documentation.</p>
 </li>
 </ul>
 </div>
-<div class="sect4">
-<h5 id="configure-logging-in-wildfly">Configure Logging in WildFly</h5>
+</div>
+<div class="sect2">
+<h3 id="configure-logging-in-wildfly">6.6. Configure Logging in WildFly</h3>
 <div class="paragraph">
 <p>WildFly logging can be configured with the web console or the command
 line interface. You can get more detail on the <a href="Admin_Guide.html#Logging">Logging
 Configuration</a> page.</p>
 </div>
 <div class="paragraph">
-<p>Turn on debugging for a specific category with CLI:</p>
+<p>Turn on debugging for a specific category with the CLI:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1559,7 +1665,11 @@ Configuration</a> page.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>By default the <code>server.log</code> is configured to include all levels in it&#8217;s
+<p>In the example above the <code>org.jboss.as</code> log category was configured. Use a different value
+for the <code>logger</code> key to configure a different log category.</p>
+</div>
+<div class="paragraph">
+<p>By default the <code>server.log</code> is configured to include all levels in its
 log output. In the above example we changed the console to also display
 debug messages.</p>
 </div>
@@ -1567,12 +1677,10 @@ debug messages.</p>
 </div>
 </div>
 </div>
-</div>
-</div>
 <div id="footer">
 <div id="footer-text">
-Version 23.0.0.Final<br>
-Last updated 2021-03-09 18:54:50 PST
+Version 24.0.0.Final<br>
+Last updated 2021-06-16 12:05:21 CDT
 </div>
 </div>
 </body>

@@ -522,8 +522,8 @@ table.CodeRay td.code>pre{padding:0}
 <div id="header">
 <h1>WildFly Elytron Security</h1>
 <div class="details">
-<span id="revnumber">version 23.0.0.Final,</span>
-<span id="revdate">2021-03-10T23:27:43Z</span>
+<span id="revnumber">version 24.0.0.Final,</span>
+<span id="revdate">2021-06-17T00:13:37Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Elytron Security Guide</div>
@@ -3564,6 +3564,11 @@ user2=password123</pre>
 user2=Guest</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>The Properties Realm also supports storing hashed passwords in the properties
+files, namely DIGEST passwords. Learn how to specify the encoding and character set for these passwords
+in the next section.</p>
+</div>
 </div>
 <div class="sect4">
 <h5 id="configure-a-properties-realm-in-wildfly">Configure a properties-realm in WildFly:</h5>
@@ -3578,6 +3583,31 @@ in the previous step in the <em>example-users.properties</em> file. Also, if
 your properties files are located outside of <em>jboss.server.config.dir</em>,
 then you need to change the <em>path</em> and <em>relative-to</em> values
 appropriately.</p>
+</div>
+<div class="paragraph">
+<p>Additionally, if storing hashed passwords in the properties file, you can specify the following
+attributes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>hash-encoding</code>: This attribute specifies the string format for the password if it is not stored in plain
+text. It is set to <code>hex</code> encoding by default, but <code>base64</code> is also supported.</p>
+</li>
+<li>
+<p><code>hash-charset</code>: This attribute specifies the character set to use when converting the password string to a
+byte array. It is set to <code>UTF-8</code> by default.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For example, the following properties realm is configured to use <code>base64</code> encoding and the character set
+<code>GB2312</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/properties-realm=examplePropRealm:add(groups-attribute=groups,groups-properties={path=example-roles.properties,relative-to=jboss.server.config.dir},users-properties={path=example-users.properties,relative-to=jboss.server.config.dir},hash-encoding=base64,hash-charset=GB2312)</code></pre>
+</div>
 </div>
 </div>
 <div class="sect4">
@@ -3885,6 +3915,30 @@ connect to the server.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/ldap-realm=exampleLR:add(dir-context=exampleDC,identity-mapping={search-base-dn="ou=Users,dc=wildfly,dc=org",rdn-identifier="uid",user-password-mapper={from="userPassword"},attribute-mapping=[{filter-base-dn="ou=Roles,dc=wildfly,dc=org",filter="(&amp;(objectClass=groupOfNames)(member={1}))",from="cn",to="Roles"}]})</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Additionally, if storing hashed passwords in the LDIF file, you can specify the following
+attributes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>hash-encoding</code>: This attribute specifies the string format for the password if it is not stored in plain
+text. It is set to <code>base64</code> encoding by default, but <code>hex</code> is also supported.</p>
+</li>
+<li>
+<p><code>hash-charset</code>: This attribute specifies the character set to use when converting the password string to a
+byte array. It is set to <code>UTF-8</code> by default.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For example, the following LDAP realm is storing hexadecimal encoded strings hashed using the <code>GB2312</code> character set:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/ldap-realm=exampleLR:add(dir-context=exampleDC,identity-mapping={...},hash-encoding=hex,hash-charset=GB2312)</code></pre>
 </div>
 </div>
 </div>
@@ -5171,6 +5225,23 @@ trusted certificate into the browser&#8217;s truststore.</p>
 <div class="paragraph">
 <p>You can configure your trust-manager to use certificate-revocation-list (CRL) to check revocation status of obtained certificates.</p>
 </div>
+<div class="paragraph">
+<p>The supported attributes for a certificate-revocation-list include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>path: The path to the configuration file that is used to initialize the certificate revocation list.</p>
+</li>
+<li>
+<p>relative-to: The base path of the certificate revocation list file.</p>
+</li>
+<li>
+<p>maximum-cert-path: The maximum number of non-self-issued intermediate certificates that can exist in a certification path.
+The default value is 5. (Deprecated. Use maximum-cert-path in trust-manager).</p>
+</li>
+</ul>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/trust-manager=twoWayTM:write-attribute(name=certificate-revocation-list, value={})</code></pre>
@@ -5188,6 +5259,31 @@ trusted certificate into the browser&#8217;s truststore.</p>
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/trust-manager=twoWayTM:write-attribute(name=certificate-revocation-list.path, value=intermediate.crl.pem)</code></pre>
 </div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="configure-multiple-certificate-revocation-lists">Configure multiple certificate revocation lists</h6>
+<div class="paragraph">
+<p>Alternatively, you can configure multiple certificate revocation lists in your trust-manager using
+the certificate-revocation-lists attribute as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/trust-manager=twoWayTM:write-attribute(name=certificate-revocation-lists, value=[{path="PATH/TO/CRL"}, {path="PATH/TO/OTHER/CRL"}])</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The supported attributes for certificate-revocation-lists include a list of certificate-revocation-list objects containing:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>path: The path to the configuration file that is used to initialize the certificate revocation list.</p>
+</li>
+<li>
+<p>relative-to: The base path of the certificate revocation list file.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -6244,7 +6340,54 @@ change once <a href="https://bugs.openjdk.java.net/browse/JDK-8209953">JDK-82099
 </div>
 </div>
 <div class="sect3">
-<h4 id="default-sslcontext">4.3.17. Default SSLContext</h4>
+<h4 id="configuring-sslv2hello">4.3.17. Configuring SSLv2Hello</h4>
+<div class="paragraph">
+<p>Older JDK versions use <code>SSLv2Hello</code> during the initial SSL handshake message
+where the SSL/TLS version that will be used for the rest of the communication is
+negotiated.</p>
+</div>
+<div class="paragraph">
+<p>Using <code>SSLv2Hello</code> is discouraged, therefore newer JDK versions disable this protocol
+on the client by default. However, they do provide the ability to re-enable it if necessary.</p>
+</div>
+<div class="paragraph">
+<p><code>SSLv2Hello</code> can be configured as a supported protocol for the server SSL context as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/server-ssl-context=server-context:add(protocols=[SSLv2Hello,TLSv1], ...)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Similarly, it can be configured as a supported protocol for the client SSL context as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/client-ssl-context=client-context:add(protocols=[SSLv2Hello,TLSv1], ...)</code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="warning">WARNING:</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The use of <code>SSLv2Hello</code> is strongly discouraged.</p>
+</li>
+<li>
+<p><code>SSLv2Hello</code> cannot be configured by itself, as its purpose is to determine
+which encryption protocols are supported by the server it connects to. It always
+needs to be configured along side another encryption protocol.</p>
+</li>
+<li>
+<p>Additionally, IBM JDK does not support specifying <code>SSLv2Hello</code> in its client, although a
+server side connection always accepts this protocol.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="default-sslcontext">4.3.18. Default SSLContext</h4>
 <div class="paragraph">
 <p>Many libraries that can be used within deployments may require SSL configuration for any connections they establish, these libraries tend to be configurable by the caller or if no configuration is provided fall back to using the default <code>SSLContext</code> for the process available from: -</p>
 </div>
@@ -6289,7 +6432,7 @@ change once <a href="https://bugs.openjdk.java.net/browse/JDK-8209953">JDK-82099
 </div>
 </div>
 <div class="sect3">
-<h4 id="configuring-sni">4.3.18. Configuring SNI</h4>
+<h4 id="configuring-sni">4.3.19. Configuring SNI</h4>
 <div class="paragraph">
 <p>Using the WildFly Elytron subsystem it is possible to configure an SSL context which supports SNI.  By supporting SNI if an SNI host name is available whilst the SSLSession is being negotiated a host specific SSLContext will be selected.  If no host specific SSLContext is identified either because no host name was received or because there is no match a default SSLContext will be used instead.  By identifying a host specific SSLContext it means that a certificate appropriate for that host can be used.</p>
 </div>
@@ -6975,6 +7118,12 @@ after authentication.</p>
 <li>
 <p><code>encoded</code> When encoding is set to true, the identity names will be BASE32 encoded before they are used as filenames. This is beneficial, because some filesystems are case-insensitive or might restrict set of characters allowed in a filename. Default value is true.</p>
 </li>
+<li>
+<p><code>hash-encoding</code> specifies the string format for the password if it is not stored in plain text. Set to BASE64 bt default, but HEX is also supported.</p>
+</li>
+<li>
+<p><code>hash-charset</code> specifies the character set to use when converting the password string to a byte array. Set to UTF-8 by default.</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -6983,12 +7132,26 @@ after authentication.</p>
 <div class="sect5">
 <h6 id="wildfly-management-cli">WildFly management CLI</h6>
 <div class="paragraph">
-<p>The following command creates realm with name <code>fsRealm</code> that resides in directory <code>fs-realm-users</code> inside the base configuration directory defined by <code>jboss.server.config.dir</code> property. The levels number is 2 and encoded value is true.</p>
+<p>The following command creates realm with name <code>fsRealm</code> that resides in directory <code>fs-realm-users</code> inside the base configuration directory defined by <code>jboss.server.config.dir</code> property. The levels number is 2 and encoded value is true.
+The charset is UTF-8 and the string encoding is BASE64.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/filesystem-realm=fsRealm:add(path=fs-realm-users, relative-to=jboss.server.config.dir)</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Although identities stored within the same realm can be hashed using different algorithms, they are all
+hashed using the same character set and stored using the same string encoding across the whole realm.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>To add identity with the name "alex" to this filesystem realm:</p>
@@ -7279,7 +7442,7 @@ modifiableIdentity.dispose();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This realm is defined within a single <code>princpal-query</code> against the <code>Identities</code> datasource.  For the user <code>test</code> the result of the query would be: -</p>
+<p>This realm is defined within a single <code>principal-query</code> against the <code>Identities</code> datasource.  For the user <code>test</code> the result of the query would be: -</p>
 </div>
 <table class="tableblock frame-all grid-all" style="width: 25%;">
 <caption class="title">Table 5. Query Results</caption>
@@ -7465,6 +7628,39 @@ Where the various password mappers load encoded representations of passwords and
 <p><code>iteration-count-index</code> - The index of the column containing the iteration count.</p>
 </li>
 </ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="hash-character-sets">Hash Character Sets</h5>
+<div class="paragraph">
+<p>The various password mappers allow loading multiples values from the database to hash the client provided password in order
+to compare against the password stored in the database.</p>
+</div>
+<div class="paragraph">
+<p>The JDBC realm supports specifying the character set via the attribute <code>hash-charset</code> to use when converting
+the client provided password string to a byte array. This is useful when our database is storing
+hashed passwords using a charset other than <code>UTF-8</code>, as the JDBC realm assumes that is the charset being used by default.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Although more than one password mapper can be defined on a single <code>principal-query</code>, only one <code>hash-charset</code>
+can be defined across the whole realm.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For example, the following JDBC realm is configured using the GB2312 charset:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code> /subsystem=elytron/jdbc-realm=exampleDbRealm:add(principal-query=[{sql="SELECT password FROM all_users WHERE user=?",data-source=exampleDS,simple-digest-mapper={algorithm=password-salt-digest-md5,password-index=1}}])</code></pre>
 </div>
 </div>
 </div>
@@ -14829,8 +15025,8 @@ for example, Infinispan cache cannot be used, any others?</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 23.0.0.Final<br>
-Last updated 2021-03-09 09:08:12 PST
+Version 24.0.0.Final<br>
+Last updated 2021-06-16 12:05:21 CDT
 </div>
 </div>
 </body>

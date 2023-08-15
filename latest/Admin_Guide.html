@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>WildFly Admin Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly developer team</span><br>
-<span id="revnumber">version 23.0.0.Final,</span>
-<span id="revdate">2021-03-12T19:11:02Z</span>
+<span id="revnumber">version 24.0.0.Final,</span>
+<span id="revdate">2021-06-17T00:13:37Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Admin guide</div>
@@ -1466,7 +1466,7 @@ invoked via the HTTP API, the JSON representation of a <code>ModelNode</code>.)<
 </div>
 <div class="paragraph">
 <p>Every resource except the root resource will have an <code>add</code> operation and
-should have a <code>remove</code> operation ("should" because in WildFly 23 many do
+should have a <code>remove</code> operation ("should" because in WildFly 24 many do
 not). The parameters for the <code>add</code> operation vary depending on the
 resource. The <code>remove</code> operation has no parameters.</p>
 </div>
@@ -3912,7 +3912,7 @@ we add role based authorization checks to the management model.</p>
 <div class="paragraph">
 <p>After a realm has been defined it needs to be associated with an inbound
 or outbound connection for it to be used, the following are some
-examples where these associations are used within the WildFly 23
+examples where these associations are used within the WildFly 24
 configuration.</p>
 </div>
 <div class="sect3">
@@ -5378,7 +5378,7 @@ the <code>search-credential</code> attribute.  This element supports the followi
 <div class="sect2">
 <h3 id="Security_Realms_Plugins"><a class="link" href="#Security_Realms_Plugins">6.9. Plug Ins</a></h3>
 <div class="paragraph">
-<p>Within WildFly 23 for communication with the management interfaces and
+<p>Within WildFly 24 for communication with the management interfaces and
 for other services exposed using Remoting where username / password
 authentication is used the use of Digest authentication is preferred
 over the use of HTTP Basic or SASL Plain so that we can avoid the
@@ -5403,7 +5403,7 @@ support loading a users password, hash and roles from a custom store to
 allow different stores to be implemented without forcing the
 authentication back to plain text variant, this article describes the
 requirements for a plug in and shows a simple example plug-in for use
-with WildFly 23.</p>
+with WildFly 24.</p>
 </div>
 <div class="paragraph">
 <p>When implementing a plug in there are two steps to the authentication
@@ -5565,7 +5565,7 @@ used for the authorization step.</p>
 <h4 id="installing-and-configuring-a-plug-in"><a class="link" href="#installing-and-configuring-a-plug-in">6.9.4. Installing and Configuring a Plug-In</a></h4>
 <div class="paragraph">
 <p>The next step of this article describes the steps to implement a plug-in
-provider and how to make it available within WildFly 23 and how to
+provider and how to make it available within WildFly 24 and how to
 configure it. Example configuration and an example implementation are
 shown to illustrate this.</p>
 </div>
@@ -5679,7 +5679,7 @@ PlugInProvider implementation class.</p>
 <h5 id="package-as-a-module"><a class="link" href="#package-as-a-module">Package as a Module</a></h5>
 <div class="paragraph">
 <p>To make the <code>PlugInProvider</code> available to the application it is bundled
-as a module and added to the modules already shipped with WildFly 23.</p>
+as a module and added to the modules already shipped with WildFly 24.</p>
 </div>
 <div class="paragraph">
 <p>To add as a module we first need a <code>module.xml</code>: -</p>
@@ -9864,7 +9864,7 @@ you installed.</p>
 <div class="sect3">
 <h4 id="jdbc-driver-installation"><a class="link" href="#jdbc-driver-installation">9.3.1. JDBC Driver Installation</a></h4>
 <div class="paragraph">
-<p>The recommended way to install a JDBC driver into WildFly 23 is to deploy
+<p>The recommended way to install a JDBC driver into WildFly 24 is to deploy
 it as a regular JAR deployment. The reason for this is that when you run
 WildFly in domain mode, deployments are automatically propagated to all
 servers to which the deployment applies; thus distribution of the driver
@@ -13847,7 +13847,7 @@ the command line.</p>
 <div class="sect3">
 <h4 id="deployment-of--jms.xml-files"><a class="link" href="#deployment-of--jms.xml-files">9.8.10. Deployment of -jms.xml files</a></h4>
 <div class="paragraph">
-<p>Starting with WildFly 23, you have the ability to deploy a -jms.xml file
+<p>Starting with WildFly 24, you have the ability to deploy a -jms.xml file
 defining Jakarta Messaging destinations, e.g.:</p>
 </div>
 <div class="listingblock">
@@ -14472,7 +14472,7 @@ connect to a legacy app server (running HornetQ)</p>
 </li>
 <li>
 <p>forward compatibility: legacy messaging clients (using HornetQ) can connect
-to a WildFly 23 app server (running Artemis).</p>
+to a WildFly 24 app server (running Artemis).</p>
 </li>
 </ul>
 </div>
@@ -14525,7 +14525,7 @@ providing a <code>legacy-entries</code> attribute to the <code>jms-queue</code> 
 </div>
 <div class="paragraph">
 <p>The <code>legacy-entries</code> must be used by legacy clients (using HornetQ)
-while the regular <code>entries</code> are for WildFly 23 Jakarta Messaging clients (using
+while the regular <code>entries</code> are for WildFly 24 Jakarta Messaging clients (using
 Artemis).</p>
 </div>
 <div class="paragraph">
@@ -14547,7 +14547,7 @@ in the legacy <code>messaging</code> subsystem and the regular entries will be
 created with a <code>-new</code> suffix.<br>
 If <code>add-legacy-entries</code> is set to <code>false</code> during migration, no legacy
 resources will be created in the <code>messaging-activemq</code> subsystem and
-legacy messaging clients will not be able to communicate with WildFly 23
+legacy messaging clients will not be able to communicate with WildFly 24
 servers.</p>
 </div>
 </div>
@@ -14557,7 +14557,7 @@ servers.</p>
 <div class="paragraph">
 <p>Backward compatibility requires no configuration change in the legacy
 server.<br>
-WildFly 23 clients do not look up resources on the legacy server but
+WildFly 24 clients do not look up resources on the legacy server but
 use client-side JNDI to create their Jakarta Messaging resources. WildFly&#8217;s Artemis client
 can then use these resources to communicate with the legacy server
 using the HornetQ CORE protocol.</p>
@@ -14568,7 +14568,7 @@ using the HornetQ CORE protocol.</p>
 JNDI</a> to create Jakarta Messaging resources ( <code>ConnectionFactory</code> and <code>Destination</code>).</p>
 </div>
 <div class="paragraph">
-<p>For example, if a WildFly 23 messaging client wants to communicate with a
+<p>For example, if a WildFly 24 messaging client wants to communicate with a
 legacy server using a queue named <code>myQueue</code>, it must use the
 following properties to configure its JNDI <code>InitialContext</code>:</p>
 </div>
@@ -16547,7 +16547,7 @@ element to the xml or by using the following CLI operation:</p>
 <div class="sect3">
 <h4 id="specification-2"><a class="link" href="#specification-2">9.18.2. Specification</a></h4>
 <div class="paragraph">
-<p>WildFly&#8217;s MicroProfile Reactive Streams Operators subsystem implements MicroProfile Reactive Streams Operators 1.0, which adds support for asynchronous streaming of data. It essentially replicates the the interfaces, and their implementations, that were made available in the <a href="https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/Flow.html">java.util.concurrent.Flow</a> class introduced in Java 9. Thus MicroProfile Reactive Streams Operators can be considered a stop-gap until Java 9 and later is ubiquitous.</p>
+<p>WildFly&#8217;s MicroProfile Reactive Streams Operators subsystem implements MicroProfile Reactive Streams Operators 2.0, which adds support for asynchronous streaming of data. It essentially replicates the the interfaces, and their implementations, that were made available in the <a href="https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/Flow.html">java.util.concurrent.Flow</a> class introduced in Java 9. Thus MicroProfile Reactive Streams Operators can be considered a stop-gap until Java 9 and later is ubiquitous.</p>
 </div>
 </div>
 <div class="sect3">
@@ -16783,7 +16783,7 @@ mp.messaging.incoming.from.value.deserializer=org.apache.kafka.common.serializat
 <div class="paragraph">
 <p>The security subsystem is the subsystem that brings the security
 services provided by <a href="http://www.jboss.org/picketbox">PicketBox</a> to the
-WildFly 23 server instances.</p>
+WildFly 24 server instances.</p>
 </div>
 <div class="paragraph">
 <p>If you are looking to secure the management interfaces for the
@@ -18283,7 +18283,32 @@ deployment resource, for example
 </div>
 </div>
 <div class="sect3">
-<h4 id="deployment-descriptors"><a class="link" href="#deployment-descriptors">9.23.3. Deployment Descriptors</a></h4>
+<h4 id="job-repository"><a class="link" href="#job-repository">9.23.3. Job Repository</a></h4>
+<div class="paragraph">
+<p>The batch subsystem supports 2 types of job repository:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>in-memory job repository: all job execution data are kept in the memory
+of WildFly instance. When the server shuts down, all job execution data
+are lost. In a clustered environment, each WildFly server instance has its
+own in-memory job repository, and it is not possible to share job execution
+data between WildFly instances. This is the default job repository in
+batch subsystem.</p>
+</li>
+<li>
+<p>jdbc job repository: all job execution data are saved in a relational
+database accessed via jdbc. In a clustered environment, a jdbc job repository
+can be used to share job execution data between WildFly instances.
+For example, one may start a job execution in one instance, stop and restart
+it from a different WildFly instance.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="deployment-descriptors"><a class="link" href="#deployment-descriptors">9.23.4. Deployment Descriptors</a></h4>
 <div class="paragraph">
 <p>There are no deployment descriptors for configuring a batch environment
 defined by the <a href="https://www.jcp.org/en/jsr/detail?id=352">JSR-352
@@ -18325,7 +18350,7 @@ deployment descriptor.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="deployment-resources"><a class="link" href="#deployment-resources">9.23.4. Deployment Resources</a></h4>
+<h4 id="deployment-resources"><a class="link" href="#deployment-resources">9.23.5. Deployment Resources</a></h4>
 <div class="paragraph">
 <p>Some subsystems in <a href="http://wildfly.org">WildFly</a> register runtime
 resources for deployments. The batch subsystem registers jobs and
@@ -25584,7 +25609,7 @@ to the process it was managing and release other resources:</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-request"><a class="link" href="#format-of-a-detyped-operation-request">12.5.3. Format of a Detyped Operation Request</a></h4>
 <div class="paragraph">
-<p>The basic method a user of the WildFly 23 programmatic management API
+<p>The basic method a user of the WildFly 24 programmatic management API
 would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -26104,7 +26129,7 @@ header just like this :</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-response"><a class="link" href="#format-of-a-detyped-operation-response">12.5.4. Format of a Detyped Operation Response</a></h4>
 <div class="paragraph">
-<p>As noted previously, the basic method a user of the WildFly 23
+<p>As noted previously, the basic method a user of the WildFly 24
 programmatic management API would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -27010,7 +27035,7 @@ script (e.g. 'bin/jboss-admin.bat --connect command=:shutdown').</p>
 <div class="paragraph">
 <p>To avoid "Press any key to continue &#8230;&#8203;" message you need to specify
 NOPAUSE variable. Call 'set NOPAUSE=true' in command line before running
-any WildFly 23 .bat script or include it in your custom script before
+any WildFly 24 .bat script or include it in your custom script before
 invoking scripts from WildFly.</p>
 </div>
 </div>
@@ -27571,7 +27596,7 @@ Thanks to the <em>config=&lt;config name&gt;</em> system property, the script ca
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 23.0.0.Final<br>
+Version 24.0.0.Final<br>
 Last updated 2020-12-01 21:12:38 CST
 </div>
 </div>
