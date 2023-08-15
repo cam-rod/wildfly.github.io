@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>WildFly Admin Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly developer team</span><br>
-<span id="revnumber">version 19.0.0.Final,</span>
-<span id="revdate">2020-03-17T23:46:04Z</span>
+<span id="revnumber">version 19.1.0.Final,</span>
+<span id="revdate">2020-05-04T20:24:20Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Admin guide</div>
@@ -1380,7 +1380,7 @@ invoked via the HTTP API, the JSON representation of a <code>ModelNode</code>.)<
 </div>
 <div class="paragraph">
 <p>Every resource except the root resource will have an <code>add</code> operation and
-should have a <code>remove</code> operation ("should" because in WildFly 19 many do
+should have a <code>remove</code> operation ("should" because in WildFly 19.1 many do
 not). The parameters for the <code>add</code> operation vary depending on the
 resource. The <code>remove</code> operation has no parameters.</p>
 </div>
@@ -3826,7 +3826,7 @@ we add role based authorization checks to the management model.</p>
 <div class="paragraph">
 <p>After a realm has been defined it needs to be associated with an inbound
 or outbound connection for it to be used, the following are some
-examples where these associations are used within the WildFly 19
+examples where these associations are used within the WildFly 19.1
 configuration.</p>
 </div>
 <div class="sect3">
@@ -4708,6 +4708,7 @@ for both inbound and outbound SSL connections.</p>
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;server-identities&gt;</span>
   <span class="tag">&lt;ssl</span> <span class="attribute-name">protocol</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;engine</span> <span class="attribute-name">enabled-protocols</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
     <span class="tag">&lt;keystore</span> <span class="attribute-name">path</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">relative-to</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">keystore-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">key-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
   <span class="tag">&lt;/ssl&gt;</span>
 <span class="tag">&lt;/server-identities&gt;</span></code></pre>
@@ -4717,9 +4718,23 @@ for both inbound and outbound SSL connections.</p>
 <ul>
 <li>
 <p><strong>protocol</strong> - By default this is set to TLS and in general does not
-need to be set.</p>
+need to be set. To make use of OpenSSL, this can be set to <code>openssl.TLS</code>.
+Other valid values are <code>openssl.TLSv1.1</code> and <code>openssl.TLSv1.2</code>, which
+limit the minimum protocol version to TLSv1.1 and TLSv1.2 respectively.</p>
+</li>
+<li>
+<p><strong>enabled-protocols</strong> - The protocols to enable on the underlying
+<code>SSLEngine</code>.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p><strong>NOTE</strong> When using OpenSSL 1.1.0g or higher, the lowest and highest protocol
+versions specified by <code>enabled-protocols</code> will be used to set the minimum
+and maximum protocol versions on the underlying <code>SSLEngine</code>. For example,
+if <code>enabled-protocols</code> is set to ["TLSv1.0", "TLSv1.2"], the minimum
+protocol version will be set to TLSv1.0 and the maximum protocol version
+will be set to TLSv1.2.</p>
 </div>
 <div class="paragraph">
 <p>The SSL element then contains the nested <code>&lt;keystore /&gt;</code> element, this is
@@ -5277,7 +5292,7 @@ the <code>search-credential</code> attribute.  This element supports the followi
 <div class="sect2">
 <h3 id="Security_Realms_Plugins"><a class="link" href="#Security_Realms_Plugins">6.9. Plug Ins</a></h3>
 <div class="paragraph">
-<p>Within WildFly 19 for communication with the management interfaces and
+<p>Within WildFly 19.1 for communication with the management interfaces and
 for other services exposed using Remoting where username / password
 authentication is used the use of Digest authentication is preferred
 over the use of HTTP Basic or SASL Plain so that we can avoid the
@@ -5302,7 +5317,7 @@ support loading a users password, hash and roles from a custom store to
 allow different stores to be implemented without forcing the
 authentication back to plain text variant, this article describes the
 requirements for a plug in and shows a simple example plug-in for use
-with WildFly 19.</p>
+with WildFly 19.1.</p>
 </div>
 <div class="paragraph">
 <p>When implementing a plug in there are two steps to the authentication
@@ -5464,7 +5479,7 @@ used for the authorization step.</p>
 <h4 id="installing-and-configuring-a-plug-in"><a class="link" href="#installing-and-configuring-a-plug-in">6.9.4. Installing and Configuring a Plug-In</a></h4>
 <div class="paragraph">
 <p>The next step of this article describes the steps to implement a plug-in
-provider and how to make it available within WildFly 19 and how to
+provider and how to make it available within WildFly 19.1 and how to
 configure it. Example configuration and an example implementation are
 shown to illustrate this.</p>
 </div>
@@ -5578,7 +5593,7 @@ PlugInProvider implementation class.</p>
 <h5 id="package-as-a-module"><a class="link" href="#package-as-a-module">Package as a Module</a></h5>
 <div class="paragraph">
 <p>To make the <code>PlugInProvider</code> available to the application it is bundled
-as a module and added to the modules already shipped with WildFly 19.</p>
+as a module and added to the modules already shipped with WildFly 19.1.</p>
 </div>
 <div class="paragraph">
 <p>To add as a module we first need a <code>module.xml</code>: -</p>
@@ -9734,7 +9749,7 @@ you installed.</p>
 <div class="sect3">
 <h4 id="jdbc-driver-installation"><a class="link" href="#jdbc-driver-installation">9.3.1. JDBC Driver Installation</a></h4>
 <div class="paragraph">
-<p>The recommended way to install a JDBC driver into WildFly 19 is to deploy
+<p>The recommended way to install a JDBC driver into WildFly 19.1 is to deploy
 it as a regular JAR deployment. The reason for this is that when you run
 WildFly in domain mode, deployments are automatically propagated to all
 servers to which the deployment applies; thus distribution of the driver
@@ -13472,7 +13487,7 @@ the command line.</p>
 <div class="sect3">
 <h4 id="deployment-of--jms.xml-files"><a class="link" href="#deployment-of--jms.xml-files">9.8.10. Deployment of -jms.xml files</a></h4>
 <div class="paragraph">
-<p>Starting with WildFly 19, you have the ability to deploy a -jms.xml file
+<p>Starting with WildFly 19.1, you have the ability to deploy a -jms.xml file
 defining JMS destinations, e.g.:</p>
 </div>
 <div class="listingblock">
@@ -13982,7 +13997,7 @@ Please note that the destination is created remotely but won&#8217;t be removed 
 <div class="paragraph">
 <p>WildFly 10 supports both backwards and forwards compatibility with
 legacy versions that were using HornetQ as their messaging brokers (such
-as JBoss AS7, WildFly 19 &amp; 9).<br>
+as JBoss AS7, WildFly 19.1 &amp; 9).<br>
 These two compatibility modes are provided by the ActiveMQ Artemis
 project that supports the HornetQ&#8217;s CORE protocol:</p>
 </div>
@@ -15598,7 +15613,7 @@ configuration properties:</p>
 <div class="paragraph">
 <p>The security subsystem is the subsystem that brings the security
 services provided by <a href="http://www.jboss.org/picketbox">PicketBox</a> to the
-WildFly 19 server instances.</p>
+WildFly 19.1 server instances.</p>
 </div>
 <div class="paragraph">
 <p>If you are looking to secure the management interfaces for the
@@ -24513,7 +24528,7 @@ to the process it was managing and release other resources:</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-request"><a class="link" href="#format-of-a-detyped-operation-request">13.5.3. Format of a Detyped Operation Request</a></h4>
 <div class="paragraph">
-<p>The basic method a user of the WildFly 19 programmatic management API
+<p>The basic method a user of the WildFly 19.1 programmatic management API
 would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -25033,7 +25048,7 @@ header just like this :</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-response"><a class="link" href="#format-of-a-detyped-operation-response">13.5.4. Format of a Detyped Operation Response</a></h4>
 <div class="paragraph">
-<p>As noted previously, the basic method a user of the WildFly 19
+<p>As noted previously, the basic method a user of the WildFly 19.1
 programmatic management API would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -25939,7 +25954,7 @@ script (e.g. 'bin/jboss-admin.bat --connect command=:shutdown').</p>
 <div class="paragraph">
 <p>To avoid "Press any key to continue &#8230;&#8203;" message you need to specify
 NOPAUSE variable. Call 'set NOPAUSE=true' in command line before running
-any WildFly 19 .bat script or include it in your custom script before
+any WildFly 19.1 .bat script or include it in your custom script before
 invoking scripts from WildFly.</p>
 </div>
 </div>
@@ -26442,8 +26457,8 @@ for a complete description of the command.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 19.0.0.Final<br>
-Last updated 2020-01-20 10:18:55 PST
+Version 19.1.0.Final<br>
+Last updated 2019-11-05 20:46:55 CST
 </div>
 </div>
 </body>

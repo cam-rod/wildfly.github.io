@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>Developer Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly developer team</span><br>
-<span id="revnumber">version 19.0.0.Final,</span>
-<span id="revdate">2020-03-17T23:46:04Z</span>
+<span id="revnumber">version 19.1.0.Final,</span>
+<span id="revdate">2020-05-04T20:24:20Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Developer guide</div>
@@ -717,7 +717,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#example-applications-based-on-ee6">21.2. Example Applications Based on EE6</a></li>
 </ul>
 </li>
-<li><a href="#Migrate_Order_Application_from_EAP5">22. Porting the Order Application from EAP 5.1 to WildFly 19</a>
+<li><a href="#Migrate_Order_Application_from_EAP5">22. Porting the Order Application from EAP 5.1 to WildFly 19.1</a>
 <ul class="sectlevel2">
 <li><a href="#overview-of-the-application">22.1. Overview of the application</a></li>
 <li><a href="#summary-of-changes-migrate-order-application">22.2. Summary of changes</a></li>
@@ -1496,7 +1496,7 @@ deployment.</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>As explained in the <a href="#Class_Loading_in_WildFly">Class Loading in WildFly</a> article,
-WildFly 19 is based on module classloading. A class within a module B
+WildFly 19.1 is based on module classloading. A class within a module B
 isn&#8217;t visible to a class within a module A, unless module B adds a
 dependency on module A. Module dependencies can be explicitly (as
 explained in that classloading article) or can be "implicit". This
@@ -1885,7 +1885,7 @@ applications.</p>
 <h2 id="Application_Client_Reference">5. Application Client Reference</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As a Jakarta EE compliant server, WildFly 19 contains an application
+<p>As a Jakarta EE compliant server, WildFly 19.1 contains an application
 client. An application client is essentially a cut down server instance,
 that allow you to use EE features such as injection in a client side
 program.</p>
@@ -2140,7 +2140,7 @@ Guide</a><br>
 <div class="sect2">
 <h3 id="using-cdi-beans-from-outside-the-deployment">7.1. Using CDI Beans from outside the deployment</h3>
 <div class="paragraph">
-<p>For WildFly 19 onwards, it is now possible have classes outside the
+<p>For WildFly 19.1 onwards, it is now possible have classes outside the
 deployment be picked up as CDI beans. In order for this to work you must
 add a dependency on the external deployment that your beans are coming
 from, and make sure the META-INF directory of this deployment is
@@ -2720,7 +2720,7 @@ Executor Service instance&#8217;s JNDI name is
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter details the extensions that are available when developing
-Enterprise Java Beans <sup>tm</sup> on WildFly 19.</p>
+Enterprise Java Beans <sup>tm</sup> on WildFly 19.1.</p>
 </div>
 <div class="paragraph">
 <p>Currently there is no support for configuring the extensions using an
@@ -3692,7 +3692,7 @@ defined in the server configuration (i.e. <code>standalone.xml</code> or
 <div class="sect5">
 <h6 id="the-clustering-namespace-urnclustering1.0">The clustering namespace urn:clustering:1.0</h6>
 <div class="paragraph">
-<p>This namespace is deprecated and as of WildFly 19 its use has no effect.
+<p>This namespace is deprecated and as of WildFly 19.1 its use has no effect.
 The clustering behavior of EJBs is determined by the profile in use on
 the server.</p>
 </div>
@@ -4224,7 +4224,7 @@ specific extensions to the security configurations.</p>
 <div class="paragraph">
 <p>The Jakarta EE spec doesn&#8217;t mandate a specific way to configure security
 domain for a bean. It leaves it to the vendor implementations to allow
-such configurations, the way they wish. In WildFly 19, the use of
+such configurations, the way they wish. In WildFly 19.1, the use of
 <code>@org.jboss.ejb3.annotation.SecurityDomain</code> annotation allows the
 developer to configure the security domain for a bean. Here&#8217;s an
 example:</p>
@@ -4319,14 +4319,14 @@ of a .jar deployment or .war/WEB-INF folder of a .war deployment.
 <div class="paragraph">
 <p>As you can see the <code>doSomething</code> method is configured to be accessible
 for users with role "bar". However, the bean isn&#8217;t configured for any
-specific security domain. Prior to WildFly 19, the absence of an
+specific security domain. Prior to WildFly 19.1, the absence of an
 explicitly configured security domain on the bean would leave the bean
 unsecured, which meant that even if the <code>doSomething</code> method was
 configured with <code>@RolesAllowed("bar")</code> anyone even without the "bar"
 role could invoke on the bean.</p>
 </div>
 <div class="paragraph">
-<p>In WildFly 19, the presence of any security metadata (like @RolesAllowed,
+<p>In WildFly 19.1, the presence of any security metadata (like @RolesAllowed,
 @PermitAll, @DenyAll, @RunAs, @RunAsPrincipal) on the bean or any
 business method of the bean, makes the bean secure, even in the absence
 of an explicitly configured security domain. In such cases, the security
@@ -4367,7 +4367,7 @@ domain defaulted to "other"). However, notice that the method
 <code>helloWorld</code> doesn&#8217;t have any specific security configurations.</p>
 </div>
 <div class="paragraph">
-<p>In WildFly 19, such methods which have no explicit security
+<p>In WildFly 19.1, such methods which have no explicit security
 configurations, in a secured bean, will be treated similar to a method
 with <code>@DenyAll</code> configuration. What that means is, no one is allowed
 access to the <code>helloWorld</code> method. This behaviour can be controlled via
@@ -5107,7 +5107,7 @@ native API hibernate.cfg.xml file:</p>
 <p><a href="http://infinispan.org/docs/9.4.x/user_guide/user_guide.html#integrations_jpa_hibernate">Infinispan
 Hibernate/JPA second level cache provider documentation</a> contains
 advanced configuration information but you should bear in mind that when
-Hibernate runs within WildFly 19, some of those configuration options,
+Hibernate runs within WildFly 19.1, some of those configuration options,
 such as region factory, are not needed. Moreover, the application server
 providers you with option of selecting a different cache container for
 Infinispan via <strong>hibernate.cache.infinispan.container</strong> persistence
@@ -7087,7 +7087,7 @@ the <strong>required</strong> jboss ejb client setup, please see
 <div class="sectionbody">
 <div class="paragraph">
 <p>This page outlines the three options you have for deploying JAX-RS
-applications in WildFly 19. These three methods are specified in the
+applications in WildFly 19.1. These three methods are specified in the
 JAX-RS 2.0 specification in section 2.3.2.</p>
 </div>
 <div class="sect2">
@@ -7244,7 +7244,7 @@ project integration.</p>
 </div>
 <div class="paragraph">
 <p>This section covers the most relevant topics for the JBossWS version
-available on WildFly 19.</p>
+available on WildFly 19.1.</p>
 </div>
 <div class="sect2">
 <h3 id="JAX-WS_User_Guide">16.1. JAX-WS User Guide</h3>
@@ -20628,7 +20628,7 @@ their deployment and set module dependencies in it.</p>
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-WildFly 19 introduced the EJB client API for managing remote EJB
+WildFly 19.1 introduced the EJB client API for managing remote EJB
 invocations. The EJB client API works off EJBClientContext(s). An
 EJBClientContext can potentially contain any number of EJB receivers. An
 EJB receiver is a component which knows how to communicate with a server
@@ -20642,7 +20642,7 @@ applications can be classified into:
 <p>A remote client which runs as a standalone Java application</p>
 </li>
 <li>
-<p>A remote client which runs within another WildFly 19 instance</p>
+<p>A remote client which runs within another WildFly 19.1 instance</p>
 </li>
 </ul>
 </div>
@@ -20659,7 +20659,7 @@ than one EJBClientContext(s) and a EJB client context selector will be
 responsible for returning the appropriate context.</p>
 </div>
 <div class="paragraph">
-<p>In case of remote clients which run within another WildFly 19 instance,
+<p>In case of remote clients which run within another WildFly 19.1 instance,
 each deployed application will have a corresponding EJB client context.
 Whenever that application invokes on another EJB, the corresponding EJB
 client context will be used for finding the right EJB receiver and
@@ -20670,7 +20670,7 @@ letting it handle the invocation.</p>
 <div class="paragraph">
 <p>In the Overview section we briefly looked at the different types of
 remote clients. Let&#8217;s focus on the standalone remote clients (the ones
-that don&#8217;t run within another WildFly 19 instance) for some of the next
+that don&#8217;t run within another WildFly 19.1 instance) for some of the next
 sections. Like mentioned earlier, typically a remote standalone client
 has just one EJB client context backed by any number of EJB receivers.
 Consider this example:</p>
@@ -20705,7 +20705,7 @@ context is used by the above code to invoke the bean.</p>
 </div>
 <div class="paragraph">
 <p>Now let&#8217;s consider a case where the user application wants to invoke on
-the bean more than once, but wants to connect to the WildFly 19 server
+the bean more than once, but wants to connect to the WildFly 19.1 server
 using different security credentials. Let&#8217;s take a look at the following
 code:</p>
 </div>
@@ -20828,7 +20828,7 @@ context which typically is the one tied to the entire application.</p>
 have more control over which JNDI context "talks to" which server and
 connects to that server in "what way". This gives the user applications
 the flexibility that was associated with the JNP based JNDI invocations
-prior to WildFly 19 versions.</p>
+prior to WildFly 19.1 versions.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -22048,7 +22048,7 @@ as follows:</p>
 <div class="sect2">
 <h3 id="security">19.3. Security</h3>
 <div class="paragraph">
-<p>WildFly 19 is secure by default. What this means is that no communication
+<p>WildFly 19.1 is secure by default. What this means is that no communication
 can happen with an WildFly instance from a remote client (irrespective
 of whether it is a standalone client or another server instance) without
 passing the appropriate credentials. Remember that in this example, our
@@ -22578,7 +22578,7 @@ these projects is.</p>
 <div class="sect2">
 <h3 id="history">20.2. History</h3>
 <div class="paragraph">
-<p>Previous versions of JBoss AS (versions &lt; WildFly 19) used JNP project (
+<p>Previous versions of JBoss AS (versions &lt; WildFly 19.1) used JNP project (
 <a href="http://anonsvn.jboss.org/repos/jbossas/projects/naming/" class="bare">http://anonsvn.jboss.org/repos/jbossas/projects/naming/</a>) as the JNDI
 naming implementation. Developers of client applications of previous
 versions of JBoss AS will be familiar with the <code>jnp:// PROVIDER_URL</code> URL
@@ -22586,7 +22586,7 @@ they used to use in their applications for communicating with the JNDI
 server on the JBoss server.</p>
 </div>
 <div class="paragraph">
-<p>Starting WildFly 19, the JNP project is <em>not</em> used. Neither on the server
+<p>Starting WildFly 19.1, the JNP project is <em>not</em> used. Neither on the server
 side nor on the client side. The client side of the JNP project has now
 been replaced by jboss-remote-naming project (
 <a href="https://github.com/jbossas/jboss-remote-naming" class="bare">https://github.com/jbossas/jboss-remote-naming</a>). There were various
@@ -22648,7 +22648,7 @@ they used <code>jnp://localhost:1099</code> (just an example). In WildFly, the U
 protocol scheme for jboss-remote-naming project is <code>remote://</code>. The rest
 of the PROVIDER_URL part is the server hostname or IP and the port on
 which the remoting connector is exposed on the server side. By default
-the http-remoting connector port in WildFly 19 is 8080. That&#8217;s what we
+the http-remoting connector port in WildFly 19.1 is 8080. That&#8217;s what we
 have used in our example. The hostname we have used is localhost but
 that should point to the server IP or hostname where the server is
 running.</p>
@@ -22671,7 +22671,7 @@ version of that project (which is available in a WildFly release <strong>after</
 </table>
 </div>
 <div class="paragraph">
-<p>WildFly 19 can use the PROVIDER_URL like:</p>
+<p>WildFly 19.1 can use the PROVIDER_URL like:</p>
 </div>
 <div class="paragraph">
 <p>java.naming.provider.url=http-remoting://server1:8080,http-remoting://server2:8080</p>
@@ -22728,7 +22728,7 @@ port.</p>
 <div class="paragraph">
 <p>We previously mentioned that remote-naming, backed by jboss-remoting
 project, has increased support for security configurations. Starting
-WildFly 19, every service including the http remoting connector (which
+WildFly 19.1, every service including the http remoting connector (which
 listens by default on port 8080), is secured (see
 <a href="https://community.jboss.org/wiki/AS710Beta1-SecurityEnabledByDefault" class="bare">https://community.jboss.org/wiki/AS710Beta1-SecurityEnabledByDefault</a> for
 details). This means that when trying to do JNDI operations like a
@@ -22749,7 +22749,7 @@ named " `peter`" whose password is expected to be " `lois`".</p>
 <td class="content">
 Note: The server side configurations for the remoting connector to allow
 "peter" to access the connector, is out of the scope of this
-documentation. The WildFly 19 documentation already has chapters on how
+documentation. The WildFly 19.1 documentation already has chapters on how
 to set that up.
 </td>
 </tr>
@@ -22810,7 +22810,7 @@ exposed by the javax.naming.Context class. The remote-naming project
 only supports the read-only kind of methods (like the lookup() method)
 and does not support any write kind of methods (like the bind() method).
 The client applications are expected to use the remote-naming project
-mainly for lookups of JNDI objects. Neither WildFly 19 nor remote-naming
+mainly for lookups of JNDI objects. Neither WildFly 19.1 nor remote-naming
 project allows writing/binding to the JNDI server from a remote
 application.</p>
 </div>
@@ -23321,7 +23321,7 @@ application deployed on another JBoss instance</p>
 <h3 id="example-applications-migrated-from-previous-releases">21.1. Example Applications Migrated from Previous Releases</h3>
 <div class="paragraph">
 <p>The applications in this section were written for a previous version of
-the server but have been modified to run on WildFly 19. Changes were made
+the server but have been modified to run on WildFly 19.1. Changes were made
 to resolve issues that arose during deployment and runtime or to fix
 problems with application behaviour. Each example below documents the
 changes that were made to get the application to run successfully on
@@ -23332,7 +23332,7 @@ WildFly.</p>
 <div class="paragraph">
 <p>For details on how to migrate this demo application, see
 <a href="https://community.jboss.org/blogs/marek-novotny/2011/12/16/dvdstore-migration-for-jboss-as-710beta">Seam
-2 DVD Store example on WildFly 19</a> on Marek Novotny&#8217;s Blog.</p>
+2 DVD Store example on WildFly 19.1</a> on Marek Novotny&#8217;s Blog.</p>
 </div>
 </div>
 <div class="sect3">
@@ -23340,7 +23340,7 @@ WildFly.</p>
 <div class="paragraph">
 <p>For details on how to migrate this demo application, see
 <a href="http://community.jboss.org/blogs/marek-novotny/2011/07/29/seam-2-booking-example-on-jboss-as-7">Seam
-2 Booking example on WildFly 19</a> on Marek Novotny&#8217;s Blog.</p>
+2 Booking example on WildFly 19.1</a> on Marek Novotny&#8217;s Blog.</p>
 </div>
 </div>
 <div class="sect3">
@@ -23354,7 +23354,7 @@ and learn how debug and resolve them. See <a href="#Migrate_Seam_2_Booking_EAR_B
 <div class="sect3">
 <h4 id="jbpm-console-application">21.1.4. jBPM-Console application</h4>
 <div class="paragraph">
-<p>Kris Verlaenen migrated this application from AS 5 to WildFly 19. For
+<p>Kris Verlaenen migrated this application from AS 5 to WildFly 19.1. For
 details about this migration, see <a href="http://kverlaen.blogspot.com/2011/07/jbpm5-on-as7-lightning.html">jBPM5 on WildFly</a> on his Kris&#8217;s Blog.</p>
 </div>
 </div>
@@ -23369,7 +23369,7 @@ about this migration, see <a href="#Migrate_Order_Application_from_EAP5.1_to_Wil
 <h4 id="migrate-example-application">21.1.6. Migrate example application</h4>
 <div class="paragraph">
 <p>A step by step work through of issues, and their solutions, that might
-crop up when migrating applications to WildFly 19. See the following
+crop up when migrating applications to WildFly 19.1. See the following
 <a href="https://github.com/danbev/migrate">github project</a> for details.</p>
 </div>
 </div>
@@ -23395,11 +23395,11 @@ your own project. For more information about the quickstarts, see
 </div>
 </div>
 <div class="sect1">
-<h2 id="Migrate_Order_Application_from_EAP5">22. Porting the Order Application from EAP 5.1 to WildFly 19</h2>
+<h2 id="Migrate_Order_Application_from_EAP5">22. Porting the Order Application from EAP 5.1 to WildFly 19.1</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Andy Miller ported an example Order application that was used for
-performance testing from EAP 5.1 to WildFly 19. These are the notes he
+performance testing from EAP 5.1 to WildFly 19.1. These are the notes he
 made during the migration process.</p>
 </div>
 <div class="sect2">
@@ -23698,7 +23698,7 @@ changes that were made to the application.</p>
 </div>
 <div class="paragraph">
 <p>This is a step-by-step how-to guide on porting the Seam Booking
-application binaries from EAP5.1 to WildFly 19. Although there are better
+application binaries from EAP5.1 to WildFly 19.1. Although there are better
 approaches for migrating applications, the purpose of this document is
 to show the types of issues you might encounter when migrating an
 application and how to debug and resolve those issues.</p>
@@ -24247,7 +24247,7 @@ look that the text within the brackets after "missing".</p>
 <div class="sect4">
 <h5 id="how-to-resolve-it-6">How to resolve it:</h5>
 <div class="paragraph">
-<p>In WildFly 19, datasource configuration has changed and needs to be
+<p>In WildFly 19.1, datasource configuration has changed and needs to be
 defined in the <code>standalone/configuration/standalone.xml</code> file. Since
 WildFly ships with an example database that is already defined in the
 standalone.xml file, we will modify the <code>persistence.xml</code> file to use
@@ -24761,24 +24761,24 @@ and the EAR as modified to run on AS7
 <div class="paragraph">
 <p>This document details the main points that need to be considered by
 Spring developers that wish to develop new applications or to migrate
-existing applications to be run into WildFly 19.</p>
+existing applications to be run into WildFly 19.1.</p>
 </div>
 <div class="sect2">
 <h3 id="dependencies-and-modularity">24.1. Dependencies and Modularity</h3>
 <div class="paragraph">
-<p>WildFly 19 has a modular class loading strategy, different from previous
+<p>WildFly 19.1 has a modular class loading strategy, different from previous
 versions of JBoss AS, which enforces a better class loading isolation
 between deployments and the application server itself. A detailed
 description can be found in the documentation dedicated to
 <a href="https://docs.jboss.org/author/display/AS7/Class+Loading+in+AS7">class
-loading in WildFly 19</a>.</p>
+loading in WildFly 19.1</a>.</p>
 </div>
 <div class="paragraph">
 <p>This reduces significantly the risk of running into a class loading
 conflict and allows applications to package their own dependencies if
 they choose to do so. This makes it easier for Spring applications that
 package their own dependencies - such as logging frameworks or
-persistence providers to run on WildFly 19.</p>
+persistence providers to run on WildFly 19.1.</p>
 </div>
 <div class="paragraph">
 <p>At the same time, this does not mean that duplications and conflicts
@@ -24813,7 +24813,7 @@ depending on the type of deployment as shown
 through either one of LocalSessionFactoryBean or
 AnnotationSessionFactoryBean) may use a version of Hibernate 3 packaged
 inside the application. Hibernate 4 (which is provided through the
-'org.hibernate' module of WildFly 19) is not supported by Spring 3.0 and
+'org.hibernate' module of WildFly 19.1) is not supported by Spring 3.0 and
 Spring 3.1 (and may be supported by Spring 3.2 as described in
 <a href="https://jira.springsource.org/browse/SPR-8096">SPR-8096</a>), so adding this
 module as a dependency is not a solution.</p>
@@ -24906,7 +24906,7 @@ JNDI binding via persistence.xml properties is not supported in WildFly
 <div class="sect3">
 <h4 id="using-spring-managed-persistence-units">24.4.2. Using Spring-managed persistence units</h4>
 <div class="paragraph">
-<p>Spring applications running in WildFly 19 may also create persistence
+<p>Spring applications running in WildFly 19.1 may also create persistence
 units on their own, using the LocalContainerEntityManagerFactoryBean.
 This is what these applications need to consider:</p>
 </div>
@@ -26430,8 +26430,8 @@ applications to WildFly.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 19.0.0.Final<br>
-Last updated 2020-01-20 10:18:55 PST
+Version 19.1.0.Final<br>
+Last updated 2019-11-05 20:46:55 CST
 </div>
 </div>
 </body>
