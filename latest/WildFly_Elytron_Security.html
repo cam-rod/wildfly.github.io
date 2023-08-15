@@ -522,8 +522,8 @@ table.CodeRay td.code>pre{padding:0}
 <div id="header">
 <h1>WildFly Elytron Security</h1>
 <div class="details">
-<span id="revnumber">version 12.0.0.Final,</span>
-<span id="revdate">2018-03-01T06:48:21Z</span>
+<span id="revnumber">version 13.0.0.Final,</span>
+<span id="revdate">2018-05-31T05:22:12Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Elytron Security Guide</div>
@@ -1710,13 +1710,15 @@ the legacy security default configuration.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">default-permission-mapper</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The default-permission-mapper mapper is a
-constant permission mapper that uses
-org.wildfly.security.auth.permission.LoginPermission to assign the login
-permission and
-org.wildfly.extension.batch.jberet.deployment.BatchPermission to assign
-permission for batch jobs. The batch permissions are start, stop,
-restart, abandon, and read which aligns with
-javax.batch.operations.JobOperator.</p></td>
+simple permission mapper that uses the default-permissions permission set
+to assign the full set of permissions that an identity would require to
+access any services on the server. For example, the default-permission-mapper
+mapper uses org.wildfly.extension.batch.jberet.deployment.BatchPermission
+specified by the default-permissions permission set to assign permission for
+batch jobs. The batch permissions are start, stop, restart, abandon, and read
+which aligns with javax.batch.operations.JobOperator. The default-permission-mapper
+mapper also uses org.wildfly.security.auth.permission.LoginPermission specified
+by the the login-permission permission set to assign the login permission.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">local (mapper)</p></td>
@@ -1824,8 +1826,10 @@ and openssl provider loaders.</p></td>
     <span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>,
     <span class="string"><span class="delimiter">&quot;</span><span class="content">result</span><span class="delimiter">&quot;</span></span> =&gt; {
         <span class="string"><span class="delimiter">&quot;</span><span class="content">default-authentication-context</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">final-providers</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">initial-providers</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">combined-providers</span><span class="delimiter">&quot;</span></span>,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">disallowed-providers</span><span class="delimiter">&quot;</span></span> =&gt; [<span class="string"><span class="delimiter">&quot;</span><span class="content">OracleUcrypto</span><span class="delimiter">&quot;</span></span>],
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">final-providers</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">combined-providers</span><span class="delimiter">&quot;</span></span>,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">initial-providers</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">security-properties</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">add-prefix-role-mapper</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">add-suffix-role-mapper</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">aggregate-http-server-mechanism-factory</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
@@ -1838,6 +1842,7 @@ and openssl provider loaders.</p></td>
         <span class="string"><span class="delimiter">&quot;</span><span class="content">aggregate-realm</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">aggregate-role-mapper</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">aggregate-sasl-server-factory</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">aggregate-security-event-listener</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">authentication-configuration</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">authentication-context</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">caching-realm</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
@@ -1846,23 +1851,13 @@ and openssl provider loaders.</p></td>
         <span class="string"><span class="delimiter">&quot;</span><span class="content">concatenating-principal-decoder</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">configurable-http-server-mechanism-factory</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">configurable-sasl-server-factory</span><span class="delimiter">&quot;</span></span> =&gt; {<span class="string"><span class="delimiter">&quot;</span><span class="content">configured</span><span class="delimiter">&quot;</span></span> =&gt; {
-            <span class="string"><span class="delimiter">&quot;</span><span class="content">filters</span><span class="delimiter">&quot;</span></span> =&gt; [
-                {<span class="string"><span class="delimiter">&quot;</span><span class="content">pattern-filter</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">JBOSS-LOCAL-USER</span><span class="delimiter">&quot;</span></span>},
-                {<span class="string"><span class="delimiter">&quot;</span><span class="content">pattern-filter</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">DIGEST-MD5</span><span class="delimiter">&quot;</span></span>}
-            ],
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">filters</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
             <span class="string"><span class="delimiter">&quot;</span><span class="content">properties</span><span class="delimiter">&quot;</span></span> =&gt; {<span class="string"><span class="delimiter">&quot;</span><span class="content">wildfly.sasl.local-user.default-user</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">$local</span><span class="delimiter">&quot;</span></span>},
             <span class="string"><span class="delimiter">&quot;</span><span class="content">protocol</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
             <span class="string"><span class="delimiter">&quot;</span><span class="content">sasl-server-factory</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">elytron</span><span class="delimiter">&quot;</span></span>,
             <span class="string"><span class="delimiter">&quot;</span><span class="content">server-name</span><span class="delimiter">&quot;</span></span> =&gt; undefined
         }},
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">constant-permission-mapper</span><span class="delimiter">&quot;</span></span> =&gt; {<span class="string"><span class="delimiter">&quot;</span><span class="content">default-permission-mapper</span><span class="delimiter">&quot;</span></span> =&gt; {<span class="string"><span class="delimiter">&quot;</span><span class="content">permissions</span><span class="delimiter">&quot;</span></span> =&gt; [
-            {<span class="string"><span class="delimiter">&quot;</span><span class="content">class-name</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">org.wildfly.security.auth.permission.LoginPermission</span><span class="delimiter">&quot;</span></span>},
-            {
-                <span class="string"><span class="delimiter">&quot;</span><span class="content">class-name</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">org.wildfly.extension.batch.jberet.deployment.BatchPermission</span><span class="delimiter">&quot;</span></span>,
-                <span class="string"><span class="delimiter">&quot;</span><span class="content">module</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">org.wildfly.extension.batch.jberet</span><span class="delimiter">&quot;</span></span>,
-                <span class="string"><span class="delimiter">&quot;</span><span class="content">target-name</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">*</span><span class="delimiter">&quot;</span></span>
-            }
-        ]}},
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">constant-permission-mapper</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">constant-principal-decoder</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">constant-principal-transformer</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">constant-realm-mapper</span><span class="delimiter">&quot;</span></span> =&gt; {<span class="string"><span class="delimiter">&quot;</span><span class="content">local</span><span class="delimiter">&quot;</span></span> =&gt; {<span class="string"><span class="delimiter">&quot;</span><span class="content">realm-name</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">local</span><span class="delimiter">&quot;</span></span>}},
@@ -1878,6 +1873,12 @@ and openssl provider loaders.</p></td>
         <span class="string"><span class="delimiter">&quot;</span><span class="content">custom-role-decoder</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">custom-role-mapper</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">dir-context</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">file-audit-log</span><span class="delimiter">&quot;</span></span> =&gt; {<span class="string"><span class="delimiter">&quot;</span><span class="content">local-audit</span><span class="delimiter">&quot;</span></span> =&gt; {
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">format</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">JSON</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">path</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">audit.log</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">relative-to</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">jboss.server.log.dir</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">synchronized</span><span class="delimiter">&quot;</span></span> =&gt; <span class="predefined-constant">true</span>
+        }},
         <span class="string"><span class="delimiter">&quot;</span><span class="content">filesystem-realm</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">filtering-key-store</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">http-authentication-factory</span><span class="delimiter">&quot;</span></span> =&gt; {
@@ -1908,7 +1909,7 @@ and openssl provider loaders.</p></td>
         }},
         <span class="string"><span class="delimiter">&quot;</span><span class="content">jdbc-realm</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">kerberos-security-factory</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">key-managers</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">key-manager</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">key-store</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">key-store-realm</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">ldap-key-store</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
@@ -1921,6 +1922,26 @@ and openssl provider loaders.</p></td>
             <span class="string"><span class="delimiter">&quot;</span><span class="content">filters</span><span class="delimiter">&quot;</span></span> =&gt; [{<span class="string"><span class="delimiter">&quot;</span><span class="content">provider-name</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">WildFlyElytron</span><span class="delimiter">&quot;</span></span>}],
             <span class="string"><span class="delimiter">&quot;</span><span class="content">sasl-server-factory</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">global</span><span class="delimiter">&quot;</span></span>
         }},
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">periodic-rotating-file-audit-log</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">permission-set</span><span class="delimiter">&quot;</span></span> =&gt; {
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">login-permission</span><span class="delimiter">&quot;</span></span> =&gt; {<span class="string"><span class="delimiter">&quot;</span><span class="content">permissions</span><span class="delimiter">&quot;</span></span> =&gt; [{<span class="string"><span class="delimiter">&quot;</span><span class="content">class-name</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">org.wildfly.security.auth.permission.LoginPermission</span><span class="delimiter">&quot;</span></span>}]},
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">default-permissions</span><span class="delimiter">&quot;</span></span> =&gt; {<span class="string"><span class="delimiter">&quot;</span><span class="content">permissions</span><span class="delimiter">&quot;</span></span> =&gt; [
+                {
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">class-name</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">org.wildfly.extension.batch.jberet.deployment.BatchPermission</span><span class="delimiter">&quot;</span></span>,
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">module</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">org.wildfly.extension.batch.jberet</span><span class="delimiter">&quot;</span></span>,
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">target-name</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">*</span><span class="delimiter">&quot;</span></span>
+                },
+                {
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">class-name</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">org.wildfly.transaction.client.RemoteTransactionPermission</span><span class="delimiter">&quot;</span></span>,
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">module</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">org.wildfly.transaction.client</span><span class="delimiter">&quot;</span></span>
+                },
+                {
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">class-name</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">org.jboss.ejb.client.RemoteEJBPermission</span><span class="delimiter">&quot;</span></span>,
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">module</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">org.jboss.ejb-client</span><span class="delimiter">&quot;</span></span>
+                }
+            ]}
+        },
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">policy</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">properties-realm</span><span class="delimiter">&quot;</span></span> =&gt; {
             <span class="string"><span class="delimiter">&quot;</span><span class="content">ApplicationRealm</span><span class="delimiter">&quot;</span></span> =&gt; {
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">groups-attribute</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">groups</span><span class="delimiter">&quot;</span></span>,
@@ -1950,6 +1971,7 @@ and openssl provider loaders.</p></td>
         <span class="string"><span class="delimiter">&quot;</span><span class="content">provider-http-server-mechanism-factory</span><span class="delimiter">&quot;</span></span> =&gt; {<span class="string"><span class="delimiter">&quot;</span><span class="content">global</span><span class="delimiter">&quot;</span></span> =&gt; {<span class="string"><span class="delimiter">&quot;</span><span class="content">providers</span><span class="delimiter">&quot;</span></span> =&gt; undefined}},
         <span class="string"><span class="delimiter">&quot;</span><span class="content">provider-loader</span><span class="delimiter">&quot;</span></span> =&gt; {
             <span class="string"><span class="delimiter">&quot;</span><span class="content">elytron</span><span class="delimiter">&quot;</span></span> =&gt; {
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">argument</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">class-names</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">configuration</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">module</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">org.wildfly.security.elytron</span><span class="delimiter">&quot;</span></span>,
@@ -1957,6 +1979,7 @@ and openssl provider loaders.</p></td>
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">relative-to</span><span class="delimiter">&quot;</span></span> =&gt; undefined
             },
             <span class="string"><span class="delimiter">&quot;</span><span class="content">openssl</span><span class="delimiter">&quot;</span></span> =&gt; {
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">argument</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">class-names</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">configuration</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">module</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">org.wildfly.openssl</span><span class="delimiter">&quot;</span></span>,
@@ -1983,7 +2006,16 @@ and openssl provider loaders.</p></td>
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">security-domain</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">ManagementDomain</span><span class="delimiter">&quot;</span></span>
             },
             <span class="string"><span class="delimiter">&quot;</span><span class="content">application-sasl-authentication</span><span class="delimiter">&quot;</span></span> =&gt; {
-                <span class="string"><span class="delimiter">&quot;</span><span class="content">mechanism-configurations</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">mechanism-configurations</span><span class="delimiter">&quot;</span></span> =&gt; [
+                    {
+                        <span class="string"><span class="delimiter">&quot;</span><span class="content">mechanism-name</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">JBOSS-LOCAL-USER</span><span class="delimiter">&quot;</span></span>,
+                        <span class="string"><span class="delimiter">&quot;</span><span class="content">realm-mapper</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">local</span><span class="delimiter">&quot;</span></span>
+                    },
+                    {
+                        <span class="string"><span class="delimiter">&quot;</span><span class="content">mechanism-name</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">DIGEST-MD5</span><span class="delimiter">&quot;</span></span>,
+                        <span class="string"><span class="delimiter">&quot;</span><span class="content">mechanism-realm-configurations</span><span class="delimiter">&quot;</span></span> =&gt; [{<span class="string"><span class="delimiter">&quot;</span><span class="content">realm-name</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">ApplicationRealm</span><span class="delimiter">&quot;</span></span>}]
+                    }
+                ],
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">sasl-server-factory</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">configured</span><span class="delimiter">&quot;</span></span>,
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">security-domain</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">ApplicationDomain</span><span class="delimiter">&quot;</span></span>
             }
@@ -1991,20 +2023,28 @@ and openssl provider loaders.</p></td>
         <span class="string"><span class="delimiter">&quot;</span><span class="content">security-domain</span><span class="delimiter">&quot;</span></span> =&gt; {
             <span class="string"><span class="delimiter">&quot;</span><span class="content">ApplicationDomain</span><span class="delimiter">&quot;</span></span> =&gt; {
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">default-realm</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">ApplicationRealm</span><span class="delimiter">&quot;</span></span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">outflow-anonymous</span><span class="delimiter">&quot;</span></span> =&gt; <span class="predefined-constant">false</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">outflow-security-domains</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">permission-mapper</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">default-permission-mapper</span><span class="delimiter">&quot;</span></span>,
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">post-realm-principal-transformer</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">pre-realm-principal-transformer</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">principal-decoder</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">realm-mapper</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
-                <span class="string"><span class="delimiter">&quot;</span><span class="content">realms</span><span class="delimiter">&quot;</span></span> =&gt; [{
-                    <span class="string"><span class="delimiter">&quot;</span><span class="content">realm</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">ApplicationRealm</span><span class="delimiter">&quot;</span></span>,
-                    <span class="string"><span class="delimiter">&quot;</span><span class="content">role-decoder</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">groups-to-roles</span><span class="delimiter">&quot;</span></span>
-                }],
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">realms</span><span class="delimiter">&quot;</span></span> =&gt; [
+                    {
+                        <span class="string"><span class="delimiter">&quot;</span><span class="content">realm</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">ApplicationRealm</span><span class="delimiter">&quot;</span></span>,
+                        <span class="string"><span class="delimiter">&quot;</span><span class="content">role-decoder</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">groups-to-roles</span><span class="delimiter">&quot;</span></span>
+                    },
+                    {<span class="string"><span class="delimiter">&quot;</span><span class="content">realm</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">local</span><span class="delimiter">&quot;</span></span>}
+                ],
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">role-mapper</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">security-event-listener</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">trusted-security-domains</span><span class="delimiter">&quot;</span></span> =&gt; undefined
             },
             <span class="string"><span class="delimiter">&quot;</span><span class="content">ManagementDomain</span><span class="delimiter">&quot;</span></span> =&gt; {
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">default-realm</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">ManagementRealm</span><span class="delimiter">&quot;</span></span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">outflow-anonymous</span><span class="delimiter">&quot;</span></span> =&gt; <span class="predefined-constant">false</span>,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">outflow-security-domains</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">permission-mapper</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">default-permission-mapper</span><span class="delimiter">&quot;</span></span>,
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">post-realm-principal-transformer</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">pre-realm-principal-transformer</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
@@ -2021,18 +2061,35 @@ and openssl provider loaders.</p></td>
                     }
                 ],
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">role-mapper</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">security-event-listener</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
                 <span class="string"><span class="delimiter">&quot;</span><span class="content">trusted-security-domains</span><span class="delimiter">&quot;</span></span> =&gt; undefined
             }
         },
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">security-property</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">server-ssl-context</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">service-loader-http-server-mechanism-factory</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">service-loader-sasl-server-factory</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">simple-permission-mapper</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">simple-permission-mapper</span><span class="delimiter">&quot;</span></span> =&gt; {<span class="string"><span class="delimiter">&quot;</span><span class="content">default-permission-mapper</span><span class="delimiter">&quot;</span></span> =&gt; {
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">mapping-mode</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">first</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">permission-mappings</span><span class="delimiter">&quot;</span></span> =&gt; [
+                {
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">principals</span><span class="delimiter">&quot;</span></span> =&gt; [<span class="string"><span class="delimiter">&quot;</span><span class="content">anonymous</span><span class="delimiter">&quot;</span></span>],
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">permission-sets</span><span class="delimiter">&quot;</span></span> =&gt; [{<span class="string"><span class="delimiter">&quot;</span><span class="content">permission-set</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">default-permissions</span><span class="delimiter">&quot;</span></span>}]
+                },
+                {
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">match-all</span><span class="delimiter">&quot;</span></span> =&gt; <span class="predefined-constant">true</span>,
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">permission-sets</span><span class="delimiter">&quot;</span></span> =&gt; [
+                        {<span class="string"><span class="delimiter">&quot;</span><span class="content">permission-set</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">login-permission</span><span class="delimiter">&quot;</span></span>},
+                        {<span class="string"><span class="delimiter">&quot;</span><span class="content">permission-set</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">default-permissions</span><span class="delimiter">&quot;</span></span>}
+                    ]
+                }
+            ]
+        }},
         <span class="string"><span class="delimiter">&quot;</span><span class="content">simple-regex-realm-mapper</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">simple-role-decoder</span><span class="delimiter">&quot;</span></span> =&gt; {<span class="string"><span class="delimiter">&quot;</span><span class="content">groups-to-roles</span><span class="delimiter">&quot;</span></span> =&gt; {<span class="string"><span class="delimiter">&quot;</span><span class="content">attribute</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">groups</span><span class="delimiter">&quot;</span></span>}},
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">size-rotating-file-audit-log</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">syslog-audit-log</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">token-realm</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">trust-managers</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">trust-manager</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">x500-attribute-principal-decoder</span><span class="delimiter">&quot;</span></span> =&gt; undefined
     }
 }</code></pre>
@@ -4750,7 +4807,40 @@ based on their functionality, for example <em>empty-role-decoder</em>,
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-an-elytron-permission-mapper">4.5.3. Create an Elytron Permission Mapper</h4>
+<h4 id="create-an-elytron-permission-set">4.5.3. Create an Elytron Permission Set</h4>
+<div class="paragraph">
+<p>Permission sets can be used to assign permissions to an identity.</p>
+</div>
+<div class="paragraph">
+<p>Adding a permission set takes the general form:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby"><span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=elytron</span><span class="delimiter">/</span></span>permission-set=<span class="key">PermissionSetName</span>:add(permissions=[{<span class="keyword">class</span>-name=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span>, <span class="keyword">module</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span>, target-name=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span>, action=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span>}...])</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <em>permissions</em> consists of a set of permissions, where each permission has the following attributes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>class-name</em> is the fully qualified class name of the permission. This is the only permission attribute that is required.</p>
+</li>
+<li>
+<p><em>module</em> is the optional module to use to load the permission.</p>
+</li>
+<li>
+<p><em>target-name</em> is the optional target name to pass to the permission as it is constructed.</p>
+</li>
+<li>
+<p><em>action</em> is the optional action to pass to the permission as it is constructed.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="create-an-elytron-permission-mapper">4.5.4. Create an Elytron Permission Mapper</h4>
 <div class="paragraph">
 <p>In addition to roles being assigned to a identity, permissions may also
 be assigned. A permission mapper assigns permissions to an identity.
@@ -4768,7 +4858,7 @@ functionality, for example <em>logical-permission-mapper</em>,
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-an-elytron-role-mapper">4.5.4. Create an Elytron Role Mapper</h4>
+<h4 id="create-an-elytron-role-mapper">4.5.5. Create an Elytron Role Mapper</h4>
 <div class="paragraph">
 <p>A role mapper maps roles after they have been decoded to other roles.
 Examples include normalizing role names or adding and removing specific
@@ -4787,7 +4877,7 @@ also specifically typed based on their functionality, for example
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-an-elytron-security-domain">4.5.5. Create an Elytron Security Domain</h4>
+<h4 id="create-an-elytron-security-domain">4.5.6. Create an Elytron Security Domain</h4>
 <div class="paragraph">
 <p>Security domains in the Elytron subsystem, when used in conjunction with
 security realms, are use for both core management authentication as well
@@ -4803,7 +4893,7 @@ as for authentication with applications.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-an-elytron-authentication-factory">4.5.6. Create an Elytron Authentication Factory</h4>
+<h4 id="create-an-elytron-authentication-factory">4.5.7. Create an Elytron Authentication Factory</h4>
 <div class="paragraph">
 <p>An authentication factory is an authentication policy used for specific
 authentication mechanisms. Authenticaion factories are specifically
@@ -4821,7 +4911,7 @@ based on the authentication mechanism, for example
 </div>
 </div>
 <div class="sect3">
-<h4 id="create-an-elytron-policy-provider">4.5.7. Create an Elytron Policy Provider</h4>
+<h4 id="create-an-elytron-policy-provider">4.5.8. Create an Elytron Policy Provider</h4>
 <div class="paragraph">
 <p>Elytron subsystem provides a specific resource definition that can be
 used to configure a default ruby Policy provider. The subsystem allows
@@ -8667,8 +8757,8 @@ for example, Infinispan cache cannot be used, any others?</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 12.0.0.Final<br>
-Last updated 2018-02-28 16:06:06 CST
+Version 13.0.0.Final<br>
+Last updated 2018-05-30 14:06:26 CDT
 </div>
 </div>
 </body>

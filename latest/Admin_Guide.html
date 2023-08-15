@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>WildFly Admin Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly developer team</span><br>
-<span id="revnumber">version 12.0.0.Final,</span>
-<span id="revdate">2018-03-01T06:48:21Z</span>
+<span id="revnumber">version 13.0.0.Final,</span>
+<span id="revdate">2018-05-31T05:22:12Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Admin guide</div>
@@ -1358,7 +1358,7 @@ invoked via the HTTP API, the JSON representation of a <code>ModelNode</code>.)<
 </div>
 <div class="paragraph">
 <p>Every resource except the root resource will have an <code>add</code> operation and
-should have a <code>remove</code> operation ("should" because in WildFly 12 many do
+should have a <code>remove</code> operation ("should" because in WildFly 13 many do
 not). The parameters for the <code>add</code> operation vary depending on the
 resource. The <code>remove</code> operation has no parameters.</p>
 </div>
@@ -2701,7 +2701,85 @@ two ways to make the CLI to display JSON:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="batch-processing"><a class="link" href="#batch-processing">3.2.8. Batch Processing</a></h4>
+<h4 id="color-output"><a class="link" href="#color-output">3.2.8. Color output</a></h4>
+<div class="paragraph">
+<p>The CLI outputs results of commands and the prompt in color. To disable this, there are two possible ways to disable it:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>--no-color-output</em> will disable color output;</p>
+</li>
+<li>
+<p>Change <em>&lt;enabled&gt;</em> to <code>false</code> in <code>jboss-cli.xml</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <em>&lt;color-output&gt;</em> block is  used to configure the  colors of the six basic elements that do support it</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Output messages: error, warning and success;</p>
+</li>
+<li>
+<p>Required configuration options when using the auto-complete functionality;</p>
+</li>
+<li>
+<p>The color of the default prompt;</p>
+</li>
+<li>
+<p>The color of the prompt when using <code>batch</code> and any of the workflow commands, <code>if</code>, <code>for</code> and <code>try</code>.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;color-output&gt;</span>
+    <span class="tag">&lt;enabled&gt;</span>true<span class="tag">&lt;/enabled&gt;</span>
+    <span class="tag">&lt;error-color&gt;</span>red<span class="tag">&lt;/error-color&gt;</span>
+    <span class="tag">&lt;warn-color&gt;</span>yellow<span class="tag">&lt;/warn-color&gt;</span>
+    <span class="tag">&lt;success-color&gt;</span>default<span class="tag">&lt;/success-color&gt;</span>
+    <span class="tag">&lt;required-color&gt;</span>magenta<span class="tag">&lt;/required-color&gt;</span>
+    <span class="tag">&lt;workflow-color&gt;</span>green<span class="tag">&lt;/workflow-color&gt;</span>
+    <span class="tag">&lt;prompt-color&gt;</span>blue<span class="tag">&lt;/prompt-color&gt;</span>
+<span class="tag">&lt;/color-output&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There are eight available colors:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Black</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Magenta</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Blue</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Red</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cyan</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">White</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Green</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yellow</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>There is also the possibility of using the <em>default</em> color, which is the terminal&#8217;s configured foreground color.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="batch-processing"><a class="link" href="#batch-processing">3.2.9. Batch Processing</a></h4>
 <div class="paragraph">
 <p>The batch mode allows one to group commands and operations and execute
 them together as an atomic unit. If at least one of the commands or
@@ -2779,7 +2857,7 @@ name=mytopic</em>)</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="operators"><a class="link" href="#operators">3.2.9. Operators</a></h4>
+<h4 id="operators"><a class="link" href="#operators">3.2.10. Operators</a></h4>
 <div class="paragraph">
 <p>CLI has some operators that are similar to shell operators:</p>
 </div>
@@ -3449,7 +3527,7 @@ we add role based authorization checks to the management model.</p>
 <div class="paragraph">
 <p>After a realm has been defined it needs to be associated with an inbound
 or outbound connection for it to be used, the following are some
-examples where these associations are used within the WildFly 12
+examples where these associations are used within the WildFly 13
 configuration.</p>
 </div>
 <div class="sect3">
@@ -4849,7 +4927,7 @@ context factory, defaults to ' `com.sun.jndi.ldap.LdapCtxFactory&#8217;</p>
 <div class="sect2">
 <h3 id="Security_Realms_Plugins"><a class="link" href="#Security_Realms_Plugins">6.9. Plug Ins</a></h3>
 <div class="paragraph">
-<p>Within WildFly 12 for communication with the management interfaces and
+<p>Within WildFly 13 for communication with the management interfaces and
 for other services exposed using Remoting where username / password
 authentication is used the use of Digest authentication is preferred
 over the use of HTTP Basic or SASL Plain so that we can avoid the
@@ -4874,7 +4952,7 @@ support loading a users password, hash and roles from a custom store to
 allow different stores to be implemented without forcing the
 authentication back to plain text variant, this article describes the
 requirements for a plug in and shows a simple example plug-in for use
-with WildFly 12.</p>
+with WildFly 13.</p>
 </div>
 <div class="paragraph">
 <p>When implementing a plug in there are two steps to the authentication
@@ -5036,7 +5114,7 @@ used for the authorization step.</p>
 <h4 id="installing-and-configuring-a-plug-in"><a class="link" href="#installing-and-configuring-a-plug-in">6.9.4. Installing and Configuring a Plug-In</a></h4>
 <div class="paragraph">
 <p>The next step of this article describes the steps to implement a plug-in
-provider and how to make it available within WildFly 12 and how to
+provider and how to make it available within WildFly 13 and how to
 configure it. Example configuration and an example implementation are
 shown to illustrate this.</p>
 </div>
@@ -5150,7 +5228,7 @@ PlugInProvider implementation class.</p>
 <h5 id="package-as-a-module"><a class="link" href="#package-as-a-module">Package as a Module</a></h5>
 <div class="paragraph">
 <p>To make the <code>PlugInProvider</code> available to the application it is bundled
-as a module and added to the modules already shipped with WildFly 12.</p>
+as a module and added to the modules already shipped with WildFly 13.</p>
 </div>
 <div class="paragraph">
 <p>To add as a module we first need a <code>module.xml</code>: -</p>
@@ -9128,7 +9206,7 @@ you installed.</p>
 <div class="sect3">
 <h4 id="jdbc-driver-installation"><a class="link" href="#jdbc-driver-installation">9.3.1. JDBC Driver Installation</a></h4>
 <div class="paragraph">
-<p>The recommended way to install a JDBC driver into WildFly 12 is to deploy
+<p>The recommended way to install a JDBC driver into WildFly 13 is to deploy
 it as a regular JAR deployment. The reason for this is that when you run
 WildFly in domain mode, deployments are automatically propagated to all
 servers to which the deployment applies; thus distribution of the driver
@@ -9273,6 +9351,14 @@ please refer to the chapter " <a href="#application-deployment">Application Depl
     <span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>,
     <span class="string"><span class="delimiter">&quot;</span><span class="content">result</span><span class="delimiter">&quot;</span></span> =&gt; [{
         <span class="string"><span class="delimiter">&quot;</span><span class="content">driver-name</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">h2</span><span class="delimiter">&quot;</span></span>,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">datasource-class-info</span><span class="delimiter">&quot;</span></span> =&gt; [{<span class="string"><span class="delimiter">&quot;</span><span class="content">org.h2.jdbcx.JdbcDataSource</span><span class="delimiter">&quot;</span></span> =&gt; {
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">URL</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">java.lang.String</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">description</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">java.lang.String</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">loginTimeout</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">int</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">password</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">java.lang.String</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">url</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">java.lang.String</span><span class="delimiter">&quot;</span></span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">user</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">java.lang.String</span><span class="delimiter">&quot;</span></span>
+        }}],
         <span class="string"><span class="delimiter">&quot;</span><span class="content">deployment-name</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">driver-module-name</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">com.h2database.h2</span><span class="delimiter">&quot;</span></span>,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">module-slot</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">main</span><span class="delimiter">&quot;</span></span>,
@@ -9284,6 +9370,18 @@ please refer to the chapter " <a href="#application-deployment">Application Depl
     }]
 }</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>datasource-class-info</code> shows connection properties defined in the <code>(xa-)datasource-class</code>.
+</td>
+</tr>
+</table>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -9838,7 +9936,493 @@ on the next boot.
 </div>
 </div>
 <div class="sect3">
-<h4 id="Logging_Handlers"><a class="link" href="#Logging_Handlers">9.4.8. Handlers</a></h4>
+<h4 id="logging-formatters"><a class="link" href="#logging-formatters">9.4.8. Logging Formatters</a></h4>
+<div class="paragraph">
+<p>Formatters are used to format a log message. A formatter can be assigned to a logging handler.</p>
+</div>
+<div class="paragraph">
+<p>The logging subsystem includes 4 types of handlers:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#json-formatter">JSON Formatter</a></p>
+</li>
+<li>
+<p><a href="#pattern-formatter">Pattern Formatter</a></p>
+</li>
+<li>
+<p><a href="#xml-formatter">XML Formatter</a></p>
+</li>
+<li>
+<p><a href="#custom-formatter">Custom Formatter</a></p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="json-formatter"><a class="link" href="#json-formatter">JSON Formatter</a></h5>
+<div class="paragraph">
+<p>A formatter used to format log messages in JSON.</p>
+</div>
+<div class="sect5">
+<h6 id="examples"><a class="link" href="#examples">Examples</a></h6>
+<div class="listingblock">
+<div class="title">Simple JSON Formatter</div>
+<div class="content">
+<pre>/subsystem=logging/json-formatter=json:add(pretty-print=true, exception-output-type=formatted)</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Logstash Formatter</div>
+<div class="content">
+<pre>/subsystem=logging/json-formatter=logstash:add(exception-output-type=formatted, key-overrides=[timestamp="@timestamp"],
+meta-data=[@version=1])</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="pattern-formatter"><a class="link" href="#pattern-formatter">Pattern Formatter</a></h5>
+<div class="paragraph">
+<p>A formatter used to format log messages in plain text. The following table describes the format characters for the
+pattern formatter.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<mark>Highlighted</mark> symbols indicate the calculation of the caller is required which can be expensive to resolve.
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Pattern Syntax</caption>
+<colgroup>
+<col style="width: 12.5%;">
+<col style="width: 62.5%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%c</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The category of the logging event. A precision specifier can be used to alter the dot delimited category</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>%c      org.jboss.example.Foo
+%c{1}   Foo
+%c{2}   example.Foo
+%c{.}   ...Foo
+%c{1.}  o.j.e.Foo
+%c{1~.} o.~.~.Foo</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><mark>%C</mark></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The class of the code calling the log method. A precision specifier can be used to alter the dot delimited class name.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>%C      org.jboss.example.Foo
+%C{1}   Foo
+%C{2}   example.Foo
+%C{.}   ...Foo
+%C{1.}  o.j.e.Foo
+%C{1~.} o.~.~.Foo</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a id="timestamp"></a>%d</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The timestamp the log message. Any valid <a href="https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html"><code>SimpleDateFormat</code></a> pattern. The
+ default is <code>yyyy-MM-dd HH:mm:ss,SSS</code>.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>%d{HH:mm:ss,SSS}
+%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><mark>%D</mark></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the module the log message came from. A precision specifier can be used to alter the dot delimited module
+ name.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>%D      org.jboss.example
+%D{1}   example
+%D{2}   jboss.example
+%D{.}   ..example
+%D{1.}  o.j.example
+%D{1~.} o.~.example</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%e</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The exception stack trace. Accepts an argument to indicate how many levels of suppressed messages to print.</p></td>
+<td class="tableblock halign-left valign-top"><div><table class="tableblock frame-none grid-none spread">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>%e</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Prints the full stack trace.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>%e{0}</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Prints the stack trace ignoring any suppressed messages.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>%e{1}</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Prints the stack trace with a maximum of one suppressed message.</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><mark>%F</mark></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the file the class that logged the message.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>&nbsp;</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%h</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The host name. A precision specifier can be used to alter the dot delimited host name.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>%h     localhost
+%h{2}  localdomain.localhost</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%H</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The qualified host name. A precision specifier can be used to alter the dot delimited host name.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>%H    developer.jboss.org
+%H{2} jboss.org</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%i</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The process id.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>&nbsp;</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%k</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The resource bundle key.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>&nbsp;</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%K</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If colored output is supported defines the colors to map to the log message.</p></td>
+<td class="tableblock halign-left valign-top"><div><table class="tableblock frame-none grid-none spread">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>%K{level}</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The level determines the color of the output.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>%K{red}</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All messages will be colored red.</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><mark>%l</mark></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The location information. This includes the callers class name, method name, file name and line number.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>%l    org.jboss.example.Foo.bar(Foo.java:33)</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><mark>%L</mark></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The line number of the caller.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>&nbsp;</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%m</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The formatted message including any stack traces.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>&nbsp;</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><mark>%M</mark></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The callers method name.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>&nbsp;</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%n</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A platform independent line separator.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>&nbsp;</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%N</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the process.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>&nbsp;</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%p</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The level of the logged message.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>&nbsp;</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%P</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The localized level of the logged message.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>&nbsp;</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%r</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The relative number of milliseconds since the given base time from the log message.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>&nbsp;</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%s</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The simple formatted message. This will not include the stack trace if a cause was logged.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>&nbsp;</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%t</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the callers thread.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>&nbsp;</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><mark>%v</mark></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The version of the module. A precision specifier can be used to alter the dot delimited module version.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>&nbsp;</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The nested diagnostic context entries. A precision specifier can be used to specify the number of entries to print.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>%x      value1.value2.value3
+%x{1}   value3
+%x{2}   value2.value3</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The mapped diagnostic context entry. The entry must be followed by the key for the MDC entry.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>%X{key}</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%z</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allows the timezone to be overridden when formatting the <a href="#timestamp">timestamp</a>. This must precede the
+ <a href="#timestamp">timestamp</a>.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>%z{GMT}%d{yyyy-MM-dd&#8217;T&#8217;HH:mm:ssSSSXXX}</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%#</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allows a system property to be appended to the log message.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>%#{jboss.server.name}</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%$</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allows a system property to be appended to the log message.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>%${jboss.server.name}</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Escapes the <code>%</code> symbol.</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>&nbsp;</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>You can also modify the format by placing the optional format modifier between the percent sign and the symbol.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. Format Modifier Examples</caption>
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 42.8572%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Modifier</th>
+<th class="tableblock halign-center valign-top">Left Justify</th>
+<th class="tableblock halign-right valign-top">Min Width</th>
+<th class="tableblock halign-right valign-top">Max Width</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">[%20c]</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">20</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">&nbsp;</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>[  org.jboss.example]</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">[%-20c]</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">20</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">&nbsp;</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>[org.jboss.example  ]</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">[%.10c]</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&nbsp;</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">&nbsp;</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>[org.jboss]</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">[%20.30c]</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">20</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">30</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>[  org.jboss.example]</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">[%-20.30c]</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">20</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">30</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>[org.jboss.example  ]</pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="sect5">
+<h6 id="examples-2"><a class="link" href="#examples-2">Examples</a></h6>
+<div class="listingblock">
+<div class="title">Simple Pattern Formatter</div>
+<div class="content">
+<pre>/subsystem=logging/pattern-formatter=DEFAULT:add(pattern="%d{HH:mm:ssSSSXXX} %-5p [%c] (%t) %10.10#{jboss.node.name} %s%e%n")</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Color Pattern Formatter</div>
+<div class="content">
+<pre>/subsystem=logging/pattern-formatter=DEFAULT:add(color-map="info:cyan,warn:brightyellow,error:brightred,debug:magenta", pattern="%K{level}%d{yyyy-MM-dd'T'HH:mm:ssSSSXXX} %-5p [%c] (%t) %s%e%n")</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="xml-formatter"><a class="link" href="#xml-formatter">XML Formatter</a></h5>
+<div class="paragraph">
+<p>A formatter used to format log messages in XML.</p>
+</div>
+<div class="sect5">
+<h6 id="examples-3"><a class="link" href="#examples-3">Examples</a></h6>
+<div class="listingblock">
+<div class="title">Simple XML Formatter</div>
+<div class="content">
+<pre>/subsystem=logging/xml-formatter=xml:add(pretty-print=true, exception-output-type=detailed-and-formatted)</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Key Overrides XML Formatter</div>
+<div class="content">
+<pre>/subsystem=logging/xml-formatter=xml:add(pretty-print=true, print-namespace=true, namespace-uri="urn:custom:1.0", key-overrides={message=msg, record=logRecord, timestamp=date}, print-details=true)</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="custom-formatter"><a class="link" href="#custom-formatter">Custom Formatter</a></h5>
+<div class="paragraph">
+<p>A custom formatter to be used with handlers. Note that most log records are formatted in the printf format. Formatters
+may require invocation of the <code>org.jboss.logmanager.ExtLogRecord#getFormattedMessage()</code> for the message to be properly
+formatted.</p>
+</div>
+<div class="sect5">
+<h6 id="examples-4"><a class="link" href="#examples-4">Examples</a></h6>
+<div class="listingblock">
+<div class="content">
+<pre>/subsystem=logging/custom-formatter=custom:add(class=org.jboss.example.CustomFormatter, module=org.jboss.example, properties={prettyPrint=true,printDetails=true,bufferSize=1024})</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Logging_Handlers"><a class="link" href="#Logging_Handlers">9.4.9. Handlers</a></h4>
 <div class="paragraph">
 <p>WIP</p>
 </div>
@@ -10730,7 +11314,7 @@ rotated.</th>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Logging_How_To"><a class="link" href="#Logging_How_To">9.4.9. How To</a></h4>
+<h4 id="Logging_How_To"><a class="link" href="#Logging_How_To">9.4.10. How To</a></h4>
 <div class="sect4">
 <h5 id="how-do-i-add-a-log-category"><a class="link" href="#how-do-i-add-a-log-category">How do I add a log category?</a></h5>
 <div class="listingblock">
@@ -10829,7 +11413,7 @@ continue to use the logging subsystem configuration.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Logging_Loggers"><a class="link" href="#Logging_Loggers">9.4.10. Loggers</a></h4>
+<h4 id="Logging_Loggers"><a class="link" href="#Logging_Loggers">9.4.11. Loggers</a></h4>
 <div class="paragraph">
 <p>WIP</p>
 </div>
@@ -11945,7 +12529,7 @@ content.</p>
 </div>
 <div class="paragraph">
 <p>The full details of all configuration options available can be found in
-the <a href="https://wildscribe.github.io/WildFly/12/subsystem/undertow/index.html">subsystem reference</a>.</p>
+the <a href="https://wildscribe.github.io/WildFly/13/subsystem/undertow/index.html">subsystem reference</a>.</p>
 </div>
 </div>
 </div>
@@ -12404,7 +12988,7 @@ the command line.</p>
 <div class="sect3">
 <h4 id="deployment-of--jms.xml-files"><a class="link" href="#deployment-of--jms.xml-files">9.7.10. Deployment of -jms.xml files</a></h4>
 <div class="paragraph">
-<p>Starting with WildFly 12, you have the ability to deploy a -jms.xml file
+<p>Starting with WildFly 13, you have the ability to deploy a -jms.xml file
 defining JMS destinations, e.g.:</p>
 </div>
 <div class="listingblock">
@@ -12783,7 +13367,7 @@ subsystem (which allows to inject the JMS resources using the
 <div class="paragraph">
 <p>WildFly 10 supports both backwards and forwards compatibility with
 legacy versions that were using HornetQ as their messaging brokers (such
-as JBoss AS7, WildFly 12 &amp; 9).<br>
+as JBoss AS7, WildFly 13 &amp; 9).<br>
 These two compatibility modes are provided by the ActiveMQ Artemis
 project that supports the HornetQ&#8217;s CORE protocol:</p>
 </div>
@@ -13179,7 +13763,7 @@ Now create your broadcast/discovery groups using this channel:</p>
 <div class="paragraph">
 <p>The security subsystem is the subsystem that brings the security
 services provided by <a href="http://www.jboss.org/picketbox">PicketBox</a> to the
-WildFly 12 server instances.</p>
+WildFly 13 server instances.</p>
 </div>
 <div class="paragraph">
 <p>If you are looking to secure the management interfaces for the
@@ -21432,7 +22016,7 @@ to the process it was managing and release other resources:</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-request"><a class="link" href="#format-of-a-detyped-operation-request">12.5.3. Format of a Detyped Operation Request</a></h4>
 <div class="paragraph">
-<p>The basic method a user of the WildFly 12 programmatic management API
+<p>The basic method a user of the WildFly 13 programmatic management API
 would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -21952,7 +22536,7 @@ header just like this :</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-response"><a class="link" href="#format-of-a-detyped-operation-response">12.5.4. Format of a Detyped Operation Response</a></h4>
 <div class="paragraph">
-<p>As noted previously, the basic method a user of the WildFly 12
+<p>As noted previously, the basic method a user of the WildFly 13
 programmatic management API would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -22858,7 +23442,7 @@ script (e.g. 'bin/jboss-admin.bat --connect command=:shutdown').</p>
 <div class="paragraph">
 <p>To avoid "Press any key to continue &#8230;&#8203;" message you need to specify
 NOPAUSE variable. Call 'set NOPAUSE=true' in command line before running
-any WildFly 12 .bat script or include it in your custom script before
+any WildFly 13 .bat script or include it in your custom script before
 invoking scripts from WildFly.</p>
 </div>
 </div>
@@ -23255,6 +23839,88 @@ Type <em>help security enable-ssl-http-server</em> for a complete description of
 <em>undertow</em> server. Type <em>help security disable-ssl-http-server</em> for a complete
 description of the command.</p>
 </li>
+<li>
+<p><em>security enable-sasl-management</em>: To enable SASL authentication (elytron SASL factory) for the
+management interfaces. Calling this command without any option will have the
+effect to associate the out of the box SASL factory to the http-interface.
+Type <em>help security enable-sasl-management</em> for a complete description of the command.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This command supports a subset of SASL mechanisms such as: EXTERNAL, DIGEST-MD5,
+JBOSS-LOCAL-USER, SCRAM-*, &#8230;&#8203; The CLI completer proposes the set of mechanisms that
+can be properly configured using this command. Each mechanism can be associated
+to a property file realm, a file-system realm or a trust-store realm according to its nature.</p>
+</div>
+<div class="paragraph">
+<p>NB: Once the command is executed, the CLI will reload the server and reconnect to it.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>security disable-sasl-management</em>: To disable SASL for the
+management interfaces. If a mechanism is provided, this mechanism will be removed
+from the factory, the factory will stay associated to the interface. Without mechanism, the
+factory is no more active on the management interface. Type <em>help security disable-sasl-management</em>
+for a complete description of the command.</p>
+</li>
+<li>
+<p><em>security reorder-sasl-management</em>: To re-order the list of SASL mechanisms present
+in the factory. Order of mechanisms is of importance, the first in the list is sent to the client.
+Type <em>help security reorder-sasl-management</em> for a complete description of the command.</p>
+</li>
+<li>
+<p><em>security enable-http-auth-management</em>: To enable HTTP authentication (elytron HTTP factory) for the
+management http-interface. Calling this command without any option will have the
+effect to associate the out of the box HTTP Authentication factory to the http-interface.
+Type <em>help security enable-http-auth-management</em> for a complete description of the command.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This command supports a subset of HTTP mechanisms such as: BASIC, CLIENT_CERT, DIGEST, &#8230;&#8203;
+The CLI completer proposes the set of mechanisms that can be properly configured
+using this command. Each mechanism can be associated to a property file realm,
+a file-system realm or a trust-store realm according to its nature.</p>
+</div>
+<div class="paragraph">
+<p>NB: Once the command is executed, the CLI will reload the server and reconnect to it.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>security disable-http-auth-management</em>: To disable HTTP Authentication for the
+http management interface. If a mechanism is provided, this mechanism will be removed
+from the factory, the factory will stay associated to the interface. Without mechanism, the
+factory is no more active on the management interface. Type <em>help security disable-http-auth-management</em>
+for a complete description of the command.</p>
+</li>
+<li>
+<p><em>security enable-http-auth-http-server</em>: To enable HTTP authentication (elytron HTTP factory) for the
+given undertow security domain.
+Type <em>help security enable-http-auth-http-server</em> for a complete description of the command.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This command supports a subset of HTTP mechanisms such as: BASIC, CLIENT_CERT, DIGEST, &#8230;&#8203;
+The CLI completer proposes the set of mechanisms that can be properly configured
+using this command. Each mechanism can be associated to a property file realm,
+a file-system realm or a trust-store realm according to its nature.</p>
+</div>
+<div class="paragraph">
+<p>NB: Once the command is executed, the CLI will reload the server and reconnect to it.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>security disable-http-auth-http-server</em>: To disable HTTP Authentication for the
+given undertow security domain. If a mechanism is provided, this mechanism will be removed
+from the factory, the factory will stay associated to the security domain. Without mechanism, the
+factory is no more active on the security-domain. Type <em>help security disable-http-auth-http-server</em>
+for a complete description of the command.</p>
+</li>
 </ul>
 </div>
 </div>
@@ -23263,8 +23929,8 @@ description of the command.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 12.0.0.Final<br>
-Last updated 2018-02-28 16:06:06 CST
+Version 13.0.0.Final<br>
+Last updated 2018-05-30 14:06:26 CDT
 </div>
 </div>
 </body>
