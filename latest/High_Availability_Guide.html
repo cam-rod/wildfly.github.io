@@ -533,8 +533,8 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <h1>High Availability Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly clustering team</span><br>
-<span id="revnumber">version 27.0.0.Final,</span>
-<span id="revdate">2022-11-08T01:15:58Z</span>
+<span id="revnumber">version 28.0.0.Final,</span>
+<span id="revdate">2023-04-20T02:04:09Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">High Availability Guide</div>
@@ -604,6 +604,11 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </ul>
 </li>
 <li><a href="#ranked-affinity-load-balancer">5.2. Enabling ranked affinity support in load balancer</a></li>
+<li><a href="#load-balancer-affinity-cookie">5.3. Support for load-balancers relying on affinity cookie</a>
+<ul class="sectlevel3">
+<li><a href="#haproxy">5.3.1. HAProxy</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#HA_Singleton_Features">6. HA Singleton Features</a>
@@ -1872,7 +1877,7 @@ another WildFly instance act similar in terms of failover.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
+References in this document to Enterprise JavaBeans (EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
 </td>
 </tr>
 </table>
@@ -2383,7 +2388,7 @@ command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/key-store=default-trust-store:add(type=JKS, relative-to=jboss.server.config.dir, path=application.truststore, credential-reference={clear-text=password})</code></pre>
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/key-store=default-trust-store:add(type=PKCS12, relative-to=jboss.server.config.dir, path=application.truststore, credential-reference={clear-text=password})</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2516,6 +2521,60 @@ See the following CLI command:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code>/subsystem=undertow/configuration=filter/mod-cluster=load-balancer/affinity=ranked:write-attribute(name=delimiter,value=&quot;:&quot;)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="load-balancer-affinity-cookie"><a class="anchor" href="#load-balancer-affinity-cookie"></a>5.3. Support for load-balancers relying on affinity cookie</h3>
+<div class="paragraph">
+<p>While the Apache family of load-balancers relies on attaching session affinity (routing) information by default to a <code>JSESSIONID</code> cookie or a <code>jsessionid</code> path parameter,
+there are other load-balancers that rely on a cookie to drive session affinity.</p>
+</div>
+<div class="paragraph">
+<p>In order to configure the cookie name and other properties use the following CLI script:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=undertow/servlet-container=default/setting=affinity-cookie:add(name=SRV)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The affinity can be specified either in the <code>instance-id</code> or by providing <code>jboss.node.name</code> property to the server.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>./bin/standalone.sh -c standalone-ha.xml -Djboss.node.name=ribera1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For complete documentation on configuring the servlet container refer to <a href="Admin_Guide.html#servlet-container-configuration">Undertow documentation section</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="haproxy"><a class="anchor" href="#haproxy"></a>5.3.1. HAProxy</h4>
+<div class="paragraph">
+<p>The following is a minimum HAProxy configuration to enable affinity provided by application server to be respected by the given load-balancer.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>defaults
+timeout connect 5s
+timeout client 50s
+timeout server 50s
+
+frontend myfrontend
+bind 127.0.0.1:8888
+default_backend myservers
+
+backend myservers
+mode http
+cookie SRV indirect preserve
+option redispatch
+server server1 127.0.0.1:8080 cookie ribera1
+server server2 127.0.0.1:8180 cookie ribera2</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice that the proxy server defined cookie names need to correspond with the application server&#8217;s <code>instance-id</code>.</p>
 </div>
 </div>
 </div>
@@ -3913,7 +3972,7 @@ To be able to query the Kubernetes server ensure view permissions are granted on
 </table>
 </div>
 <div class="paragraph">
-<p>For advanced configuration options, please visit protocol&#8217;s documentation <a href="https://github.com/jgroups-extras/jgroups-kubernetes/blob/master/README.adoc">here</a>.</p>
+<p>For advanced configuration options, please visit protocol&#8217;s documentation <a href="https://github.com/jgroups-extras/jgroups-kubernetes/blob/main/README.adoc">here</a>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -4970,8 +5029,8 @@ move on and you will get the points step by step.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>unzip wildfly-27.0.0.Final.zip
-cd wildfly-27.0.0.Final/bin
+<pre class="CodeRay highlight"><code>unzip wildfly-28.0.0.Final.zip
+cd wildfly-28.0.0.Final/bin
 ./domain.sh</code></pre>
 </div>
 </div>
@@ -4981,12 +5040,12 @@ mode:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>wildfly-27.0.0.Final/bin$ ./domain.sh
+<pre class="CodeRay highlight"><code>wildfly-28.0.0.Final/bin$ ./domain.sh
 =========================================================================
 
   JBoss Bootstrap Environment
 
-  JBOSS_HOME: /Users/weli/Downloads/wildfly-27.0.0.Final
+  JBOSS_HOME: /Users/weli/Downloads/wildfly-28.0.0.Final
 
   JAVA: /Library/Java/Home/bin/java
 
@@ -4995,7 +5054,7 @@ mode:</p>
 =========================================================================
 ...
 
-[Server:server-two] 14:46:12,375 INFO  [org.jboss.as] (Controller Boot Thread) JBAS015874: WildFly 27.0.0.Final &quot;Kenny&quot; started in 8860ms - Started 210 of 258 services (827 services are lazy, passive or on-demand)</code></pre>
+[Server:server-two] 14:46:12,375 INFO  [org.jboss.as] (Controller Boot Thread) JBAS015874: WildFly 28.0.0.Final &quot;Kenny&quot; started in 8860ms - Started 210 of 258 services (828 services are lazy, passive or on-demand)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5148,7 +5207,7 @@ public, and unsecured interfaces.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
+<i class="fa icon-tip" title=":bulb:"></i>
 </td>
 <td class="content">
 It is easier to turn off all firewalls for testing, but in production,
@@ -5300,7 +5359,7 @@ to 'other-server-group', so 'server-three' is our choice.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
 </td>
 <td class="content">
 In newer version of WildFly, the profile 'ha' changes to 'full-ha':
@@ -5340,7 +5399,7 @@ secondary host.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
+<i class="fa icon-tip" title=":bulb:"></i>
 </td>
 <td class="content">
 server-three on primary and secondary host are two different hosts, their names
@@ -5409,7 +5468,7 @@ establish a cluster <span class="icon yellow"><i class="fa fa-smile-o"></i></spa
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
 </td>
 <td class="content">
 Why is the port number 8330 instead of 8080? Please check the settings
@@ -5492,7 +5551,7 @@ mod_cluster out of box so it&#8217;s the easiest way.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
 </td>
 <td class="content">
 The WildFly domain controller and httpd are not necessary to be on
@@ -5531,7 +5590,7 @@ website:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
+<i class="fa icon-tip" title=":bulb:"></i>
 </td>
 <td class="content">
 Jean-Frederic has suggested to use mod_cluster 1.2.x. Because 1.1.x it
@@ -5631,7 +5690,7 @@ MemManagerFile /var/cache/httpd
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
 </td>
 <td class="content">
 For more details on mod_cluster configurations please see this document:
@@ -5720,7 +5779,7 @@ cluster.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
+<i class="fa icon-tip" title=":bulb:"></i>
 </td>
 <td class="content">
 It doesn&#8217;t matter if you found the request is distributed to the secondary host at
@@ -5747,10 +5806,10 @@ this document readable.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
-References in this document to JavaServer Pages(JSP) refer to the Jakarta Server Pages unless otherwise noted
+References in this document to JavaServer Pages (JSP) refer to the Jakarta Server Pages unless otherwise noted
 </td>
 </tr>
 </table>
@@ -5761,8 +5820,8 @@ References in this document to JavaServer Pages(JSP) refer to the Jakarta Server
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 27.0.0.Final<br>
-Last updated 2022-09-12 16:18:46 -0500
+Version 28.0.0.Final<br>
+Last updated 2023-04-04 16:25:29 -0500
 </div>
 </div>
 </body>

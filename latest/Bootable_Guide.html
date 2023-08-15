@@ -533,8 +533,8 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <h1>Bootable JAR Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly team</span><br>
-<span id="revnumber">version 27.0.0.Final,</span>
-<span id="revdate">2022-11-08T01:15:58Z</span>
+<span id="revnumber">version 28.0.0.Final,</span>
+<span id="revdate">2023-04-20T02:04:09Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Bootable JAR Guide</div>
@@ -699,7 +699,7 @@ you would need to specify the server version, for example <code><code>wildfly@ma
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -751,7 +751,7 @@ and instead specify the alternative. If a layer has an alternative the Descripti
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -801,7 +801,8 @@ all of which provide typical core WildFly capabilities like the logging subsyste
 <a href="#gal.cdi">cdi</a> (optional)<br>
 <a href="#gal.datasources-web-server">datasources-web-server</a><br>
 <a href="#gal.jaxrs">jaxrs</a> (optional)<br>
-<a href="#gal.jpa">jpa</a> (optional)<br></p></td>
+<a href="#gal.jpa">jpa</a> (optional)<br>
+<a href="#gal.microprofile-rest-client">microprofile-rest-client</a> (optional)<br></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.cloud-server"></a>cloud-server</p></td>
@@ -822,6 +823,16 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <a href="#gal.management">management</a> (optional)<br>
 <a href="#gal.request-controller">request-controller</a> (optional)<br>
 <a href="#gal.security-manager">security-manager</a> (optional)<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.ee-core-profile-server"></a>ee-core-profile-server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A Jakarta EE Core Profile server.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.core-server">core-server</a><br>
+<a href="#gal.cdi">cdi</a><br>
+<a href="#gal.ee-integration">ee-integration</a><br>
+<a href="#gal.jaxrs">jaxrs-core</a><br>
+<a href="#gal.jsonp">jsonp</a><br>
+<a href="#gal.jsonb">jsonb</a><br></p></td>
 </tr>
 </tbody>
 </table>
@@ -905,6 +916,17 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.ee"></a>ee</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for common functionality in the Jakarta EE platform and for Jakarta Concurrency.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.ee-concurrency">ee-concurrency</a> (optional)<br>
+<a href="#gal.ee-integration">ee-integration</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.ee-concurrency"></a>ee-concurrency</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for Jakarta Concurrency.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.naming">naming</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.ee-integration"></a>ee-integration</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for common functionality in the Jakarta EE platform.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.jsonb">jsonb</a> (optional)<br>
 <a href="#gal.naming">naming</a><br></p></td>
@@ -963,7 +985,7 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <a href="#gal.elytron">elytron</a><br>
 <a href="#gal.naming">naming</a><br>
 <a href="#gal.remoting">remoting</a><br>
-<a href="#gal.resource-adapters">resource-adapters</a><br>
+<a href="#gal.resource-adapters">messaging-activemq</a><br>
 <a href="#gal.undertow">undertow</a><br></p></td>
 </tr>
 <tr>
@@ -1002,10 +1024,17 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jaxrs-core"></a>jaxrs-core</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for Jakarta RESTful Web Services.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.ee-integration">ee-integration</a><br>
+<a href="#gal.servlet">servlet</a><br></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jaxrs"></a>jaxrs</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Support for JAXRS.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.web-server">web-server</a><br>
-<a href="#gal.microprofile-rest-client">microprofile-rest-client</a> (optional)<br></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for Jakarta RESTful Web Services with optional ee-concurrency and deployment scanner layers.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.deployment-scanner">deployment-scanner</a> (optional)<br>
+<a href="#gal.ee-concurrency">ee-concurrency</a> (optional)<br>
+<a href="#gal.jaxrs-core">jaxrs-core</a><br></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jdr"></a>jdr</p></td>
@@ -1090,8 +1119,7 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-fault-tolerance"></a>microprofile-fault-tolerance</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile Fault Tolerance.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br>
-<a href="#gal.microprofile-config">microprofile-config</a><br>
-<a href="#gal.microprofile-metrics">microprofile-metrics</a><br></p></td>
+<a href="#gal.microprofile-config">microprofile-config</a><br></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-health"></a>microprofile-health</p></td>
@@ -1107,21 +1135,9 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <a href="#gal.microprofile-config">microprofile-config</a><br></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-metrics"></a>microprofile-metrics</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile Metrics.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.management">management</a><br>
-<a href="#gal.microprofile-config">microprofile-config</a><br></p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-openapi"></a>microprofile-openapi</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile OpenAPI.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.jaxrs">jaxrs</a><br>
-<a href="#gal.microprofile-config">microprofile-config</a><br></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-opentracing"></a>microprofile-opentracing</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile OpenTracing.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br>
 <a href="#gal.microprofile-config">microprofile-config</a><br></p></td>
 </tr>
 <tr>
@@ -1131,9 +1147,7 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <a href="#gal.microprofile-fault-tolerance">microprofile-fault-tolerance</a> (optional)<br>
 <a href="#gal.microprofile-health">microprofile-health</a> (optional)<br>
 <a href="#gal.microprofile-jwt">microprofile-jwt</a> (optional)<br>
-<a href="#gal.microprofile-metrics">microprofile-metrics</a> (optional)<br>
 <a href="#gal.microprofile-openapi">microprofile-openapi</a> (optional)<br>
-<a href="#gal.microprofile-opentracing">microprofile-opentracing</a> (optional)<br>
 <a href="#gal.microprofile-rest-client">microprofile-rest-client</a> (optional)<br></p></td>
 </tr>
 <tr>
@@ -1158,6 +1172,19 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-lra-coordinator"></a>microprofile-lra-coordinator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile LRA Coordinator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br>
+<a href="#gal.jaxrs">jaxrs</a><br>
+<a href="#gal.transactions">transactions</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-lra-participant"></a>microprofile-lra-participant</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile LRA Participant</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br>
+<a href="#gal.jaxrs">jaxrs</a><br></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.mod_cluster"></a>mod_cluster</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for mod_cluster subsystem.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.web-server">web-server</a><br></p></td>
@@ -1171,9 +1198,7 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.observability"></a>observability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile monitoring features.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.microprofile-config">microprofile-config</a> (optional)<br>
-<a href="#gal.microprofile-health">microprofile-health</a> (optional)<br>
-<a href="#gal.microprofile-metrics">microprofile-metrics</a> (optional)<br>
-<a href="#gal.microprofile-opentracing">microprofile-opentracing</a> (optional)<br></p></td>
+<a href="#gal.microprofile-health">microprofile-health</a> (optional)<br></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.pojo"></a>pojo</p></td>
@@ -1184,7 +1209,7 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.remote-activemq"></a>remote-activemq</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for connections to a remote Apache Activemq Artemis Jakarta Messaging broker.<br>
 <em>Alternative:</em> <a href="#gal.embedded-activemq">embedded-activemq</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.resource-adapters">resource-adapters</a><br></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.resource-adapters">messaging-activemq</a><br></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.remoting"></a>remoting</p></td>
@@ -1212,6 +1237,13 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.security-manager"></a>security-manager</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for applying security manager permissions to applications.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.base-server">base-server</a><br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.servlet"></a>servlet</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A servlet container.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.ee">ee-integration</a><br>
+<a href="#gal.naming">naming</a><br>
+<a href="#gal.undertow">undertow</a><br></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.transactions"></a>transactions</p></td>
@@ -1262,8 +1294,9 @@ and configured to connect to the server.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A servlet container.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.deployment-scanner">deployment-scanner</a> (optional)<br>
 <a href="#gal.ee">ee</a><br>
+<a href="#gal.ee">ee-concurrency</a> (optional)<br>
 <a href="#gal.naming">naming</a><br>
-<a href="#gal.undertow">undertow</a><br></p></td>
+<a href="#gal.servlet">servlet</a><br></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.webservices"></a>webservices</p></td>
@@ -1278,11 +1311,11 @@ and configured to connect to the server.</p></td>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
-References in this document to Java Persistence API(JPA) refer to the Jakarta Persistence unless otherwise noted.
-      References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
+References in this document to Java Persistence API (JPA) refer to the Jakarta Persistence unless otherwise noted.
+      References in this document to Enterprise JavaBeans (EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
 </td>
 </tr>
 </table>
@@ -1414,8 +1447,8 @@ the Maven plugin offers a <em>development</em> mode that allows you to build and
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 27.0.0.Final<br>
-Last updated 2022-01-12 11:25:45 -0600
+Version 28.0.0.Final<br>
+Last updated 2023-04-04 16:25:29 -0500
 </div>
 </div>
 </body>

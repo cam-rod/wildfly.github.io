@@ -533,8 +533,8 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <h1>Developer Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly developer team</span><br>
-<span id="revnumber">version 27.0.0.Final,</span>
-<span id="revdate">2022-11-08T01:15:58Z</span>
+<span id="revnumber">version 28.0.0.Final,</span>
+<span id="revdate">2023-04-20T02:04:09Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Developer guide</div>
@@ -567,7 +567,6 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <ul class="sectlevel2">
 <li><a href="#getting-started">5.1. Getting Started</a></li>
 <li><a href="#connecting-to-more-than-one-host">5.2. Connecting to more than one host</a></li>
-<li><a href="#example-application-client-reference">5.3. Example</a></li>
 </ul>
 </li>
 <li><a href="#embedded-api">6. Embedded API</a>
@@ -662,6 +661,8 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <ul class="sectlevel2">
 <li><a href="#jakarta-restful-web-services-activation">15.1. Jakarta RESTful Web Services Activation</a></li>
 <li><a href="#using-jackson-for-serialization">15.2. Using Jackson for serialization</a></li>
+<li><a href="#using-the-tracing-feature">15.3. Using the Tracing Feature</a></li>
+<li><a href="#resteasy-spring-framework-integration">15.4. RESTEasy Spring Framework Integration</a></li>
 </ul>
 </li>
 <li><a href="#Web_Undertow_Reference_Guide">16. Sharing sessions between wars in an ear</a></li>
@@ -806,9 +807,9 @@ of how to add an explicit module dependency are explained below.</p>
 deployment process some dependencies on modules defined by the
 application server are set up for you automatically. For instance, if
 you are deploying a Jakarta EE application a dependency on the Java EE
-API&#8217;s will be added to your module automatically. Similarly if your
+API&#8217;s will be added to your module automatically. Similarly, if your
 module contains a beans.xml file a dependency on
-<a href="http://seamframework.org/Weld">Weld</a> will be added automatically, along
+<a href="https://weld.cdi-spec.org/">Weld</a> will be added automatically, along
 with any supporting modules that weld needs to operate.</p>
 </div>
 <div class="paragraph">
@@ -1233,7 +1234,7 @@ ear deployment is as follows:</p>
 </td>
 <td class="content">
 The xsd for jboss-deployment-structure.xml is available at
-<a href="https://github.com/wildfly/wildfly-core/blob/master/server/src/main/resources/schema/jboss-deployment-structure-1_2.xsd">https://github.com/wildfly/wildfly-core/blob/main/server/src/main/resources/schema/jboss-deployment-structure-1_2.xsd</a>
+<a href="https://github.com/wildfly/wildfly-core/blob/main/server/src/main/resources/schema/jboss-deployment-structure-1_3.xsd">jboss-deployment-structure-1_3.xsd</a>
 </td>
 </tr>
 </table>
@@ -1494,7 +1495,7 @@ deployment.</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>As explained in the <a href="#Class_Loading_in_WildFly">Class Loading in WildFly</a> article,
-WildFly 27 is based on module classloading. A class within a module B
+WildFly 28 is based on module classloading. A class within a module B
 isn&#8217;t visible to a class within a module A, unless module B adds a
 dependency on module A. Module dependencies can be explicitly (as
 explained in that classloading article) or can be "implicit". This
@@ -1584,7 +1585,7 @@ being added</th>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Core Server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">javax.api sun.jdk org.jboss.vfs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.se sun.jdk</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"> </p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"> </p></td>
 </tr>
@@ -1899,7 +1900,7 @@ applications.</p>
 <h2 id="Application_Client_Reference"><a class="anchor" href="#Application_Client_Reference"></a>5. Application Client Reference</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As a Jakarta EE compliant server, WildFly 27 contains an application
+<p>As a Jakarta EE compliant server, WildFly 28 contains an application
 client. An application client is essentially a cut down server instance,
 that allows you to use EE features such as injection in a client side
 program.</p>
@@ -1970,15 +1971,6 @@ jboss-ejb-client.properties file rather than a host:</p>
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code>./appclient.sh --ejb-client-properties=my-jboss-ejb-client.properties myear.ear#appClient.jar arg1</code></pre>
 </div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="example-application-client-reference"><a class="anchor" href="#example-application-client-reference"></a>5.3. Example</h3>
-<div class="paragraph">
-<p>A simple example of how to package an application client and use it with
-WildFly can be within the quickstart
-<a href="https://github.com/wildfly/quickstart/tree/master/app-client">appclient</a>
-which is located on Github .</p>
 </div>
 </div>
 </div>
@@ -2154,7 +2146,7 @@ Guide</a><br>
 <div class="sect2">
 <h3 id="using-cdi-beans-from-outside-the-deployment"><a class="anchor" href="#using-cdi-beans-from-outside-the-deployment"></a>7.1. Using CDI Beans from outside the deployment</h3>
 <div class="paragraph">
-<p>For WildFly 27 onwards, it is now possible to have classes outside the
+<p>For WildFly 28 onwards, it is now possible to have classes outside the
 deployment be picked up as CDI beans. In order for this to work, you must
 add a dependency on the external deployment that your beans are coming
 from, and make sure the META-INF directory of this deployment is
@@ -2697,7 +2689,7 @@ Executor Service instance&#8217;s JNDI name is
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter details the extensions that are available when developing
-Enterprise Java Beans <sup>tm</sup> on WildFly 27.</p>
+Enterprise Java Beans <sup>tm</sup> on WildFly 28.</p>
 </div>
 <div class="paragraph">
 <p>Currently, there is no support for configuring the extensions using an
@@ -3246,7 +3238,7 @@ implementing container interceptors in user applications
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
+References in this document to Enterprise JavaBeans (EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
 </td>
 </tr>
 </table>
@@ -3819,7 +3811,7 @@ defined in the server configuration (i.e. <code>standalone.xml</code> or
 <div class="sect5">
 <h6 id="the-clustering-namespace-urnclustering1.0"><a class="anchor" href="#the-clustering-namespace-urnclustering1.0"></a>The clustering namespace urn:clustering:1.0</h6>
 <div class="paragraph">
-<p>This namespace is deprecated and as of WildFly 27 its use has no effect.
+<p>This namespace is deprecated and as of WildFly 28 its use has no effect.
 The clustering behavior of Jakarta Enterprise Beans are determined by the profile in use on
 the server.</p>
 </div>
@@ -4369,7 +4361,7 @@ specific extensions to the security configurations.</p>
 <div class="paragraph">
 <p>The Jakarta EE spec doesn&#8217;t mandate a specific way to configure security
 domain for a bean. It leaves it to the vendor implementations to allow
-such configurations, the way they wish. In WildFly 27, the use of
+such configurations, the way they wish. In WildFly 28, the use of
 <code>@org.jboss.ejb3.annotation.SecurityDomain</code> annotation allows the
 developer to configure the security domain for a bean. Here&#8217;s an
 example:</p>
@@ -4464,14 +4456,14 @@ of a .jar deployment or .war/WEB-INF folder of a .war deployment.
 <div class="paragraph">
 <p>As you can see the <code>doSomething</code> method is configured to be accessible
 for users with role "bar". However, the bean isn&#8217;t configured for any
-specific security domain. Prior to WildFly 27, the absence of an
+specific security domain. Prior to WildFly 28, the absence of an
 explicitly configured security domain on the bean would leave the bean
 unsecured, which meant that even if the <code>doSomething</code> method was
 configured with <code>@RolesAllowed("bar")</code> anyone even without the "bar"
 role could invoke on the bean.</p>
 </div>
 <div class="paragraph">
-<p>In WildFly 27, the presence of any security metadata (like @RolesAllowed,
+<p>In WildFly 28, the presence of any security metadata (like @RolesAllowed,
 @PermitAll, @DenyAll, @RunAs, @RunAsPrincipal) on the bean or any
 business method of the bean, makes the bean secure, even in the absence
 of an explicitly configured security domain. In such cases, the security
@@ -4512,7 +4504,7 @@ domain defaulted to "other"). However, notice that the method
 <code>helloWorld</code> doesn&#8217;t have any specific security configurations.</p>
 </div>
 <div class="paragraph">
-<p>In WildFly 27, such methods which have no explicit security
+<p>In WildFly 28, such methods which have no explicit security
 configurations, in a secured bean, will be treated similar to a method
 with <code>@DenyAll</code> configuration. What that means is, no one is allowed
 access to the <code>helloWorld</code> method. This behaviour can be controlled via
@@ -4745,7 +4737,7 @@ Then the caller WildFly uses the configuration in <code>wildfly-config.xml</code
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
+References in this document to Enterprise JavaBeans (EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
 </td>
 </tr>
 </table>
@@ -5637,7 +5629,7 @@ native API hibernate.cfg.xml file:</p>
 <p><a href="http://infinispan.org/docs/9.4.x/user_guide/user_guide.html#integrations_jpa_hibernate">Infinispan
 Hibernate/JPA second level cache provider documentation</a> contains
 advanced configuration information but you should bear in mind that when
-Hibernate runs within WildFly 27, some of those configuration options,
+Hibernate runs within WildFly 28, some of those configuration options,
 such as region factory, are not needed. Moreover, the application server
 providers you with option of selecting a different cache container for
 Infinispan via <strong>hibernate.cache.infinispan.container</strong> persistence
@@ -6250,8 +6242,8 @@ your application by setting the <code>jboss.entity.manager.factory.jndi.name</co
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-References in this document to Java Transaction API(JTA) refer to Jakarta Transactions unless otherwise noted.
-      References in this document to Java Persistence API(JPA) refer to the Jakarta Persistence unless otherwise noted.
+References in this document to Java Transaction API (JTA) refer to Jakarta Transactions unless otherwise noted.
+      References in this document to Java Persistence API (JPA) refer to the Jakarta Persistence unless otherwise noted.
 </td>
 </tr>
 </table>
@@ -6922,8 +6914,8 @@ or list all the configuration options of the subsystem in <code>jboss-cli</code>
 </td>
 <td class="content">
 References in this document to CDI refer to Jakarta Contexts and Dependency Injection unless otherwise noted.
-      References in this document to Java Transaction API(JTA) refer to Jakarta Transactions unless otherwise noted.
-      References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
+      References in this document to Java Transaction API (JTA) refer to Jakarta Transactions unless otherwise noted.
+      References in this document to Enterprise JavaBeans (EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
 </td>
 </tr>
 </table>
@@ -7344,7 +7336,7 @@ can be found in the <code>bin/client</code> directory of WildFly&#8217;s distrib
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="directive">final</span> <span class="predefined-type">Properties</span> env = <span class="keyword">new</span> <span class="predefined-type">Properties</span>();
-env.put(<span class="predefined-type">Context</span>.INITIAL_CONTEXT_FACTORY, <span class="string"><span class="delimiter">&quot;</span><span class="content">org.jboss.naming.remote.client.InitialContextFactory</span><span class="delimiter">&quot;</span></span>);
+env.put(<span class="predefined-type">Context</span>.INITIAL_CONTEXT_FACTORY, <span class="string"><span class="delimiter">&quot;</span><span class="content">org.wildfly.naming.client.WildFlyInitialContextFactory</span><span class="delimiter">&quot;</span></span>);
 env.put(<span class="predefined-type">Context</span>.PROVIDER_URL, <span class="string"><span class="delimiter">&quot;</span><span class="content">http-remoting://localhost:8080</span><span class="delimiter">&quot;</span></span>);
 <span class="comment">// the property below is required ONLY if there is no ejb client configuration loaded (such as a</span>
 <span class="comment">// jboss-ejb-client.properties in the class path) and the context will be used to lookup EJBs</span>
@@ -7444,7 +7436,7 @@ the <strong>required</strong> jboss ejb client setup, please see
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
+References in this document to Enterprise JavaBeans (EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
 </td>
 </tr>
 </table>
@@ -7457,13 +7449,13 @@ References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta En
 <div class="sectionbody">
 <div class="paragraph">
 <p>RESTEasy is the Jakarta RESTful Web Services implementation used in WildFly Full. For detailed documentation see the
-<a href="https://resteasy.dev/docs">RESTEasy 6.2.1.Final documentation</a>.</p>
+<a href="https://resteasy.dev/docs">RESTEasy 6.2.3.Final documentation</a>.</p>
 </div>
 <div class="sect2">
 <h3 id="jakarta-restful-web-services-activation"><a class="anchor" href="#jakarta-restful-web-services-activation"></a>15.1. Jakarta RESTful Web Services Activation</h3>
 <div class="paragraph">
 <p>This section outlines the three options you have for deploying Jakarta RESTful Web Services
-applications in WildFly 27. These three methods are specified in the
+applications in WildFly 28. These three methods are specified in the
 Jakarta RESTful Web Services 3.1 specification in section 2.3.2.</p>
 </div>
 <div class="sect3">
@@ -7642,6 +7634,68 @@ you need to use a custom <code>ObjectMapper</code>. An example of this <code>Obj
 }</code></pre>
 </div>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="using-the-tracing-feature"><a class="anchor" href="#using-the-tracing-feature"></a>15.3. Using the Tracing Feature</h3>
+<div class="paragraph">
+<p>The tracing feature provides more internal states of the Jakarta RESTful Web Services container. For example, it could
+be able to show what filters a request is going through, or how long time a request is processed and other kinds of information.</p>
+</div>
+<div class="paragraph">
+<p>The tracing feature can be enabled by setting the <code>tracing-type</code> attribute to <code>ALL</code> or <code>ON_DEMAND</code>. You can also control
+the threshold with the <code>tracing-threshold</code> attribute. The following is an example of enabling tracing using CLI:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>/subsystem=jaxrs:write-attribute(name=tracing-type, value=ALL)
+:reload</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also configure the tracing feature with the context parameters <code>resteasy.server.tracing.type</code> and
+<code>resteasy.server.tracing.threshold</code> in your deployments <code>web.xml</code> file.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+The tracing feature should not be used in production environments. Data can be exposed to clients via HTTP headers.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="resteasy-spring-framework-integration"><a class="anchor" href="#resteasy-spring-framework-integration"></a>15.4. RESTEasy Spring Framework Integration</h3>
+<div class="paragraph">
+<p>WildFly generally includes support for Jakarta Context and Dependency Injection (CDI). The Spring Framework, however,
+does not support CDI. You may need to exclude some subsystems and modules for Spring applications to work with Jakarta
+RESTful Web Services.</p>
+</div>
+<div class="paragraph">
+<p>The following is an example <code>jboss-deployment-structure.xml</code> that may be needed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+<span class="tag">&lt;jboss-deployment-structure</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:deployment-structure:1.2</span><span class="delimiter">&quot;</span></span>
+                            <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;deployment&gt;</span>
+        <span class="tag">&lt;exclusions&gt;</span>
+            <span class="tag">&lt;module</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.jboss.resteasy.resteasy-cdi</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;/exclusions&gt;</span>
+    <span class="tag">&lt;/deployment&gt;</span>
+<span class="tag">&lt;/jboss-deployment-structure&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>org.jboss.resteasy.resteasy-cdi</code> module adds CDI support for the RESTEasy implementation. Excluding this
+should allow Spring deployments to work.</p>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -7649,11 +7703,10 @@ you need to use a custom <code>ObjectMapper</code>. An example of this <code>Obj
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-References in this document to Java API for RESTful Web Services(JAX-RS) refer to Jakarta RESTful Web Services unless otherwise noted.
+References in this document to Java API for RESTful Web Services (JAX-RS) refer to Jakarta RESTful Web Services unless otherwise noted.
 </td>
 </tr>
 </table>
-</div>
 </div>
 </div>
 </div>
@@ -7708,7 +7761,7 @@ project integration.</p>
 </div>
 <div class="paragraph">
 <p>This section covers the most relevant topics for the JBossWS version
-available on WildFly 27.</p>
+available on WildFly 28.</p>
 </div>
 <div class="sect2">
 <h3 id="Jakarta_XML_Web_Services_User_Guide"><a class="anchor" href="#Jakarta_XML_Web_Services_User_Guide"></a>17.1. Jakarta XML Web Services User Guide</h3>
@@ -8702,7 +8755,7 @@ annotation target includes <code>METHOD</code> and <code>FIELD</code> for use by
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-References in this document to Java API for XML-Based Web Services(JAX-WS) refer to the Jakarta XML Web Services unless otherwise noted
+References in this document to Java API for XML-Based Web Services (JAX-WS) refer to the Jakarta XML Web Services unless otherwise noted
 </td>
 </tr>
 </table>
@@ -12553,7 +12606,7 @@ suite your security needs before going to production environment.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
+<i class="fa icon-warning" title=":warning:"></i>
 </td>
 <td class="content">
 The following sections provide directions and examples on understanding
@@ -12760,10 +12813,10 @@ file, type and the alias/password to use for accessing it:</p>
 <div class="literalblock">
 <div class="content">
 <pre>org.apache.ws.security.crypto.provider=org.apache.ws.security.components.crypto.Merlin
-org.apache.ws.security.crypto.merlin.keystore.type=jks
+org.apache.ws.security.crypto.merlin.keystore.type=PKCS
 org.apache.ws.security.crypto.merlin.keystore.password=password
 org.apache.ws.security.crypto.merlin.keystore.alias=bob
-org.apache.ws.security.crypto.merlin.keystore.file=bob.jks</pre>
+org.apache.ws.security.crypto.merlin.keystore.file=bob.pkcs12</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -12816,7 +12869,7 @@ also provided:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Assuming the <em>bob.jks</em> keystore has been properly generated and contains
+<p>Assuming the <em>bob.pkcs12</em> keystore has been properly generated and contains
 Bob&#8217;s (server) full key (private/certificate + public key) as well as
 Alice&#8217;s (client) public key, we can proceed to packaging the endpoint.
 Here is the expected content (the endpoint is a <em>POJO</em> one in a <em>war</em>
@@ -12850,7 +12903,7 @@ supported):</p>
      0 Thu Jun 16 18:50:44 CEST 2011 WEB-INF/wsdl/
   4086 Thu Jun 16 18:50:44 CEST 2011 WEB-INF/wsdl/SecurityService.wsdl
    653 Thu Jun 16 18:50:44 CEST 2011 WEB-INF/wsdl/SecurityService_schema1.xsd
-  1820 Thu Jun 16 18:50:44 CEST 2011 WEB-INF/classes/bob.jks
+  1820 Thu Jun 16 18:50:44 CEST 2011 WEB-INF/classes/bob.pkcs12
    311 Thu Jun 16 18:50:44 CEST 2011 WEB-INF/classes/bob.properties</pre>
 </div>
 </div>
@@ -12881,7 +12934,7 @@ bean:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
 </td>
 <td class="content">
 If you&#8217;re deploying the endpoint archive on WildFly, remember to add a
@@ -12930,17 +12983,17 @@ context. Here the <code>KeystorePasswordCallback</code> is the same as on server
 side above, you might want/need different implementation in real world
 scenarios, of course.<br>
 The <em>alice.properties</em> file is the client side equivalent of the server
-side <em>bob.properties</em> and references the <em>alice.jks</em> keystore file,
+side <em>bob.properties</em> and references the <em>alice.pkcs12</em> keystore file,
 which has been populated with Alice&#8217;s (client) full key
 (private/certificate + public key) as well as Bob&#8217;s (server) public key.</p>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre>org.apache.ws.security.crypto.provider=org.apache.ws.security.components.crypto.Merlin
-org.apache.ws.security.crypto.merlin.keystore.type=jks
+org.apache.ws.security.crypto.merlin.keystore.type=PKCS12
 org.apache.ws.security.crypto.merlin.keystore.password=password
 org.apache.ws.security.crypto.merlin.keystore.alias=alice
-org.apache.ws.security.crypto.merlin.keystore.file=META-INF/alice.jks</pre>
+org.apache.ws.security.crypto.merlin.keystore.file=META-INF/alice.pkcs12</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -13104,7 +13157,7 @@ proper WS-Security Policy:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
 </td>
 <td class="content">
 If you want to send hash / digest passwords, you can use a policy such
@@ -13307,7 +13360,7 @@ generated by wsconsume:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
 </td>
 <td class="content">
 If you&#8217;re deploying the endpoint archive on WildFly, remember to add a
@@ -14860,7 +14913,7 @@ alice=friend</pre>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
+<i class="fa icon-tip" title=":bulb:"></i>
 </td>
 <td class="content">
 To achieve better interoperability, you might consider allowing the STS
@@ -19133,7 +19186,7 @@ for Jakarta Messaging transport as explained above.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 JBossWS currently supports POJO endpoints only for Jakarta Messaging transport use.
@@ -19215,7 +19268,7 @@ as:</p>
   <span class="tag">&lt;/wsdl:binding&gt;</span>
   <span class="tag">&lt;wsdl:service</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">HelloWorldService</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
     <span class="tag">&lt;soapjms:jndiConnectionFactoryName&gt;</span>java:jms/RemoteConnectionFactory<span class="tag">&lt;/soapjms:jndiConnectionFactoryName&gt;</span>
-    <span class="tag">&lt;soapjms:jndiInitialContextFactory&gt;</span>org.jboss.naming.remote.client.InitialContextFactory<span class="tag">&lt;/soapjms:jndiInitialContextFactory&gt;</span>
+    <span class="tag">&lt;soapjms:jndiInitialContextFactory&gt;</span>org.wildfly.naming.client.WildFlyInitialContextFactory<span class="tag">&lt;/soapjms:jndiInitialContextFactory&gt;</span>
     <span class="tag">&lt;soapjms:jndiURL&gt;</span>http-remoting://myhost:8080<span class="tag">&lt;/soapjms:jndiURL&gt;</span>
     <span class="tag">&lt;wsdl:port</span> <span class="attribute-name">binding</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">tns:HelloWorldServiceSoapBinding</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">HelloWorldImplPort</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
       <span class="tag">&lt;soap:address</span> <span class="attribute-name">location</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jms:queue:testQueue</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
@@ -19234,7 +19287,7 @@ as:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
 </td>
 <td class="content">
 The <em>HelloWorldImplPort</em> here is meant for using the <em>testQueue</em> that
@@ -19260,7 +19313,7 @@ context factory class to use and the JNDI registry address.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
 </td>
 <td class="content">
 Have a look at the application server domain for finding out the
@@ -19300,7 +19353,7 @@ annotation to refer to the consumed contract:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 The endpoint implementation references the <code>HelloWorldServiceLocal</code> wsdl
@@ -19337,7 +19390,7 @@ endpoint interface, the endpoint implementation and the WSDL file in a
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 A dependency on <code>org.hornetq</code> module needs to be added in MANIFEST.MF
@@ -19384,7 +19437,7 @@ BusFactory.setThreadDefaultBus(bus);
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
 </td>
 <td class="content">
 The WSDL location URL needs to be retrieved in a custom way, depending
@@ -19416,7 +19469,7 @@ credentials need to be set into the Apache CXF JMSConduit:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
 </td>
 <td class="content">
 Have a look at the WildFly domain and messaging configuration for
@@ -19436,7 +19489,7 @@ similarly to</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="predefined-type">Properties</span> env = <span class="keyword">new</span> <span class="predefined-type">Properties</span>();
-env.put(<span class="predefined-type">Context</span>.INITIAL_CONTEXT_FACTORY, <span class="string"><span class="delimiter">&quot;</span><span class="content">org.jboss.naming.remote.client.InitialContextFactory</span><span class="delimiter">&quot;</span></span>);
+env.put(<span class="predefined-type">Context</span>.INITIAL_CONTEXT_FACTORY, <span class="string"><span class="delimiter">&quot;</span><span class="content">org.wildfly.naming.client.WildFlyInitialContextFactory</span><span class="delimiter">&quot;</span></span>);
 env.put(<span class="predefined-type">Context</span>.PROVIDER_URL, <span class="string"><span class="delimiter">&quot;</span><span class="content">http-remoting://myhost:8080</span><span class="delimiter">&quot;</span></span>);
 env.put(<span class="predefined-type">Context</span>.SECURITY_PRINCIPAL, <span class="string"><span class="delimiter">&quot;</span><span class="content">user</span><span class="delimiter">&quot;</span></span>);
 env.put(<span class="predefined-type">Context</span>.SECURITY_CREDENTIALS, <span class="string"><span class="delimiter">&quot;</span><span class="content">password</span><span class="delimiter">&quot;</span></span>);
@@ -19544,7 +19597,7 @@ serves over both HTTP and Jakarta Messaging transports.</p>
   <span class="tag">&lt;/wsdl:binding&gt;</span>
   <span class="tag">&lt;wsdl:service</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">HelloWorldService</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
     <span class="tag">&lt;soapjms:jndiConnectionFactoryName&gt;</span>java:jms/RemoteConnectionFactory<span class="tag">&lt;/soapjms:jndiConnectionFactoryName&gt;</span>
-    <span class="tag">&lt;soapjms:jndiInitialContextFactory&gt;</span>org.jboss.naming.remote.client.InitialContextFactory<span class="tag">&lt;/soapjms:jndiInitialContextFactory&gt;</span>
+    <span class="tag">&lt;soapjms:jndiInitialContextFactory&gt;</span>org.wildfly.naming.client.WildFlyInitialContextFactory<span class="tag">&lt;/soapjms:jndiInitialContextFactory&gt;</span>
     <span class="tag">&lt;soapjms:jndiURL&gt;</span>http-remoting://localhost:8080<span class="tag">&lt;/soapjms:jndiURL&gt;</span>
     <span class="tag">&lt;wsdl:port</span> <span class="attribute-name">binding</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">tns:HelloWorldServiceSoapBinding</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">HelloWorldImplPort</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
       <span class="tag">&lt;soap:address</span> <span class="attribute-name">location</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jms:queue:testQueue</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
@@ -19669,7 +19722,7 @@ endpoint publish:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
 </td>
 <td class="content">
 Here too the MANIFEST.MF needs to declare a dependency on <em>org.hornetq</em>
@@ -20181,7 +20234,7 @@ algorithms</p></td>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
+<i class="fa icon-warning" title=":warning:"></i>
 </td>
 <td class="content">
 Always verify the contents of the generated wsdl contract, as policy
@@ -20197,7 +20250,7 @@ only; users remain responsible for the policies in their contracts.
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
+<i class="fa icon-tip" title=":bulb:"></i>
 </td>
 <td class="content">
 The <code>org.jboss.wsf.stack.cxf.extensions.policy.Constants</code> interface has
@@ -20210,7 +20263,7 @@ convenient String constants for the available policy set labels.
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
+<i class="fa icon-tip" title=":bulb:"></i>
 </td>
 <td class="content">
 If you feel a new set should be added, just propose it by writing the
@@ -20456,7 +20509,7 @@ dependencies they want to be added to their deployment.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
 </td>
 <td class="content">
 The JBoss Web Services APIs are always available by default whenever the
@@ -20490,7 +20543,7 @@ module implicitly created for your deployment.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
 </td>
 <td class="content">
 When using annotations on your endpoints / handlers such as the Apache
@@ -20556,7 +20609,7 @@ instance.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
 </td>
 <td class="content">
 Be careful as issues because of misconfiguration here can be quite hard
@@ -20570,7 +20623,7 @@ different.
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
 </td>
 <td class="content">
 The <em>services</em> option is almost always needed when declaring
@@ -20620,7 +20673,7 @@ their deployment and set module dependencies in it.</p>
 <div class="sectionbody">
 <div class="quoteblock abstract">
 <blockquote>
-WildFly 27 introduced the EJB client API for managing remote EJB
+WildFly 28 introduced the EJB client API for managing remote EJB
 invocations. The EJB client API works off EJBClientContext(s). An
 EJBClientContext can potentially contain any number of EJB receivers. An
 EJB receiver is a component which knows how to communicate with a server
@@ -20634,7 +20687,7 @@ applications can be classified into:
 <p>A remote client which runs as a standalone Java application</p>
 </li>
 <li>
-<p>A remote client which runs within another WildFly 27 instance</p>
+<p>A remote client which runs within another WildFly 28 instance</p>
 </li>
 </ul>
 </div>
@@ -20651,7 +20704,7 @@ than one EJBClientContext(s) and an EJB client context selector will be
 responsible for returning the appropriate context.</p>
 </div>
 <div class="paragraph">
-<p>In case of remote clients which run within another WildFly 27 instance,
+<p>In case of remote clients which run within another WildFly 28 instance,
 each deployed application will have a corresponding EJB client context.
 Whenever that application invokes on another EJB, the corresponding EJB
 client context will be used for finding the right EJB receiver and
@@ -20662,7 +20715,7 @@ letting it handle the invocation.</p>
 <div class="paragraph">
 <p>In the Overview section we briefly looked at the different types of
 remote clients. Let&#8217;s focus on the standalone remote clients (the ones
-that don&#8217;t run within another WildFly 27 instance) for some of the next
+that don&#8217;t run within another WildFly 28 instance) for some of the next
 sections. Like mentioned earlier, typically a remote standalone client
 has just one EJB client context backed by any number of EJB receivers.
 Consider this example:</p>
@@ -20697,7 +20750,7 @@ context is used by the above code to invoke the bean.</p>
 </div>
 <div class="paragraph">
 <p>Now let&#8217;s consider a case where the user application wants to invoke on
-the bean more than once, but wants to connect to the WildFly 27 server
+the bean more than once, but wants to connect to the WildFly 28 server
 using different security credentials. Let&#8217;s take a look at the following
 code:</p>
 </div>
@@ -20820,13 +20873,13 @@ context which typically is the one tied to the entire application.</p>
 have more control over which JNDI context "talks to" which server and
 connects to that server in "what way". This gives the user applications
 the flexibility that was associated with the JNP based JNDI invocations
-prior to WildFly 27 versions.</p>
+prior to WildFly 28 versions.</p>
 </div>
 <div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 <strong>IMPORTANT:</strong> <strong>It is very important to remember that scoped EJB client
@@ -20878,7 +20931,7 @@ itself is closed.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 The connections that were manually added by the application to the EJB
@@ -21135,10 +21188,10 @@ EJB client context.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
-References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
+References in this document to Enterprise JavaBeans (EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
 </td>
 </tr>
 </table>
@@ -21159,7 +21212,7 @@ proxy.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
 </td>
 <td class="content">
 After you have read this article, do remember to take a look at
@@ -21186,7 +21239,7 @@ let&#8217;s get started:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 Users who already have EJBs deployed on the server side can just skip to
@@ -21475,12 +21528,12 @@ invokes on a stateless bean:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 The entire server side and client side code is hosted at the github repo
 here
-<a href="https://github.com/wildfly/quickstart/tree/master/ejb-remote">ejb-remote</a>
+<a href="https://github.com/wildfly/quickstart/tree/main/ejb-remote">ejb-remote</a>
 </td>
 </tr>
 </table>
@@ -21727,7 +21780,7 @@ remote.connection.default.password=apppassword</pre>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 This file includes a reference to a default password. Be sure to change
@@ -21736,16 +21789,11 @@ this as soon as possible.
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>The above properties file is just an example. The actual file that was
-used for this sample program is available here for reference
-<a href="https://github.com/wildfly/quickstart/blob/master/ejb-remote/client/src/main/resources/jboss-ejb-client.properties">jboss-ejb-client.properties</a></p>
-</div>
 <div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 We&#8217;ll see what each of it means.
@@ -21853,7 +21901,7 @@ attribute security-realm in the configuration.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 We then use the "remote.connection.&lt;connection-name&gt;.connect.options."
@@ -21957,10 +22005,10 @@ the client classpath</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
-References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
+References in this document to Enterprise JavaBeans (EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
 </td>
 </tr>
 </table>
@@ -21987,7 +22035,7 @@ a remote standalone client</a></p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 Note that this chapter deals with the case where the bean is deployed on
@@ -22015,7 +22063,7 @@ which is within a myapp.ear. Here&#8217;s how it would look like:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 Note that packaging itself isn&#8217;t really important in the context of this
@@ -22064,7 +22112,7 @@ as follows:</p>
 <div class="sect2">
 <h3 id="security"><a class="anchor" href="#security"></a>20.3. Security</h3>
 <div class="paragraph">
-<p>WildFly 27 is secure by default. What this means is that no communication
+<p>WildFly 28 is secure by default. What this means is that no communication
 can happen with an WildFly instance from a remote client (irrespective
 of whether it is a standalone client or another server instance) without
 passing the appropriate credentials. Remember that in this example, our
@@ -22121,7 +22169,7 @@ created in this example is <code>ejb</code> and the password is <code>test.</cod
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 Note that you can use any username and password combination you want to.
@@ -22133,7 +22181,7 @@ Note that you can use any username and password combination you want to.
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 You do <strong>not</strong> require the server to be started to add a user using the
@@ -22163,7 +22211,7 @@ will look like:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 It&#8217;s very important to note that if you are starting both the server
@@ -22406,7 +22454,7 @@ jboss-ejb-client.xml are explained next.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 If your application is deployed as a top level .war deployment, then the
@@ -22496,10 +22544,10 @@ public <span class="type">void</span> invokeOnBean() {
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
-References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
+References in this document to Enterprise JavaBeans (EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
 </td>
 </tr>
 </table>
@@ -22562,7 +22610,7 @@ wildfly-naming-client project. The other property is the PROVIDER_URL.
 which is <code>remote+http://</code> for wildfly-naming-client. The rest
 of the PROVIDER_URL part is the server hostname or IP and the port on
 which the remoting connector is exposed on the server side. By default
-the http-remoting connector port in WildFly 27 is 8080. That&#8217;s what we
+the http-remoting connector port in WildFly 28 is 8080. That&#8217;s what we
 have used in our example. The hostname we have used is localhost but
 that should point to the server IP or hostname where the server is
 running.</p>
@@ -22778,7 +22826,7 @@ the wildfly-naming-client project will lookup for "foo/bar" JNDI name under the
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 Note: Since the JNDI name that you use on the client side is <strong>always</strong>
@@ -22854,7 +22902,7 @@ implementation using the approach described in the <code>java.util.ServiceLoader
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 Note: One important thing is that jndi.properties should not be packaged in an
@@ -22962,7 +23010,7 @@ spec.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 Note that only the java:jboss/exported/ namespace is available to remote
@@ -23177,10 +23225,10 @@ project.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
-References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
+References in this document to Enterprise JavaBeans (EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
 </td>
 </tr>
 </table>
@@ -23193,7 +23241,7 @@ References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta En
 <h2 id="h2-web-console"><a class="anchor" href="#h2-web-console"></a>22. H2 Web Console Integration</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The H2 database library provided by WildFly&#8217;s <code>com.h2database.h2</code> module includes an implementation of the Jakarta Servlet <code>HttpServlet</code> interface (<code>org.h2.server.web.WebServlet</code>) that can be used to expose the H2 project&#8217;s web console tool. WildFly users could utilize this servlet in their own application by adding a dependency on the <code>com.h2database.h2</code> module to their application&#8217;s deployment and then adding the servlet to the application&#8217;s <code>web.xml</code>. This is certainly not recommended for production use&#8201;&#8212;&#8201;no use of H2 is recommended in production applications&#8201;&#8212;&#8201;but developers may find use of the H2 console useful.</p>
+<p>The H2 database library provided by WildFly&#8217;s <code>com.h2database.h2</code> module includes an implementation of the Jakarta Servlet <code>HttpServlet</code> interface (<code>org.h2.server.web.JakartaWebServlet</code>) that can be used to expose the H2 project&#8217;s web console tool. WildFly users could utilize this servlet in their own application by adding a dependency on the <code>com.h2database.h2</code> module to their application&#8217;s deployment and then adding the servlet to the application&#8217;s <code>web.xml</code>. This is certainly not recommended for production use&#8201;&#8212;&#8201;no use of H2 is recommended in production applications&#8201;&#8212;&#8201;but developers may find use of the H2 console useful.</p>
 </div>
 <div class="paragraph">
 <p>WildFly has historically integrated H2 in such a way that this is possible. But beginning with the 26 release, this no longer works out of the box, as the <code>com.h2database.h2</code> module no longer has out-of-the-box access to the module that exposes the Jakarta Servlet API.</p>
@@ -23223,7 +23271,19 @@ References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta En
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>com.h2database.h2</code> module optionally depends on the <code>javax.servlet.api.h2</code> module, so if one exists and it exposes the Jakarta Servlet API, then H2 <code>WebServlet</code> integration will work.</p>
+<p>The <code>com.h2database.h2</code> module optionally depends on the <code>javax.servlet.api.h2</code> module, so if one exists and it exposes the Jakarta Servlet API, then H2 <code>JakartaWebServlet</code> integration will work.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title=":information_source:"></i>
+</td>
+<td class="content">
+The relevant servlet implementation class is <code>org.h2.server.web.JakartaWebServlet</code>, and not <code>org.h2.server.web.WebServlet</code>. The latter relies on older versions of the Servlet API no longer provided by WildFly.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -23274,7 +23334,7 @@ about this migration, see <a href="#Migrate_Order_Application_from_EAP5">Order A
 <h4 id="migrate-example-application"><a class="anchor" href="#migrate-example-application"></a>23.1.5. Migrate example application</h4>
 <div class="paragraph">
 <p>A step by step work through of issues, and their solutions, that might
-crop up when migrating applications to WildFly 27. See the following
+crop up when migrating applications to WildFly 28. See the following
 <a href="https://github.com/danbev/migrate">github project</a> for details.</p>
 </div>
 </div>
@@ -23595,10 +23655,10 @@ changes that were made to the application.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
-References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
+References in this document to Enterprise JavaBeans (EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
 </td>
 </tr>
 </table>
@@ -23613,24 +23673,24 @@ References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta En
 <div class="paragraph">
 <p>This document details the main points that need to be considered by
 Spring developers that wish to develop new applications or to migrate
-existing applications to be run into WildFly 27.</p>
+existing applications to be run into WildFly 28.</p>
 </div>
 <div class="sect2">
 <h3 id="dependencies-and-modularity"><a class="anchor" href="#dependencies-and-modularity"></a>25.1. Dependencies and Modularity</h3>
 <div class="paragraph">
-<p>WildFly 27 has a modular class loading strategy, different from previous
+<p>WildFly 28 has a modular class loading strategy, different from previous
 versions of JBoss AS, which enforces a better class loading isolation
 between deployments and the application server itself. A detailed
 description can be found in the documentation dedicated to
 <a href="https://docs.jboss.org/author/display/AS7/Class+Loading+in+AS7">class
-loading in WildFly 27</a>.</p>
+loading in WildFly 28</a>.</p>
 </div>
 <div class="paragraph">
 <p>This reduces significantly the risk of running into a class loading
 conflict and allows applications to package their own dependencies if
 they choose to do so. This makes it easier for Spring applications that
 package their own dependencies - such as logging frameworks or
-persistence providers to run on WildFly 27.</p>
+persistence providers to run on WildFly 28.</p>
 </div>
 <div class="paragraph">
 <p>At the same time, this does not mean that duplications and conflicts
@@ -23740,7 +23800,7 @@ to be looked up in JNDI, as follows:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
 JNDI binding via persistence.xml properties is not supported in WildFly
@@ -23753,7 +23813,7 @@ JNDI binding via persistence.xml properties is not supported in WildFly
 <div class="sect3">
 <h4 id="using-spring-managed-persistence-units"><a class="anchor" href="#using-spring-managed-persistence-units"></a>25.4.2. Using Spring-managed persistence units</h4>
 <div class="paragraph">
-<p>Spring applications running in WildFly 27 may also create persistence
+<p>Spring applications running in WildFly 28 may also create persistence
 units on their own, using the LocalContainerEntityManagerFactoryBean.
 This is what these applications need to consider:</p>
 </div>
@@ -24824,7 +24884,7 @@ remote.connection.default.connect.options.org.xnio.Options.SASL_POLICY_NOANONYMO
 </div>
 <div class="paragraph">
 <p>For information about the changes implemented between Hibernate 4 and Hibernate 5, see
-<a href="https://github.com/hibernate/hibernate-orm/blob/master/migration-guide.adoc" class="bare">https://github.com/hibernate/hibernate-orm/blob/master/migration-guide.adoc</a></p>
+<a href="https://github.com/hibernate/hibernate-orm/blob/main/migration-guide.adoc" class="bare">https://github.com/hibernate/hibernate-orm/blob/main/migration-guide.adoc</a></p>
 </div>
 </div>
 <div class="sect4">
@@ -25167,7 +25227,7 @@ then clients previously accessing WildFly 10 would use</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="java">java.naming.factory.initial=org.jboss.naming.remote.client.InitialContextFactory
+<pre class="CodeRay highlight nowrap"><code data-lang="java">java.naming.factory.initial=org.wildfly.naming.client.WildFlyInitialContextFactory
 java.naming.provider.url=remote:<span class="comment">//localhost:4447</span></code></pre>
 </div>
 </div>
@@ -25176,7 +25236,7 @@ java.naming.provider.url=remote:<span class="comment">//localhost:4447</span></c
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="java">java.naming.factory.initial=org.jboss.naming.remote.client.InitialContextFactory
+<pre class="CodeRay highlight nowrap"><code data-lang="java">java.naming.factory.initial=org.wildfly.naming.client.WildFlyInitialContextFactory
 java.naming.provider.url=http-remoting:<span class="comment">//localhost:8080</span></code></pre>
 </div>
 </div>
@@ -25199,10 +25259,10 @@ java.naming.provider.url=http-remoting:<span class="comment">//localhost:8080</s
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title=":information_source:"></i>
 </td>
 <td class="content">
-References in this document to Enterprise JavaBeans(EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
+References in this document to Enterprise JavaBeans (EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
 </td>
 </tr>
 </table>
@@ -25224,7 +25284,7 @@ WildFly.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
 </td>
 <td class="content">
 Feel free to add content in any way you prefer. You do not need to
@@ -25258,7 +25318,7 @@ WildFly.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
 </td>
 <td class="content">
 Feel free to add content in any way you prefer. You do not need to
@@ -25283,8 +25343,8 @@ applications to WildFly.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 27.0.0.Final<br>
-Last updated 2022-07-08 22:22:01 -0500
+Version 28.0.0.Final<br>
+Last updated 2023-04-04 16:25:29 -0500
 </div>
 </div>
 </body>
