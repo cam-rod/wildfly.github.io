@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>Getting Started Developing Applications Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly team</span><br>
-<span id="revnumber">version 15.0.0.Final,</span>
-<span id="revdate">2018-11-30T23:13:08Z</span>
+<span id="revnumber">version 16.0.0.Final,</span>
+<span id="revdate">2019-02-28T01:16:57Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Getting Started Developing Applications Guide</div>
@@ -4014,13 +4014,13 @@ environment:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">weli@power:~$ mvn -version
+<pre class="CodeRay highlight nowrap"><code>weli@power:~$ mvn -version
 Apache Maven 3.0.3 (r1075438; 2011-03-01 01:31:09+0800)
 Maven home: /usr/share/maven
 Java version: 1.6.0_33, vendor: Apple Inc.
 Java home: /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
 Default locale: en_US, platform encoding: MacRoman
-OS name: &quot;mac os x&quot;, version: &quot;10.8&quot;, arch: &quot;x86_64&quot;, family: &quot;mac&quot;</code></pre>
+OS name: "mac os x", version: "10.8", arch: "x86_64", family: "mac"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4044,7 +4044,7 @@ development, it&#8217;s a commercial software and can be downloaded from:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">mvn archetype:create -DarchetypeGroupId=org.apache.maven.archetypes \
+<pre class="CodeRay highlight nowrap"><code>mvn archetype:create -DarchetypeGroupId=org.apache.maven.archetypes \
 -DarchetypeArtifactId=maven-archetype-webapp \
 -DarchetypeVersion=1.0 \
 -DgroupId=net.bluedash \
@@ -4070,7 +4070,7 @@ manage the download for us. First is to add repository into our pom.xml:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">&lt;repository&gt;
+<pre class="CodeRay highlight nowrap"><code data-lang="java">&lt;repository&gt;
   &lt;id&gt;jvnet-nexus-releases&lt;/id&gt;
   &lt;name&gt;jvnet-nexus-releases&lt;/name&gt;
   &lt;url&gt;https:<span class="comment">//maven.java.net/content/repositories/releases/&lt;/url&gt;</span>
@@ -4082,7 +4082,7 @@ manage the download for us. First is to add repository into our pom.xml:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
     <span class="tag">&lt;groupId&gt;</span>javax.faces<span class="tag">&lt;/groupId&gt;</span>
     <span class="tag">&lt;artifactId&gt;</span>jsf-api<span class="tag">&lt;/artifactId&gt;</span>
     <span class="tag">&lt;version&gt;</span>2.1<span class="tag">&lt;/version&gt;</span>
@@ -4126,7 +4126,7 @@ use it in our project.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;repository&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;repository&gt;</span>
     <span class="tag">&lt;id&gt;</span>jboss-public-repository-group<span class="tag">&lt;/id&gt;</span>
     <span class="tag">&lt;name&gt;</span>JBoss Public Repository Group<span class="tag">&lt;/name&gt;</span>
     <span class="tag">&lt;url&gt;</span>http://repository.jboss.org/nexus/content/groups/public/<span class="tag">&lt;/url&gt;</span>
@@ -4147,7 +4147,7 @@ use it in our project.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">&lt;pluginRepository&gt;
+<pre class="CodeRay highlight nowrap"><code data-lang="java">&lt;pluginRepository&gt;
     &lt;id&gt;jboss-<span class="directive">public</span>-repository-group&lt;/id&gt;
     &lt;name&gt;JBoss Public Repository <span class="predefined-type">Group</span>&lt;/name&gt;
     &lt;url&gt;http:<span class="comment">//repository.jboss.org/nexus/content/groups/public/&lt;/url&gt;</span>
@@ -4165,7 +4165,7 @@ use it in our project.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">&lt;plugin&gt;
+<pre class="CodeRay highlight nowrap"><code data-lang="java">&lt;plugin&gt;
     &lt;groupId&gt;org.jboss.as.plugins&lt;/groupId&gt;
     &lt;artifactId&gt;jboss-as-maven-plugin&lt;/artifactId&gt;
     &lt;executions&gt;
@@ -4198,7 +4198,7 @@ JBoss AS7 directory, run following command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">bin/standalone.sh</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">bin/standalone.sh</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4207,7 +4207,7 @@ directory and run maven command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">mvn -q jboss-as:deploy</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">mvn -q jboss-as:deploy</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4368,7 +4368,7 @@ dive into the details now:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="error">#</span> Sample JPDA settings <span class="keyword">for</span> remote socket debugging
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="error">#</span> Sample JPDA settings <span class="keyword">for</span> remote socket debugging
 <span class="error">#</span>JAVA_OPTS=<span class="string"><span class="delimiter">&quot;</span><span class="content">$JAVA_OPTS -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n</span><span class="delimiter">&quot;</span></span></code></pre>
 </div>
 </div>
@@ -4377,7 +4377,7 @@ dive into the details now:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="error">#</span> Sample JPDA settings <span class="keyword">for</span> remote socket debugging
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="error">#</span> Sample JPDA settings <span class="keyword">for</span> remote socket debugging
 JAVA_OPTS=<span class="string"><span class="delimiter">&quot;</span><span class="content">$JAVA_OPTS -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n</span><span class="delimiter">&quot;</span></span></code></pre>
 </div>
 </div>
@@ -4395,7 +4395,7 @@ With WildFly you can directly start the server in debug mode:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">bin/standalone.sh --debug --server-config=standalone.xml</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">bin/standalone.sh --debug --server-config=standalone.xml</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4592,23 +4592,16 @@ demonstrate the various ways you can deploy apps to JBoss AS 7.</p>
 <p>Start JBoss AS 7 from the console</p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="error">$</span>JBOSS_HOME/bin/standalone.sh</code></pre>
+<pre class="CodeRay highlight nowrap"><code>$ JBOSS_HOME/bin/standalone.sh</code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>Deploy the app using Maven</p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">mvn clean <span class="keyword">package</span> <span class="namespace">jboss</span>-<span class="namespace">as</span>:<span class="namespace">deploy</span></code></pre>
+<pre class="CodeRay highlight nowrap"><code>$ mvn clean package jboss-as:deploy</code></pre>
 </div>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ol>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -4617,29 +4610,34 @@ demonstrate the various ways you can deploy apps to JBoss AS 7.</p>
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-The quickstarts use the jboss-as maven plugin to deploy and undeploy
+<div class="paragraph">
+<p>The quickstarts use the jboss-as maven plugin to deploy and undeploy
 applications. This plugin uses the JBoss AS Native Java Detyped
 Management API to communicate with the server. The Detyped API is used
 by management tools to control an entire domain of servers, and exposes
 only a small number of types, allowing for backwards and forwards
-compatibility.
+compatibility.</p>
+</div>
 </td>
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>Show the app has deployed in the terminal</p>
-</div>
+</li>
+<li>
+<p>Show the app has deployed in the terminal.</p>
 <div class="paragraph">
 <p>Visit <a href="http://localhost:8080/jboss-as-helloworld" class="bare">http://localhost:8080/jboss-as-helloworld</a></p>
 </div>
-<div class="paragraph">
+</li>
+<li>
 <p>Undeploy the app using Maven</p>
-</div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">mvn jboss-as:undeploy</code></pre>
+<pre class="CodeRay highlight nowrap"><code>$ mvn jboss-as:undeploy</code></pre>
 </div>
+</div>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect4">
@@ -4650,26 +4648,23 @@ compatibility.
 <p>Start JBoss AS 7 from the console (if not already running)</p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="error">$</span>JBOSS_HOME/bin/standalone.sh</code></pre>
+<pre class="CodeRay highlight nowrap"><code>$ JBOSS_HOME/bin/standalone.sh</code></pre>
 </div>
 </div>
 </li>
-</ol>
-</div>
-<div class="paragraph">
+<li>
 <p>Build the war</p>
-</div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">mvn clean <span class="keyword">package</span></code></pre>
+<pre class="CodeRay highlight nowrap"><code>$ mvn clean package</code></pre>
 </div>
 </div>
-<div class="paragraph">
+</li>
+<li>
 <p>Start the CLI</p>
-</div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="error">$</span>JBOSS_HOME/bin/jboss-admin.sh --connect</code></pre>
+<pre class="CodeRay highlight nowrap"><code>$ JBOSS_HOME/bin/jboss-admin.sh --connect</code></pre>
 </div>
 </div>
 <div class="admonitionblock important">
@@ -4689,21 +4684,24 @@ node.
 </tr>
 </table>
 </div>
-<div class="paragraph">
+</li>
+<li>
 <p>Deploy the app</p>
-</div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">deploy target/jboss-as-helloworld.war</code></pre>
+<pre class="CodeRay highlight nowrap"><code>$ deploy target/jboss-as-helloworld.war</code></pre>
 </div>
 </div>
-<div class="paragraph">
+</li>
+<li>
 <p>Show the app has deployed</p>
-</div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">undeploy jboss-as-helloworld.war</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="error">$</span> undeploy jboss-as-helloworld.war</code></pre>
 </div>
+</div>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect4">
@@ -4714,23 +4712,20 @@ node.
 <p>Start JBoss AS 7 from the console (if not already running)</p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="error">$</span>JBOSS_HOME/bin/standalone.sh</code></pre>
+<pre class="CodeRay highlight nowrap"><code>$ JBOSS_HOME/bin/standalone.sh</code></pre>
 </div>
 </div>
 </li>
-</ol>
-</div>
-<div class="paragraph">
+<li>
 <p>Build the war</p>
-</div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">mvn clean <span class="keyword">package</span></code></pre>
+<pre class="CodeRay highlight nowrap"><code>$ mvn clean package</code></pre>
 </div>
 </div>
-<div class="paragraph">
+</li>
+<li>
 <p>Open up the web management interface <a href="http://localhost:9990/console" class="bare">http://localhost:9990/console</a></p>
-</div>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -4738,29 +4733,34 @@ node.
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-The web maangement interface offers the same functionality as the CLI
+<div class="paragraph">
+<p>The web management interface offers the same functionality as the CLI
 (and again uses the Detyped Management API), but does so using a pretty
 GWT interface! You can set up virtual servers, interrogate sub systems
-and more.
+and more.</p>
+</div>
 </td>
 </tr>
 </table>
 </div>
-<div class="paragraph">
+</li>
+<li>
 <p>Navigate <code>Manage Deployments &#8594; Add content</code>. Click on choose file and
 locate <code>helloworld/target/jboss-as-helloworld.war</code>.</p>
-</div>
-<div class="paragraph">
+</li>
+<li>
 <p>Click <code>Next</code> and <code>Finish</code> to upload the war to the server.</p>
-</div>
-<div class="paragraph">
+</li>
+<li>
 <p>Now click <code>Enable</code> and <code>Ok</code> to start the application</p>
-</div>
-<div class="paragraph">
+</li>
+<li>
 <p>Switch to the console to show it deployed</p>
-</div>
-<div class="paragraph">
+</li>
+<li>
 <p>Now click <code>Remove</code></p>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect4">
@@ -4771,18 +4771,15 @@ locate <code>helloworld/target/jboss-as-helloworld.war</code>.</p>
 <p>Start JBoss AS 7 from the console (if not already running)</p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="error">$</span>JBOSS_HOME/bin/standalone.sh</code></pre>
+<pre class="CodeRay highlight nowrap"><code>$ JBOSS_HOME/bin/standalone.sh</code></pre>
 </div>
 </div>
 </li>
-</ol>
-</div>
-<div class="paragraph">
+<li>
 <p>Build the war</p>
-</div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">mvn clean <span class="keyword">package</span></code></pre>
+<pre class="CodeRay highlight nowrap"><code>$ mvn clean package</code></pre>
 </div>
 </div>
 <div class="admonitionblock important">
@@ -4792,23 +4789,25 @@ locate <code>helloworld/target/jboss-as-helloworld.war</code>.</p>
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-Of course, you can still use the good ol' file system to deploy. Just
-copy the file to <code>$JBOSS_HOME/standalone/deployments</code>.
+<div class="paragraph">
+<p>Of course, you can still use the good ol' file system to deploy. Just
+copy the file to <code>$JBOSS_HOME/standalone/deployments</code>.</p>
+</div>
 </td>
 </tr>
 </table>
 </div>
-<div class="paragraph">
+</li>
+<li>
 <p>Copy the war</p>
-</div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">cp target/jboss-as-helloworld.war <span class="error">$</span>JBOSS_HOME/standalone/deployments</code></pre>
+<pre class="CodeRay highlight nowrap"><code>$ cp target/jboss-as-helloworld.war $JBOSS_HOME/standalone/deployments</code></pre>
 </div>
 </div>
-<div class="paragraph">
+</li>
+<li>
 <p>Show the war deployed</p>
-</div>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -4816,28 +4815,30 @@ copy the file to <code>$JBOSS_HOME/standalone/deployments</code>.
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-The filesystem deployment uses marker files to indicate the status of a
+<div class="paragraph">
+<p>The filesystem deployment uses marker files to indicate the status of a
 deployment. As this deployment succeeded we get a
 <code>$JBOSS_HOME/standalone/deployments/jboss-as-helloworld.war.deployed</code>
-file. If the deployment failed, you would get a <code>.failed</code> file etc.
+file. If the deployment failed, you would get a <code>.failed</code> file etc.</p>
+</div>
 </td>
 </tr>
 </table>
 </div>
-<div class="paragraph">
+</li>
+<li>
 <p>Undeploy the war</p>
-</div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">rm <span class="error">$</span>JBOSS_HOME/standalone/deployments/jboss-as-helloworld.war.deployed</code></pre>
+<pre class="CodeRay highlight nowrap"><code>rm $JBOSS_HOME/standalone/deployments/jboss-as-helloworld.war.deployed</code></pre>
 </div>
 </div>
-<div class="paragraph">
+</li>
+<li>
 <p>Show the deployment stopping!</p>
-</div>
-<div class="paragraph">
-<p>Start and stop the appserver, show that the deployment really is gone!</p>
-</div>
+</li>
+<li>
+<p>Start and stop the app server, show that the deployment really is gone!</p>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -4845,10 +4846,15 @@ file. If the deployment failed, you would get a <code>.failed</code> file etc.
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-This gives you much more precise control over deployments than before
+<div class="paragraph">
+<p>This gives you much more precise control over deployments than before</p>
+</div>
 </td>
 </tr>
 </table>
+</div>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect4">
@@ -5557,58 +5563,43 @@ layer and in your views</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="arquillian">Arquillian</h5>
+<h5 id="arquillian-getting-started">Arquillian</h5>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
 <p>Make sure JBoss AS is running</p>
-</li>
-<li>
-<p>[source, bash]</p>
-</li>
-</ol>
-</div>
 <div class="listingblock">
 <div class="content">
-<pre>mvn clean test -Parq-jbossas-remote</pre>
+<pre class="CodeRay highlight nowrap"><code>mvn clean test -Parq-jbossas-remote</code></pre>
 </div>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+</li>
 <li>
 <p>Explain the difference between managed and remote</p>
 </li>
-</ol>
-</div>
-<div class="paragraph">
+<li>
 <p>Make sure JBoss AS is stopped</p>
-</div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">mvn clean test -Parq-jbossas-managed</code></pre>
+<pre class="CodeRay highlight nowrap"><code>mvn clean test -Parq-jbossas-managed</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Start JBoss AS in Eclipse</p>
-</div>
-<div class="paragraph">
-<p>Update the project to use the <code>arq-jbossas-remote</code> profile</p>
-</div>
-<div class="paragraph">
-<p>Run the test from Eclipse</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Right click on test, <code>Run As &#8594; JUnit Test</code></p>
 </li>
-</ol>
+<li>
+<p>Start JBoss AS in Eclipse</p>
+</li>
+<li>
+<p>Update the project to use the <code>arq-jbossas-remote</code> profile</p>
+</li>
+<li>
+<p>Run the test from Eclipse</p>
+<div class="paragraph">
+<p>Right click on test, <code>Run As &#8594; JUnit Test</code></p>
 </div>
 <div class="paragraph">
 <p><code>MemberRegistrationTest.java</code></p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+</li>
 <li>
 <p>Discuss micro deployments</p>
 </li>
@@ -5629,8 +5620,8 @@ logic</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 15.0.0.Final<br>
-Last updated 2018-09-06 09:09:40 PDT
+Version 16.0.0.Final<br>
+Last updated 2019-02-06 11:57:26 PST
 </div>
 </div>
 </body>

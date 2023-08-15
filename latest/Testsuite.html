@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>WildFly Testsuite</h1>
 <div class="details">
 <span id="author" class="author">WildFly team</span><br>
-<span id="revnumber">version 15.0.0.Final,</span>
-<span id="revdate">2018-11-30T23:13:08Z</span>
+<span id="revnumber">version 16.0.0.Final,</span>
+<span id="revdate">2019-02-28T01:16:57Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly testsuite</div>
@@ -1149,7 +1149,7 @@ run the specified module <em>only</em>.</p>
 <h4 id="output-to-console">2.2.1. Output to console</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">-DtestLogToFile</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">-DtestLogToFile</code></pre>
 </div>
 </div>
 </div>
@@ -1176,7 +1176,7 @@ timeout ratio, you need to specify timeout manually for Surefire.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">-Dsurefire.forked.process.timeout=<span class="integer">900</span></code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">-Dsurefire.forked.process.timeout=<span class="integer">900</span></code></pre>
 </div>
 </div>
 </div>
@@ -1193,7 +1193,7 @@ operations.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">-Dtimeout.ratio.fsio=<span class="integer">100</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">-Dtimeout.ratio.fsio=<span class="integer">100</span>
 -Dtimeout.ratio.netio=<span class="integer">100</span>
 -Dtimeout.ratio.memio=<span class="integer">100</span>
 -Dtimeout.ratio.proc=<span class="integer">100</span>
@@ -1273,7 +1273,7 @@ AS into submodules to run the tests against.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">./integration-tests.sh -DallTests -Djboss.dist=/opt/wildfly-<span class="integer">8</span></code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">./integration-tests.sh -DallTests -Djboss.dist=/opt/wildfly-<span class="integer">8</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1291,7 +1291,7 @@ Arquillian).</p>
 <div class="sect4">
 <h5 id="running-against-a-running-jboss-as-instance">Running against a running JBoss AS instance</h5>
 <div class="paragraph">
-<p>Arquillian&#8217;s WildFly 15 container adapter allows specifying
+<p>Arquillian&#8217;s WildFly 16 container adapter allows specifying
 <code>allowConnectingToRunningServer</code> in <code>arquillian.xml</code>, which makes it
 check whether AS is listening at <code>managementAddress:managementPort</code>, and
 if so, it uses that server instead of launching a new one, and doesn&#8217;t
@@ -1322,7 +1322,7 @@ your local one (typically in .m2/settings.xml).</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml">   <span class="tag">&lt;mirror&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml">   <span class="tag">&lt;mirror&gt;</span>
       <span class="tag">&lt;id&gt;</span>eap6-mirror-setting<span class="tag">&lt;/id&gt;</span>
       <span class="tag">&lt;mirrorOf&gt;</span>
          *,!central-eap6,!central-eap6-plugins,!jboss-public-eap6,!jboss-public-eap6-plugins
@@ -1339,7 +1339,7 @@ purpose is to get the artifacts which the testsuite depends on.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">mvn clean install -s settings.xml -Dmaven.repo.local=local-repo-eap</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">mvn clean install -s settings.xml -Dmaven.repo.local=local-repo-eap</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1348,7 +1348,7 @@ would run:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">./integration-tests.sh -DallTests -Djboss.dist=/opt/eap6</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">./integration-tests.sh -DallTests -Djboss.dist=/opt/eap6</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1411,7 +1411,7 @@ only).</p>
 <h5 id="examples-1">Examples</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">./integration-tests.sh install -DdebugClient -Ddebug.port.surefire=<span class="integer">4040</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">./integration-tests.sh install -DdebugClient -Ddebug.port.surefire=<span class="integer">4040</span>
 <span class="error"> </span>
 ...
 <span class="error"> </span>
@@ -1423,7 +1423,7 @@ Listening <span class="keyword">for</span> transport dt_socket at address: <span
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">./integration-tests.sh install -DdebugClient -Ddebug.port.surefire
+<pre class="CodeRay highlight nowrap"><code>./integration-tests.sh install -DdebugClient -Ddebug.port.surefire
  
 ...
  
@@ -1435,12 +1435,12 @@ Listening for transport dt_socket at address: 5050</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">./integration-tests.sh install -Ddebug</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">./integration-tests.sh install -Ddebug</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">./integration-tests.sh install -Ddebug -Das.debug.port=<span class="integer">5005</span></code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">./integration-tests.sh install -Ddebug -Das.debug.port=<span class="integer">5005</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock important">
@@ -1482,7 +1482,7 @@ properties (with the following defaults):</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">-Dds.jdbc.driver=
+<pre class="CodeRay highlight nowrap"><code data-lang="java">-Dds.jdbc.driver=
 -Dds.jdbc.driver.version=
 -Dds.jdbc.url=
 -Dds.jdbc.user=test
@@ -1526,7 +1526,7 @@ some of databases, which can be set using:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">-Dds.db=&lt;database-identifier&gt;</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">-Dds.db=&lt;database-identifier&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1617,10 +1617,10 @@ properties. Whole set is included in all server startup parameters.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">./integration-tests.sh clean install -Dintegration.module -DallTests \
-<span class="error">\</span><span class="string"><span class="delimiter">&quot;</span><span class="content">-Dsecurity.manager.other=-Djava.security.manager </span><span class="char">\
-</span><span class="content">-Djava.security.policy==$(pwd)/testsuite/shared/src/main/resources/secman/permitt_all.policy </span><span class="char">\
-</span><span class="content">-Djava.security.debug=access:failure </span><span class="char">\&quot;</span></span></code></pre>
+<pre class="CodeRay highlight nowrap"><code>./integration-tests.sh clean install -Dintegration.module -DallTests \
+\"-Dsecurity.manager.other=-Djava.security.manager \
+-Djava.security.policy==$(pwd)/testsuite/shared/src/main/resources/secman/permitt_all.policy \
+-Djava.security.debug=access:failure \"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1640,7 +1640,7 @@ be run separatedly afterwards. Use one of these:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">./integration-tests.sh site
+<pre class="CodeRay highlight nowrap"><code>./integration-tests.sh site
 cd testsuite; mvn site
 mvn -pl testsuite site</code></pre>
 </div>
@@ -1671,10 +1671,10 @@ maven report goal doesn&#8217;t support getting classes outside
 target/classes.</p>
 </div>
 <div class="sect4">
-<h5 id="usage">Usage</h5>
+<h5 id="usage-integration-testsuite">Usage</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">./build.sh clean install -DskipTests
+<pre class="CodeRay highlight nowrap"><code>./build.sh clean install -DskipTests
 ./integration-tests.sh clean install -DallTests -Dcoverage
 ./integration-tests.sh site -DallTests -Dcoverage ## Must run in separatedly.</code></pre>
 </div>
@@ -1684,7 +1684,7 @@ target/classes.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">mvn clean install -DskipTests
+<pre class="CodeRay highlight nowrap"><code>mvn clean install -DskipTests
 mvn -rf testsuite clean install -DallTests -Dcoverage
 mvn -rf testsuite site -DallTests -Dcoverage</code></pre>
 </div>
@@ -1724,7 +1724,7 @@ mvn -rf testsuite site -DallTests -Dcoverage</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">mvn clean install -DskipTests -DallTests  <span class="error">#</span><span class="error">#</span> ...to clean all testsuite modules.
+<pre class="CodeRay highlight nowrap"><code>mvn clean install -DskipTests -DallTests  ## ...to clean all testsuite modules.
 mvn dependency:purge-local-repository build-helper:remove-project-artifact -Dbuildhelper.removeAll</code></pre>
 </div>
 </div>
@@ -1734,7 +1734,7 @@ it&#8217;s recommended to use local repository:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">cp /home/hudson/.m2/settings.xml .
+<pre class="CodeRay highlight nowrap"><code data-lang="java">cp /home/hudson/.m2/settings.xml .
 sed <span class="string"><span class="delimiter">&quot;</span><span class="content">s|&lt;settings&gt;|&lt;settings&gt;&lt;localRepository&gt;/home/ozizka/hudson-repos/$JOBNAME&lt;/localRepository&gt;|</span><span class="delimiter">&quot;</span></span> -i settings.xml</code></pre>
 </div>
 </div>
@@ -1743,7 +1743,7 @@ sed <span class="string"><span class="delimiter">&quot;</span><span class="conte
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">mvn clean install ... -Dmaven.repo.local=localrepo</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">mvn clean install ... -Dmaven.repo.local=localrepo</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1809,7 +1809,7 @@ TBD: <a href="https://issues.jboss.org/browse/ARQ-647" class="bare">https://issu
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;container</span> <span class="attribute-name">qualifier</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jboss</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">default</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;container</span> <span class="attribute-name">qualifier</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jboss</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">default</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
     <span class="tag">&lt;configuration&gt;</span>
         <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jbossHome</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>${basedir}/target/jbossas<span class="tag">&lt;/property&gt;</span></code></pre>
 </div>
@@ -1819,7 +1819,7 @@ TBD: <a href="https://issues.jboss.org/browse/ARQ-647" class="bare">https://issu
 <h4 id="server-jvm-arguments">3.5.2. Server JVM arguments</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;surefire.memory.args&gt;</span>-Xmx512m -XX:MaxPermSize=256m<span class="tag">&lt;/surefire.memory.args&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;surefire.memory.args&gt;</span>-Xmx512m -XX:MaxPermSize=256m<span class="tag">&lt;/surefire.memory.args&gt;</span>
     <span class="tag">&lt;surefire.jpda.args&gt;</span><span class="tag">&lt;/surefire.jpda.args&gt;</span>
     <span class="tag">&lt;surefire.system.args&gt;</span>${surefire.memory.args} ${surefire.jpda.args}<span class="tag">&lt;/surefire.system.args&gt;</span></code></pre>
 </div>
@@ -1871,7 +1871,7 @@ TBD: <a href="https://issues.jboss.org/browse/ARQ-647" class="bare">https://issu
 <h3 id="debug-parameters-propagation">3.6. Debug parameters propagation</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;surefire.jpda.args&gt;</span><span class="tag">&lt;/surefire.jpda.args&gt;</span>       - default
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;surefire.jpda.args&gt;</span><span class="tag">&lt;/surefire.jpda.args&gt;</span>       - default
 
 <span class="tag">&lt;surefire.jpda.args&gt;</span>-Xrunjdwp:transport=dt_socket,address=${as.debug.port},server=y,suspend=y<span class="tag">&lt;/surefire.jpda.args&gt;</span> - activated by -Ddebug or -Djpda
 
@@ -1923,7 +1923,7 @@ phase generate-test-resources: resource-plugin, goal copy-resources</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;ant</span> <span class="attribute-name">antfile</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">$\{basedir}/src/test/scripts/basic-integration-build.xml</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;ant</span> <span class="attribute-name">antfile</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">$\{basedir}/src/test/scripts/basic-integration-build.xml</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
     <span class="tag">&lt;target</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">build-basic-integration</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
     <span class="tag">&lt;target</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">build-basic-integration-jts</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
 <span class="tag">&lt;/ant&gt;</span></code></pre>
@@ -1934,7 +1934,7 @@ phase generate-test-resources: resource-plugin, goal copy-resources</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;target</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">build-basic-integration</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">description</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Builds server configuration for basic-integration tests</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;target</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">build-basic-integration</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">description</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Builds server configuration for basic-integration tests</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
       <span class="tag">&lt;build-server-config</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jbossas</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span></code></pre>
 </div>
 </div>
@@ -1943,7 +1943,7 @@ phase generate-test-resources: resource-plugin, goal copy-resources</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="comment">&lt;!-- Copy the base distribution. --&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="comment">&lt;!-- Copy the base distribution. --&gt;</span>
 <span class="comment">&lt;!-- We exclude modules and bundles as they are read-only and we locate the via sys props. --&gt;</span>
 <span class="tag">&lt;copy</span> <span class="attribute-name">todir</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">@{output.dir}/@{name}</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
     <span class="tag">&lt;fileset</span> <span class="attribute-name">dir</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">@{jboss.dist}</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
@@ -1968,7 +1968,7 @@ phase generate-test-resources: resource-plugin, goal copy-resources</p>
 <h3 id="arquillian-config-file-location">4.1. Arquillian config file location</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">-Darquillian.xml=some-file-or-classpath-resource.xml</code></pre>
+<pre class="CodeRay highlight nowrap"><code>-Darquillian.xml=some-file-or-classpath-resource.xml</code></pre>
 </div>
 </div>
 </div>
@@ -2558,7 +2558,7 @@ x! - runs but should not.</p>
 <h3 id="how-to-get-it">6.1. How to get it</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">./integration-tests.sh clean install -DallTests | tee TS.txt | testsuite/tools/runSummary.sh</code></pre>
+<pre class="CodeRay highlight nowrap"><code>./integration-tests.sh clean install -DallTests | tee TS.txt | testsuite/tools/runSummary.sh</code></pre>
 </div>
 </div>
 </div>
@@ -2569,7 +2569,7 @@ x! - runs but should not.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">##  Cat the file or stdin if no args,
+<pre class="CodeRay highlight nowrap"><code>##  Cat the file or stdin if no args,
 ##  filter only interesting lines - plugin executions and modules separators,
 ##  plus Test runs summaries,
 ##  and remove the boring plugins like enforcer etc.
@@ -2594,7 +2594,7 @@ cat $1 \
 <h3 id="example-output-with-comments.">6.3. Example output with comments.</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">ondra@ondra-redhat: ~/work/AS7/ozizka-as7 $  ./integration-tests.sh clean install -DallTests | tee TS.txt | testsuite/tools/runSummary.sh
+<pre class="CodeRay highlight nowrap"><code>ondra@ondra-redhat: ~/work/AS7/ozizka-as7 $  ./integration-tests.sh clean install -DallTests | tee TS.txt | testsuite/tools/runSummary.sh
 [INFO] ------------------------------------------------------------------------
 [INFO] ------------------------------------------------------------------------
 [INFO] Building JBoss Application Server Test Suite: Aggregator 7.1.0.CR1-SNAPSHOT
@@ -2643,7 +2643,7 @@ cat $1 \
               TODO: Remove
  
 [INFO] --- maven-antrun-plugin:1.6:run (build-smoke.server) @ jboss-as-testsuite-integration-smoke ---
-     [echo] Building AS instance &quot;smoke&quot; from /home/ondra/work/EAP/EAP6-DR9 to /home/ondra/work/AS7/ozizka-as7/testsuite/integration/smoke/target
+     [echo] Building AS instance "smoke" from /home/ondra/work/EAP/EAP6-DR9 to /home/ondra/work/AS7/ozizka-as7/testsuite/integration/smoke/target
               TODO: Should be running one level above!
  
 [INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ jboss-as-testsuite-integration-smoke ---
@@ -2657,7 +2657,7 @@ cat $1 \
 <h3 id="example-output-unchanged">6.4. Example output, unchanged</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">ondra@lenovo:~/work/AS7/ozizka-git$ ./integration-tests.sh clean install -DallTests | tee TS.txt | testsuite/tools/runSummary.sh
+<pre class="CodeRay highlight nowrap"><code>ondra@lenovo:~/work/AS7/ozizka-git$ ./integration-tests.sh clean install -DallTests | tee TS.txt | testsuite/tools/runSummary.sh
 SSCmeetingWestfordJan     [copy] Warning: /home/ondra/work/AS7/ozizka-git/testsuite/integration/src/test/resources/test-configs/smoke does not exist.
      [copy] Warning: /home/ondra/work/AS7/ozizka-git/testsuite/integration/src/test/resources/test-configs/clustering-udp-0 does not exist.
      [copy] Warning: /home/ondra/work/AS7/ozizka-git/testsuite/integration/src/test/resources/test-configs/clustering-udp-1 does not exist.
@@ -2690,7 +2690,7 @@ SSCmeetingWestfordJan     [copy] Warning: /home/ondra/work/AS7/ozizka-git/testsu
 [INFO] --- maven-resources-plugin:2.5:copy-resources (ts.copy-jbossas.groups) @ jboss-as-testsuite-integration-smoke ---
 [INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ jboss-as-testsuite-integration-smoke ---
 [INFO] --- maven-antrun-plugin:1.6:run (build-smoke.server) @ jboss-as-testsuite-integration-smoke ---
-     [echo] Building AS instance &quot;smoke&quot; from /home/ondra/work/AS7/ozizka-git/testsuite/integration/smoke/../../../build/target/jboss-as-7.1.0.Final-SNAPSHOT to /home/ondra/work/AS7/ozizka-git/testsuite/integration/smoke/target
+     [echo] Building AS instance "smoke" from /home/ondra/work/AS7/ozizka-git/testsuite/integration/smoke/../../../build/target/jboss-as-7.1.0.Final-SNAPSHOT to /home/ondra/work/AS7/ozizka-git/testsuite/integration/smoke/target
 [INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ jboss-as-testsuite-integration-smoke ---
 [INFO] --- maven-surefire-plugin:2.10:test (smoke-full.surefire) @ jboss-as-testsuite-integration-smoke ---
  T E S T S
@@ -2726,9 +2726,9 @@ SSCmeetingWestfordJan     [copy] Warning: /home/ondra/work/AS7/ozizka-git/testsu
 [INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ jboss-as-testsuite-integration-clust ---
 [INFO] --- maven-antrun-plugin:1.6:run (build-clustering.server) @ jboss-as-testsuite-integration-clust ---
      [echo] Building config clustering-udp-0
-     [echo] Building AS instance &quot;clustering-udp-0&quot; from /home/ondra/work/AS7/ozizka-git/testsuite/integration/clust/../../../build/target/jboss-as-7.1.0.Final-SNAPSHOT to /home/ondra/work/AS7/ozizka-git/testsuite/integration/clust/target
+     [echo] Building AS instance "clustering-udp-0" from /home/ondra/work/AS7/ozizka-git/testsuite/integration/clust/../../../build/target/jboss-as-7.1.0.Final-SNAPSHOT to /home/ondra/work/AS7/ozizka-git/testsuite/integration/clust/target
      [echo] Building config clustering-udp-1
-     [echo] Building AS instance &quot;clustering-udp-1&quot; from /home/ondra/work/AS7/ozizka-git/testsuite/integration/clust/../../../build/target/jboss-as-7.1.0.Final-SNAPSHOT to /home/ondra/work/AS7/ozizka-git/testsuite/integration/clust/target
+     [echo] Building AS instance "clustering-udp-1" from /home/ondra/work/AS7/ozizka-git/testsuite/integration/clust/../../../build/target/jboss-as-7.1.0.Final-SNAPSHOT to /home/ondra/work/AS7/ozizka-git/testsuite/integration/clust/target
 [INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ jboss-as-testsuite-integration-clust ---
 [INFO] --- maven-surefire-plugin:2.10:test (tests-clustering-multi-node-unmanaged.surefire) @ jboss-as-testsuite-integration-clust ---
  T E S T S
@@ -2753,9 +2753,9 @@ SSCmeetingWestfordJan     [copy] Warning: /home/ondra/work/AS7/ozizka-git/testsu
 [INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ jboss-as-testsuite-integration-iiop ---
 [INFO] --- maven-antrun-plugin:1.6:run (build-clustering.server) @ jboss-as-testsuite-integration-iiop ---
      [echo] Building config iiop-client
-     [echo] Building AS instance &quot;iiop-client&quot; from /home/ondra/work/AS7/ozizka-git/testsuite/integration/iiop/../../../build/target/jboss-as-7.1.0.Final-SNAPSHOT to /home/ondra/work/AS7/ozizka-git/testsuite/integration/iiop/target
+     [echo] Building AS instance "iiop-client" from /home/ondra/work/AS7/ozizka-git/testsuite/integration/iiop/../../../build/target/jboss-as-7.1.0.Final-SNAPSHOT to /home/ondra/work/AS7/ozizka-git/testsuite/integration/iiop/target
      [echo] Building config iiop-server
-     [echo] Building AS instance &quot;iiop-server&quot; from /home/ondra/work/AS7/ozizka-git/testsuite/integration/iiop/../../../build/target/jboss-as-7.1.0.Final-SNAPSHOT to /home/ondra/work/AS7/ozizka-git/testsuite/integration/iiop/target
+     [echo] Building AS instance "iiop-server" from /home/ondra/work/AS7/ozizka-git/testsuite/integration/iiop/../../../build/target/jboss-as-7.1.0.Final-SNAPSHOT to /home/ondra/work/AS7/ozizka-git/testsuite/integration/iiop/target
 [INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ jboss-as-testsuite-integration-iiop ---
 [INFO] --- maven-surefire-plugin:2.10:test (tests-iiop-multi-node.surefire) @ jboss-as-testsuite-integration-iiop ---
  T E S T S
@@ -2856,7 +2856,7 @@ standards</a> and follow those guidelines.</p>
 <h3 id="managementclient-and-modelnode-usage-example">7.3. ManagementClient and ModelNode usage example</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">final</span> ModelNode operation = <span class="keyword">new</span> ModelNode();
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="directive">final</span> ModelNode operation = <span class="keyword">new</span> ModelNode();
 operation.get(ModelDescriptionConstants.OP).set(ModelDescriptionConstants.READ_RESOURCE_OPERATION);
 operation.get(ModelDescriptionConstants.OP_ADDR).set(address);
 operation.get(ModelDescriptionConstants.RECURSIVE).set(<span class="predefined-constant">true</span>);
@@ -2879,7 +2879,7 @@ Assert.assertEquals(ModelDescriptionConstants.SUCCESS, result.get(ModelDescripti
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@ContainerResource</span> <span class="directive">private</span> ManagementClient managementClient;
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="annotation">@ContainerResource</span> <span class="directive">private</span> ManagementClient managementClient;
 <span class="directive">final</span> ModelNode result = managementClient.getControllerClient().execute(operation);</code></pre>
 </div>
 </div>
@@ -2888,13 +2888,13 @@ Assert.assertEquals(ModelDescriptionConstants.SUCCESS, result.get(ModelDescripti
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@ArquillianResource</span> <span class="directive">private</span> ManagementClient managementClient;
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="annotation">@ArquillianResource</span> <span class="directive">private</span> ManagementClient managementClient;
 ModelControllerClient client = managementClient.getControllerClient();</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@ArquillianResource</span> ContainerController cc;
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="annotation">@ArquillianResource</span> ContainerController cc;
 <span class="error"> </span>
 <span class="annotation">@Test</span>
 <span class="directive">public</span> <span class="type">void</span> test() {
@@ -2905,32 +2905,32 @@ ModelControllerClient client = managementClient.getControllerClient();</code></p
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;arquillian&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;arquillian&gt;</span>
     <span class="tag">&lt;container</span> <span class="attribute-name">qualifier</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">mode</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">manual</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
 <span class="tag">&lt;/arquillian&gt;</span></code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// Targeted containers HTTP context.</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="comment">// Targeted containers HTTP context.</span>
 <span class="annotation">@ArquillianResource</span> <span class="predefined-type">URL</span> url;</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// Targeted containers HTTP context where servlet is located.</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="comment">// Targeted containers HTTP context where servlet is located.</span>
 <span class="annotation">@ArquillianResource</span>(SomeServlet.class) <span class="predefined-type">URL</span> url;</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// Targeted containers initial context.</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="comment">// Targeted containers initial context.</span>
 <span class="annotation">@ArquillianResource</span> <span class="predefined-type">InitialContext</span>|<span class="predefined-type">Context</span> context;</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// The manual deployer.</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="comment">// The manual deployer.</span>
 <span class="annotation">@ArquillianResource</span> Deployer deployer;</code></pre>
 </div>
 </div>
@@ -3055,7 +3055,7 @@ timeouts.When this and specific are defined, both apply.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Deployment</span>(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">X</span><span class="delimiter">&quot;</span></span>, managed = <span class="predefined-constant">false</span>) ...
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="annotation">@Deployment</span>(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">X</span><span class="delimiter">&quot;</span></span>, managed = <span class="predefined-constant">false</span>) ...
 <span class="error"> </span>
 <span class="annotation">@Test</span>
 <span class="directive">public</span> <span class="type">void</span> shouldFail(<span class="annotation">@ArquillianResource</span> Deployer deployer) <span class="directive">throws</span> <span class="exception">Exception</span> {
@@ -3078,7 +3078,7 @@ And then you have tests that run against each.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Deployment</span>(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">deplA</span><span class="delimiter">&quot;</span></span>, testable = <span class="predefined-constant">false</span>)
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="annotation">@Deployment</span>(name = <span class="string"><span class="delimiter">&quot;</span><span class="content">deplA</span><span class="delimiter">&quot;</span></span>, testable = <span class="predefined-constant">false</span>)
     <span class="annotation">@TargetsContainer</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">serverB</span><span class="delimiter">&quot;</span></span>)
     <span class="directive">public</span> <span class="directive">static</span> Archive&lt;?&gt; deployment()
 <span class="error"> </span>
@@ -3192,7 +3192,7 @@ your branch.</p>
 <p><em>(Please don&#8217;t (re)move - this is a landing page from a Jira link.)</em></p>
 </div>
 <div class="paragraph">
-<p><strong>Thank you for finding time to contribute to WildFly 15 quality.</strong><br>
+<p><strong>Thank you for finding time to contribute to WildFly 16 quality.</strong><br>
 Covering corner cases found by community users with tests is very
 important to increase stability.<br>
 If you&#8217;re providing a test case to support your bug report, it&#8217;s very
@@ -3205,7 +3205,7 @@ likely that your bug will be fixed much sooner.</p>
 file.</p>
 </div>
 <div class="paragraph">
-<p>Check WildFly 15
+<p>Check WildFly 16
 <a href="https://github.com/wildfly/wildfly/tree/master/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration">test
 suite test cases</a> for examples.</p>
 </div>
@@ -3215,7 +3215,7 @@ Developer Guide</a>. Check the requirements for a test to be included in
 the testsuite.</p>
 </div>
 <div class="paragraph">
-<p>Ask for help at WildFly 15 forum or at IRC - #wildfly @ FreeNode.</p>
+<p>Ask for help at WildFly 16 forum or at IRC - #wildfly @ FreeNode.</p>
 </div>
 </div>
 <div class="sect2">
@@ -3355,7 +3355,7 @@ IPv6 adress.<br>
 Always use the configurable values provided by Arquillian or as a system
 property.<br>
 If you come across a value which is not configurable but you think it
-should be, file an WildFly 15 jira issue with component "Test suite".<br>
+should be, file an WildFly 16 jira issue with component "Test suite".<br>
 See
 <a href="https://github.com/arquillian/arquillian/blob/master/examples/junit/src/test/java/com/acme/web/LocalRunServletTestCase.java">@ArquillianResourrce
 usage example</a>.</p>
@@ -3411,7 +3411,7 @@ configurable timeout value with a default if not set.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">junit.framework.AssertionFailedError
+<pre class="CodeRay highlight nowrap"><code data-lang="java">junit.framework.AssertionFailedError
      at junit.framework.Assert.fail(Assert.java:<span class="integer">48</span>) [arquillian-service:]
      at junit.framework.Assert.assertTrue(Assert.java:<span class="integer">20</span>) [arquillian-service:]
      at junit.framework.Assert.assertTrue(Assert.java:<span class="integer">27</span>) [arquillian-service:]
@@ -3427,7 +3427,7 @@ to misconfiguration, note the property and it&#8217;s value in the exception:</p
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="predefined-type">File</span> jdbcJar = <span class="keyword">new</span> <span class="predefined-type">File</span>( <span class="predefined-type">System</span>.getProperty(<span class="string"><span class="delimiter">&quot;</span><span class="content">jbossas.ts.dir</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">.</span><span class="delimiter">&quot;</span></span>),
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="predefined-type">File</span> jdbcJar = <span class="keyword">new</span> <span class="predefined-type">File</span>( <span class="predefined-type">System</span>.getProperty(<span class="string"><span class="delimiter">&quot;</span><span class="content">jbossas.ts.dir</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">.</span><span class="delimiter">&quot;</span></span>),
        <span class="string"><span class="delimiter">&quot;</span><span class="content">integration/src/test/resources/mysql-connector-java-5.1.15.jar</span><span class="delimiter">&quot;</span></span>);
     <span class="keyword">if</span>( !jdbcJar.exists() )
         <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">IllegalStateException</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Can't find </span><span class="delimiter">&quot;</span></span> + jdbcJar + <span class="string"><span class="delimiter">&quot;</span><span class="content"> using $</span><span class="content">\{</span><span class="content">jbossas.ts.dir} == </span><span class="delimiter">&quot;</span></span> + <span class="predefined-type">System</span>.getProperty(<span class="string"><span class="delimiter">&quot;</span><span class="content">jbossas.ts.dir</span><span class="delimiter">&quot;</span></span>) );</code></pre>
@@ -3500,7 +3500,7 @@ You can create a jar with classifier using this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;plugin&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;plugin&gt;</span>
     <span class="tag">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/groupId&gt;</span>
     <span class="tag">&lt;artifactId&gt;</span>maven-jar-plugin<span class="tag">&lt;/artifactId&gt;</span>
     <span class="tag">&lt;executions&gt;</span>
@@ -3519,7 +3519,7 @@ dependency to a testsuite module:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml">    <span class="tag">&lt;dependency&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml">    <span class="tag">&lt;dependency&gt;</span>
         <span class="tag">&lt;groupId&gt;</span>org.wildfly<span class="tag">&lt;/groupId&gt;</span>
         <span class="tag">&lt;artifactId&gt;</span>wildfly-clustering-common<span class="tag">&lt;/artifactId&gt;</span>
         <span class="tag">&lt;classifier&gt;</span>tests<span class="tag">&lt;/classifier&gt;</span>
@@ -3534,8 +3534,8 @@ dependency to a testsuite module:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 15.0.0.Final<br>
-Last updated 2018-09-06 09:09:40 PDT
+Version 16.0.0.Final<br>
+Last updated 2019-02-06 11:57:26 PST
 </div>
 </div>
 </body>

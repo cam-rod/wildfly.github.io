@@ -524,18 +524,27 @@ table.CodeRay td.code>pre{padding:0}
 <h1>Getting Started Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly team</span><br>
-<span id="revnumber">version 15.0.0.Final,</span>
-<span id="revdate">2018-11-30T23:13:08Z</span>
+<span id="revnumber">version 16.0.0.Final,</span>
+<span id="revdate">2019-02-28T01:16:57Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Getting Started Guide</div>
+<ul class="sectlevel1">
+<li><a href="#getting-started-with-wildfly">1. Getting Started with WildFly 16</a>
 <ul class="sectlevel2">
-<li><a href="#getting-started-with-wildfly">1. Getting Started with WildFly 15</a>
-<ul class="sectlevel3">
 <li><a href="#download">1.1. Download</a></li>
 <li><a href="#requirements">1.2. Requirements</a></li>
 <li><a href="#installation">1.3. Installation</a></li>
-<li><a href="#wildfly---a-quick-tour">1.4. WildFly - A Quick Tour</a></li>
+<li><a href="#wildfly---a-quick-tour">1.4. WildFly - A Quick Tour</a>
+<ul class="sectlevel3">
+<li><a href="#wildfly-directory-structure">1.4.1. WildFly Directory Structure</a></li>
+<li><a href="#wildfly-10-configurations">1.4.2. WildFly 16 Configurations</a></li>
+<li><a href="#starting-wildfly-10">1.4.3. Starting WildFly 16</a></li>
+<li><a href="#starting-wildfly-with-an-alternate-configuration">1.4.4. Starting WildFly with an Alternate Configuration</a></li>
+<li><a href="#managing-your-wildfly-10">1.4.5. Managing your WildFly 16</a></li>
+<li><a href="#modifying-the-example-datasource">1.4.6. Modifying the Example DataSource</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -550,16 +559,17 @@ table.CodeRay td.code>pre{padding:0}
 <!-- toc disabled -->
 </div>
 </div>
-<div class="sect2">
-<h3 id="getting-started-with-wildfly">1. Getting Started with WildFly 15</h3>
+<div class="sect1">
+<h2 id="getting-started-with-wildfly">1. Getting Started with WildFly 16</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>WildFly 15 is the latest release in a series of JBoss open-source
-application server offerings. WildFly 15 is an exceptionally fast,
+<p>WildFly 16 is the latest release in a series of JBoss open-source
+application server offerings. WildFly 16 is an exceptionally fast,
 lightweight and powerful implementation of the Java Enterprise Edition 8
 Platform specifications. The state-of-the-art architecture built on the
 Modular Service Container enables services on-demand when your
 application requires them. The table below lists the Java Enterprise
-Edition 8 technologies and the technologies available in WildFly 15
+Edition 8 technologies and the technologies available in WildFly 16
 server configuration profiles.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -576,8 +586,8 @@ server configuration profiles.</p>
 <th class="tableblock halign-left valign-top">Java EE 8 Full Profile</th>
 <th class="tableblock halign-left valign-top">Java EE 8 Web
 Profile</th>
-<th class="tableblock halign-left valign-top">WildFly 15 Full Profile</th>
-<th class="tableblock halign-left valign-top">WildFly 15 Web Profile</th>
+<th class="tableblock halign-left valign-top">WildFly 16 Full Profile</th>
+<th class="tableblock halign-left valign-top">WildFly 16 Web Profile</th>
 </tr>
 </thead>
 <tbody>
@@ -831,7 +841,7 @@ Profile</th>
 </tbody>
 </table>
 <div class="paragraph">
-<p>Missing HornetQ and JMS?</p>
+<p>Missing ActiveMQ Artemis and JMS?</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -840,7 +850,7 @@ Profile</th>
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-The WildFly Web Profile doesn&#8217;t include JMS (provided by HornetQ) by
+The WildFly Web Profile doesn&#8217;t include JMS (provided by ActiveMQ Artemis) by
 default. If you want to use messaging, make sure you start the server
 using the "Full Profile" configuration.
 </td>
@@ -849,63 +859,63 @@ using the "Full Profile" configuration.
 </div>
 <div class="paragraph">
 <p>This document provides a quick overview on how to download and get
-started using WildFly 15 for your application development. For in-depth
-content on administrative features, refer to the WildFly 15 Admin Guide.</p>
+started using WildFly 16 for your application development. For in-depth
+content on administrative features, refer to the WildFly 16 Admin Guide.</p>
 </div>
-<div class="sect3">
-<h4 id="download">1.1. Download</h4>
+<div class="sect2">
+<h3 id="download">1.1. Download</h3>
 <div class="paragraph">
-<p>WildFly 15 distributions can be obtained from:</p>
+<p>WildFly 16 distributions can be obtained from:</p>
 </div>
 <div class="paragraph">
 <p><a href="http://www.wildfly.org/downloads/">wildfly.org/downloads</a></p>
 </div>
 <div class="paragraph">
-<p>WildFly 15 provides a single distribution available in zip or tar file
+<p>WildFly 16 provides a single distribution available in zip or tar file
 formats.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>wildfly-15.0.0.Final.zip</strong></p>
+<p><strong>wildfly-16.0.0.Final.zip</strong></p>
 </li>
 <li>
-<p><strong>wildfly-15.0.0.Final.tar.gz</strong></p>
+<p><strong>wildfly-16.0.0.Final.tar.gz</strong></p>
 </li>
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="requirements">1.2. Requirements</h4>
+<div class="sect2">
+<h3 id="requirements">1.2. Requirements</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>Java SE 8 or later (we recommend that you use the latest update
-available)</p>
+<p>Java SE 8 or later. We recommend that you use the latest available update
+of the current long-term support Java release.</p>
 </li>
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="installation">1.3. Installation</h4>
+<div class="sect2">
+<h3 id="installation">1.3. Installation</h3>
 <div class="paragraph">
 <p>Simply extract your chosen download to the directory of your choice. You
-can install WildFly 15 on any operating system that supports the zip or
+can install WildFly 16 on any operating system that supports the zip or
 tar formats. Refer to the Release Notes for additional information
 related to the release.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="wildfly---a-quick-tour">1.4. WildFly - A Quick Tour</h4>
+<div class="sect2">
+<h3 id="wildfly---a-quick-tour">1.4. WildFly - A Quick Tour</h3>
 <div class="paragraph">
-<p>Now that you&#8217;ve downloaded WildFly 15, the next thing to discuss is the
+<p>Now that you&#8217;ve downloaded WildFly 16, the next thing to discuss is the
 layout of the distribution and explore the server directory structure,
 key configuration files, log files, user deployments and so on. It&#8217;s
 worth familiarizing yourself with the layout so that you&#8217;ll be able to
 find your way around when it comes to deploying your own applications.</p>
 </div>
-<div class="sect4">
-<h5 id="wildfly-directory-structure">WildFly Directory Structure</h5>
+<div class="sect3">
+<h4 id="wildfly-directory-structure">1.4.1. WildFly Directory Structure</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 50%;">
@@ -963,10 +973,10 @@ used by the single standalone server run from this installation.</p></td>
 </tr>
 </tbody>
 </table>
-<div class="sect5">
-<h6 id="standalone-directory-structure">Standalone Directory Structure</h6>
+<div class="sect4">
+<h5 id="standalone-directory-structure">Standalone Directory Structure</h5>
 <div class="paragraph">
-<p>In " <strong><em>standalone</em></strong> " mode each WildFly 15 server instance is an
+<p>In " <strong><em>standalone</em></strong> " mode each WildFly 16 server instance is an
 independent process (similar to previous JBoss AS versions; e.g., 3, 4,
 5, or 6). The configuration files, deployment content and writable areas
 used by the single standalone server run from a WildFly installation are
@@ -1027,10 +1037,10 @@ process.</p></td>
 </tbody>
 </table>
 </div>
-<div class="sect5">
-<h6 id="domain-directory-structure">Domain Directory Structure</h6>
+<div class="sect4">
+<h5 id="domain-directory-structure">Domain Directory Structure</h5>
 <div class="paragraph">
-<p>A key feature of WildFly 15 is the managing multiple servers from a
+<p>A key feature of WildFly 16 is the managing multiple servers from a
 single control point. A collection of multiple servers are referred to
 as a " <strong><em>domain</em></strong> ". Domains can span multiple physical (or virtual)
 machines with all WildFly instances on a given host under the control of
@@ -1103,10 +1113,10 @@ process.</p></td>
 </table>
 </div>
 </div>
+<div class="sect3">
+<h4 id="wildfly-10-configurations">1.4.2. WildFly 16 Configurations</h4>
 <div class="sect4">
-<h5 id="wildfly-10-configurations">WildFly 15 Configurations</h5>
-<div class="sect5">
-<h6 id="standalone-server-configurations">Standalone Server Configurations</h6>
+<h5 id="standalone-server-configurations">Standalone Server Configurations</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1156,8 +1166,8 @@ high availability</p>
 </ul>
 </div>
 </div>
-<div class="sect5">
-<h6 id="domain-server-configurations">Domain Server Configurations</h6>
+<div class="sect4">
+<h5 id="domain-server-configurations">Domain Server Configurations</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1180,15 +1190,15 @@ provide.</p>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="starting-wildfly-10">Starting WildFly 15</h5>
+<div class="sect3">
+<h4 id="starting-wildfly-10">1.4.3. Starting WildFly 16</h4>
 <div class="paragraph">
-<p>To start WildFly 15 using the default web profile configuration in "
+<p>To start WildFly 16 using the default web profile configuration in "
 <em>standalone</em>" mode, change directory to $JBOSS_HOME/bin.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>./standalone.sh</code></pre>
+<pre class="CodeRay highlight nowrap"><code>./standalone.sh</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1197,12 +1207,12 @@ capabilities,</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>./domain.sh</code></pre>
+<pre class="CodeRay highlight nowrap"><code>./domain.sh</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="starting-wildfly-with-an-alternate-configuration">Starting WildFly with an Alternate Configuration</h5>
+<div class="sect3">
+<h4 id="starting-wildfly-with-an-alternate-configuration">1.4.4. Starting WildFly with an Alternate Configuration</h4>
 <div class="paragraph">
 <p>If you choose to start your server with one of the other provided
 configurations, they can be accessed by passing the --server-config
@@ -1214,7 +1224,7 @@ syntax from $JBOSS_HOME/bin:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">./standalone.sh --server-config=standalone-full-ha.xml</code></pre>
+<pre class="CodeRay highlight nowrap"><code>./standalone.sh --server-config=standalone-full-ha.xml</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1222,22 +1232,22 @@ syntax from $JBOSS_HOME/bin:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">./domain.sh --domain-config=my-domain-configuration.xml</code></pre>
+<pre class="CodeRay highlight nowrap"><code>./domain.sh --domain-config=my-domain-configuration.xml</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Alternatively, you can create your own selecting the additional
 subsystems you want to add, remove, or modify.</p>
 </div>
-<div class="sect5">
-<h6 id="test-your-installation">Test Your Installation</h6>
+<div class="sect4">
+<h5 id="test-your-installation">Test Your Installation</h5>
 <div class="paragraph">
 <p>After executing one of the above commands, you should see output similar
 to what&#8217;s shown below.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">=========================================================================
+<pre class="CodeRay highlight nowrap"><code>=========================================================================
  
   JBoss Bootstrap Environment
  
@@ -1271,14 +1281,14 @@ discussion in the user forum and access the enhanced web-based
 Administration Console. Or, if you uncover a defect while using WildFly,
 report an issue to inform us (attached patches will be reviewed). This
 landing page is recommended for convenient access to information about
-WildFly 15 but can easily be replaced with your own if desired.</p>
+WildFly 16 but can easily be replaced with your own if desired.</p>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="managing-your-wildfly-10">Managing your WildFly 15</h5>
+<div class="sect3">
+<h4 id="managing-your-wildfly-10">1.4.5. Managing your WildFly 16</h4>
 <div class="paragraph">
-<p>WildFly 15 offers two administrative mechanisms for managing your
+<p>WildFly 16 offers two administrative mechanisms for managing your
 running instance:</p>
 </div>
 <div class="ulist">
@@ -1291,10 +1301,10 @@ running instance:</p>
 </li>
 </ul>
 </div>
-<div class="sect5">
-<h6 id="authentication">Authentication</h6>
+<div class="sect4">
+<h5 id="authentication">Authentication</h5>
 <div class="paragraph">
-<p>By default WildFly 15 is now distributed with security enabled for the
+<p>By default WildFly 16 is now distributed with security enabled for the
 management interfaces, this means that before you connect using the
 administration console or remotely using the CLI you will need to add a
 new user, this can be achieved simply by using the <em>add-user.sh</em> script
@@ -1306,8 +1316,8 @@ a new user: -</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">./add-user.sh
-What type of user <span class="keyword">do</span> you wish to add?
+<pre class="CodeRay highlight nowrap"><code>./add-user.sh
+What type of user do you wish to add?
  a) Management User (mgmt-users.properties)
  b) Application User (application-users.properties)
 (a):</code></pre>
@@ -1323,7 +1333,7 @@ added: -</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">Enter the details of the new user to add.
+<pre class="CodeRay highlight nowrap"><code>Enter the details of the new user to add.
 Realm (ManagementRealm) :
 Username :
 Password :
@@ -1348,8 +1358,8 @@ authentication and the files reloaded if they have changed, for this
 reason you do not need to re-start the server after adding a new user.</p>
 </div>
 </div>
-<div class="sect5">
-<h6 id="administration-console">Administration Console</h6>
+<div class="sect4">
+<h5 id="administration-console">Administration Console</h5>
 <div class="paragraph">
 <p>To access the web-based Administration Console, simply follow the link
 from the Welcome Screen. To directly access the Management Console,
@@ -1372,7 +1382,7 @@ port 9990 is the default port configured.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;management-interfaces&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;management-interfaces&gt;</span>
    <span class="tag">&lt;native-interface</span> <span class="attribute-name">security-realm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">ManagementRealm</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
       <span class="tag">&lt;socket-binding</span> <span class="attribute-name">native</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">management-native</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
    <span class="tag">&lt;/native-interface&gt;</span>
@@ -1395,8 +1405,8 @@ added you can click on the 'Try Again' link at the bottom of the error
 page to try connecting to the administration console again.</p>
 </div>
 </div>
-<div class="sect5">
-<h6 id="command-line-interface">Command-Line Interface</h6>
+<div class="sect4">
+<h5 id="command-line-interface">Command-Line Interface</h5>
 <div class="paragraph">
 <p>If you prefer to manage your server from the command line (or batching),
 the <em>jboss-cli.sh</em> script provides the same capabilities available via
@@ -1405,7 +1415,7 @@ directory; e.g.,</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">$JBOSS_HOME/bin/jboss-cli.sh --connect
+<pre class="CodeRay highlight nowrap"><code>$JBOSS_HOME/bin/jboss-cli.sh --connect
 Connected to standalone controller at localhost:9990</code></pre>
 </div>
 </div>
@@ -1428,8 +1438,8 @@ syntax, type <strong><em>help</em></strong> once connected.</p>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="modifying-the-example-datasource">Modifying the Example DataSource</h5>
+<div class="sect3">
+<h4 id="modifying-the-example-datasource">1.4.6. Modifying the Example DataSource</h4>
 <div class="paragraph">
 <p>As with previous JBoss application server releases, a default data
 source, <strong><em>ExampleDS</em></strong> , is configured using the embedded H2 database for
@@ -1453,7 +1463,7 @@ H2 datasource configuration is shown below.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:domain:datasources:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:domain:datasources:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
     <span class="tag">&lt;datasources&gt;</span>
         <span class="tag">&lt;datasource</span> <span class="attribute-name">jndi-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">java:jboss/datasources/ExampleDS</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">pool-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">ExampleDS</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
             <span class="tag">&lt;connection-url&gt;</span>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1<span class="tag">&lt;/connection-url&gt;</span>
@@ -1510,8 +1520,8 @@ the project documentation.</p>
 </li>
 </ul>
 </div>
-<div class="sect5">
-<h6 id="configure-logging-in-wildfly">Configure Logging in WildFly</h6>
+<div class="sect4">
+<h5 id="configure-logging-in-wildfly">Configure Logging in WildFly</h5>
 <div class="paragraph">
 <p>WildFly logging can be configured with the web console or the command
 line interface. You can get more detail on the <a href="Admin_Guide.html#Logging">Logging
@@ -1522,7 +1532,7 @@ Configuration</a> page.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="ruby"><span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=logging</span><span class="delimiter">/</span></span>logger=org.jboss.as<span class="symbol">:add</span>(level=<span class="constant">DEBUG</span>)</code></pre>
+<pre class="CodeRay highlight nowrap"><code>/subsystem=logging/logger=org.jboss.as:add(level=DEBUG)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1535,10 +1545,11 @@ debug messages.</p>
 </div>
 </div>
 </div>
+</div>
 <div id="footer">
 <div id="footer-text">
-Version 15.0.0.Final<br>
-Last updated 2018-09-06 09:09:40 PDT
+Version 16.0.0.Final<br>
+Last updated 2019-02-27 17:10:07 PST
 </div>
 </div>
 </body>

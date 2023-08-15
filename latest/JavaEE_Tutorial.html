@@ -524,62 +524,66 @@ table.CodeRay td.code>pre{padding:0}
 <h1>JavaEE 7 Tutorial</h1>
 <div class="details">
 <span id="author" class="author">WildFly team</span><br>
-<span id="revnumber">version 15.0.0.Final,</span>
-<span id="revdate">2018-11-30T23:13:08Z</span>
+<span id="revnumber">version 16.0.0.Final,</span>
+<span id="revdate">2019-02-28T01:16:57Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">JavaEE 7 Tutorial</div>
+<ul class="sectlevel1">
+<li><a href="#Java_API_for_RESTful_Web_Services_JAX-RS">1. Java API for RESTful Web Services (JAX-RS)</a>
 <ul class="sectlevel2">
-<li><a href="#content">1. Content</a></li>
-<li><a href="#tutorial-overview">2. Tutorial Overview</a></li>
-<li><a href="#what-are-restful-web-services">3. What are RESTful Web Services?</a></li>
-<li><a href="#creating-a-restful-endpoint">4. Creating a RESTful endpoint</a></li>
-<li><a href="#package-and-build-the-endpoint">5. Package and build the endpoint</a></li>
-<li><a href="#deploy-the-endpoint-to-openshift">6. Deploy the endpoint to OpenShift</a></li>
-<li><a href="#building-the-mobile-client">7. Building the mobile client</a></li>
-<li><a href="#exploring-the-mobile-client">8. Exploring the mobile client</a></li>
-<li><a href="#Java_Servlet_Technology">1. Java Servlet Technology</a>
+<li><a href="#content-java-api-restful-web-services">1.1. Content</a></li>
+<li><a href="#tutorial-overview">1.2. Tutorial Overview</a></li>
+<li><a href="#what-are-restful-web-services">1.3. What are RESTful Web Services?</a></li>
+<li><a href="#creating-a-restful-endpoint">1.4. Creating a RESTful endpoint</a></li>
+<li><a href="#package-and-build-the-endpoint">1.5. Package and build the endpoint</a></li>
+<li><a href="#deploy-the-endpoint-to-openshift">1.6. Deploy the endpoint to OpenShift</a></li>
+<li><a href="#building-the-mobile-client">1.7. Building the mobile client</a></li>
+<li><a href="#exploring-the-mobile-client">1.8. Exploring the mobile client</a></li>
+</ul>
+</li>
+<li><a href="#Java_Servlet_Technology">2. Java Servlet Technology</a>
 <ul class="sectlevel2">
-<li><a href="#content">1.1. Content</a></li>
-<li><a href="#asynchronous-support">1.2. Asynchronous Support</a></li>
+<li><a href="#content-java-servlet-technology">2.1. Content</a></li>
+<li><a href="#asynchronous-support">2.2. Asynchronous Support</a></li>
 </ul>
 </li>
-<li><a href="#Managed_Beans">2. Managed Beans</a></li>
-<li><a href="#Bean_Validation">3. Bean Validation</a>
+<li><a href="#Managed_Beans">3. Managed Beans</a></li>
+<li><a href="#Bean_Validation">4. Bean Validation</a>
 <ul class="sectlevel2">
-<li><a href="#configure-jbossas-for-messaging">3.1. Configure JBossAS for Messaging</a></li>
-<li><a href="#adding-the-message-destinations">3.2. Adding the message destinations</a></li>
+<li><a href="#configure-jbossas-for-messaging">4.1. Configure JBossAS for Messaging</a></li>
+<li><a href="#adding-the-message-destinations">4.2. Adding the message destinations</a></li>
 </ul>
 </li>
-<li><a href="#JavaMail_API">4. JavaMail API</a>
+<li><a href="#JavaMail_API">5. JavaMail API</a>
 <ul class="sectlevel2">
-<li><a href="#session-beans">4.1. Session Beans</a>
+<li><a href="#session-beans">5.1. Session Beans</a>
 <ul class="sectlevel3">
-<li><a href="#stateful-session-beans">4.1.1. Stateful Session Beans</a></li>
-<li><a href="#stateless-session-beans">4.1.2. Stateless Session Beans</a></li>
-<li><a href="#singleton-session-beans">4.1.3. Singleton Session Beans</a></li>
+<li><a href="#stateful-session-beans">5.1.1. Stateful Session Beans</a></li>
+<li><a href="#stateless-session-beans">5.1.2. Stateless Session Beans</a></li>
+<li><a href="#singleton-session-beans">5.1.3. Singleton Session Beans</a></li>
 </ul>
 </li>
-<li><a href="#message-driven-beans">4.2. Message Driven Beans</a></li>
-<li><a href="#how-can-enterprise-javabeans-can-be-accessed">4.3. How can Enterprise JavaBeans can be accessed?</a>
+<li><a href="#message-driven-beans">5.2. Message Driven Beans</a></li>
+<li><a href="#how-can-enterprise-javabeans-can-be-accessed">5.3. How can Enterprise JavaBeans can be accessed?</a>
 <ul class="sectlevel3">
-<li><a href="#remote-call-invocation">4.3.1. Remote call invocation</a></li>
-<li><a href="#local-call-invocation">4.3.2. Local call invocation</a></li>
-<li><a href="#web-services">4.3.3. Web Services</a></li>
+<li><a href="#remote-call-invocation">5.3.1. Remote call invocation</a></li>
+<li><a href="#local-call-invocation">5.3.2. Local call invocation</a></li>
+<li><a href="#web-services">5.3.3. Web Services</a></li>
 </ul>
 </li>
-<li><a href="#packaging">4.4. Packaging</a></li>
-<li><a href="#developing-web-service-implementations">4.5. Developing web service implementations</a>
+<li><a href="#packaging">5.4. Packaging</a></li>
+<li><a href="#developing-web-service-implementations">5.5. Developing web service implementations</a>
 <ul class="sectlevel3">
-<li><a href="#the-service-implementation-class">4.5.1. The service implementation class</a></li>
-<li><a href="#deploying-service-implementations">4.5.2. Deploying service implementations</a></li>
+<li><a href="#the-service-implementation-class">5.5.1. The service implementation class</a></li>
+<li><a href="#deploying-service-implementations">5.5.2. Deploying service implementations</a></li>
 </ul>
 </li>
-<li><a href="#consuming-web-services">4.6. Consuming web services</a>
+<li><a href="#consuming-web-services">5.6. Consuming web services</a>
 <ul class="sectlevel3">
-<li><a href="#creating-the-client-artifacts">4.6.1. Creating the client artifacts</a></li>
-<li><a href="#constructing-a-service-stub">4.6.2. Constructing a service stub</a></li>
-<li><a href="#appendix">4.6.3. Appendix</a></li>
+<li><a href="#creating-the-client-artifacts">5.6.1. Creating the client artifacts</a></li>
+<li><a href="#constructing-a-service-stub">5.6.2. Constructing a service stub</a></li>
+<li><a href="#appendix">5.6.3. Appendix</a></li>
 </ul>
 </li>
 </ul>
@@ -604,23 +608,24 @@ table.CodeRay td.code>pre{padding:0}
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-This guide is still under development, check back soon!
+<div class="paragraph">
+<p>This guide is still under development, check back soon!</p>
+</div>
 </td>
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>[[Java_API_for_RESTful_Web_Services_(JAX-RS)]]
-= Java API for RESTful Web Services (JAX-RS)</p>
 </div>
 </div>
-</div>
+<div class="sect1">
+<h2 id="Java_API_for_RESTful_Web_Services_JAX-RS">1. Java API for RESTful Web Services (JAX-RS)</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="content">1. Content</h3>
+<h3 id="content-java-api-restful-web-services">1.1. Content</h3>
 
 </div>
 <div class="sect2">
-<h3 id="tutorial-overview">2. Tutorial Overview</h3>
+<h3 id="tutorial-overview">1.2. Tutorial Overview</h3>
 <div class="paragraph">
 <p>This chapter describes the Java API for RESTful web services (JAX-RS,
 defined in <a href="http://jcp.org/en/jsr/detail?id=311">JSR331</a>).
@@ -671,7 +676,7 @@ RESTful service running on a JBossAS 7 instance in the cloud.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="what-are-restful-web-services">3. What are RESTful Web Services?</h3>
+<h3 id="what-are-restful-web-services">1.3. What are RESTful Web Services?</h3>
 <div class="paragraph">
 <p>Coming Soon</p>
 </div>
@@ -744,7 +749,7 @@ embedded in response messages.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="creating-a-restful-endpoint">4. Creating a RESTful endpoint</h3>
+<h3 id="creating-a-restful-endpoint">1.4. Creating a RESTful endpoint</h3>
 <div class="paragraph">
 <p>A RESTful endpoint is deployed as JavaEE web archive (WAR). For this
 tutorial we use a simple library application to manage some books. There
@@ -766,7 +771,7 @@ a simple Java representation of a RESTful entity.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Book</span> {
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Book</span> {
 <span class="error"> </span>
     <span class="directive">private</span> <span class="predefined-type">String</span> isbn;
     <span class="directive">private</span> <span class="predefined-type">String</span> title;
@@ -794,7 +799,7 @@ JAX-RS annotations to define</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Path</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">/library</span><span class="delimiter">&quot;</span></span>)
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="annotation">@Path</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">/library</span><span class="delimiter">&quot;</span></span>)
 <span class="annotation">@Consumes</span>({ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span> })
 <span class="annotation">@Produces</span>({ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span> })
 <span class="directive">public</span> <span class="type">class</span> <span class="class">Library</span> {
@@ -888,7 +893,7 @@ API</a> documentation.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="package-and-build-the-endpoint">5. Package and build the endpoint</h3>
+<h3 id="package-and-build-the-endpoint">1.5. Package and build the endpoint</h3>
 <div class="paragraph">
 <p>To package the endpoint we create a simple web archive and include a
 web.xml with the following content</p>
@@ -911,7 +916,7 @@ web.xml is needed for RESTful endpoints
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">&lt;web-app version=<span class="string"><span class="delimiter">&quot;</span><span class="content">2.4</span><span class="delimiter">&quot;</span></span> xmlns=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://java.sun.com/xml/ns/j2ee</span><span class="delimiter">&quot;</span></span>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">&lt;web-app version=<span class="string"><span class="delimiter">&quot;</span><span class="content">2.4</span><span class="delimiter">&quot;</span></span> xmlns=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://java.sun.com/xml/ns/j2ee</span><span class="delimiter">&quot;</span></span>
          xmlns:xsi=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span>
          xsi:schemaLocation=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd</span><span class="delimiter">&quot;</span></span>&gt;
     &lt;servlet-mapping&gt;
@@ -926,7 +931,7 @@ web.xml is needed for RESTful endpoints
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">&lt;jboss-web&gt;
+<pre class="CodeRay highlight nowrap"><code data-lang="java">&lt;jboss-web&gt;
   &lt;context-root&gt;jaxrs-sample&lt;/context-root&gt;
 &lt;/jboss-web&gt;</code></pre>
 </div>
@@ -948,7 +953,7 @@ log output the deployment phase and JAX-RS endpoint invocations produce.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="error">$</span> git clone git:<span class="comment">//github.com/tdiesler/javaee-tutorial.git</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="error">$</span> git clone git:<span class="comment">//github.com/tdiesler/javaee-tutorial.git</span>
 Cloning into javaee-tutorial...
 <span class="error"> </span>
 <span class="error">$</span> cd javaee-tutorial/jaxrs
@@ -969,7 +974,7 @@ Cloning into javaee-tutorial...
 </div>
 </div>
 <div class="sect2">
-<h3 id="deploy-the-endpoint-to-openshift">6. Deploy the endpoint to OpenShift</h3>
+<h3 id="deploy-the-endpoint-to-openshift">1.6. Deploy the endpoint to OpenShift</h3>
 <div class="paragraph">
 <p>First we need to create a free
 <a href="https://openshift.redhat.com/app/express">OpenShift Express</a> account and
@@ -988,7 +993,7 @@ repository is configured that gives access to your deployed application.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="error">$</span> rhc-create-app -a tutorial -t jbossas-<span class="float">7.0</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="error">$</span> rhc-create-app -a tutorial -t jbossas-<span class="float">7.0</span>
 Password:
 <span class="error"> </span>
 Attempting to create remote application space: tutorial
@@ -1009,7 +1014,7 @@ The remote repository is located here:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="error">$</span> git clone ssh:<span class="comment">//79dcb9db5e134cccb9d1ba33e6089667@tutorial-tdiesler.rhcloud.com/~/git/tutorial.git</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="error">$</span> git clone ssh:<span class="comment">//79dcb9db5e134cccb9d1ba33e6089667@tutorial-tdiesler.rhcloud.com/~/git/tutorial.git</span>
 Cloning into tutorial...
 remote: Counting objects: <span class="integer">24</span>, done.
 remote: Compressing objects: <span class="integer">100</span>% (<span class="integer">14</span>/<span class="integer">14</span>), done.
@@ -1030,7 +1035,7 @@ from the repository.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="error">$</span> rm -rf tutorial/src tutorial/pom.xml</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="error">$</span> rm -rf tutorial/src tutorial/pom.xml</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1039,7 +1044,7 @@ from the repository.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="error">$</span> cp javaee-tutorial/jaxrs/server/target/javaee-tutorial-jaxrs-server-<span class="float">1.0</span><span class="float">.0</span>-SNAPSHOT.war tutorial/deployments
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="error">$</span> cp javaee-tutorial/jaxrs/server/target/javaee-tutorial-jaxrs-server-<span class="float">1.0</span><span class="float">.0</span>-SNAPSHOT.war tutorial/deployments
 <span class="error">$</span> cd tutorial; git commit -a -m <span class="string"><span class="delimiter">&quot;</span><span class="content">Initial jaxrs endpoint deployment</span><span class="delimiter">&quot;</span></span>
 [master be5b5a3] Initial jaxrs endpoint deployment
  <span class="integer">7</span> files changed, <span class="integer">0</span> insertions(+), <span class="integer">672</span> deletions(-)
@@ -1066,7 +1071,7 @@ in the library.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="error">$</span> curl http:<span class="comment">//tutorial-tdiesler.rhcloud.com/jaxrs-sample/library/books</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="error">$</span> curl http:<span class="comment">//tutorial-tdiesler.rhcloud.com/jaxrs-sample/library/books</span>
 [
 {<span class="string"><span class="delimiter">&quot;</span><span class="content">title</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">The Judgment</span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="content">isbn</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">001</span><span class="delimiter">&quot;</span></span>},
 {<span class="string"><span class="delimiter">&quot;</span><span class="content">title</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">The Stoker</span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="content">isbn</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">002</span><span class="delimiter">&quot;</span></span>},
@@ -1077,7 +1082,7 @@ in the library.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="building-the-mobile-client">7. Building the mobile client</h3>
+<h3 id="building-the-mobile-client">1.7. Building the mobile client</h3>
 <div class="paragraph">
 <p>The source associated with this tutorial contains a fully working mobile
 client application for the Android framework. If not done so already
@@ -1189,7 +1194,7 @@ as from this client app</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="integer">08</span>-<span class="integer">30</span> <span class="integer">09</span>:<span class="octal">05</span>:<span class="float">46.180</span>: INFO/JaxrsSample(<span class="integer">269</span>): removeBook: <span class="predefined-type">Book</span> [isbn=<span class="integer">1234</span>, title=<span class="integer">1234</span>]
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="integer">08</span>-<span class="integer">30</span> <span class="integer">09</span>:<span class="octal">05</span>:<span class="float">46.180</span>: INFO/JaxrsSample(<span class="integer">269</span>): removeBook: <span class="predefined-type">Book</span> [isbn=<span class="integer">1234</span>, title=<span class="integer">1234</span>]
 <span class="integer">08</span>-<span class="integer">30</span> <span class="integer">09</span>:<span class="octal">05</span>:<span class="float">46.210</span>: INFO/JaxrsSample(<span class="integer">269</span>): requestURI: http:<span class="comment">//tutorial-tdiesler.rhcloud.com:80/jaxrs-sample/library</span>
 <span class="integer">08</span>-<span class="integer">30</span> <span class="integer">09</span>:<span class="octal">05</span>:<span class="float">46.860</span>: INFO/global(<span class="integer">269</span>): Default buffer size used in <span class="predefined-type">BufferedInputStream</span> constructor. It would be better to be explicit <span class="keyword">if</span> an <span class="integer">8</span>k buffer is required.
 <span class="integer">08</span>-<span class="integer">30</span> <span class="integer">09</span>:<span class="octal">05</span>:<span class="float">46.920</span>: INFO/JaxrsSample(<span class="integer">269</span>): getBooks: [<span class="predefined-type">Book</span> [isbn=<span class="octal">001</span>, title=The Judgment], <span class="predefined-type">Book</span> [isbn=<span class="octal">002</span>, title=The Stoker], <span class="predefined-type">Book</span> [isbn=<span class="octal">003</span>, title=Jackals and Arabs], <span class="predefined-type">Book</span> [isbn=<span class="octal">004</span>, title=The Refusal]]</code></pre>
@@ -1197,7 +1202,7 @@ as from this client app</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="exploring-the-mobile-client">8. Exploring the mobile client</h3>
+<h3 id="exploring-the-mobile-client">1.8. Exploring the mobile client</h3>
 <div class="paragraph">
 <p>There is a lot to writing high quality mobile applications. The goal of
 this little application is to get you started with JBossAS 7 / Android
@@ -1214,7 +1219,7 @@ approach.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Consumes</span>({ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span> })
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="annotation">@Consumes</span>({ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span> })
 <span class="annotation">@Produces</span>({ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span> })
 <span class="directive">public</span> <span class="type">interface</span> <span class="class">LibraryClient</span> {
 <span class="error"> </span>
@@ -1261,7 +1266,7 @@ size of the application is considerably smaller in size (i.e. 40k)</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">    <span class="annotation">@Override</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">    <span class="annotation">@Override</span>
     <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Book</span>&gt; getBooks() {
         <span class="predefined-type">List</span>&lt;<span class="predefined-type">Book</span>&gt; result = <span class="keyword">new</span> <span class="predefined-type">ArrayList</span>&lt;<span class="predefined-type">Book</span>&gt;();
         <span class="predefined-type">String</span> content = get(<span class="string"><span class="delimiter">&quot;</span><span class="content">books</span><span class="delimiter">&quot;</span></span>);
@@ -1305,7 +1310,7 @@ of the application is considerably bigger in size (i.e. 400k)</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">    <span class="annotation">@Override</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">    <span class="annotation">@Override</span>
     <span class="directive">public</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Book</span>&gt; getBooks() {
         <span class="predefined-type">List</span>&lt;<span class="predefined-type">Book</span>&gt; result = <span class="keyword">new</span> <span class="predefined-type">ArrayList</span>&lt;<span class="predefined-type">Book</span>&gt;();
         <span class="keyword">try</span> {
@@ -1324,8 +1329,10 @@ RESTEasy mobile client. Feasible is also a RESTEasy JavaScript library
 that would enable the portable PhoneGap approach.</p>
 </div>
 </div>
+</div>
+</div>
 <div class="sect1">
-<h2 id="Java_Servlet_Technology">1. Java Servlet Technology</h2>
+<h2 id="Java_Servlet_Technology">2. Java Servlet Technology</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Coming Soon</p>
@@ -1343,11 +1350,11 @@ This guide is still under development, check back soon!
 </table>
 </div>
 <div class="sect2">
-<h3 id="content">1.1. Content</h3>
+<h3 id="content-java-servlet-technology">2.1. Content</h3>
 
 </div>
 <div class="sect2">
-<h3 id="asynchronous-support">1.2. Asynchronous Support</h3>
+<h3 id="asynchronous-support">2.2. Asynchronous Support</h3>
 <div class="paragraph">
 <p>[[Java_Server_Faces_Technology_(JSF)]]
 = Java Server Faces Technology (JSF)</p>
@@ -1379,7 +1386,7 @@ This guide is still under development, check back soon!
 </div>
 </div>
 <div class="sect1">
-<h2 id="Managed_Beans">2. Managed Beans</h2>
+<h2 id="Managed_Beans">3. Managed Beans</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>[[Contexts_and_Dependency_Injection_(CDI)]]
@@ -1388,7 +1395,7 @@ This guide is still under development, check back soon!
 </div>
 </div>
 <div class="sect1">
-<h2 id="Bean_Validation">3. Bean Validation</h2>
+<h2 id="Bean_Validation">4. Bean Validation</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>[[Java_Message_Service_API_(JMS)]]
@@ -1410,7 +1417,7 @@ This guide is still under development, check back soon!
 </table>
 </div>
 <div class="sect2">
-<h3 id="configure-jbossas-for-messaging">3.1. Configure JBossAS for Messaging</h3>
+<h3 id="configure-jbossas-for-messaging">4.1. Configure JBossAS for Messaging</h3>
 <div class="paragraph">
 <p>Currently, the default configuration does not include the JMS subsystem.
 To enable JMS in the standalone server you need to add these
@@ -1418,7 +1425,7 @@ configuration items to standalone.xml or simply use standalone-full.xml.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">&lt;extension module=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.jboss.as.messaging</span><span class="delimiter">&quot;</span></span>/&gt;
+<pre class="CodeRay highlight nowrap"><code data-lang="java">&lt;extension module=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.jboss.as.messaging</span><span class="delimiter">&quot;</span></span>/&gt;
 <span class="error"> </span>
 &lt;subsystem xmlns=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:domain:messaging:1.0</span><span class="delimiter">&quot;</span></span>&gt;
     &lt;!-- Default journal file size is <span class="integer">10</span>Mb, reduced here to <span class="integer">100</span>k <span class="keyword">for</span> faster first boot --&gt;
@@ -1521,12 +1528,12 @@ configuration items to standalone.xml or simply use standalone-full.xml.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="error">$</span> bin/standalone.sh --server-config=standalone-preview.xml</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="error">$</span> bin/standalone.sh --server-config=standalone-preview.xml</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="adding-the-message-destinations">3.2. Adding the message destinations</h3>
+<h3 id="adding-the-message-destinations">4.2. Adding the message destinations</h3>
 <div class="paragraph">
 <p>For this tutorial we use two message destinations</p>
 </div>
@@ -1546,7 +1553,7 @@ Interface (CLI)</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="error">$</span> bin/jboss-admin.sh --connect
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="error">$</span> bin/jboss-admin.sh --connect
 Connected to standalone controller at localhost:<span class="integer">9999</span>
 [standalone<span class="annotation">@localhost</span>:<span class="integer">9999</span> /] jms-queue add --queue-address=BidQueue --entries=queue/bid
 [standalone<span class="annotation">@localhost</span>:<span class="integer">9999</span> /] jms-topic add --topic-address=AuctionTopic --entries=topic/auction
@@ -1555,15 +1562,17 @@ Closed connection to localhost:<span class="integer">9999</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>or by adding them to the subsytem configuration as shown above.
-[[JavaEE_Connector_Architecture_(JCA)]]
+<p>or by adding them to the subsytem configuration as shown above.</p>
+</div>
+<div class="paragraph">
+<p>[[JavaEE_Connector_Architecture_(JCA)]]
 = JavaEE Connector Architecture (JCA)</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="JavaMail_API">4. JavaMail API</h2>
+<h2 id="JavaMail_API">5. JavaMail API</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>[[Java_Authorization_Contract_for_Containers_(JACC)]]
@@ -1580,7 +1589,7 @@ properties for WildFly to take it. Such a module would depend on the
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">&lt;module xmlns=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:module:1.1</span><span class="delimiter">&quot;</span></span> name=<span class="string"><span class="delimiter">&quot;</span><span class="content">com.example.customjacc</span><span class="delimiter">&quot;</span></span>&gt;
+<pre class="CodeRay highlight nowrap"><code data-lang="java">&lt;module xmlns=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:module:1.1</span><span class="delimiter">&quot;</span></span> name=<span class="string"><span class="delimiter">&quot;</span><span class="content">com.example.customjacc</span><span class="delimiter">&quot;</span></span>&gt;
 <span class="error"> </span> &lt;resources&gt;
 <span class="error"> </span><span class="error"> </span><span class="error"> </span> &lt;resource-root path=<span class="string"><span class="delimiter">&quot;</span><span class="content">customjacc.jar</span><span class="delimiter">&quot;</span></span>/&gt;
 <span class="error"> </span> &lt;/resources&gt;
@@ -1617,7 +1626,7 @@ the JBoss CLI:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">[standalone<span class="annotation">@localhost</span>:<span class="integer">9990</span> /] /system-property=javax.security.jacc.policy.provider:add(value=com.example.customjacc.CustomPolicy)
+<pre class="CodeRay highlight nowrap"><code data-lang="java">[standalone<span class="annotation">@localhost</span>:<span class="integer">9990</span> /] /system-property=javax.security.jacc.policy.provider:add(value=com.example.customjacc.CustomPolicy)
 [standalone<span class="annotation">@localhost</span>:<span class="integer">9990</span> /] /system-property=javax.security.jacc.PolicyConfigurationFactory.provider:add(value=com.example.customjacc.CustomPolicyConfigurationFactory)</code></pre>
 </div>
 </div>
@@ -1627,7 +1636,7 @@ classes from:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">[standalone<span class="annotation">@localhost</span>:<span class="integer">9990</span> /] /system-property=org.jboss.as.security.jacc-module:add(value=com.example.customjacc)</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">[standalone<span class="annotation">@localhost</span>:<span class="integer">9990</span> /] /system-property=org.jboss.as.security.jacc-module:add(value=com.example.customjacc)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1648,7 +1657,7 @@ should be located under the <code>WEB-INF</code> directory. An example
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">&lt;?xml version=<span class="string"><span class="delimiter">&quot;</span><span class="content">1.0</span><span class="delimiter">&quot;</span></span>?&gt;
+<pre class="CodeRay highlight nowrap"><code data-lang="java">&lt;?xml version=<span class="string"><span class="delimiter">&quot;</span><span class="content">1.0</span><span class="delimiter">&quot;</span></span>?&gt;
 &lt;jboss-web xmlns=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.jboss.com/xml/ns/javaee</span><span class="delimiter">&quot;</span></span>
     xmlns:xsi=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span>
     xsi:schemaLocation=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.jboss.com/xml/ns/javaee http://www.jboss.org/j2ee/schema/jboss-web_10_0.xsd</span><span class="delimiter">&quot;</span></span>
@@ -1663,7 +1672,7 @@ instead, placed under the root META-INF directory:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">&lt;?xml version=<span class="string"><span class="delimiter">&quot;</span><span class="content">1.0</span><span class="delimiter">&quot;</span></span> encoding=<span class="string"><span class="delimiter">&quot;</span><span class="content">UTF-8</span><span class="delimiter">&quot;</span></span>?&gt;
+<pre class="CodeRay highlight nowrap"><code data-lang="java">&lt;?xml version=<span class="string"><span class="delimiter">&quot;</span><span class="content">1.0</span><span class="delimiter">&quot;</span></span> encoding=<span class="string"><span class="delimiter">&quot;</span><span class="content">UTF-8</span><span class="delimiter">&quot;</span></span>?&gt;
 &lt;jboss-app xmlns=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.jboss.com/xml/ns/javaee</span><span class="delimiter">&quot;</span></span>
     xmlns:xsi=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span>
     version=<span class="string"><span class="delimiter">&quot;</span><span class="content">7.0</span><span class="delimiter">&quot;</span></span>&gt;
@@ -1696,41 +1705,41 @@ This guide is still under development, check back soon!
 </table>
 </div>
 <div class="sect2">
-<h3 id="session-beans">4.1. Session Beans</h3>
+<h3 id="session-beans">5.1. Session Beans</h3>
 <div class="sect3">
-<h4 id="stateful-session-beans">4.1.1. Stateful Session Beans</h4>
+<h4 id="stateful-session-beans">5.1.1. Stateful Session Beans</h4>
 
 </div>
 <div class="sect3">
-<h4 id="stateless-session-beans">4.1.2. Stateless Session Beans</h4>
+<h4 id="stateless-session-beans">5.1.2. Stateless Session Beans</h4>
 
 </div>
 <div class="sect3">
-<h4 id="singleton-session-beans">4.1.3. Singleton Session Beans</h4>
+<h4 id="singleton-session-beans">5.1.3. Singleton Session Beans</h4>
 
 </div>
 </div>
 <div class="sect2">
-<h3 id="message-driven-beans">4.2. Message Driven Beans</h3>
+<h3 id="message-driven-beans">5.2. Message Driven Beans</h3>
 
 </div>
 <div class="sect2">
-<h3 id="how-can-enterprise-javabeans-can-be-accessed">4.3. How can Enterprise JavaBeans can be accessed?</h3>
+<h3 id="how-can-enterprise-javabeans-can-be-accessed">5.3. How can Enterprise JavaBeans can be accessed?</h3>
 <div class="sect3">
-<h4 id="remote-call-invocation">4.3.1. Remote call invocation</h4>
+<h4 id="remote-call-invocation">5.3.1. Remote call invocation</h4>
 
 </div>
 <div class="sect3">
-<h4 id="local-call-invocation">4.3.2. Local call invocation</h4>
+<h4 id="local-call-invocation">5.3.2. Local call invocation</h4>
 
 </div>
 <div class="sect3">
-<h4 id="web-services">4.3.3. Web Services</h4>
+<h4 id="web-services">5.3.3. Web Services</h4>
 
 </div>
 </div>
 <div class="sect2">
-<h3 id="packaging">4.4. Packaging</h3>
+<h3 id="packaging">5.4. Packaging</h3>
 <div class="paragraph">
 <p>[[Java_API_for_XML_Web_Services_(JAX-WS)]]
 = Java API for XML Web Services (JAX-WS)</p>
@@ -1744,7 +1753,7 @@ consult the <a href="Developer_Guide.html#JAX-WS_User_Guide">user guide</a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="developing-web-service-implementations">4.5. Developing web service implementations</h3>
+<h3 id="developing-web-service-implementations">5.5. Developing web service implementations</h3>
 <div class="paragraph">
 <p>JAX-WS does leverage annotations in order to express web service meta
 data on Java components and to describe the mapping between Java data
@@ -1791,7 +1800,7 @@ Services</a></p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="the-service-implementation-class">4.5.1. The service implementation class</h4>
+<h4 id="the-service-implementation-class">5.5.1. The service implementation class</h4>
 <div class="paragraph">
 <p>When starting from Java you must provide the service implementation. A
 valid endpoint implementation class must meet the following
@@ -1820,7 +1829,7 @@ on the <code>@WebService</code> annotation for now.</p>
 <h5 id="implementing-the-service">Implementing the service</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">org.jboss.test.ws.jaxws.samples.retail.profile</span>;
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">org.jboss.test.ws.jaxws.samples.retail.profile</span>;
 <span class="error"> </span>
 <span class="keyword">import</span> <span class="include">javax.ejb.Stateless</span>;
 <span class="keyword">import</span> <span class="include">javax.jws.WebService</span>;
@@ -1865,7 +1874,7 @@ the more important ones here.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">org.jboss.test.ws.jaxws.samples.retail.profile</span>;
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">org.jboss.test.ws.jaxws.samples.retail.profile</span>;
 <span class="error"> </span>
 <span class="keyword">import</span> <span class="include">javax.xml.bind.annotation.XmlAccessType</span>;
 <span class="keyword">import</span> <span class="include">javax.xml.bind.annotation.XmlAccessorType</span>;
@@ -1922,7 +1931,7 @@ If you have more complex mapping problems you need to consult the
 </div>
 </div>
 <div class="sect3">
-<h4 id="deploying-service-implementations">4.5.2. Deploying service implementations</h4>
+<h4 id="deploying-service-implementations">5.5.2. Deploying service implementations</h4>
 <div class="paragraph">
 <p>Service deployment basically depends on the implementation type. As you
 may already know web services can be implemented as EJB3 components or
@@ -1972,7 +1981,7 @@ in the application server management console.
 </div>
 </div>
 <div class="sect2">
-<h3 id="consuming-web-services">4.6. Consuming web services</h3>
+<h3 id="consuming-web-services">5.6. Consuming web services</h3>
 <div class="paragraph">
 <p>When creating web service clients you would usually start from the WSDL.
 JBossWS ships with a set of tools to generate the required JAX-WS
@@ -1981,7 +1990,7 @@ will look at the most basic usage patterns. For a more detailed
 introduction to web service client please consult the user guide.</p>
 </div>
 <div class="sect3">
-<h4 id="creating-the-client-artifacts">4.6.1. Creating the client artifacts</h4>
+<h4 id="creating-the-client-artifacts">5.6.1. Creating the client artifacts</h4>
 <div class="sect4">
 <h5 id="using-wsconsume">Using wsconsume</h5>
 <div class="paragraph">
@@ -2085,7 +2094,7 @@ client implementations in the next section.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="constructing-a-service-stub">4.6.2. Constructing a service stub</h4>
+<h4 id="constructing-a-service-stub">5.6.2. Constructing a service stub</h4>
 <div class="paragraph">
 <p>Web service clients make use of a service stubs that hide the details of
 a remote web service invocation. To a client application a WS invocation
@@ -2096,7 +2105,7 @@ service stub:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">import</span> <span class="include">javax.xml.ws.Service</span>;
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="keyword">import</span> <span class="include">javax.xml.ws.Service</span>;
 [...]
 Service service = Service.create(                                 (<span class="integer">1</span>)
 <span class="keyword">new</span> <span class="predefined-type">URL</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">http://example.org/service?wsdl</span><span class="delimiter">&quot;</span></span>),
@@ -2124,12 +2133,12 @@ stub</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="appendix">4.6.3. Appendix</h4>
+<h4 id="appendix">5.6.3. Appendix</h4>
 <div class="sect4">
 <h5 id="sample-wsdl-contract">Sample wsdl contract</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">&lt;definitions
+<pre class="CodeRay highlight nowrap"><code data-lang="java">&lt;definitions
     name=<span class="string"><span class="delimiter">'</span><span class="content">ProfileMgmtService</span><span class="delimiter">'</span></span>
     targetNamespace=<span class="string"><span class="delimiter">'</span><span class="content">http://org.jboss.ws/samples/retail/profile</span><span class="delimiter">'</span></span>
     xmlns=<span class="string"><span class="delimiter">'</span><span class="content">http://schemas.xmlsoap.org/wsdl/</span><span class="delimiter">'</span></span>
@@ -2226,8 +2235,8 @@ stub</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 15.0.0.Final<br>
-Last updated 2018-09-06 09:09:40 PDT
+Version 16.0.0.Final<br>
+Last updated 2019-02-06 11:57:26 PST
 </div>
 </div>
 </body>
