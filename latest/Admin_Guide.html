@@ -533,8 +533,8 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <h1>WildFly Admin Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly developer team</span><br>
-<span id="revnumber">version 28.0.0.Final,</span>
-<span id="revdate">2023-04-20T02:04:09Z</span>
+<span id="revnumber">version 29.0.0.Final,</span>
+<span id="revdate">2023-07-20T17:19:12Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Admin guide</div>
@@ -606,14 +606,16 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#MicroProfile_Reactive_Streams_Operators_SmallRye">7.19. MicroProfile Reactive Streams Operators Subsystem Configuration</a></li>
 <li><a href="#MicroProfile_Reactive_Messaging_SmallRye">7.20. MicroProfile Reactive Messaging Subsystem Configuration</a></li>
 <li><a href="#MicroProfile_Telemetry">7.21. MicroProfile Telemetry Subsystem Configuration</a></li>
-<li><a href="#Web_services">7.22. Web services configuration</a></li>
-<li><a href="#Resource_adapters">7.23. Resource adapters</a></li>
-<li><a href="#Jakarta_Batch">7.24. Jakarta Batch Subsystem Configuration</a></li>
-<li><a href="#JMX">7.25. JMX subsystem configuration</a></li>
-<li><a href="#Deployment_Scanner">7.26. Deployment Scanner configuration</a></li>
-<li><a href="#Core_Management">7.27. Core Management Subsystem Configuration</a></li>
-<li><a href="#Elytron_OIDC_Client">7.28. Elytron OpenID Connect Client Subsystem Configuration</a></li>
-<li><a href="#Simple_configuration_subsystems">7.29. Simple configuration subsystems</a></li>
+<li><a href="#MicroProfile_LRA">7.22. MicroProfile LRA Subsystems Configuration</a></li>
+<li><a href="#Web_services">7.23. Web services configuration</a></li>
+<li><a href="#Resource_adapters">7.24. Resource adapters</a></li>
+<li><a href="#Jakarta_Batch">7.25. Jakarta Batch Subsystem Configuration</a></li>
+<li><a href="#Jakarta_Faces">7.26. Jakarta Faces Configuration</a></li>
+<li><a href="#JMX">7.27. JMX subsystem configuration</a></li>
+<li><a href="#Deployment_Scanner">7.28. Deployment Scanner configuration</a></li>
+<li><a href="#Core_Management">7.29. Core Management Subsystem Configuration</a></li>
+<li><a href="#Elytron_OIDC_Client">7.30. Elytron OpenID Connect Client Subsystem Configuration</a></li>
+<li><a href="#Simple_configuration_subsystems">7.31. Simple configuration subsystems</a></li>
 </ul>
 </li>
 <li><a href="#Domain_Setup">8. Domain Setup</a>
@@ -759,8 +761,10 @@ Controller. See <a href="#Domain_Setup">Domain Setup</a> for details.</p>
 <div class="paragraph">
 <p>The following is an example managed domain topology:</p>
 </div>
-<div class="paragraph">
-<p><span class="image"><img src="DC-HC-Server.png" alt="images/DC-HC-Server.png"></span></p>
+<div class="imageblock">
+<div class="content">
+<img src="images/DC-HC-Server.png" alt="DC-HC-Server.png">
+</div>
 </div>
 <div class="sect4">
 <h5 id="host"><a class="anchor" href="#host"></a><a class="link" href="#host">Host</a></h5>
@@ -1344,7 +1348,7 @@ execute and all scripts in the directory will invoke the configuration script.</
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 If you provide a common configuration file it will be invoked before the standalone and domain script
@@ -1454,7 +1458,7 @@ invoked via the HTTP API, the JSON representation of a <code>ModelNode</code>.)<
 </div>
 <div class="paragraph">
 <p>Every resource except the root resource will have an <code>add</code> operation and
-should have a <code>remove</code> operation ("should" because in WildFly 28 many do
+should have a <code>remove</code> operation ("should" because in WildFly 29 many do
 not). The parameters for the <code>add</code> operation vary depending on the
 resource. The <code>remove</code> operation has no parameters.</p>
 </div>
@@ -1718,7 +1722,7 @@ that maps to the attribute (and its resource).</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -1737,7 +1741,7 @@ This takes place before the attribute value is resolved (if it contains an expre
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -1818,7 +1822,7 @@ $ ./bin/jboss-cli.sh -c --command=&quot;/subsystem=undertow/server=default-serve
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -2285,7 +2289,7 @@ API. It can be accessed by pointing your browser to:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 By default the web interface can be accessed here:
@@ -2432,7 +2436,7 @@ port needs to be provided if the server is listening on some other port.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 The jboss-cli script accepts a --connect parameter: ./jboss-cli.sh
@@ -2835,7 +2839,7 @@ others are no longer proposed by completion.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 We are also considering adding aliases that are less verbose for the user, and
@@ -3007,7 +3011,7 @@ through the description:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 To see the full model enter <code>:read-resource(recursive=true)</code>.
@@ -3031,7 +3035,7 @@ and the in-memory history is initialized with its content.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 While in the command line session, you can use the arrow keys to go back
@@ -3236,7 +3240,7 @@ then the last entry from the search history is used.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-warning" title=":warning:"></i>
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
 On Windows, searching and navigating backward is only supported starting with Windows 10 and Windows Server 2016.
@@ -3248,7 +3252,7 @@ On Windows, searching and navigating backward is only supported starting with Wi
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-warning" title=":warning:"></i>
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
 If the CLI process is sent the signal KILL(9) while it is paging, the terminal will stay
@@ -3404,7 +3408,7 @@ realm and the users password.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 Although the properties files do not contain the plain text passwords
@@ -3419,7 +3423,7 @@ the same password.
 <p>To manipulate the files and add users we provide a utility add-user.sh
 and add-user.bat to add the users and generate the hashes, to add a user
 you should execute the script and follow the guided process.
-<span class="image"><img src="add-user.png" alt="images/add-user.png"></span><br>
+<span class="image"><img src="images/add-user.png" alt="add-user.png"></span><br>
 The full details of the add-user utility are described later but for the
 purpose of accessing the management interface you need to enter the
 following values: -</p>
@@ -3507,7 +3511,7 @@ These files are meant to be human-readable and human editable.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 The XML configuration files act as a central, authoritative source of
@@ -3750,7 +3754,7 @@ addresses for each interface:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 An interface configuration element is used to provide a single <code>InetAddress</code> to parts
@@ -3951,7 +3955,7 @@ mode.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 After you have installed your application server and decided if you are
@@ -4001,7 +4005,7 @@ number and in any order:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 The default name of the realm for management users is <code>ManagementRealm</code>,
@@ -4014,7 +4018,7 @@ unless you have switched to a different realm.
 <div class="sect5">
 <h6 id="interactive-mode"><a class="anchor" href="#interactive-mode"></a><a class="link" href="#interactive-mode">Interactive Mode</a></h6>
 <div class="paragraph">
-<p><span class="image"><img src="add-mgmt-user-interactive.png" alt="images/add-mgmt-user-interactive.png"></span></p>
+<p><span class="image"><img src="images/add-mgmt-user-interactive.png" alt="add-mgmt-user-interactive.png"></span></p>
 </div>
 <div class="paragraph">
 <p>Here we have added a new Management User called <code>adminUser</code>, as you can
@@ -4034,13 +4038,13 @@ management chapter.</p>
 <code>./add-user.sh {username} {password</code>} can be used.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="add-mgmt-user-non-interactive.png" alt="images/add-mgmt-user-non-interactive.png"></span></p>
+<p><span class="image"><img src="images/add-mgmt-user-non-interactive.png" alt="add-mgmt-user-non-interactive.png"></span></p>
 </div>
 <div class="admonitionblock warning">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-warning" title=":warning:"></i>
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
 If you add users using this approach there is a risk that any other user
@@ -4064,7 +4068,7 @@ user.</p>
 <div class="sect5">
 <h6 id="interactive-mode-1"><a class="anchor" href="#interactive-mode-1"></a><a class="link" href="#interactive-mode-1">Interactive Mode</a></h6>
 <div class="paragraph">
-<p><span class="image"><img src="add-app-user-interactive.png" alt="images/add-app-user-interactive.png"></span></p>
+<p><span class="image"><img src="images/add-app-user-interactive.png" alt="add-app-user-interactive.png"></span></p>
 </div>
 <div class="paragraph">
 <p>Here a new user called <code>appUser</code> has been added, in this case a comma
@@ -4083,13 +4087,13 @@ a connection from one server to another.</p>
 <code>./add-user.sh -a {username} {password</code>}.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="add-app-user-non-interactive.png" alt="images/add-app-user-non-interactive.png"></span></p>
+<p><span class="image"><img src="images/add-app-user-non-interactive.png" alt="add-app-user-non-interactive.png"></span></p>
 </div>
 <div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 Non-interactive mode does not support defining a list of users, to
@@ -4114,7 +4118,7 @@ your intention.</p>
 <div class="sect5">
 <h6 id="interactive-mode-2"><a class="anchor" href="#interactive-mode-2"></a><a class="link" href="#interactive-mode-2">Interactive Mode</a></h6>
 <div class="paragraph">
-<p><span class="image"><img src="update-mgmt-user-interactive.png" alt="images/update-mgmt-user-interactive.png"></span></p>
+<p><span class="image"><img src="images/update-mgmt-user-interactive.png" alt="update-mgmt-user-interactive.png"></span></p>
 </div>
 </div>
 <div class="sect5">
@@ -4130,13 +4134,13 @@ with no confirmation prompt.</p>
 <div class="sect5">
 <h6 id="interactive-mode-3"><a class="anchor" href="#interactive-mode-3"></a><a class="link" href="#interactive-mode-3">Interactive Mode</a></h6>
 <div class="paragraph">
-<p><span class="image"><img src="update-app-user-interactive.png" alt="images/update-app-user-interactive.png"></span></p>
+<p><span class="image"><img src="images/update-app-user-interactive.png" alt="update-app-user-interactive.png"></span></p>
 </div>
 <div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 On updating a user with roles you will need to re-enter the list of
@@ -4379,7 +4383,7 @@ denied" if the user is attempting to read or write the resource.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-warning" title=":warning:"></i>
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
 Before changing the provider to "rbac", be sure your configuration has a
@@ -4486,7 +4490,7 @@ admin console.</p>
 individual user mappings can be added, removed, or edited.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="usermapping.png" alt="images/usermapping.png" width="450"></span></p>
+<p><span class="image"><img src="images/usermapping.png" alt="usermapping.png" width="450"></span></p>
 </div>
 <div class="paragraph">
 <p>The CLI can also be used to map individuals users to roles.</p>
@@ -4569,7 +4573,7 @@ console.</p>
 group mappings can be added, removed, or edited.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="groupmapping.png" alt="images/groupmapping.png" width="450"></span></p>
+<p><span class="image"><img src="images/groupmapping.png" alt="groupmapping.png" width="450"></span></p>
 </div>
 <div class="paragraph">
 <p>The CLI can also be used to map groups to roles. The only difference to
@@ -4601,7 +4605,7 @@ anyone who can authenticate can at least have <code>Monitor</code> privileges.</
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 A user who can authenticate to the management security realm but who
@@ -4617,7 +4621,7 @@ functions, not even reads.
 click on the "Include All" checkbox:</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="includeall.png" alt="images/includeall.png" width="450"></span></p>
+<p><span class="image"><img src="images/includeall.png" alt="includeall.png" width="450"></span></p>
 </div>
 <div class="paragraph">
 <p>The same change can be made using the CLI:</p>
@@ -4648,7 +4652,7 @@ where the <code>include-all</code> attribute is set to true for a role.</p>
 In the add dialog, simply change the "Type" pulldown to "Exclude".</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="excludemapping.png" alt="images/excludemapping.png" width="450"></span></p>
+<p><span class="image"><img src="images/excludemapping.png" alt="excludemapping.png" width="450"></span></p>
 </div>
 <div class="paragraph">
 <p>In the CLI, excludes are identical to includes, except the resource
@@ -4851,7 +4855,7 @@ via the admin console. Select "Scoped Roles" from the "Administration"
 tab, "Roles" subtab:</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="scopedroles.png" alt="images/scopedroles.png" width="450"></span></p>
+<p><span class="image"><img src="images/scopedroles.png" alt="scopedroles.png" width="450"></span></p>
 </div>
 <div class="paragraph">
 <p>When adding a new scoped role, use the dialogue&#8217;s "Type" pull down to
@@ -4860,7 +4864,7 @@ place the names of the relevant hosts or server groups in the "Scope"
 text are.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="addscopedrole.png" alt="images/addscopedrole.png" width="450"></span></p>
+<p><span class="image"><img src="images/addscopedrole.png" alt="addscopedrole.png" width="450"></span></p>
 </div>
 </div>
 </div>
@@ -5191,7 +5195,7 @@ expressions to be security sensitive, you can change that setting:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 This vault-expression constraint overlaps somewhat with the
@@ -5572,7 +5576,7 @@ click on your name in the top right corner; the roles you are in will be
 shown.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="callersroles.png" alt="images/callersroles.png" width="450"></span></p>
+<p><span class="image"><img src="images/callersroles.png" alt="callersroles.png" width="450"></span></p>
 </div>
 <div class="paragraph">
 <p>CLI users should use the <code>whoami</code> operation with the <code>verbose</code> attribute
@@ -5659,13 +5663,13 @@ clicking on their name in the top right corner and clicking on the "Run
 as&#8230;&#8203;" link.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="callersroles.png" alt="images/callersroles.png" width="450"></span></p>
+<p><span class="image"><img src="images/callersroles.png" alt="callersroles.png" width="450"></span></p>
 </div>
 <div class="paragraph">
 <p>Then select the role in which you wish to operate:</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="runasrole.png" alt="images/runasrole.png" width="450"></span></p>
+<p><span class="image"><img src="images/runasrole.png" alt="runasrole.png" width="450"></span></p>
 </div>
 <div class="paragraph">
 <p>The console will need to be restarted in order for the change to take
@@ -5815,7 +5819,7 @@ control behavior. Use the <code>--help</code> parameter to learn more:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 Managing deployments through the web interface provides an alternate,
@@ -6180,7 +6184,7 @@ directory and reacts to changes by updating the server.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 Users are encouraged to use the WildFly management APIs to upload and
@@ -6500,7 +6504,7 @@ bounce it with no content change):</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 The above examples use Unix shell commands. Windows equivalents are:
@@ -6595,7 +6599,7 @@ stored in a subdirectory:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 The location of the content repository and its internal structure is
@@ -6765,7 +6769,7 @@ respective component reference.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 The configuration schemas can found in <code>$JBOSS_HOME/docs/schema</code>.
@@ -7055,7 +7059,7 @@ Similarly, classes from <code>ejb1.jar</code> can access classes from <code>ejb2
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 This flag has no effect on the isolated classloader of the <code>.war</code>
@@ -7079,7 +7083,7 @@ Annotations included in Jakarta EE deployments.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 System properties etc are resolved in the security context of the
@@ -7574,7 +7578,7 @@ they might not be required or covered by non-default resources. In such case def
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 The default bindings are optional, if the jndi name for a default
@@ -7588,7 +7592,7 @@ available to Jakarta EE applications.
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 If default EE resources are not required and bindings do not point at them,
@@ -7670,7 +7674,7 @@ following global JNDI namespaces:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 If WildFly is to be used as a Jakarta EE application server, then it&#8217;s
@@ -7935,7 +7939,7 @@ a remote WildFly instance.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 Only entries within the <code>java:jboss/exported</code> context are accessible
@@ -7977,7 +7981,7 @@ you installed.</p>
 <div class="sect3">
 <h4 id="jdbc-driver-installation"><a class="anchor" href="#jdbc-driver-installation"></a><a class="link" href="#jdbc-driver-installation">7.3.1. JDBC Driver Installation</a></h4>
 <div class="paragraph">
-<p>The recommended way to install a JDBC driver into WildFly 28 is to deploy
+<p>The recommended way to install a JDBC driver into WildFly 29 is to deploy
 it as a regular JAR deployment. The reason for this is that when you run
 WildFly in domain mode, deployments are automatically propagated to all
 servers to which the deployment applies; thus distribution of the driver
@@ -8146,7 +8150,7 @@ please refer to the chapter " <a href="#application-deployment">Application Depl
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <code>datasource-class-info</code> shows connection properties defined in the <code>(xa-)datasource-class</code>.
@@ -8158,7 +8162,7 @@ please refer to the chapter " <a href="#application-deployment">Application Depl
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 Using the web console or the CLI greatly simplifies the deployment of
@@ -8278,7 +8282,7 @@ the project documentation.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 Agroal will try to load an java.sql.Driver from the specified module if the <em>class</em> is not defined
@@ -8290,7 +8294,7 @@ Agroal will try to load an java.sql.Driver from the specified module if the <em>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 Any installed <em>driver</em> provides an operation called <em>class-info</em> that lists all the properties available for that particular class, that can be set in the <em>connection-factory</em>.
@@ -8335,7 +8339,7 @@ Any installed <em>driver</em> provides an operation called <em>class-info</em> t
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 Attributes <em>username</em> and <em>password</em> are provided for basic authentication with the database. Agroal does not allow <em>username</em> and <em>password</em> to be set as <em>connection-properties</em> due to security requirements.
@@ -8401,7 +8405,7 @@ Attributes <em>username</em> and <em>password</em> are provided for basic authen
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 There is a set of flush operations that perform many of these features on-demand. These are <em>flush-all</em> to close all connections immediately, <em>flush-graceful</em> to close all connections under normal operation, <em>flush-invalid</em> to remove any invalid connections from the pool and <em>flush-idle</em> to remove any connections not being used.
@@ -8453,7 +8457,7 @@ There is a set of flush operations that perform many of these features on-demand
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 There is also a <em>reset-statistics</em> operation provided.
@@ -8530,7 +8534,7 @@ There is also a <em>reset-statistics</em> operation provided.
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 The <em>connectable</em> attribute allows a non-XA datasource to take part in an XA transaction ('Last Resource Commit Optimization (LRCO)' / 'Commit Markable Resource')
@@ -8892,7 +8896,7 @@ the logging configuration for the entire server.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 The <code>logging.properties</code> file is overwritten at boot and with each
@@ -8962,7 +8966,7 @@ pattern formatter.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <mark>Highlighted</mark> symbols indicate the calculation of the caller is required which can be expensive to resolve.
@@ -9473,7 +9477,7 @@ milliseconds.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 The rotate happens before the next message is written by the handler.
@@ -9500,7 +9504,7 @@ file will be rotated with the current month each time the 10Mb size is reached.<
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 The rotate happens before the next message is written by the handler.
@@ -9521,7 +9525,7 @@ to the name moving previously rotated file indexes up by 1 until the <code>max-b
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 The rotate happens before the next message is written by the handler.
@@ -9546,7 +9550,7 @@ large memory consumption during boot.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -9600,7 +9604,7 @@ large memory consumption during boot.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 Wrapping a <code>socket-handler</code> in a <a href="#async-handler"><code>async-handler</code></a> may improve performance.
@@ -9619,7 +9623,7 @@ Wrapping a <code>socket-handler</code> in a <a href="#async-handler"><code>async
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -9714,7 +9718,7 @@ in a <a href="Developer_Guide.html#jboss-deployment-structure-file">jboss-deploy
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 This only works for logging in your deployment. Server logs will continue to use the logging subsystem
@@ -9734,7 +9738,7 @@ This only works for logging in your deployment. Server logs will continue to use
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 This is still a work in progress. Please feel free to edit any mistakes
@@ -9787,7 +9791,7 @@ org.wildfly.example would have a resource path of
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 You may notice that the <code>category</code> and <code>filter</code> attributes are missing.
@@ -9807,7 +9811,7 @@ filters for the logger.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 Filters on loggers are not inherited.
@@ -10609,7 +10613,7 @@ interface.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 References in this document to Enterprise JavaBeans (EJB) refer to the Jakarta Enterprise Beans unless otherwise noted.
@@ -10714,7 +10718,7 @@ HTTP connections when serving remote requests with the HTTP invoker.</p></td>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -11235,7 +11239,7 @@ the console access log service is started. The value is resolved once per start 
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 The above JSON is formatted only for readability. The output will be on a single line.
@@ -12051,7 +12055,7 @@ That way you can use the SSLContext with the broker but also with other services
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 One point that you have to take into account is the fact that the connector might be used on a different point than the server you have configured it on.
@@ -12143,7 +12147,7 @@ the command line.</p>
 <div class="sect3">
 <h4 id="deployment-of--jms.xml-files"><a class="anchor" href="#deployment-of--jms.xml-files"></a><a class="link" href="#deployment-of--jms.xml-files">7.8.10. Deployment of -jms.xml files</a></h4>
 <div class="paragraph">
-<p>Starting with WildFly 28, you have the ability to deploy a -jms.xml file
+<p>Starting with WildFly 29, you have the ability to deploy a -jms.xml file
 defining Jakarta Messaging destinations, e.g.:</p>
 </div>
 <div class="listingblock">
@@ -12165,7 +12169,7 @@ defining Jakarta Messaging destinations, e.g.:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-warning" title=":warning:"></i>
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
 This feature <strong>is primarily intended for development</strong> as destinations
@@ -12253,7 +12257,7 @@ module:</p>
  
     <span class="tag">&lt;dependencies&gt;</span>
        <span class="comment">&lt;!-- add the dependencies required by messaging Bridge code                --&gt;</span>
-       <span class="tag">&lt;module</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">javax.api</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span> <span class="comment">&lt;!-- deprecated --&gt;</span>
+       <span class="tag">&lt;module</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">java.se</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
        <span class="tag">&lt;module</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jakarta.jms.api</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
        <span class="tag">&lt;module</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jakarta.transaction.api</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
        <span class="tag">&lt;module</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.jboss.remote-naming</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
@@ -12785,7 +12789,7 @@ connect to a legacy app server (running HornetQ)</p>
 </li>
 <li>
 <p>forward compatibility: legacy messaging clients (using HornetQ) can connect
-to a WildFly 28 app server (running Artemis).</p>
+to a WildFly 29 app server (running Artemis).</p>
 </li>
 </ul>
 </div>
@@ -12838,7 +12842,7 @@ providing a <code>legacy-entries</code> attribute to the <code>jms-queue</code> 
 </div>
 <div class="paragraph">
 <p>The <code>legacy-entries</code> must be used by legacy clients (using HornetQ)
-while the regular <code>entries</code> are for WildFly 28 Jakarta Messaging clients (using
+while the regular <code>entries</code> are for WildFly 29 Jakarta Messaging clients (using
 Artemis).</p>
 </div>
 <div class="paragraph">
@@ -12860,7 +12864,7 @@ in the legacy <code>messaging</code> subsystem and the regular entries will be
 created with a <code>-new</code> suffix.<br>
 If <code>add-legacy-entries</code> is set to <code>false</code> during migration, no legacy
 resources will be created in the <code>messaging-activemq</code> subsystem and
-legacy messaging clients will not be able to communicate with WildFly 28
+legacy messaging clients will not be able to communicate with WildFly 29
 servers.</p>
 </div>
 </div>
@@ -12870,7 +12874,7 @@ servers.</p>
 <div class="paragraph">
 <p>Backward compatibility requires no configuration change in the legacy
 server.<br>
-WildFly 28 clients do not look up resources on the legacy server but
+WildFly 29 clients do not look up resources on the legacy server but
 use client-side JNDI to create their Jakarta Messaging resources. WildFly&#8217;s Artemis client
 can then use these resources to communicate with the legacy server
 using the HornetQ CORE protocol.</p>
@@ -12881,7 +12885,7 @@ using the HornetQ CORE protocol.</p>
 JNDI</a> to create Jakarta Messaging resources ( <code>ConnectionFactory</code> and <code>Destination</code>).</p>
 </div>
 <div class="paragraph">
-<p>For example, if a WildFly 28 messaging client wants to communicate with a
+<p>For example, if a WildFly 29 messaging client wants to communicate with a
 legacy server using a queue named <code>myQueue</code>, it must use the
 following properties to configure its JNDI <code>InitialContext</code>:</p>
 </div>
@@ -13538,7 +13542,7 @@ By default, Narayana persists transaction log in database table named <code>JBos
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="sh"># PostgreSQL driver module
 ./bin/jboss-cli.sh &quot;embed-server, module add --name=org.postgresql --resources=/tmp/postgresql.jar \
-  --dependencies=javax.api\,jakarta.transaction.api&quot;
+  --dependencies=java.se\,jakarta.transaction.api&quot;
 
 # non-jta PostgreSQL datasource creation
 ./bin/jboss-cli.sh &quot;embed-server --server-config=standalone.xml,data-source add --name=JDBCStore \
@@ -13775,7 +13779,7 @@ means that the periodic recovery will try to finish the record.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -13917,7 +13921,7 @@ A corresponding metric will be exposed for it with the name and labels:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 Some subsystems (such as <code>undertow</code> or <code>messaging-activemq</code>) do not enable their statistics by default
@@ -13941,7 +13945,7 @@ System property <code>-Dwildfly.statistics-enabled=true</code> to enable statist
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 Standard WildFly continues to use the existing metrics subsystem, so this extension must be manually added and configured. See below for details.
@@ -13968,7 +13972,7 @@ Standard WildFly continues to use the existing metrics subsystem, so this extens
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 It is assumed that the server administrator will provision and secure the collector, which is outside the scope of this document.
@@ -14045,7 +14049,7 @@ HTTP metrics endpoints. By default, it is not defined (there will be no metrics 
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 Some subsystems (such as <code>undertow</code> or <code>messaging-activemq</code>) do not enable their statistics by default as they have an impact on performance and memory usage. These subsystems provide a <code>statistics-enabled</code> attribute that must be set to <code>true</code> to enable them. For convenience, WildFly standalone configuration provides expressions to enable the statistics by setting a System property <code>-Dwildfly.statistics-enabled=true</code> to enable statistics on the subsystems provided by the configuration.
@@ -14283,7 +14287,7 @@ default values, so what you see in the configuration file may look different):</
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -14394,7 +14398,7 @@ created by the <code>add-user</code> script. For example:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 The HTTP response contains additional information with individual outcomes for each probe that determined the healthiness.
@@ -14550,7 +14554,7 @@ a property and the file content is the value of the property.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 This corresponds to the layout used by <a href="https://docs.openshift.com/enterprise/3.2/dev_guide/configmaps.html">OpenShift ConfigMaps</a>.
@@ -14940,7 +14944,7 @@ created by the <code>add-user</code> script. For example:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -14981,7 +14985,7 @@ will be added (which returns <code>UP</code>) and the <code>empty-readiness-chec
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -15003,7 +15007,7 @@ will be added (which returns <code>UP</code>) and the <code>empty-startup-checks
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -15354,9 +15358,6 @@ mp.jwt.verify.issuer=quickstart-jwt-issuer</code></pre>
 <div class="paragraph">
 <p>As the deployment is configured entirely within the MicroProfile Config properties other than the presence of the <em>microprofile-jwt-smallrye</em> subsystem the virtual <code>SecurityDomain</code> means no other managed configuration is required for the deployment.</p>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in _admin-guide/Subsystem_configuration.adoc - include::subsystem-configuration/MicroProfile_Metrics.adoc[]</p>
-</div>
 </div>
 </div>
 <div class="sect2">
@@ -15442,7 +15443,7 @@ The OpenAPI endpoint is registered using the configured path (e.g. <a href="http
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 Currently, the OpenAPI endpoint for a given virtual host can only document a single JAX-RS deployment.
@@ -15499,7 +15500,7 @@ $ curl -v -H'Accept: application/json' http://localhost:8080/openapi
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 References in this document to Java API for RESTful Web Services (JAX-RS) refer to Jakarta RESTful Web Services unless otherwise noted.
@@ -15562,7 +15563,7 @@ however, it is not included by default in the default configuration of WildFly.<
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 The MicroProfile Metrics extension and subsystem are required by this extension to provide Metrics integration,
@@ -16202,7 +16203,7 @@ mp.messaging.incoming.from-kafka.key.deserializer=org.apache.kafka.common.serial
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -16250,7 +16251,155 @@ EOF</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Web_services"><a class="anchor" href="#Web_services"></a><a class="link" href="#Web_services">7.22. Web services configuration</a></h3>
+<h3 id="MicroProfile_LRA"><a class="anchor" href="#MicroProfile_LRA"></a><a class="link" href="#MicroProfile_LRA">7.22. MicroProfile LRA Subsystems Configuration</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre>:narayana-version: 6.0.0.Final
+:eclipse-mp-lra-api-version: 2.0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Support for <a href="https://github.com/eclipse/microprofile-lra">MicroProfile LRA (Long Running Actions)</a> is
+provided by the <em>microprofile-lra-coordinator</em> and <em>microprofile-lra-participant</em> subsystems.</p>
+</div>
+<div class="paragraph">
+<p>The <em>microprofile-lra-coordinator</em> subsystem provides the LRA Coordinator capabilities required for the coordination of the distributed transactions.</p>
+</div>
+<div class="paragraph">
+<p>The <em>microprofile-lra-participant</em> subsystem provides capabilities required to define services that participate in the LRAs by executing transactional actions and compensations. They communicate with the LRA Coordinator in order to process distributed transactions.</p>
+</div>
+<div class="sect3">
+<h4 id="required-extension-microprofile-lra"><a class="anchor" href="#required-extension-microprofile-lra"></a><a class="link" href="#required-extension-microprofile-lra">7.22.1. Required Extension</a></h4>
+<div class="paragraph">
+<p>These extensions are <strong>not</strong> included in the standard configurations included in the WildFly distribution.</p>
+</div>
+<div class="paragraph">
+<p>You can add the extensions to a configuration either by adding
+a relevant extensions elements to the xml or by using CLI operations.</p>
+</div>
+<div class="sect4">
+<h5 id="lra-coordinator"><a class="anchor" href="#lra-coordinator"></a><a class="link" href="#lra-coordinator">LRA Coordinator</a></h5>
+<div class="paragraph">
+<p>You can add the extension to a configuration either by adding
+an <code>&lt;extension module="org.wildfly.extension.microprofile.lra-coordinator"/&gt;</code>
+element to the xml or by using the following CLI operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>[standalone@localhost:9990 /] /extension=org.wildfly.extension.microprofile.lra-coordinator:add()
+{&quot;outcome&quot; =&gt; &quot;success&quot;}
+
+[standalone@localhost:9990 /] /subsystem=microprofile-lra-coordinator:add
+{
+    &quot;outcome&quot; =&gt; &quot;success&quot;,
+    &quot;response-headers&quot; =&gt; {
+        &quot;operation-requires-reload&quot; =&gt; true,
+        &quot;process-state&quot; =&gt; &quot;reload-required&quot;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you provision your own server and include the <code>microprofile-lra-coordinator</code> Galleon layer, you will get the required modules, and the extension and subsystem will be added to your configuration.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="lra-participant"><a class="anchor" href="#lra-participant"></a><a class="link" href="#lra-participant">LRA Participant</a></h5>
+<div class="paragraph">
+<p>You can add the extension to a configuration either by adding
+an <code>&lt;extension module="org.wildfly.extension.microprofile.lra-participant"/&gt;</code>
+element to the xml or by using the following CLI operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>[standalone@localhost:9990 /] /extension=org.wildfly.extension.microprofile.lra-participant:add()
+{&quot;outcome&quot; =&gt; &quot;success&quot;}
+
+[standalone@localhost:9990 /] /subsystem=microprofile-lra-participant:add
+{
+    &quot;outcome&quot; =&gt; &quot;success&quot;,
+    &quot;response-headers&quot; =&gt; {
+        &quot;operation-requires-reload&quot; =&gt; true,
+        &quot;process-state&quot; =&gt; &quot;reload-required&quot;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you provision your own server and include the <code>microprofile-lra-participant</code> Galleon layer, you will get the required modules, and the extension and subsystem will be added to your configuration.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="specification-4"><a class="anchor" href="#specification-4"></a><a class="link" href="#specification-4">7.22.2. Specification</a></h4>
+<div class="paragraph">
+<p>WildFly&#8217;s MicroProfile LRA Participant subsystem implements MicroProfile
+LRA {eclipse-mp-lra-api-version}, which adds support for Long Running Actions based on the saga pattern. The MicroProfile LRA Coordinator subsystem is used to provide coordination of such transactions which LRA Participants contact in order to enlist into the LRAs.</p>
+</div>
+<div class="paragraph">
+<p>Tha LRA Coordinator can also run independently in the distributed system and can be started with for instance Docker like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>$ docker run -p 8080:8080 quay.io/jbosstm/lra-coordinator</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="management-model-4"><a class="anchor" href="#management-model-4"></a><a class="link" href="#management-model-4">7.22.3. Management model</a></h4>
+<div class="paragraph">
+<p>The <code>/subsystem=microprofile-lra-coordinator</code> resource defines two attributes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>host</code> - Represents the name of the Undertow subsystem 'host' resource that the LRA Coordinator is deployed to.</p>
+</li>
+<li>
+<p><code>server</code> - Represents the name of the Undertow subsystem 'server' resource that the LRA Coordinator is deployed to.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>/subsystem=microprofile-lra-participant</code> resource defines one attribute:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>lra-coordinator-url</code> - The configuration of the LRA Coordinator URL required in order for this participant to connect to the coordinator.</p>
+</li>
+<li>
+<p><code>proxy-host</code> - Represents the name of the Undertow subsystem 'host' resource that the LRA Participant proxy deploys to.</p>
+</li>
+<li>
+<p><code>proxy-server</code> - Represents the name of the Undertow subsystem 'server' resource that the LRA Participant proxy deploys to.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="component-reference-8"><a class="anchor" href="#component-reference-8"></a><a class="link" href="#component-reference-8">7.22.4. Component Reference</a></h4>
+<div class="paragraph">
+<p>The MicroProfile LRA implementation is provided by the Narayana project - <a href="https://www.narayana.io/" class="bare">https://www.narayana.io/</a>.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/eclipse/microprofile-lra">MicroProfile LRA</a></p>
+</li>
+<li>
+<p><a href="https://github.com/jbosstm/narayana/tree/main/rts/lra">Narayana LRA implementation</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Web_services"><a class="anchor" href="#Web_services"></a><a class="link" href="#Web_services">7.23. Web services configuration</a></h3>
 <div class="paragraph">
 <p>JBossWS components are provided to the application server through the
 webservices subsystem. JBossWS components handle the processing of WS
@@ -16260,7 +16409,7 @@ subsystem is provided in the server&#8217;s domain and standalone
 configuration files.</p>
 </div>
 <div class="sect3">
-<h4 id="structure-of-the-webservices-subsystem"><a class="anchor" href="#structure-of-the-webservices-subsystem"></a><a class="link" href="#structure-of-the-webservices-subsystem">7.22.1. Structure of the webservices subsystem</a></h4>
+<h4 id="structure-of-the-webservices-subsystem"><a class="anchor" href="#structure-of-the-webservices-subsystem"></a><a class="link" href="#structure-of-the-webservices-subsystem">7.23.1. Structure of the webservices subsystem</a></h4>
 <div class="sect4">
 <h5 id="published-endpoint-address"><a class="anchor" href="#published-endpoint-address"></a><a class="link" href="#published-endpoint-address">Published endpoint address</a></h5>
 <div class="paragraph">
@@ -16406,7 +16555,7 @@ and includes a recording handler.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 The <code>Standard-Endpoint-Config</code> is a special endpoint configuration. It
@@ -16546,7 +16695,7 @@ which the chain will be triggered.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 The <code>class</code> attribute is used to provide the fully qualified class name
@@ -16561,7 +16710,7 @@ deployment classloader must to be able to load the handler class.
 </div>
 </div>
 <div class="sect3">
-<h4 id="runtime-information"><a class="anchor" href="#runtime-information"></a><a class="link" href="#runtime-information">7.22.2. Runtime information</a></h4>
+<h4 id="runtime-information"><a class="anchor" href="#runtime-information"></a><a class="link" href="#runtime-information">7.23.2. Runtime information</a></h4>
 <div class="paragraph">
 <p>Each web service endpoint is exposed through the deployment that
 provides the endpoint implementation. Each endpoint can be queried as a
@@ -16594,7 +16743,7 @@ context and a WSDL Url:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ws-component-reference"><a class="anchor" href="#ws-component-reference"></a><a class="link" href="#ws-component-reference">7.22.3. Component Reference</a></h4>
+<h4 id="ws-component-reference"><a class="anchor" href="#ws-component-reference"></a><a class="link" href="#ws-component-reference">7.23.3. Component Reference</a></h4>
 <div class="paragraph">
 <p>The web service subsystem is provided by the JBossWS project. For a
 detailed description of the available configuration properties, please
@@ -16617,7 +16766,7 @@ consult the project documentation.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Resource_adapters"><a class="anchor" href="#Resource_adapters"></a><a class="link" href="#Resource_adapters">7.23. Resource adapters</a></h3>
+<h3 id="Resource_adapters"><a class="anchor" href="#Resource_adapters"></a><a class="link" href="#Resource_adapters">7.24. Resource adapters</a></h3>
 <div class="paragraph">
 <p>Resource adapters are configured through the <em>resource-adapters</em>
 subsystem. Declaring a new resource adapter consists of two separate
@@ -16625,7 +16774,7 @@ steps: You would need to deploy the .rar archive and define a resource
 adapter entry in the subsystem.</p>
 </div>
 <div class="sect3">
-<h4 id="resource-adapter-definitions"><a class="anchor" href="#resource-adapter-definitions"></a><a class="link" href="#resource-adapter-definitions">7.23.1. Resource Adapter Definitions</a></h4>
+<h4 id="resource-adapter-definitions"><a class="anchor" href="#resource-adapter-definitions"></a><a class="link" href="#resource-adapter-definitions">7.24.1. Resource Adapter Definitions</a></h4>
 <div class="paragraph">
 <p>The resource adapter itself is defined within the subsystem
 <em>resource-adapters</em>:</p>
@@ -16674,7 +16823,7 @@ adapter entry in the subsystem.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="automatic-activation-of-resource-adapter-archives"><a class="anchor" href="#automatic-activation-of-resource-adapter-archives"></a><a class="link" href="#automatic-activation-of-resource-adapter-archives">7.23.2. Automatic activation of resource adapter archives</a></h4>
+<h4 id="automatic-activation-of-resource-adapter-archives"><a class="anchor" href="#automatic-activation-of-resource-adapter-archives"></a><a class="link" href="#automatic-activation-of-resource-adapter-archives">7.24.2. Automatic activation of resource adapter archives</a></h4>
 <div class="paragraph">
 <p>A resource adapter archive can be automatically activated with a
 configuration by including an META-INF/ironjacamar.xml in the archive.</p>
@@ -16685,7 +16834,7 @@ configuration by including an META-INF/ironjacamar.xml in the archive.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ra-component-reference"><a class="anchor" href="#ra-component-reference"></a><a class="link" href="#ra-component-reference">7.23.3. Component Reference</a></h4>
+<h4 id="ra-component-reference"><a class="anchor" href="#ra-component-reference"></a><a class="link" href="#ra-component-reference">7.24.3. Component Reference</a></h4>
 <div class="paragraph">
 <p>The resource adapter subsystem is provided by the
 <a href="http://www.jboss.org/ironjacamar">IronJacamar</a> project. For a detailed
@@ -16709,7 +16858,7 @@ the project documentation.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Jakarta_Batch"><a class="anchor" href="#Jakarta_Batch"></a><a class="link" href="#Jakarta_Batch">7.24. Jakarta Batch Subsystem Configuration</a></h3>
+<h3 id="Jakarta_Batch"><a class="anchor" href="#Jakarta_Batch"></a><a class="link" href="#Jakarta_Batch">7.25. Jakarta Batch Subsystem Configuration</a></h3>
 <div class="quoteblock abstract">
 <blockquote>
 The batch subsystem is used to configure an environment for running
@@ -16722,14 +16871,14 @@ is <code>subsystem=batch-jberet</code>.
 </blockquote>
 </div>
 <div class="sect3">
-<h4 id="default-subsystem-configuration"><a class="anchor" href="#default-subsystem-configuration"></a><a class="link" href="#default-subsystem-configuration">7.24.1. Default Subsystem Configuration</a></h4>
+<h4 id="default-subsystem-configuration"><a class="anchor" href="#default-subsystem-configuration"></a><a class="link" href="#default-subsystem-configuration">7.25.1. Default Subsystem Configuration</a></h4>
 <div class="paragraph">
 <p>For up to date information about subsystem configuration options see the
 <a href="wildscribe" target="_blank" rel="noopener">WildFly model reference</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="security"><a class="anchor" href="#security"></a><a class="link" href="#security">7.24.2. Security</a></h4>
+<h4 id="security"><a class="anchor" href="#security"></a><a class="link" href="#security">7.25.2. Security</a></h4>
 <div class="paragraph">
 <p>A new <code>security-domain</code> attribute was added to the <code>batch-jberet</code>
 subsystem to allow batch jobs to be executed under that security domain.
@@ -16769,7 +16918,7 @@ deployment resource, for example
 </div>
 </div>
 <div class="sect3">
-<h4 id="job-repository"><a class="anchor" href="#job-repository"></a><a class="link" href="#job-repository">7.24.3. Job Repository</a></h4>
+<h4 id="job-repository"><a class="anchor" href="#job-repository"></a><a class="link" href="#job-repository">7.25.3. Job Repository</a></h4>
 <div class="paragraph">
 <p>The batch subsystem supports 2 types of job repository:</p>
 </div>
@@ -16816,7 +16965,7 @@ job executions from the backing storage mechanism.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="deployment-descriptors"><a class="anchor" href="#deployment-descriptors"></a><a class="link" href="#deployment-descriptors">7.24.4. Deployment Descriptors</a></h4>
+<h4 id="deployment-descriptors"><a class="anchor" href="#deployment-descriptors"></a><a class="link" href="#deployment-descriptors">7.25.4. Deployment Descriptors</a></h4>
 <div class="paragraph">
 <p>There are no deployment descriptors for configuring a batch environment
 defined by the <a href="https://www.jcp.org/en/jsr/detail?id=352">JSR-352
@@ -16858,7 +17007,7 @@ deployment descriptor.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="deployment-resources"><a class="anchor" href="#deployment-resources"></a><a class="link" href="#deployment-resources">7.24.5. Deployment Resources</a></h4>
+<h4 id="deployment-resources"><a class="anchor" href="#deployment-resources"></a><a class="link" href="#deployment-resources">7.25.5. Deployment Resources</a></h4>
 <div class="paragraph">
 <p>Some subsystems in <a href="http://wildfly.org">WildFly</a> register runtime
 resources for deployments. The batch subsystem registers jobs and
@@ -16975,7 +17124,7 @@ resource also has a <code>stop-job</code> and <code>restart-job</code> operation
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 You can filter jobs by an attribute on the execution resource with the
@@ -17001,7 +17150,7 @@ You can filter jobs by an attribute on the execution resource with the
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 Don&#8217;t forget that CLI has tab completion which will complete operations
@@ -17048,7 +17197,136 @@ and attributes (arguments) on operations.
 </div>
 </div>
 <div class="sect2">
-<h3 id="JMX"><a class="anchor" href="#JMX"></a><a class="link" href="#JMX">7.25. JMX subsystem configuration</a></h3>
+<h3 id="Jakarta_Faces"><a class="anchor" href="#Jakarta_Faces"></a><a class="link" href="#Jakarta_Faces">7.26. Jakarta Faces Configuration</a></h3>
+<div class="paragraph">
+<p>Jakarta Faces configuration is handled by the <code>jsf</code> subsystem. The <code>jsf</code> subsystem
+allows multiple Jakarta Faces implementations to be installed on the same WildFly server. In particular, any
+version that implements spec level 4.0 or higher can be installed. For each Jakarta Faces
+implementation, a new slot needs to be created under <code>jakarta.faces.impl</code>, <code>jakarta.faces.api</code>, and
+<code>org.jboss.as.jsf-injection</code>. When the <code>jsf</code> subsystem starts up, it scans the module path to find all
+the Jakarta Faces implementations that have been installed. The default Jakarta Faces implementation that
+WildFly should use is defined by the <code>default-jsf-impl-slot</code> subsystem attribute.</p>
+</div>
+<div class="sect3">
+<h4 id="installing-a-new-jsf-implementation-via-feature-pack"><a class="anchor" href="#installing-a-new-jsf-implementation-via-feature-pack"></a><a class="link" href="#installing-a-new-jsf-implementation-via-feature-pack">7.26.1. Installing a new Jakarta Faces implementation via a feature pack</a></h4>
+<div class="paragraph">
+<p>WildFly supports provisioning a server using the Galleon tool, which allows an administrator to provision a server with
+only the desired features, which are delivered as feature packs. For more information, see <a href="Galleon_Guide.html">Provisioning WildFly with Galleon</a>.
+For an example of such a feature pack, see the <a href="https://github.com/wildfly-extras/wildfly-myfaces-feature-pack">WildFly MyFaces Feature Pack</a>
+project in the WildFly Extras GitHub organization.</p>
+</div>
+<div class="paragraph">
+<p>As a quick start, to provision a server using this feature pack, one might use a commandline like the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ galleon.sh provision myfaces_server.xml --dir=$SERVER_DIR</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">myfaces_server.xml</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; ?&gt;</span>
+<span class="tag">&lt;installation</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:galleon:provisioning:3.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+  <span class="tag">&lt;feature-pack</span> <span class="attribute-name">location</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.wildfly:wildfly-galleon-pack:{wildfly.version}</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;default-configs</span> <span class="attribute-name">inherit</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;packages</span> <span class="attribute-name">inherit</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;/feature-pack&gt;</span>
+  <span class="tag">&lt;feature-pack</span> <span class="attribute-name">location</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.wildfly:wildfly-myfaces-feature-pack:{feature-pack.version}</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;default-configs</span> <span class="attribute-name">inherit</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;packages</span> <span class="attribute-name">inherit</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;/feature-pack&gt;</span>
+  <span class="tag">&lt;config</span> <span class="attribute-name">model</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">standalone</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">standalone.xml</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;layers&gt;</span>
+      <span class="comment">&lt;!-- Base layer --&gt;</span>
+      <span class="tag">&lt;include</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">management</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+      <span class="tag">&lt;include</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">myfaces</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/layers&gt;</span>
+  <span class="tag">&lt;/config&gt;</span>
+  <span class="tag">&lt;options&gt;</span>
+    <span class="tag">&lt;option</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">optional-packages</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">passive+</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;option</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jboss-fork-embedded</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;/options&gt;</span>
+<span class="tag">&lt;/installation&gt;</span></code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="start-the-server"><a class="anchor" href="#start-the-server"></a><a class="link" href="#start-the-server">Start the server</a></h5>
+<div class="paragraph">
+<p>After starting the server, the following CLI command can be used to verify that your new Jakarta Faces
+implementation has been installed successfully. The new Jakarta Faces implementation should appear in the output
+of this command.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>[standalone@localhost:9990 /] /subsystem=jsf:list-active-jsf-impls()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="changing-the-default-jsf-implementation"><a class="anchor" href="#changing-the-default-jsf-implementation"></a><a class="link" href="#changing-the-default-jsf-implementation">7.26.2. Changing the default Jakarta Faces implementation</a></h4>
+<div class="paragraph">
+<p>The following CLI command can be used to make a newly installed Jakarta Faces implementation the default Jakarta
+Server Faces implementation used by WildFly:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=jsf/:write-attribute(name=default-jsf-impl-slot,value=&lt;JSF_IMPL_NAME&gt;-&lt;JSF_VERSION&gt;)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A server restart will be required for this change to take effect.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="configuring-a-jsf-app-to-use-a-non-default-jsf-implementation"><a class="anchor" href="#configuring-a-jsf-app-to-use-a-non-default-jsf-implementation"></a><a class="link" href="#configuring-a-jsf-app-to-use-a-non-default-jsf-implementation">7.26.3. Configuring a Jakarta Faces app to use a non-default Jakarta Faces implementation</a></h4>
+<div class="paragraph">
+<p>A Jakarta Faces app can be configured to use an installed Jakarta Faces implementation that&#8217;s not the
+default implementation by adding a <code>org.jboss.jbossfaces.JSF_CONFIG_NAME</code> context parameter to its <code>web.xml</code> file. For
+example, to indicate that a Jakarta Faces app should use MyFaces 4.0.0 (assuming MyFaces 4.0.0 has been installed
+on the server), the following context parameter would need to be added:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;context-param&gt;</span>
+  <span class="tag">&lt;param-name&gt;</span>org.jboss.jbossfaces.JSF_CONFIG_NAME<span class="tag">&lt;/param-name&gt;</span>
+  <span class="tag">&lt;param-value&gt;</span>myfaces-4.0.0<span class="tag">&lt;/param-value&gt;</span>
+<span class="tag">&lt;/context-param&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If a Jakarta Faces app does not specify this context parameter, the default Jakarta Faces implementation
+will be used for that app.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="disallowing-doctype-declarations"><a class="anchor" href="#disallowing-doctype-declarations"></a><a class="link" href="#disallowing-doctype-declarations">7.26.4. Disallowing DOCTYPE declarations</a></h4>
+<div class="paragraph">
+<p>The following CLI commands can be used to disallow DOCTYPE declarations in Jakarta Faces deployments:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=jsf:write-attribute(name=disallow-doctype-decl, value=true)
+reload</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This setting can be overridden for a particular Jakarta Faces deployment by adding the
+<code>com.sun.faces.disallowDoctypeDecl</code> context parameter to the deployment&#8217;s <code>web.xml</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;context-param&gt;</span>
+  <span class="tag">&lt;param-name&gt;</span>com.sun.faces.disallowDoctypeDecl<span class="tag">&lt;/param-name&gt;</span>
+  <span class="tag">&lt;param-value&gt;</span>false<span class="tag">&lt;/param-value&gt;</span>
+<span class="tag">&lt;/context-param&gt;</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="JMX"><a class="anchor" href="#JMX"></a><a class="link" href="#JMX">7.27. JMX subsystem configuration</a></h3>
 <div class="paragraph">
 <p>The JMX subsystem registers a service with the Remoting endpoint so that
 remote access to JMX can be obtained over the exposed Remoting
@@ -17114,7 +17392,7 @@ JMXExample</code></pre>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 If using jconsole use the <code>jconsole.sh</code> and <code>jconsole.bat</code> scripts
@@ -17163,7 +17441,7 @@ dependencies</p></td>
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="audit-logging"><a class="anchor" href="#audit-logging"></a><a class="link" href="#audit-logging">7.25.1. Audit logging</a></h4>
+<h4 id="audit-logging"><a class="anchor" href="#audit-logging"></a><a class="link" href="#audit-logging">7.27.1. Audit logging</a></h4>
 <div class="paragraph">
 <p>Audit logging for the JMX MBean server managed by the JMX subsystem. The
 resource is at <code>/subsystem=jmx/configuration=audit-log</code> and its
@@ -17319,7 +17597,7 @@ field will be populated with Throwable.getMessage()</p></td>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Deployment_Scanner"><a class="anchor" href="#Deployment_Scanner"></a><a class="link" href="#Deployment_Scanner">7.26. Deployment Scanner configuration</a></h3>
+<h3 id="Deployment_Scanner"><a class="anchor" href="#Deployment_Scanner"></a><a class="link" href="#Deployment_Scanner">7.28. Deployment Scanner configuration</a></h3>
 <div class="paragraph">
 <p>The deployment scanner is only used in standalone mode. Its job is to
 monitor a directory for new files and to deploy those files. It can be
@@ -17478,7 +17756,7 @@ off scanning you can do</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Core_Management"><a class="anchor" href="#Core_Management"></a><a class="link" href="#Core_Management">7.27. Core Management Subsystem Configuration</a></h3>
+<h3 id="Core_Management"><a class="anchor" href="#Core_Management"></a><a class="link" href="#Core_Management">7.29. Core Management Subsystem Configuration</a></h3>
 <div class="paragraph">
 <p>The core management subsystem is composed services used to manage the
 server or monitor its status.<br>
@@ -17495,7 +17773,7 @@ The core management subsystem configuration may be used to:</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="lifecycle-listener"><a class="anchor" href="#lifecycle-listener"></a><a class="link" href="#lifecycle-listener">7.27.1. Lifecycle listener</a></h4>
+<h4 id="lifecycle-listener"><a class="anchor" href="#lifecycle-listener"></a><a class="link" href="#lifecycle-listener">7.29.1. Lifecycle listener</a></h4>
 <div class="paragraph">
 <p>You can create an implementation of
 <em>org.wildfly.extension.core.management.client.ProcessStateListener</em>
@@ -17579,7 +17857,7 @@ let&#8217;s add the module to the wildfly modules :</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="configuration-changes"><a class="anchor" href="#configuration-changes"></a><a class="link" href="#configuration-changes">7.27.2. Configuration changes</a></h4>
+<h4 id="configuration-changes"><a class="anchor" href="#configuration-changes"></a><a class="link" href="#configuration-changes">7.29.2. Configuration changes</a></h4>
 <div class="paragraph">
 <p>You can use the core management subsystem to enable and configure an
 <strong>in-memory</strong> history of the last configuration changes.<br>
@@ -17622,7 +17900,7 @@ For example to track the last 5 configuration changes let&#8217;s active this
 </div>
 </div>
 <div class="sect3">
-<h4 id="JAXRS"><a class="anchor" href="#JAXRS"></a><a class="link" href="#JAXRS">7.27.3. JAXRS Subsystem Configuration</a></h4>
+<h4 id="JAXRS"><a class="anchor" href="#JAXRS"></a><a class="link" href="#JAXRS">7.29.3. JAXRS Subsystem Configuration</a></h4>
 <div class="paragraph">
 <p>The <code>jaxrs</code> subsystem represents <a href="https://projects.eclipse.org/projects/ee4j.jaxrs">Jakarta RESTful Web Services</a>.
 <a href="https://resteasy.github.io">RESTEasy</a> is the implementation.</p>
@@ -17713,7 +17991,7 @@ is not you can add it with CLI.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -17731,7 +18009,7 @@ the parameters are passed into RESTEasy so that they conform to the RESTEasy par
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 One important thing to understand is that these parameters are global. That is, they  apply to all deployments.
@@ -17747,7 +18025,7 @@ or disable RESTEasy providers. Note that they can be used in conjunction with
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 Another important fact is that once parameters are changed via some management interface the changes require
@@ -17760,7 +18038,7 @@ Another important fact is that once parameters are changed via some management i
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 RESTEasy has introduced a new treatment of <code>jakarta.ws.rs.WebApplicationException</code>&apos;s thrown by a
@@ -17777,13 +18055,13 @@ chapter "Resteasy WebApplicationExceptions" for more information.
 </div>
 </div>
 <div class="sect2">
-<h3 id="Elytron_OIDC_Client"><a class="anchor" href="#Elytron_OIDC_Client"></a><a class="link" href="#Elytron_OIDC_Client">7.28. Elytron OpenID Connect Client Subsystem Configuration</a></h3>
+<h3 id="Elytron_OIDC_Client"><a class="anchor" href="#Elytron_OIDC_Client"></a><a class="link" href="#Elytron_OIDC_Client">7.30. Elytron OpenID Connect Client Subsystem Configuration</a></h3>
 <div class="paragraph">
 <p>The ability to secure applications using <a href="https://openid.net/specs/openid-connect-core-1_0.html">OpenID Connect</a> is
 provided by the <em>elytron-oidc-client</em> subsystem.</p>
 </div>
 <div class="sect3">
-<h4 id="subsystem-configuration-elytron-oidc-client"><a class="anchor" href="#subsystem-configuration-elytron-oidc-client"></a><a class="link" href="#subsystem-configuration-elytron-oidc-client">7.28.1. Subsystem</a></h4>
+<h4 id="subsystem-configuration-elytron-oidc-client"><a class="anchor" href="#subsystem-configuration-elytron-oidc-client"></a><a class="link" href="#subsystem-configuration-elytron-oidc-client">7.30.1. Subsystem</a></h4>
 <div class="paragraph">
 <p>The <em>elytron-oidc-client</em> subsystem is included in the default configuration. If not present, the subsystem can be
 added using the following CLI commands.</p>
@@ -17799,7 +18077,7 @@ added using the following CLI commands.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="configuration-9"><a class="anchor" href="#configuration-9"></a><a class="link" href="#configuration-9">7.28.2. Configuration</a></h4>
+<h4 id="configuration-9"><a class="anchor" href="#configuration-9"></a><a class="link" href="#configuration-9">7.30.2. Configuration</a></h4>
 <div class="paragraph">
 <p>By default, the <em>elytron-oidc-client</em> subsystem does not contain any configured resources or attributes.</p>
 </div>
@@ -17928,7 +18206,7 @@ will continue normally.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="virtual-security-2"><a class="anchor" href="#virtual-security-2"></a><a class="link" href="#virtual-security-2">7.28.3. Virtual Security</a></h4>
+<h4 id="virtual-security-2"><a class="anchor" href="#virtual-security-2"></a><a class="link" href="#virtual-security-2">7.30.3. Virtual Security</a></h4>
 <div class="paragraph">
 <p>The purpose of using OpenID Connect is to verify a user&#8217;s identity based on the authentication that&#8217;s been
 performed by the OpenID provider. For this reason, OpenID Connect deployments do not depend on <code>security-domain</code>
@@ -17940,7 +18218,7 @@ across the deployment. No further managed configuration is required.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -17953,7 +18231,7 @@ depending on your use case. See <a href="#identity_propagation">Identity Propaga
 </div>
 </div>
 <div class="sect3">
-<h4 id="openid-providers"><a class="anchor" href="#openid-providers"></a><a class="link" href="#openid-providers">7.28.4. OpenID Providers</a></h4>
+<h4 id="openid-providers"><a class="anchor" href="#openid-providers"></a><a class="link" href="#openid-providers">7.30.4. OpenID Providers</a></h4>
 <div class="paragraph">
 <p>The <code>provider-url</code> attribute in the <code>oidc.json</code> configuration and in the <em>elytron-oidc-client</em>
 subsystem configuration allows you to specify the URL for the OpenID provider that you&#8217;d like to use.
@@ -17962,9 +18240,20 @@ Other OpenID providers haven&#8217;t been extensively tested yet so the use of o
 be considered experimental for now and should not be used in a production environment yet. Proper support
 for other OpenID providers will be added in a future WildFly release.</p>
 </div>
+<div class="sect4">
+<h5 id="disabling-typ-claim-validation"><a class="anchor" href="#disabling-typ-claim-validation"></a><a class="link" href="#disabling-typ-claim-validation">Disabling "typ" Claim Validation</a></h5>
+<div class="paragraph">
+<p>By default, when verifying an access token, the <em>elytron-oidc-client</em> subsystem expects the token
+to contain a <code>typ</code> claim with value <code>Bearer</code>. Access tokens provided by the Keycloak OpenID provider
+contain this claim. However, access tokens provided by other OpenID providers might not include this
+claim, causing token validation to fail. When using an OpenID provider other than Keycloak,
+it is possible to disable the <code>typ</code> claim validation by setting the <code>wildfly.elytron.oidc.disable.typ.claim.validation</code>
+system property to <code>true</code>.</p>
+</div>
+</div>
 </div>
 <div class="sect3">
-<h4 id="multi-tenancy-support"><a class="anchor" href="#multi-tenancy-support"></a><a class="link" href="#multi-tenancy-support">7.28.5. Multi-Tenancy Support</a></h4>
+<h4 id="multi-tenancy-support"><a class="anchor" href="#multi-tenancy-support"></a><a class="link" href="#multi-tenancy-support">7.30.5. Multi-Tenancy Support</a></h4>
 <div class="paragraph">
 <p>In some cases, it might be desirable to secure an application using multiple <code>oidc.json</code> configuration files.
 For example, you might want a different <code>oidc.json</code> file to be used depending on the request in order to authenticate
@@ -18028,7 +18317,7 @@ your application&#8217;s <code>web.xml</code> file, as shown in the example belo
 </div>
 </div>
 <div class="sect3">
-<h4 id="identity_propagation"><a class="anchor" href="#identity_propagation"></a><a class="link" href="#identity_propagation">7.28.6. Identity Propagation</a></h4>
+<h4 id="identity_propagation"><a class="anchor" href="#identity_propagation"></a><a class="link" href="#identity_propagation">7.30.6. Identity Propagation</a></h4>
 <div class="paragraph">
 <p>When securing an application with OpenID Connect, the <code>elytron-oidc-client</code> subsystem will automatically
 create a virtual security domain for you. If your application invokes an EJB, additional configuration
@@ -18122,9 +18411,96 @@ should be used to secure the EJB.</p>
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="securing-the-management-console-with-openid-connect"><a class="anchor" href="#securing-the-management-console-with-openid-connect"></a><a class="link" href="#securing-the-management-console-with-openid-connect">7.30.7. Securing the management console with OpenID Connect</a></h4>
+<div class="paragraph">
+<p>The management console can be secured with OpenID Connect using the Keycloak OpenID provider.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The ability to secure the management console with the Keycloak OpenID provider is only available when
+running a standalone server and is not supported when running a managed domain. The management
+CLI cannot be secured with OpenID Connect.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To secure the management console with OpenID Connect, configuration is required on the Keycloak side
+and in the <code>elytron-oidc-client</code> subsystem.</p>
+</div>
+<div class="sect4">
+<h5 id="keycloak-configuration"><a class="anchor" href="#keycloak-configuration"></a><a class="link" href="#keycloak-configuration">Keycloak Configuration</a></h5>
+<div class="paragraph">
+<p>Follow the steps in Keycloak&#8217;s <a href="https://www.keycloak.org/guides#getting-started">getting started guide</a> to
+add a new realm called <code>wildfly-infra</code>.</p>
+</div>
+<div class="paragraph">
+<p>Then, create a new OpenID Connect client called <code>wildfly-console</code>. Set the <strong>Valid Redirect URIs</strong> using
+the URI used to access the WildFly management console, e.g., <code><a href="http://localhost:9990/console/" class="bare">http://localhost:9990/console/</a><strong></code>. Similarly, you&#8217;ll
+also need to set *Web Origins</strong> using the management port for your WildFly instance, e.g.,
+<code><a href="http://localhost:9990" class="bare">http://localhost:9990</a></code>.</p>
+</div>
+<div class="paragraph">
+<p>Next, create a second OpenID Connect client called <code>wildfly-management</code>. This will be a bearer-only client so in
+the <strong>Capability</strong> configuration, be sure to uncheck the Standard flow and Direct access grants.</p>
+</div>
+<div class="paragraph">
+<p>If you will be configuring WildFly to enable <a href="RBAC.html#rbac-roles">Role Based Access Control</a> (RBAC), you can also create
+a new <strong>Realm role</strong> (e.g., Administrator) and assign it to a user.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="elytron-oidc-client-subsystem-configuration"><a class="anchor" href="#elytron-oidc-client-subsystem-configuration"></a><a class="link" href="#elytron-oidc-client-subsystem-configuration">Elytron OIDC Client Subsystem Configuration</a></h5>
+<div class="paragraph">
+<p>We need to add a <code>secure-deployment</code> resource that references the <code>wildfly-management</code> client that was created
+in the previous section.</p>
+</div>
+<div class="paragraph">
+<p>A <code>secure-server</code> that references the <code>wildfly-console</code> client is also needed.</p>
+</div>
+<div class="paragraph">
+<p>Some example CLI commands that add these resources can be seen here:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code># Configure the Keycloak provider
+/subsystem=elytron-oidc-client/provider=keycloak:add(provider-url=http://localhost:8180/realms/wildfly-infra)
+
+# Create a secure-deployment in order to protect mgmt interface
+/subsystem=elytron-oidc-client/secure-deployment=wildfly-management:add(provider=keycloak,client-id=wildfly-management,principal-attribute=preferred_username,bearer-only=true,ssl-required=EXTERNAL)
+
+# Enable RBAC where roles are obtained from the identity
+/core-service=management/access=authorization:write-attribute(name=provider,value=rbac)
+/core-service=management/access=authorization:write-attribute(name=use-identity-roles,value=true)
+
+# Create a secure-server in order to publish the management console configuration via mgmt interface
+/subsystem=elytron-oidc-client/secure-server=wildfly-console:add(provider=keycloak,client-id=wildfly-console,public-client=true)
+
+# reload
+reload</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="accessing-the-management-console"><a class="anchor" href="#accessing-the-management-console"></a><a class="link" href="#accessing-the-management-console">7.30.8. Accessing the management console</a></h4>
+<div class="paragraph">
+<p>With the above configuration in place, when you access the management console (e.g., <code><a href="http://localhost:9990/console/" class="bare">http://localhost:9990/console/</a></code>),
+you will be redirected to Keycloak to log in, and will then be redirected back to the management console upon successful
+authentication.</p>
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="Simple_configuration_subsystems"><a class="anchor" href="#Simple_configuration_subsystems"></a><a class="link" href="#Simple_configuration_subsystems">7.29. Simple configuration subsystems</a></h3>
+<h3 id="Simple_configuration_subsystems"><a class="anchor" href="#Simple_configuration_subsystems"></a><a class="link" href="#Simple_configuration_subsystems">7.31. Simple configuration subsystems</a></h3>
 <div class="paragraph">
 <p>The following subsystems currently have no configuration beyond its root
 element in the configuration</p>
@@ -18212,7 +18588,7 @@ the managed hosts to communicate with it</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 In this example the domain controller uses 192.168.0.101 and the host
@@ -18289,7 +18665,7 @@ am adding a new user called "secondary".</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <code>add-user</code> MUST be run on the Domain Controller and NOT the
@@ -18389,7 +18765,7 @@ use:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 The name of each host needs to be unique when registering with the
@@ -18915,7 +19291,7 @@ storage.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">jboss.server.base.dir/tmp</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jboss.server.deploy.dir</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jboss.server.content.dir</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The directory used to store deployed content</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">jboss.server.data.dir/content</p></td>
 </tr>
@@ -19318,7 +19694,7 @@ requests.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 The interface named "public" is not inherently special. It is provided
@@ -19353,7 +19729,7 @@ the HTTP socket used by the admin console, and the JMX connector socket.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 The <code>-b</code> switch only controls the interface bindings because the
@@ -19432,7 +19808,7 @@ configurations to be communicate over multicast address <code>230.0.1.2</code>.<
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 As with the <code>-b</code> switch, the <code>-u</code> switch only controls the multicast
@@ -19477,7 +19853,7 @@ place.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -19875,7 +20251,7 @@ operations</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 Navigating through the domain topology is much more simple when you use
@@ -20106,7 +20482,7 @@ follows:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 The audit logging subsystem has a lot of internal dependencies, and it
@@ -23764,7 +24140,7 @@ If not, we continue checking the next location.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 This step was introduced for WildFly 25, and has the scope to introduce some issues in special cases. Say you have an environment variable <code>COMMON_VAR_NAME=foo</code> already in use, and you use <code>${common-var-name:bar}</code> in the wildfly configuration. Prior to WildFly 25, the default value (i.e. <code>bar</code>) will be used. In WildFly 25 and later, the value from the environment variable (i.e. <code>foo</code>) will be used.
@@ -24470,7 +24846,7 @@ to the process it was managing and release other resources:</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-request"><a class="anchor" href="#format-of-a-detyped-operation-request"></a><a class="link" href="#format-of-a-detyped-operation-request">10.5.3. Format of a Detyped Operation Request</a></h4>
 <div class="paragraph">
-<p>The basic method a user of the WildFly 28 programmatic management API
+<p>The basic method a user of the WildFly 29 programmatic management API
 would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -24990,7 +25366,7 @@ header just like this :</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-response"><a class="anchor" href="#format-of-a-detyped-operation-response"></a><a class="link" href="#format-of-a-detyped-operation-response">10.5.4. Format of a Detyped Operation Response</a></h4>
 <div class="paragraph">
-<p>As noted previously, the basic method a user of the WildFly 28
+<p>As noted previously, the basic method a user of the WildFly 29
 programmatic management API would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -25896,7 +26272,7 @@ script (e.g. 'bin/jboss-admin.bat --connect command=:shutdown').</p>
 <div class="paragraph">
 <p>To avoid "Press any key to continue &#8230;&#8203;" message you need to specify
 NOPAUSE variable. Call 'set NOPAUSE=true' in command line before running
-any WildFly 28 .bat script or include it in your custom script before
+any WildFly 29 .bat script or include it in your custom script before
 invoking scripts from WildFly.</p>
 </div>
 </div>
@@ -26099,7 +26475,7 @@ composite operation.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-warning" title=":warning:"></i>
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
 On Windows, path separator '\' needs to be escaped, this is a limitation
@@ -26457,8 +26833,8 @@ Thanks to the <em>config=&lt;config name&gt;</em> system property, the script ca
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 28.0.0.Final<br>
-Last updated 2023-04-04 16:25:29 -0500
+Version 29.0.0.Final<br>
+Last updated 2023-06-22 14:37:11 -0500
 </div>
 </div>
 </body>

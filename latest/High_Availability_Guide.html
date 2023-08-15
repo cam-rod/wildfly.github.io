@@ -533,8 +533,8 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <h1>High Availability Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly clustering team</span><br>
-<span id="revnumber">version 28.0.0.Final,</span>
-<span id="revdate">2023-04-20T02:04:09Z</span>
+<span id="revnumber">version 29.0.0.Final,</span>
+<span id="revdate">2023-07-20T17:19:12Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">High Availability Guide</div>
@@ -3978,13 +3978,14 @@ To be able to query the Kubernetes server ensure view permissions are granted on
 <div class="sect3">
 <h4 id="discovery-for-aws-ec2"><a class="anchor" href="#discovery-for-aws-ec2"></a>8.2.2. Discovery for AWS EC2</h4>
 <div class="paragraph">
-<p>The <code>org.jgroups.protocols.aws.S3_PING</code> is a discovery protocol for AWS EC2.</p>
+<p>The <code>org.jgroups.protocols.aws.S3_PING</code> is a discovery protocol using AWS S3 buckets as cluster information store.</p>
 </div>
 <div class="paragraph">
-<p>For provisioning using Galleon, use the <code>jgroups-aws</code> layer.</p>
+<p>To provision using Galleon, use the <code>jgroups-aws</code> layer.
+Note that the layer does not update configuration, only provisions necessary modules.</p>
 </div>
 <div class="paragraph">
-<p>The following example updates the <code>tcp</code> stack to use this discovery protocol instead of <code>MPING</code>:</p>
+<p>The following minimal example updates the existing <code>tcp</code> stack to use this discovery protocol instead of <code>MPING</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3993,6 +3994,12 @@ To be able to query the Kubernetes server ensure view permissions are granted on
 /subsystem=jgroups/stack=tcp/protocol=org.jgroups.protocols.aws.S3_PING:add(add-index=1, module=&quot;org.jgroups.aws&quot;, properties={region_name=&quot;eu-central-1&quot;, bucket_name=&quot;jgroups-s3&quot;})
 run-batch</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>The S3 client used by the protocol uses the default credential store provider.
+Refer to AWS documentation how to generate and supply appropriate credentials.
+For instance, credentials can be provided by Java system properties (<code>aws.accessKeyId</code> and <code>aws.secretAccessKey</code>),
+environmental properties (<code>AWS_ACCESS_KEY_ID</code> and <code>AWS_SECRET_ACCESS_KEY</code>), etc.</p>
 </div>
 <div class="paragraph">
 <p>For advanced configuration options, please visit protocol&#8217;s documentation <a href="https://github.com/jgroups-extras/jgroups-aws#readme">here</a>.</p>
@@ -4981,7 +4988,7 @@ cluster and discovered by httpd.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="clustering/Clustering.jpg" alt="images/clustering/Clustering.jpg"></span></p>
+<p><span class="image"><img src="images/clustering/Clustering.jpg" alt="clustering/Clustering.jpg"></span></p>
 </div>
 <div class="ulist">
 <ul>
@@ -5011,7 +5018,7 @@ should see the secondary Host Controller sees the primary Host Controller as a d
 </ul>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="clustering/test_scenario.jpg" alt="images/clustering/test_scenario.jpg"></span></p>
+<p><span class="image"><img src="images/clustering/test_scenario.jpg" alt="clustering/test_scenario.jpg"></span></p>
 </div>
 <div class="paragraph">
 <p>Please don&#8217;t worry if you cannot digest so many details currently. Let&#8217;s
@@ -5029,8 +5036,8 @@ move on and you will get the points step by step.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>unzip wildfly-28.0.0.Final.zip
-cd wildfly-28.0.0.Final/bin
+<pre class="CodeRay highlight"><code>unzip wildfly-29.0.0.Final.zip
+cd wildfly-29.0.0.Final/bin
 ./domain.sh</code></pre>
 </div>
 </div>
@@ -5040,12 +5047,12 @@ mode:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code>wildfly-28.0.0.Final/bin$ ./domain.sh
+<pre class="CodeRay highlight"><code>wildfly-29.0.0.Final/bin$ ./domain.sh
 =========================================================================
 
   JBoss Bootstrap Environment
 
-  JBOSS_HOME: /Users/weli/Downloads/wildfly-28.0.0.Final
+  JBOSS_HOME: /Users/weli/Downloads/wildfly-29.0.0.Final
 
   JAVA: /Library/Java/Home/bin/java
 
@@ -5054,7 +5061,7 @@ mode:</p>
 =========================================================================
 ...
 
-[Server:server-two] 14:46:12,375 INFO  [org.jboss.as] (Controller Boot Thread) JBAS015874: WildFly 28.0.0.Final &quot;Kenny&quot; started in 8860ms - Started 210 of 258 services (828 services are lazy, passive or on-demand)</code></pre>
+[Server:server-two] 14:46:12,375 INFO  [org.jboss.as] (Controller Boot Thread) JBAS015874: WildFly 29.0.0.Final &quot;Kenny&quot; started in 8860ms - Started 210 of 258 services (829 services are lazy, passive or on-demand)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5207,7 +5214,7 @@ public, and unsecured interfaces.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 It is easier to turn off all firewalls for testing, but in production,
@@ -5359,7 +5366,7 @@ to 'other-server-group', so 'server-three' is our choice.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 In newer version of WildFly, the profile 'ha' changes to 'full-ha':
@@ -5399,7 +5406,7 @@ secondary host.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 server-three on primary and secondary host are two different hosts, their names
@@ -5414,7 +5421,7 @@ cluster-demo.war for deployment. Click on the 'Manage Deployments' link
 at the bottom of left menu list.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="clustering/JBoss_Management.png" alt="images/clustering/JBoss_Management.png"></span><br>
+<p><span class="image"><img src="images/clustering/JBoss_Management.png" alt="clustering/JBoss_Management.png"></span><br>
 (We should ensure the server-three should be started on both primary and
 secondary hosts)</p>
 </div>
@@ -5432,7 +5439,7 @@ button and add the war to 'other-server-group' and then click 'save'.</p>
 deployed into 'other-server-group'.：</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="clustering/JBoss_Management_2.png" alt="images/clustering/JBoss_Management_2.png"></span></p>
+<p><span class="image"><img src="images/clustering/JBoss_Management_2.png" alt="clustering/JBoss_Management_2.png"></span></p>
 </div>
 <div class="paragraph">
 <p>Please note we have two hosts participate in this server group, so the
@@ -5449,7 +5456,7 @@ and secondary hosts, and they should all work now:</p>
 </div>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="clustering/http---10.211.55.7-8330-cluster-demo-.png" alt="images/clustering/http---10.211.55.7-8330-cluster-demo-.png"></span></p>
+<p><span class="image"><img src="images/clustering/http---10.211.55.7-8330-cluster-demo-.png" alt="clustering/http---10.211.55.7-8330-cluster-demo-.png"></span></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5457,7 +5464,7 @@ and secondary hosts, and they should all work now:</p>
 </div>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="clustering/http---10.211.55.2-8330-cluster-demo-.png" alt="images/clustering/http---10.211.55.2-8330-cluster-demo-.png"></span></p>
+<p><span class="image"><img src="images/clustering/http---10.211.55.2-8330-cluster-demo-.png" alt="clustering/http---10.211.55.2-8330-cluster-demo-.png"></span></p>
 </div>
 <div class="paragraph">
 <p>Now that we have finished the project deployment and see the usages of
@@ -5468,7 +5475,7 @@ establish a cluster <span class="icon yellow"><i class="fa fa-smile-o"></i></spa
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 Why is the port number 8330 instead of 8080? Please check the settings
@@ -5551,7 +5558,7 @@ mod_cluster out of box so it&#8217;s the easiest way.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 The WildFly domain controller and httpd are not necessary to be on
@@ -5590,7 +5597,7 @@ website:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 Jean-Frederic has suggested to use mod_cluster 1.2.x. Because 1.1.x it
@@ -5690,7 +5697,7 @@ MemManagerFile /var/cache/httpd
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title=":heavy_exclamation_mark:"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 For more details on mod_cluster configurations please see this document:
@@ -5723,7 +5730,7 @@ For more details on mod_cluster configurations please see this document:
 </div>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="clustering/http---10.211.55.7-cluster-demo-put.jsp.png" alt="images/clustering/http---10.211.55.7-cluster-demo-put.jsp.png"></span></p>
+<p><span class="image"><img src="images/clustering/http---10.211.55.7-cluster-demo-put.jsp.png" alt="clustering/http---10.211.55.7-cluster-demo-put.jsp.png"></span></p>
 </div>
 <div class="paragraph">
 <p>We should see the request is distributed to one of the hosts (primary or
@@ -5755,7 +5762,7 @@ the Host-Controller restart the instance immediately!</p>
 </div>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="clustering/http---10.211.55.7-cluster-demo-get.jsp.png" alt="images/clustering/http---10.211.55.7-cluster-demo-get.jsp.png"></span></p>
+<p><span class="image"><img src="images/clustering/http---10.211.55.7-cluster-demo-get.jsp.png" alt="clustering/http---10.211.55.7-cluster-demo-get.jsp.png"></span></p>
 </div>
 <div class="paragraph">
 <p>Now the request should be served by the secondary host and we should see the log from
@@ -5779,7 +5786,7 @@ cluster.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title=":bulb:"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 It doesn&#8217;t matter if you found the request is distributed to the secondary host at
@@ -5806,7 +5813,7 @@ this document readable.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 References in this document to JavaServer Pages (JSP) refer to the Jakarta Server Pages unless otherwise noted
@@ -5820,8 +5827,8 @@ References in this document to JavaServer Pages (JSP) refer to the Jakarta Serve
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 28.0.0.Final<br>
-Last updated 2023-04-04 16:25:29 -0500
+Version 29.0.0.Final<br>
+Last updated 2023-06-22 14:37:11 -0500
 </div>
 </div>
 </body>

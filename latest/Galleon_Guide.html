@@ -533,8 +533,8 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <h1>Galleon Provisioning Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly developer team</span><br>
-<span id="revnumber">version 28.0.0.Final,</span>
-<span id="revdate">2023-04-20T02:04:09Z</span>
+<span id="revnumber">version 29.0.0.Final,</span>
+<span id="revdate">2023-07-20T17:19:12Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Galleon Provisioning Guide</div>
@@ -615,7 +615,7 @@ By default, all standalone and domain configurations are installed.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -634,7 +634,7 @@ By default, all standalone and domain configurations are installed.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -672,7 +672,7 @@ for example:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -725,7 +725,7 @@ to exclude the optional <em>CDI</em> dependency on <em>Jakarta Bean Validation</
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="ulist">
@@ -782,7 +782,7 @@ and instead specify the alternative. If a layer has an alternative the Descripti
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -823,6 +823,7 @@ all of which provide typical core WildFly capabilities like the logging subsyste
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.core-server">core-server</a><br>
 <a href="#gal.core-tools">core-tools</a> (optional)<br>
 <a href="#gal.datasources">datasources</a> (optional)<br>
+<a href="#gal.elytron">elytron</a><br>
 <a href="#gal.web-server">web-server</a><br></p></td>
 </tr>
 <tr>
@@ -861,6 +862,7 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.core-server">core-server</a><br>
 <a href="#gal.cdi">cdi</a><br>
 <a href="#gal.ee-integration">ee-integration</a><br>
+<a href="#gal.elytron">elytron</a><br>
 <a href="#gal.jaxrs">jaxrs-core</a><br>
 <a href="#gal.jsonp">jsonp</a><br>
 <a href="#gal.jsonb">jsonb</a><br></p></td>
@@ -965,7 +967,8 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.ee-security"></a>ee-security</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for EE Security.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br>
+<a href="#gal.elytron">elytron</a><br></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.ejb-http-invoker"></a>ejb-http-invoker</p></td>
@@ -1087,7 +1090,7 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jmx-remoting"></a>jmx-remoting</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for a JMX remoting connector.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.jmx">jmx</a><br>
-<a href="#gal.management">management</a> (optional)<br></p></td>
+<a href="#gal.management">management</a><br></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jpa"></a>jpa</p></td>
@@ -1105,7 +1108,7 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.jsf"></a>jsf</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Support for Jakarta Server Faces.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for Jakarta Faces.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.bean-validation">bean-validation</a> (optional)<br>
 <a href="#gal.cdi">cdi</a><br>
 <a href="#gal.web-server">web-server</a><br></p></td>
@@ -1142,6 +1145,11 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.resource-adapters">resource-adapters</a><br></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.micrometer"></a>micrometer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for Micrometer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-config"></a>microprofile-config</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile Config.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br></p></td>
@@ -1162,7 +1170,6 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-jwt"></a>microprofile-jwt</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile JWT.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.ee-security">ee-security</a><br>
-<a href="#gal.elytron">elytron</a><br>
 <a href="#gal.microprofile-config">microprofile-config</a><br></p></td>
 </tr>
 <tr>
@@ -1216,6 +1223,13 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <a href="#gal.jaxrs">jaxrs</a><br></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.microprofile-telemetry"></a>microprofile-telemetry</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile Telemetry</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br>
+<a href="#gal.microprofile-config">microprofile-config</a><br>
+<a href="#gal.opentelemetry">opentelemetry</a></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.mod_cluster"></a>mod_cluster</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for mod_cluster subsystem.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.web-server">web-server</a><br></p></td>
@@ -1230,6 +1244,11 @@ specialized WildFly that doesn&#8217;t need the capabilities provided by the oth
 <td class="tableblock halign-left valign-top"><p class="tableblock">Support for MicroProfile monitoring features.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.microprofile-config">microprofile-config</a> (optional)<br>
 <a href="#gal.microprofile-health">microprofile-health</a> (optional)<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.opentelemetry"></a>opentelemetry</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support for OpenTelemetry</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#gal.cdi">cdi</a><br></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="gal.pojo"></a>pojo</p></td>
@@ -1342,7 +1361,7 @@ and configured to connect to the server.</p></td>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 References in this document to Java Persistence API (JPA) refer to the Jakarta Persistence unless otherwise noted.
@@ -1362,7 +1381,7 @@ References in this document to Java Persistence API (JPA) refer to the Jakarta P
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -1443,7 +1462,7 @@ alternative:</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title=":information_source:"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 References in this document to Java Persistence API (JPA) refer to the Jakarta Persistence unless otherwise noted.
@@ -1459,8 +1478,8 @@ References in this document to Java Persistence API (JPA) refer to the Jakarta P
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 28.0.0.Final<br>
-Last updated 2023-04-04 16:25:29 -0500
+Version 29.0.0.Final<br>
+Last updated 2023-06-22 14:37:11 -0500
 </div>
 </div>
 </body>

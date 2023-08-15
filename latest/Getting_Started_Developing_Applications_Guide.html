@@ -444,8 +444,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h1>Getting Started Developing Applications Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly team</span><br>
-<span id="revnumber">version 28.0.0.Final,</span>
-<span id="revdate">2023-04-20T02:04:09Z</span>
+<span id="revnumber">version 29.0.0.Final,</span>
+<span id="revdate">2023-07-20T17:19:12Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Getting Started Developing Applications Guide</div>
@@ -459,8 +459,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#installing-and-starting-the-jboss-server-on-linux-unix-or-mac-os-x">2.1. Installing and starting the JBoss server on Linux, Unix or Mac OS X</a></li>
 <li><a href="#installing-and-starting-the-jboss-server-on-windows">2.2. Installing and starting the JBoss server on Windows</a></li>
+<li><a href="#starting-the-jboss-server-from-codeready-studio-or-eclipse-with-jboss-tools">2.3. Starting the JBoss server from CodeReady Studio or Eclipse with JBoss Tools</a></li>
+<li><a href="#importing-the-quickstarts-into-eclipse">2.4. Importing the quickstarts into Eclipse</a></li>
+<li><a href="#managing-jboss-wildfly">2.5. Managing JBoss WildFly</a></li>
 </ul>
 </li>
+<li><a href="#cdi-servlet-helloworld-quickstart">3. CDI + Servlet: Helloworld quickstart</a></li>
 </ul>
 </div>
 </div>
@@ -769,155 +773,236 @@ covers more on configuring logging.</p>
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>Starting the JBoss server from CodeReady Studio or Eclipse with JBoss Tools</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre>[[GettingStarted-with_jboss_tools]]
-
-You may choose to use CodeReady Studio, or Eclipse with JBoss Tools, rather than the command line to run JBoss WildFly, and to deploy the quickstarts. If you don't wish to use Eclipse, you should skip this section.
-
-Make sure you have installed and started CodeReady Studio or Eclipse. First, we need to add our WildFly instance to it. First, navigate to _Preferences_:
-
-image:gfx/Eclipse_Detect_Servers_1.png[]
-
-Now, locate the _JBoss Tools Runtime Detection_ preferences:
-
-image:gfx/Eclipse_Detect_Servers_2.png[]
-
-Click _Add_ and locate where you put servers on your disk:
-
-image:gfx/Eclipse_Detect_Servers_3.png[]
-
-Any available servers will be located, now all you need to do is click _OK_, and then _OK_ on the preferences dialog:
-
-image:gfx/Eclipse_Detect_Servers_4.png[]
-
-Now, let's start the server from Eclipse. If you previously started a server from the command line, you should stop it there first.
-
-First, we need to make sure the Server tab is on view. Open the _Window -&gt; Show View -&gt; Other..._ dialog:
-
-image:gfx/Eclipse_Server_Tab_1.jpg[]
-
-And select the Server view:
-
-image:gfx/Eclipse_Server_Tab_2.jpg[]
-
-You should see the Server View appear with the detected servers:
-
-image:gfx/Eclipse_Server_Tab_3.jpg[]
-
-Now, we can start the server. Right click on the server in the Server view, and select Start :
-
-image:gfx/Eclipse_Server_Start_1.jpg[]
-
-[TIP]
-========================================================================
-If you want to debug your application, you can simply select Debug
+<div class="sect2">
+<h3 id="starting-the-jboss-server-from-codeready-studio-or-eclipse-with-jboss-tools"><a class="anchor" href="#starting-the-jboss-server-from-codeready-studio-or-eclipse-with-jboss-tools"></a>2.3. Starting the JBoss server from CodeReady Studio or Eclipse with JBoss Tools</h3>
+<div id="GettingStarted-with_jboss_tools" class="paragraph">
+<p>You may choose to use CodeReady Studio, or Eclipse with JBoss Tools, rather than the command line to run JBoss WildFly, and to deploy the quickstarts. If you don&#8217;t wish to use Eclipse, you should skip this section.</p>
+</div>
+<div class="paragraph">
+<p>Make sure you have installed and started CodeReady Studio or Eclipse. First, we need to add our WildFly instance to it. First, navigate to <em>Preferences</em>:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="gfx/Eclipse_Detect_Servers_1.png" alt="Eclipse Detect Servers 1"></span></p>
+</div>
+<div class="paragraph">
+<p>Now, locate the <em>JBoss Tools Runtime Detection</em> preferences:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="gfx/Eclipse_Detect_Servers_2.png" alt="Eclipse Detect Servers 2"></span></p>
+</div>
+<div class="paragraph">
+<p>Click <em>Add</em> and locate where you put servers on your disk:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="gfx/Eclipse_Detect_Servers_3.png" alt="Eclipse Detect Servers 3"></span></p>
+</div>
+<div class="paragraph">
+<p>Any available servers will be located, now all you need to do is click <em>OK</em>, and then <em>OK</em> on the preferences dialog:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="gfx/Eclipse_Detect_Servers_4.png" alt="Eclipse Detect Servers 4"></span></p>
+</div>
+<div class="paragraph">
+<p>Now, let&#8217;s start the server from Eclipse. If you previously started a server from the command line, you should stop it there first.</p>
+</div>
+<div class="paragraph">
+<p>First, we need to make sure the Server tab is on view. Open the <em>Window &#8594; Show View &#8594; Other&#8230;&#8203;</em> dialog:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="gfx/Eclipse_Server_Tab_1.jpg" alt="Eclipse Server Tab 1"></span></p>
+</div>
+<div class="paragraph">
+<p>And select the Server view:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="gfx/Eclipse_Server_Tab_2.jpg" alt="Eclipse Server Tab 2"></span></p>
+</div>
+<div class="paragraph">
+<p>You should see the Server View appear with the detected servers:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="gfx/Eclipse_Server_Tab_3.jpg" alt="Eclipse Server Tab 3"></span></p>
+</div>
+<div class="paragraph">
+<p>Now, we can start the server. Right click on the server in the Server view, and select Start :</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="gfx/Eclipse_Server_Start_1.jpg" alt="Eclipse Server Start 1"></span></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you want to debug your application, you can simply select Debug
 rather than Start . This will start the server in debug mode, and
-automatically attach the Eclipse debugger.
-========================================================================
-
-You'll see the server output in the Console :
-
-image:gfx/Eclipse_Server_Start_2.jpg[]
-
-That's it, we now have the server up and running in Eclipse!
-
-
-Importing the quickstarts into Eclipse
---------------------------------------
-[[GettingStarted-importing_quickstarts_into_eclipse]]
-
-In order to import the quickstarts into Eclipse, you will need m2eclipse installed. If you have CodeReady Studio, then m2eclipse is already installed.
-
-First, choose _File -&gt; Import..._:
-
-image:gfx/Import_Quickstarts_1.jpg[]
-
-Select _Existing Maven Projects_:
-
-image:gfx/Import_Quickstarts_2.jpg[]
-
-Click on _Browse_, and navigate to the `quickstarts/` directory:
-
-image:gfx/Import_Quickstarts_3.jpg[]
-
-Finally, make sure all 4 quickstarts are found and selected, and click _Finish_:
-
-image:gfx/Import_Quickstarts_4.jpg[]
-
-Eclipse should now successfully import 4 projects:
-
-image:gfx/Import_Quickstarts_5.jpg[]
-
-It will take a short time to import the projects, as Maven needs to download the project's dependencies from remote repositories.
-
-
-Managing JBoss WildFly
-----------------------
-
-Here we will quickly outline how you can access both the command line interface and the web management interface for managing JBoss WildFly. Detailed information for both can be found in the link:http://docs.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/6/html/Administration_and_Configuration_Guide/index.html[Administration and Configuration Guide for JBoss Enterprise Application Platform 6] or the link:https://docs.jboss.org/author/display/WFLY/Admin+Guide[Admin Guide for JBoss WildFly].
-
-When the server is running, the web management interface can be accessed at http://localhost:9990/console. You can use the web management interface to create datasources, manage deployments and configure the server.
-
-JBoss WildFly also comes with a command line interface. To run it on Linux, Unix or Mac, execute:
-
-    wildfly-11.x.x.x/bin/jboss-admin.sh --connect
-
-Or, on Windows:
-
-    wildfly-11.x.x.x/bin/jboss-admin.bat --connect
-
-Once started, type help to discover the commands available to you.
-
-Throughout this guide we use the `wildfly` maven plugin to deploy and undeploy applications. This plugin uses the Native Java Detyped Management API to communicate with the server. The Detyped API is used by management tools to control an entire domain of servers, and exposes only a small number of types, allowing for backwards and forwards compatibility.
-
-CDI + Servlet: Helloworld quickstart
-====================================
-:Author: Pete Muir
-
-[[HelloworldQuickstart-]]
-
-This quickstart shows you how to deploy a simple servlet to JBoss WildFly. The business logic is encapsulated in a service, which is provided as a CDI bean, and injected into the Servlet.
-
-[TIP]
-.Contexts and Dependency Injection for Jakarta EE
-========================================================================
-CDI is a specification in Jakarta EE, inspired by JBoss Seam and
+automatically attach the Eclipse debugger.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll see the server output in the Console :</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="gfx/Eclipse_Server_Start_2.jpg" alt="Eclipse Server Start 2"></span></p>
+</div>
+<div class="paragraph">
+<p>That&#8217;s it, we now have the server up and running in Eclipse!</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="importing-the-quickstarts-into-eclipse"><a class="anchor" href="#importing-the-quickstarts-into-eclipse"></a>2.4. Importing the quickstarts into Eclipse</h3>
+<div id="GettingStarted-importing_quickstarts_into_eclipse" class="paragraph">
+<p>In order to import the quickstarts into Eclipse, you will need m2eclipse installed. If you have CodeReady Studio, then m2eclipse is already installed.</p>
+</div>
+<div class="paragraph">
+<p>First, choose <em>File &#8594; Import&#8230;&#8203;</em>:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="gfx/Import_Quickstarts_1.jpg" alt="Import Quickstarts 1"></span></p>
+</div>
+<div class="paragraph">
+<p>Select <em>Existing Maven Projects</em>:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="gfx/Import_Quickstarts_2.jpg" alt="Import Quickstarts 2"></span></p>
+</div>
+<div class="paragraph">
+<p>Click on <em>Browse</em>, and navigate to the <code>quickstarts/</code> directory:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="gfx/Import_Quickstarts_3.jpg" alt="Import Quickstarts 3"></span></p>
+</div>
+<div class="paragraph">
+<p>Finally, make sure all 4 quickstarts are found and selected, and click <em>Finish</em>:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="gfx/Import_Quickstarts_4.jpg" alt="Import Quickstarts 4"></span></p>
+</div>
+<div class="paragraph">
+<p>Eclipse should now successfully import 4 projects:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="gfx/Import_Quickstarts_5.jpg" alt="Import Quickstarts 5"></span></p>
+</div>
+<div class="paragraph">
+<p>It will take a short time to import the projects, as Maven needs to download the project&#8217;s dependencies from remote repositories.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="managing-jboss-wildfly"><a class="anchor" href="#managing-jboss-wildfly"></a>2.5. Managing JBoss WildFly</h3>
+<div class="paragraph">
+<p>Here we will quickly outline how you can access both the command line interface and the web management interface for managing JBoss WildFly. Detailed information for both can be found in the <a href="http://docs.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/6/html/Administration_and_Configuration_Guide/index.html">Administration and Configuration Guide for JBoss Enterprise Application Platform 6</a> or the <a href="https://docs.jboss.org/author/display/WFLY/Admin+Guide">Admin Guide for JBoss WildFly</a>.</p>
+</div>
+<div class="paragraph">
+<p>When the server is running, the web management interface can be accessed at <a href="http://localhost:9990/console" class="bare">http://localhost:9990/console</a>. You can use the web management interface to create datasources, manage deployments and configure the server.</p>
+</div>
+<div class="paragraph">
+<p>JBoss WildFly also comes with a command line interface. To run it on Linux, Unix or Mac, execute:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>wildfly-11.x.x.x/bin/jboss-admin.sh --connect</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or, on Windows:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>wildfly-11.x.x.x/bin/jboss-admin.bat --connect</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once started, type help to discover the commands available to you.</p>
+</div>
+<div class="paragraph">
+<p>Throughout this guide we use the <code>wildfly</code> maven plugin to deploy and undeploy applications. This plugin uses the Native Java Detyped Management API to communicate with the server. The Detyped API is used by management tools to control an entire domain of servers, and exposes only a small number of types, allowing for backwards and forwards compatibility.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="cdi-servlet-helloworld-quickstart"><a class="anchor" href="#cdi-servlet-helloworld-quickstart"></a>3. CDI + Servlet: Helloworld quickstart</h2>
+<div class="sectionbody">
+<div id="HelloworldQuickstart-" class="paragraph">
+<p>This quickstart shows you how to deploy a simple servlet to JBoss WildFly. The business logic is encapsulated in a service, which is provided as a CDI bean, and injected into the Servlet.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Contexts and Dependency Injection for Jakarta EE</div>
+<div class="paragraph">
+<p>CDI is a specification in Jakarta EE, inspired by JBoss Seam and
 Google Guice, and also drawing on lessons learned from frameworks such
 as Spring. It allows application developers to concentrate on developing
 their application logic by providing the ability to wire services
 together, and abstract out orthogonal concerns, all in a type safe
-manner.
-========================================================================
-
-Switch to the `quickstarts/helloworld` directory and instruct Maven to build and deploy the application:
-
-    mvn package wildfly:deploy
-
-The quickstart uses a Maven plugin to deploy the application. The plugin requires JBoss WildFly to be running (you can find out how to start the server in &lt;&lt;GettingStarted-on_linux, Installing and starting the JBoss server on Linux, Unix or Mac OS X&gt;&gt; or &lt;&lt;GettingStarted-on_windows, Installing and starting the JBoss server on Windows&gt;&gt;).
-
-Now, check if the application has deployed properly by clicking http://localhost:8080/wildfly-helloworld/HelloWorld. If you see a "Hello World" message it's all working!
-
-[TIP]
-========================================================================
-Should you wish to undeploy the quickstart, or redeploy after making
-some changes, it's pretty easy:
-
-* `mvn wildfly:deploy` - deploy any changes to the application to the
-  application server
-
-* `mvn wildfly:undeploy` - undeploy the quickstart
-========================================================================
-
-It's time to pull the covers back and dive into the internals of the quickstart.
-
-Deploying the Helloworld quickstart using CodeReady Studio, or Eclipse with JBoss Tools
----------------------------------------------------------------------------------------------
-
-You may choose to deploy the quickstart using CodeReady Studio, or Eclipse with JBoss Tools. You'll need to have JBoss WildFly started in the IDE (as described  in &lt;&lt;GettingStarted-with_jboss_tools, Starting the JBoss server from JBDS or Eclipse with JBoss Tools&gt;&gt;) and to have imported the quickstarts into Eclipse (as described in &lt;&lt;GettingStarted-importing_quickstarts_into_eclipse,Importing the quickstarts into Eclipse&gt;&gt;).
+manner.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Switch to the <code>quickstarts/helloworld</code> directory and instruct Maven to build and deploy the application:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>mvn package wildfly:deploy</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The quickstart uses a Maven plugin to deploy the application. The plugin requires JBoss WildFly to be running (you can find out how to start the server in <a href="#GettingStarted-on_linux">Installing and starting the JBoss server on Linux, Unix or Mac OS X</a> or <a href="#GettingStarted-on_windows">Installing and starting the JBoss server on Windows</a>).</p>
+</div>
+<div class="paragraph">
+<p>Now, check if the application has deployed properly by clicking <a href="http://localhost:8080/wildfly-helloworld/HelloWorld" class="bare">http://localhost:8080/wildfly-helloworld/HelloWorld</a>. If you see a "Hello World" message it&#8217;s all working!</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Should you wish to undeploy the quickstart, or redeploy after making
+some changes, it&#8217;s pretty easy:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>mvn wildfly:deploy</code> - deploy any changes to the application to the
+application server</p>
+</li>
+<li>
+<p><code>mvn wildfly:undeploy</code> - undeploy the quickstart</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>It&#8217;s time to pull the covers back and dive into the internals of the quickstart.</p>
+</div>
+<div class="paragraph">
+<p>Deploying the Helloworld quickstart using CodeReady Studio, or Eclipse with JBoss Tools</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>You may choose to deploy the quickstart using CodeReady Studio, or Eclipse with JBoss Tools. You'll need to have JBoss WildFly started in the IDE (as described  in &lt;&lt;GettingStarted-with_jboss_tools, Starting the JBoss server from JBDS or Eclipse with JBoss Tools&gt;&gt;) and to have imported the quickstarts into Eclipse (as described in &lt;&lt;GettingStarted-importing_quickstarts_into_eclipse,Importing the quickstarts into Eclipse&gt;&gt;).
 
 With the quickstarts imported, you can deploy the quickstart by right clicking on the `wildfly-helloworld` project, and choosing _Run As -&gt; Run On Server_:
 
@@ -3084,29 +3169,24 @@ and using the web management interface.
 
 :leveloffset: +1
 
-[[Developing_Jakarta_Server_Faces_Project_Using,_Maven_and_IntelliJ]]
-= Developing Jakarta Server Faces Project Using JBoss AS7, Maven and IntelliJ
+[[Developing_Jakarta_Faces_Project_Using,_Maven_and_IntelliJ]]
+= Developing Jakarta Faces Project Using JBoss AS7, Maven and IntelliJ
 
-:tip-caption: :bulb:
-:note-caption: :information_source:
-:important-caption: :heavy_exclamation_mark:
-:caution-caption: :fire:
-:warning-caption: :warning:
 
 JBoss AS7 is a very 'modern' application server that has very fast
-startup speed. So it's an excellent container to test your Jakarta Server Faces project.
+startup speed. So it's an excellent container to test your Jakarta Faces project.
 In this article, I'd like to show you how to use AS7, maven and IntelliJ
-together to develop your Jakarta Server Faces project.
+together to develop your Jakarta Faces project.
 
 In this article I'd like to introduce the following things:
 
 * Create a project using Maven
-* Add Jakarta Server Faces into project
+* Add Jakarta Faces into project
 * Writing Code
 * Add JBoss AS 7 deploy plugin into project
 * Deploy project to JBoss AS 7
 * Import project into IntelliJ
-* Add IntelliJ Jakarta Server Faces support to project
+* Add IntelliJ Jakarta Faces support to project
 * Add JBoss AS7 to IntelliJ
 * Debugging project with IntelliJ and AS7
 
@@ -3166,14 +3246,14 @@ mvn archetype:create -DarchetypeGroupId=org.apache.maven.archetypes \
 
 If everything goes fine maven will generate the project for us:
 
-image:jsf/8108c4f111aab2c3465472eb84cf1d9b7cf912d0.jpg[images/jsf/8108c4f111aab2c3465472eb84cf1d9b7cf912d0.jpg]
+image:images/jsf/8108c4f111aab2c3465472eb84cf1d9b7cf912d0.jpg[alt=jsf/8108c4f111aab2c3465472eb84cf1d9b7cf912d0.jpg]
 
 The contents of the project is shown as above.
 
-[[add-Jakarta-Server-Faces-into-project]]
-== Add Jakarta Server Faces into project
+[[add-Jakarta-Faces-into-project]]
+== Add Jakarta Faces into project
 
-The Jakarta Server Faces library is now included in maven repo, so we can let maven to
+The Jakarta Faces library is now included in maven repo, so we can let maven to
 manage the download for us. First is to add repository into our pom.xml:
 
 [source,java,options="nowrap"]
@@ -3185,7 +3265,7 @@ manage the download for us. First is to add repository into our pom.xml:
 &lt;/repository&gt;
 ----
 
-Then we add Jakarta Server Faces dependency into pom.xml:
+Then we add Jakarta Faces dependency into pom.xml:
 
 [source,xml,options="nowrap"]
 ----
@@ -3199,7 +3279,7 @@ Then we add Jakarta Server Faces dependency into pom.xml:
 
 Please note the 'scope' is 'provided', because we don't want to bundle
 the jsf.jar into the war produced by our project later, as JBoss AS7
-already have Jakarta Server Faces bundled in.
+already have Jakarta Faces bundled in.
 
 Then we run 'mvn install' to update the project, and maven will download
 jsf-api for us automatically.
@@ -3207,7 +3287,7 @@ jsf-api for us automatically.
 [[writing-code]]
 == Writing Code
 
-Writing Jakarta Server Faces code in this article is trivial, so I've put written a
+Writing Jakarta Faces code in this article is trivial, so I've put written a
 project called 'jsfdemo' onto github:
 
 https://github.com/liweinan/jsfdemo
@@ -3306,14 +3386,14 @@ mvn -q jboss-as:deploy
 Maven will use some time to download necessary components for a while,
 so please wait patiently. After a while, we can see the result:
 
-image:jsf/97d781c6be9db755aef80a110f1d9b29590610d6.jpg[images/jsf/97d781c6be9db755aef80a110f1d9b29590610d6.jpg]
+image:images/jsf/97d781c6be9db755aef80a110f1d9b29590610d6.jpg[alt=jsf/97d781c6be9db755aef80a110f1d9b29590610d6.jpg]
 
 And if you check the console output of AS7, you can see the project is
 deployed:
 
-image:jsf/2._java.jpg[images/jsf/2._java.jpg]
+image:images/jsf/2._java.jpg[alt=jsf/2._java.jpg]
 
-Now we have learnt how to create a Jakarta Server Faces project and deploy it to AS7
+Now we have learnt how to create a Jakarta Faces project and deploy it to AS7
 without any help from graphical tools. Next let's see how to use
 IntelliJ IDEA to go on developing/debugging our project.
 
@@ -3323,54 +3403,54 @@ IntelliJ IDEA to go on developing/debugging our project.
 Now it's time to import the project into IntelliJ. Now let's open
 IntelliJ, and choose 'New Project...':
 
-image:jsf/05222f3059e387df96ce04d2aea156c82af15096.jpg[images/jsf/05222f3059e387df96ce04d2aea156c82af15096.jpg]
+image:images/jsf/05222f3059e387df96ce04d2aea156c82af15096.jpg[alt=jsf/05222f3059e387df96ce04d2aea156c82af15096.jpg]
 
 The we choose 'Import project from external model':
 
-image:jsf/d68a0cdbc8c90db3db8af998f34616f73c7fe809.jpg[images/jsf/d68a0cdbc8c90db3db8af998f34616f73c7fe809.jpg]
+image:images/jsf/d68a0cdbc8c90db3db8af998f34616f73c7fe809.jpg[alt=jsf/d68a0cdbc8c90db3db8af998f34616f73c7fe809.jpg]
 
 Next step is choosing 'Maven':
 
-image:jsf/0b3d1cb5794fb54a2465da93648b5a0d1a6643f3.jpg[images/jsf/0b3d1cb5794fb54a2465da93648b5a0d1a6643f3.jpg]
+image:images/jsf/0b3d1cb5794fb54a2465da93648b5a0d1a6643f3.jpg[alt=jsf/0b3d1cb5794fb54a2465da93648b5a0d1a6643f3.jpg]
 
 Then IntelliJ will ask you the position of the project you want to
 import. In 'Root directory' input your project's directory and leave
 other options as default:
 
-image:jsf/2f192d02993248c97e2ac42ea8f3105d855e5cdf.jpg[images/jsf/2f192d02993248c97e2ac42ea8f3105d855e5cdf.jpg]
+image:images/jsf/2f192d02993248c97e2ac42ea8f3105d855e5cdf.jpg[alt=jsf/2f192d02993248c97e2ac42ea8f3105d855e5cdf.jpg]
 
 For next step, just click 'Next':
 
-image:jsf/3a3ee36eb581930822c4a66362795345f5d2f9a7.jpg[images/jsf/3a3ee36eb581930822c4a66362795345f5d2f9a7.jpg]
+image:images/jsf/3a3ee36eb581930822c4a66362795345f5d2f9a7.jpg[alt=jsf/3a3ee36eb581930822c4a66362795345f5d2f9a7.jpg]
 
 Finally click 'Finish':
 
-image:jsf/91e40cd0b1545cff4622857d6dc9959f96faf056.jpg[images/jsf/91e40cd0b1545cff4622857d6dc9959f96faf056.jpg]
+image:images/jsf/91e40cd0b1545cff4622857d6dc9959f96faf056.jpg[alt=jsf/91e40cd0b1545cff4622857d6dc9959f96faf056.jpg]
 
 Hooray! We've imported the project into IntelliJ now icon:smile-o[role="yellow"]
 
-[[adding-intellij-Jakarta-Server-Faces-support-to-project]]
-== Adding IntelliJ Jakarta Server Faces support to project
+[[adding-intellij-Jakarta-Faces-support-to-project]]
+== Adding IntelliJ Jakarta Faces support to project
 
 Let's see how to use IntelliJ and AS7 to debug the project. First we
-need to add 'Jakarta Server Faces' facet into project. Open project setting:
+need to add 'Jakarta Faces' facet into project. Open project setting:
 
-image:jsf/8b8d0051f4f15033f17cb859c65f2d8481914678.jpg[images/jsf/8b8d0051f4f15033f17cb859c65f2d8481914678.jpg]
+image:images/jsf/8b8d0051f4f15033f17cb859c65f2d8481914678.jpg[alt=jsf/8b8d0051f4f15033f17cb859c65f2d8481914678.jpg]
 
 Click on 'Facets' section on left; Select 'Web' facet that we already
-have, and click the '+' on top, choose 'Jakarta Server Faces':
+have, and click the '+' on top, choose 'Jakarta Faces':
 
-image:jsf/e6947b84a56a698ca1392a440081bddfb5cae284.jpg[images/jsf/e6947b84a56a698ca1392a440081bddfb5cae284.jpg]
+image:images/jsf/e6947b84a56a698ca1392a440081bddfb5cae284.jpg[alt=jsf/e6947b84a56a698ca1392a440081bddfb5cae284.jpg]
 
 Select 'Web' as parent facet:
 
-image:jsf/6b2296be1bb2d8a81952caef0f025a139a39b381.jpg[images/jsf/6b2296be1bb2d8a81952caef0f025a139a39b381.jpg]
+image:images/jsf/6b2296be1bb2d8a81952caef0f025a139a39b381.jpg[alt=jsf/6b2296be1bb2d8a81952caef0f025a139a39b381.jpg]
 
 Click 'Ok':
 
-image:jsf/9988c572bad281146f405e9287f645a3da201885.jpg[images/jsf/9988c572bad281146f405e9287f645a3da201885.jpg]
+image:images/jsf/9988c572bad281146f405e9287f645a3da201885.jpg[alt=jsf/9988c572bad281146f405e9287f645a3da201885.jpg]
 
-Now we have enabled IntelliJ's Jakarta Server Faces support for project.
+Now we have enabled IntelliJ's Jakarta Faces support for project.
 
 [[add-jboss-as7-to-intellij]]
 == Add JBoss AS7 to IntelliJ
@@ -3378,28 +3458,28 @@ Now we have enabled IntelliJ's Jakarta Server Faces support for project.
 Let's add JBoss AS7 into IntelliJ and use it to debug our project. First
 please choose 'Edit Configuration' in menu tab:
 
-image:jsf/dc0550785aae11f9d3eb439fdc0c51069affd25d.jpg[images/jsf/dc0550785aae11f9d3eb439fdc0c51069affd25d.jpg]
+image:images/jsf/dc0550785aae11f9d3eb439fdc0c51069affd25d.jpg[alt=jsf/dc0550785aae11f9d3eb439fdc0c51069affd25d.jpg]
 
 Click '+' and choose 'JBoss Server' -&gt; 'Local':
 
-image:jsf/1231420c938f087030cb3dcd37237b5585beb154.jpg[images/jsf/1231420c938f087030cb3dcd37237b5585beb154.jpg]
+image:images/jsf/1231420c938f087030cb3dcd37237b5585beb154.jpg[alt=jsf/1231420c938f087030cb3dcd37237b5585beb154.jpg]
 
 Click 'configure':
 
-image:jsf/d7e6ab58230b2d31fdcd8fd5f14cd4eb47b05f64.jpg[images/jsf/d7e6ab58230b2d31fdcd8fd5f14cd4eb47b05f64.jpg]
+image:images/jsf/d7e6ab58230b2d31fdcd8fd5f14cd4eb47b05f64.jpg[alt=jsf/d7e6ab58230b2d31fdcd8fd5f14cd4eb47b05f64.jpg]
 
 and choose your JBoss AS7:
 
-image:jsf/f7b29ac8009f04fc7f209222ced0bcf54f4b8d9a.jpg[images/jsf/f7b29ac8009f04fc7f209222ced0bcf54f4b8d9a.jpg]
+image:images/jsf/f7b29ac8009f04fc7f209222ced0bcf54f4b8d9a.jpg[alt=jsf/f7b29ac8009f04fc7f209222ced0bcf54f4b8d9a.jpg]
 
 Now we need to add our project into deployment. Click the 'Deployment'
 tab:
 
-image:jsf/6802fb7e29283d0e064a7cc4466b918995ba5645.jpg[images/jsf/6802fb7e29283d0e064a7cc4466b918995ba5645.jpg]
+image:images/jsf/6802fb7e29283d0e064a7cc4466b918995ba5645.jpg[alt=jsf/6802fb7e29283d0e064a7cc4466b918995ba5645.jpg]
 
 Choose 'Artifact', and add our project:
 
-image:jsf/359484b8f6f2c655d94132e9cb6f9dbe5a058656.jpg[images/jsf/359484b8f6f2c655d94132e9cb6f9dbe5a058656.jpg]
+image:images/jsf/359484b8f6f2c655d94132e9cb6f9dbe5a058656.jpg[alt=jsf/359484b8f6f2c655d94132e9cb6f9dbe5a058656.jpg]
 
 Leave everything as default and click 'Ok', now we've added JBoss AS7
 into IntelliJ
@@ -3442,7 +3522,7 @@ bin/standalone.sh --debug --server-config=standalone.xml
 
 Now we start AS7 in IntelliJ:
 
-image:jsf/52369d67f9117c924213de24dd6642b48e47a436.png[images/jsf/52369d67f9117c924213de24dd6642b48e47a436.png]
+image:images/jsf/52369d67f9117c924213de24dd6642b48e47a436.png[alt=jsf/52369d67f9117c924213de24dd6642b48e47a436.png]
 
 Please note we should undeploy the existing 'jsfdemo' project in AS7 as
 we've added by maven jboss deploy plugin before. Or AS7 will tell us
@@ -3452,46 +3532,46 @@ deploy the project anymore.
 If the project start correctly we can see from the IntelliJ console
 window, and please check the debug option is enabled:
 
-image:jsf/eaac5cb1a836809ab29513346b527fe051b7c7ac.png[images/jsf/eaac5cb1a836809ab29513346b527fe051b7c7ac.png]
+image:images/jsf/eaac5cb1a836809ab29513346b527fe051b7c7ac.png[alt=jsf/eaac5cb1a836809ab29513346b527fe051b7c7ac.png]
 
 Now we will setup the debug configuration, click 'debug' option on menu:
 
-image:jsf/b8323caf6980c40c3d635db5e308b03847618d06.jpg[images/jsf/b8323caf6980c40c3d635db5e308b03847618d06.jpg]
+image:images/jsf/b8323caf6980c40c3d635db5e308b03847618d06.jpg[alt=jsf/b8323caf6980c40c3d635db5e308b03847618d06.jpg]
 
 Choose 'Edit Configurations':
 
-image:jsf/8327bbe0e83cb7170dd84767631c98956e91c42c.jpg[images/jsf/8327bbe0e83cb7170dd84767631c98956e91c42c.jpg]
+image:images/jsf/8327bbe0e83cb7170dd84767631c98956e91c42c.jpg[alt=jsf/8327bbe0e83cb7170dd84767631c98956e91c42c.jpg]
 
 Then we click 'Add' and choose Remote:
 
-image:jsf/7103da6b6323e515a03a04cafe111aa7c6b3169d.jpg[images/jsf/7103da6b6323e515a03a04cafe111aa7c6b3169d.jpg]
+image:images/jsf/7103da6b6323e515a03a04cafe111aa7c6b3169d.jpg[alt=jsf/7103da6b6323e515a03a04cafe111aa7c6b3169d.jpg]
 
 Set the 'port' to the one you used in AS7 config file 'standalone.conf':
 
-image:jsf/30bbef45137c7d45ae300ba8d551423d1feefc96.png[images/jsf/30bbef45137c7d45ae300ba8d551423d1feefc96.png]
+image:images/jsf/30bbef45137c7d45ae300ba8d551423d1feefc96.png[alt=jsf/30bbef45137c7d45ae300ba8d551423d1feefc96.png]
 
 Leave other configurations as default and click 'Ok'. Now we need to set
 breakpoints in project, let's choose TimeBean.java and set a breakpoint
 on 'getNow()' method by clicking the left side of that line of code:
 
-image:jsf/a96b7d32e04aa67956bd00a187f09b75a5af241e.jpg[images/jsf/a96b7d32e04aa67956bd00a187f09b75a5af241e.jpg]
+image:images/jsf/a96b7d32e04aa67956bd00a187f09b75a5af241e.jpg[alt=jsf/a96b7d32e04aa67956bd00a187f09b75a5af241e.jpg]
 
 Now we can use the profile to do debug:
 
-image:jsf/5ea6987d1635c2c58d3ccdb1f5718f29d6a0fac3.png[images/jsf/5ea6987d1635c2c58d3ccdb1f5718f29d6a0fac3.png]
+image:images/jsf/5ea6987d1635c2c58d3ccdb1f5718f29d6a0fac3.png[alt=jsf/5ea6987d1635c2c58d3ccdb1f5718f29d6a0fac3.png]
 
 If everything goes fine we can see the console output:
 
-image:jsf/1096ebbbf2b29e694e300e02a48d0fa4207cb746.jpg[images/jsf/1096ebbbf2b29e694e300e02a48d0fa4207cb746.jpg]
+image:images/jsf/1096ebbbf2b29e694e300e02a48d0fa4207cb746.jpg[alt=jsf/1096ebbbf2b29e694e300e02a48d0fa4207cb746.jpg]
 
 Now we go to web browser and see our project's main page, try to click
 on 'Get current time':
 
-image:jsf/5ad5d0216d3326e9bc29705042db59f11c3c1e70.png[images/jsf/5ad5d0216d3326e9bc29705042db59f11c3c1e70.png]
+image:images/jsf/5ad5d0216d3326e9bc29705042db59f11c3c1e70.png[alt=jsf/5ad5d0216d3326e9bc29705042db59f11c3c1e70.png]
 
 Then IntelliJ will popup and the code is pausing on break point:
 
-image:jsf/2499d43c0dce2cab72ba472c8452a2b57999ac84.jpg[images/jsf/2499d43c0dce2cab72ba472c8452a2b57999ac84.jpg]
+image:images/jsf/2499d43c0dce2cab72ba472c8452a2b57999ac84.jpg[alt=jsf/2499d43c0dce2cab72ba472c8452a2b57999ac84.jpg]
 
 And we could inspect our project now.
 
@@ -3499,7 +3579,7 @@ And we could inspect our project now.
 == Conclusion
 
 In this article I've shown to you how to use maven to create a project
-using Jakarta Server Faces and deploy it in JBoss AS7, and I've also talked about the
+using Jakarta Faces and deploy it in JBoss AS7, and I've also talked about the
 usage of IntelliJ during project development phase. Hope the contents
 are practical and helpful to you icon:smile-o[role="yellow"]
 
@@ -3809,7 +3889,7 @@ bean, CDI will inject that bean
 === Introduction
 
 This quickstart adds in a "complete" view layer into the mix. Jakarta EE
-ships with a Jakarta Server Faces. Jakarta Server Faces is a server side rendering, component orientated
+ships with a Jakarta Faces. Jakarta Faces is a server side rendering, component orientated
 framework, where you write markup using an HTML like language, adding in
 dynamic behavior by binding components to beans in the back end. The
 quickstart also makes more use of CDI to wire the application together.
@@ -3835,10 +3915,10 @@ No need to open any of them, just point them out
 .  `web.xml` - don't need it!
 .  `beans.xml` - as before, marker file
 .  `faces-config.xml` - nice feature from AS7 - we can just put
-`faces-config.xml` into the WEB-INF and it enables Jakarta Server Faces (inspiration from
+`faces-config.xml` into the WEB-INF and it enables Jakarta Faces (inspiration from
 CDI)
 .  `pom.xml` we saw this before, this time it's the same but adds in
-Jakarta Server Faces API
+Jakarta Faces API
 
 [[views]]
 === Views
@@ -3862,7 +3942,7 @@ calls a method on the game bean
 persistence etc.
 ..  `@Named` – As we discussed CDI is typesafe, (beans are injected by
 type) but sometimes need to access in a non-typesafe fashion. @Named
-exposes the Bean in EL - and allows us to access it from Jakarta Server Faces
+exposes the Bean in EL - and allows us to access it from Jakarta Faces
 ..  `@SessionScoped` – really simple app, we keep the game data in the
 session - to play two concurrent games, need two sessions. This is not a
 limitation of CDI, but simply keeps this demo very simple. CDI will
@@ -3895,7 +3975,7 @@ instance at runtime
 [[introduction-3]]
 === Introduction
 
-The login quickstart builds on the knowledge of CDI and Jakarta Server Faces we have got
+The login quickstart builds on the knowledge of CDI and Jakarta Faces we have got
 from numberguess. New stuff we will learn about is how to use Jakarta Persistence to
 store data in a database, how to use Jakarta Transactions to control transactions, and
 how to use Jakarta Enterprise Beans for declarative TX control.
@@ -3930,7 +4010,7 @@ Jakarta Transactions and Jakarta Enterprise Beans
 [[views-1]]
 === Views
 
-.  `template.xhtml` One of the updates added to Jakarta Server Faces was templating
+.  `template.xhtml` One of the updates added to Jakarta Faces was templating
 ability. We take advantage of that in this app, as we have multiple
 views
 ..  Actually nothing too major here, we define the app "title" and we
@@ -3956,14 +4036,14 @@ logout, link to add users.
 
 .  `Credentials.java` Backing bean for the login form field, pretty
 trivial. It's request scoped (natural for a login field) and named so we
-can get it from Jakarta Server Faces.
+can get it from Jakarta Faces.
 .  `Login.java`
 ..  Is session scoped (a user is logged in for the length of their
 session or until they log out}}
 ..  Is accessible from EL
 ..  Injects the current credentials
 ..  Uses the userManager service to load the user, and sends any
-messages to Jakarta Server Faces as needed
+messages to Jakarta Faces as needed
 ..  Uses a producer method to expose the @LoggedIn user (producer
 methods used as we don't know which user at development time)
 .  `User.java` Is a pretty straightforward Jakarta Persistence entity. Mapped with
@@ -4005,7 +4085,7 @@ The kitchensink quickstart is generated from an archetype available for
 JBoss AS (tell people to check the
 link:/pages/createpage.action?spaceKey=WFLY&amp;title=Getting+Started+Developing+Applications&amp;linkCreation=true&amp;fromPageId=557131[Getting
 Started Developing Applications] Guide for details). It demonstrates
-CDI, Jakarta Server Faces, Jakarta Enterprise Beans, Jakarta Persistence (which we've seen before) and Jakarta RESTful Web Services and Bean
+CDI, Jakarta Faces, Jakarta Enterprise Beans, Jakarta Persistence (which we've seen before) and Jakarta RESTful Web Services and Bean
 Validation as well. We add in Arquillian for testing.
 
 [[run-the-app-2]]
@@ -4087,11 +4167,10 @@ NOTE: References in this document to CDI refer to Jakarta Contexts and Dependenc
 </div>
 </div>
 </div>
-</div>
 <div id="footer">
 <div id="footer-text">
-Version 28.0.0.Final<br>
-Last updated 2023-04-04 16:25:29 -0500
+Version 29.0.0.Final<br>
+Last updated 2023-07-17 17:20:38 -0500
 </div>
 </div>
 </body>
