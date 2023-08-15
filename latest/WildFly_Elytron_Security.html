@@ -522,8 +522,8 @@ table.CodeRay td.code>pre{padding:0}
 <div id="header">
 <h1>WildFly Elytron Security</h1>
 <div class="details">
-<span id="revnumber">version 17.0.0.Final,</span>
-<span id="revdate">2019-07-15T01:10:21Z</span>
+<span id="revnumber">version 18.0.0.Final,</span>
+<span id="revdate">2019-10-02T18:46:03Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Elytron Security Guide</div>
@@ -603,7 +603,7 @@ table.CodeRay td.code>pre{padding:0}
 </li>
 </ul>
 </li>
-<li><a href="#Elytron_and_Java_EE_Security">11. Elytron and Java EE Security</a>
+<li><a href="#Elytron_and_Java_EE_Security">11. Elytron and Jakarta EE Security</a>
 <ul class="sectlevel1">
 <li><a href="#introduction-2">10. Introduction</a>
 <ul class="sectlevel2">
@@ -633,6 +633,13 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#Audit">16. Audit</a>
 <ul class="sectlevel2">
 <li><a href="#file-audit-log">16.1. File audit log</a></li>
+<li><a href="#syslog-audit-logging">16.2. Syslog Audit Logging</a></li>
+<li><a href="#keystorecredentialstore">16.3. KeyStoreCredentialStore</a></li>
+<li><a href="#referencing-credentials">16.4. Referencing Credentials</a></li>
+<li><a href="#credentialstore-apis">16.5. CredentialStore APIs</a></li>
+<li><a href="#migrating-existing-vaults">16.6. Migrating Existing Vaults</a></li>
+<li><a href="#Custom_CredentialStore">16.7. Custom Credential Store</a></li>
+<li><a href="#reference">16.8. Reference</a></li>
 </ul>
 </li>
 <li><a href="#Custom_Components">17. Custom Components</a>
@@ -2096,7 +2103,47 @@ principal decoder.</p></td>
 </table>
 </div>
 <div class="sect3">
-<h4 id="realm-mappers">3.2.4. Realm Mappers</h4>
+<h4 id="evidence-decoders">3.2.4. Evidence Decoders</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Component</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x509-subject-alt-name-evidence-decoder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An evidence decoder that derives the
+principal associated with a certificate chain from an X.509 subject alternative
+name from the first certificate in the given chain.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x500-subject-evidence-decoder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An evidence decoder that derives the principal
+associated with a certificate chain from the subject from the first certificate
+in the given chain.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">custom-evidence-decoder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Definition of a custom evidence decoder.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">aggregate-evidence-decoder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An evidence decoder that is an aggregation of other
+evidence decoders. Given evidence, these evidence decoders will be attempted in
+order until one returns a non-null principal or until there are no more evidence
+decoders left to try.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="realm-mappers">3.2.5. Realm Mappers</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 50%;">
@@ -2135,7 +2182,7 @@ realm mapper is used instead.</p></td>
 </table>
 </div>
 <div class="sect3">
-<h4 id="realms">3.2.5. Realms</h4>
+<h4 id="realms">3.2.6. Realms</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 50%;">
@@ -2149,10 +2196,10 @@ realm mapper is used instead.</p></td>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">aggregate-realm</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#aggregate-security-realm">aggregate-realm</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A realm definition that is an aggregation of two
-realms, one for the authentication steps and one for loading the
-identity for the authorization steps.</p></td>
+or more realms, one for the authentication steps and one or more for loading the
+identity for the authorization steps and aggregating the resulting attributes.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">caching-realm</p></td>
@@ -2213,7 +2260,7 @@ extracting identities from security tokens.</p></td>
 </table>
 </div>
 <div class="sect3">
-<h4 id="permission-mappers">3.2.6. Permission Mappers</h4>
+<h4 id="permission-mappers">3.2.7. Permission Mappers</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 50%;">
@@ -2248,7 +2295,7 @@ always returns the same constant.</p></td>
 </table>
 </div>
 <div class="sect3">
-<h4 id="role-decoders">3.2.7. Role Decoders</h4>
+<h4 id="role-decoders">3.2.8. Role Decoders</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 50%;">
@@ -2274,7 +2321,7 @@ single attribute and maps it directly to roles.</p></td>
 </table>
 </div>
 <div class="sect3">
-<h4 id="role-mappers">3.2.8. Role Mappers</h4>
+<h4 id="role-mappers">3.2.9. Role Mappers</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 50%;">
@@ -2325,7 +2372,7 @@ configured mapping of role names to map role names.</p></td>
 </table>
 </div>
 <div class="sect3">
-<h4 id="ssl-components">3.2.9. SSL Components</h4>
+<h4 id="ssl-components">3.2.10. SSL Components</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 50%;">
@@ -2381,7 +2428,7 @@ be used to obtain and revoke signed certificates.</p></td>
 </table>
 </div>
 <div class="sect3">
-<h4 id="other">3.2.10. Other</h4>
+<h4 id="other">3.2.11. Other</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 50%;">
@@ -2611,6 +2658,7 @@ and openssl provider loaders.</p></td>
         <span class="string"><span class="delimiter">&quot;</span><span class="content">security-properties</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">add-prefix-role-mapper</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">add-suffix-role-mapper</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">aggregate-evidence-decoder</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">aggregate-http-server-mechanism-factory</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">aggregate-principal-decoder</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">aggregate-principal-transformer</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
@@ -2644,6 +2692,7 @@ and openssl provider loaders.</p></td>
         <span class="string"><span class="delimiter">&quot;</span><span class="content">constant-role-mapper</span><span class="delimiter">&quot;</span></span> =&gt; {<span class="string"><span class="delimiter">&quot;</span><span class="content">super-user-mapper</span><span class="delimiter">&quot;</span></span> =&gt; {<span class="string"><span class="delimiter">&quot;</span><span class="content">roles</span><span class="delimiter">&quot;</span></span> =&gt; [<span class="string"><span class="delimiter">&quot;</span><span class="content">SuperUser</span><span class="delimiter">&quot;</span></span>]}},
         <span class="string"><span class="delimiter">&quot;</span><span class="content">credential-store</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">custom-credential-security-factory</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">custom-evidence-decoder</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">custom-modifiable-realm</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">custom-permission-mapper</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">custom-principal-decoder</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
@@ -2861,7 +2910,9 @@ and openssl provider loaders.</p></td>
         <span class="string"><span class="delimiter">&quot;</span><span class="content">syslog-audit-log</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">token-realm</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
         <span class="string"><span class="delimiter">&quot;</span><span class="content">trust-manager</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">x500-attribute-principal-decoder</span><span class="delimiter">&quot;</span></span> =&gt; undefined
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">x500-attribute-principal-decoder</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">x500-subject-evidence-decoder</span><span class="delimiter">&quot;</span></span> =&gt; undefined,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">x509-subject-alt-name-evidence-decoder</span><span class="delimiter">&quot;</span></span> =&gt; undefined
     }
 }</code></pre>
 </div>
@@ -3768,6 +3819,149 @@ truststore configured in <em>ksRealm</em>.</p>
 <div class="paragraph">
 <p><strong>IMPORTANT:</strong> The decoded principal * <strong>MUST</strong>* must be the <em>alias</em> value
 you set in your server&#8217;s truststore for the client&#8217;s certificate.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="configure-an-evidence-decoder.">Configure an evidence-decoder</h5>
+<div class="paragraph">
+<p>By default, the principal associated with a certificate will be the subject name
+from the certificate. This subject name will then be rewritten using any configured
+principal decoders and principal transformers to obtain the name that should be used
+when locating and loading the identity from the underlying identity store.</p>
+</div>
+<div class="paragraph">
+<p>To specify that a subject alternative name from a certificate should be used as the
+principal associated with that certificate, an <code>x509-subject-alt-name-evidence-decoder</code>
+needs to be configured. This element has two attributes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>alt-name-type</code> - The subject alternative name type to decode. This attribute is
+required. Must be one of the subject alternative name types that can be represented
+as a <code>String</code>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>rfc822Name</code></p>
+</li>
+<li>
+<p><code>dNSName</code></p>
+</li>
+<li>
+<p><code>uniformResourceIdentifier</code></p>
+</li>
+<li>
+<p><code>iPAddress</code></p>
+</li>
+<li>
+<p><code>registeredID</code></p>
+</li>
+<li>
+<p><code>directoryName</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>segment</code> - The 0-based occurrence of the subject alternative name to map. This
+attribute is optional and only used when there is more than one subject alternative
+name of the given <code>alt-name-type</code>. The default value is <code>0</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For example, consider the following X.509 v3 Subject Alternative Name extension from
+the first certificate in an X.509 certificate chain:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml">X509v3 Subject Alternative Name:
+DNS:one.example.org, IP Address:127.0.0.1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To associate the certificate chain evidence with the principal "one.example.org", the
+following <code>x509-subject-alt-name-evidence-decoder</code> could be configured:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/x509-subject-alt-name-evidence-decoder=exampleDnsDecoder:add(alt-name-type=dNSName)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next, consider the following X.509 v3 Subject Alternative Name extension from the first
+certificate in an X.509 certificate chain:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml">X509v3 Subject Alternative Name:
+DNS:one.example.org, DNS:two.example.org, IP Address:127.0.0.1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To associate the evidence with the principal "two.example.org", the following
+<code>x509-subject-alt-name-evidence-decoder</code> could be configured:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/x509-subject-alt-name-evidence-decoder=anotherDnsDecoder:add(alt-name-type=dNSName, segment=1)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is also possible to configure an <code>x500-subject-evidence-decoder</code>. This evidence decoder
+will extract the subject from the first certificate in the certificate chain, as an <code>X500Principal</code>.
+Example configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/x500-subject-evidence-decoder=exampleSubjectDecoder:add()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To make use of a custom <code>org.wildfly.security.auth.server.EvidenceDecoder</code> implementation, a
+<code>custom-evidence-decoder</code> can be configured. The custom implementation class needs to first be
+packaged in a JAR. A module can then be added to WildFly that contains this JAR. See
+<a href="Custom_Components.html">Custom Components</a> for more information on how to add a custom Elytron
+component to WildFly.</p>
+</div>
+<div class="paragraph">
+<p>Example configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/custom-evidence-decoder=myCustomEvidenceDecoder:add(module=org.wildfly.security.examples, class-name=org.wildfly.security.examples.MyCustomEvidenceDecoder)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, it is also possible to configure an <code>aggregate-evidence-decoder</code>. This consists of
+two or more <code>evidence-decoder</code> elements where each element is reference to a configured
+evidence decoder. Given evidence, these evidence decoders will be attempted in order until
+one returns a non-null principal or until there are no more evidence decoders left to try.</p>
+</div>
+<div class="paragraph">
+<p>Example configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/x509-subject-alt-name-evidence-decoder=emailDecoder:add(alt-name-type=rfc822Name)
+/subsystem=elytron/x509-subject-alt-name-evidence-decoder=dnsDecoder:add(alt-name-type=dNSName)
+/subsystem=elytron/x500-subject-evidence-decoder=subjectDecoder:add()
+/subsystem=elytron/aggregate-evidence-decoder=aggregateDecoder:add(evidence-decoders=[emailDecoder,subjectDecoder,dnsDecoder])</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once an <code>evidence-decoder</code> has been configured, it can be referenced from a <code>security-domain</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/security-domain=exampleCertSD:add(..., evidence-decoder=aggregateDecoder)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If no <code>evidence-decoder</code> is specified for a <code>security-domain</code>, then the principal associated with the evidence will
+just be the default principal for the evidence type, i.e., for an X.509 certificate chain, this would continue to
+default to the subject from the first certificate in the certificate chain.</p>
 </div>
 </div>
 <div class="sect4">
@@ -4803,7 +4997,98 @@ trusted certificate into the browser&#8217;s truststore.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="enable-one-way-ssltls-for-the-management-interfaces">4.3.3. Enable One-way SSL/TLS for the Management Interfaces</h4>
+<h4 id="configure-certificate-revocation-in-trust-manager">4.3.3. Configure certificate revocation in trust-manager</h4>
+<div class="sect4">
+<h5 id="configure-certificate-revocation-list">Configure Certificate Revocation List:</h5>
+<div class="paragraph">
+<p>You can configure your trust-manager to use certificate-revocation-list (CRL) to check revocation status of obtained certificates.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/trust-manager=twoWayTM:write-attribute(name=certificate-revocation-list, value={})</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will use CRLs obtained from distribution points referenced in your certificates.</p>
+</div>
+<div class="paragraph">
+<p><strong>NOTE:</strong> To use a CRL your trust store must contain the certificate chain in order to check validity of both CRL list.</p>
+</div>
+<div class="sect5">
+<h6 id="override-crl-location-obtained-from-certificates">Override CRL location obtained from certificates:</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/trust-manager=twoWayTM:write-attribute(name=certificate-revocation-list.path, value=intermediate.crl.pem)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="configure-ocsp-certificate-revocation">Configure OCSP certificate revocation:</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/trust-manager=twoWayTM:write-attribute(name=ocsp, value={})</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will enable OCSP certificate revocation by using OCSP responder inside the certificate. In case the responder is known but OCSP revocation status is unknown, the verification will fail.</p>
+</div>
+<div class="sect5">
+<h6 id="override-ocsp-responder-uri-extracted-from-certificate">Override OCSP responder URI extracted from certificate:</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/trust-manager=twoWayTM:write-attribute(name=ocsp.responder, value="http://example.com/ocsp-responder")</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="configure-order-of-certificate-revocation-mechanisms">Configure order of revocation mechanisms:</h5>
+<div class="paragraph">
+<p>If both CRL and OCSP are defined, Elytron will use OCSP for obtaining revocation status as first by default. In case you want to prefer CRL:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/trust-manager=twoWayTM:write-attribute(name=ocsp.prefer-crls, value="true")</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="other-trust-manager-configuration">Other trust-manager configuration:</h5>
+<div class="sect5">
+<h6 id="configure-trust-manager-to-only-check-leaf-certificates-for-revocation-status">Configure trust-manager to only check leaf certificates for revocation status</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/trust-manager=twoWayTM:write-attribute(name=only-leaf-cert, value="true")</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="configure-trust-manager-to-accept-certificates-with-unknown-revocation-status">Configure trust-manager to accept certificates with unknown revocation status</h6>
+<div class="paragraph">
+<p>In case you want to accept certificates with unknown revocation status, you can enable soft-fail behaviour in your trust-manager.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/trust-manager=twoWayTM:write-attribute(name=soft-fail, value=true)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="set-maximum-number-of-intermediate-certificates-of-trust-manager">Set maximum number of intermediate certificates of trust-manager</h6>
+<div class="paragraph">
+<p>Sets the value of the maximum number of non-self-issued intermediate certificates that may exist in a certification path with default value of 5.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/trust-manager=twoWayTM:write-attribute(name=maximum-cert-path, value=10)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="enable-one-way-ssltls-for-the-management-interfaces">4.3.4. Enable One-way SSL/TLS for the Management Interfaces</h4>
 <div class="paragraph">
 <p>There are a couple ways to enable one-way SSL/TLS for the management interfaces.</p>
 </div>
@@ -4915,7 +5200,7 @@ support. The example commands above uses <em>TLSv1.2</em>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="enable-two-way-ssltls-for-the-management-interfaces">4.3.4. Enable Two-way SSL/TLS for the Management Interfaces</h4>
+<h4 id="enable-two-way-ssltls-for-the-management-interfaces">4.3.5. Enable Two-way SSL/TLS for the Management Interfaces</h4>
 <div class="paragraph">
 <p>First, obtain or generate your client keystore.</p>
 </div>
@@ -5101,7 +5386,7 @@ trusted certificate into the browser&#8217;s trust store.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="keystore-manipulation-operations">4.3.5. KeyStore manipulation operations</h4>
+<h4 id="keystore-manipulation-operations">4.3.6. KeyStore manipulation operations</h4>
 <div class="paragraph">
 <p>It is possible to perform various KeyStore manipulation operations on an
 Elytron key-store resource using the management CLI.</p>
@@ -5200,6 +5485,16 @@ a Let&#8217;s Encrypt account using the following commands.</p>
 <pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/certificate-authority-account=myLEAccount:add(alias=example,key-store=accountsKS,contact-urls=[mailto:admin@example.org])</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p><strong>Note:</strong> Let&#8217;s Encrypt is the default certificate authority and therefore the <code>certificate-authority</code> attribute can be omitted when creating a <code>certificate-authority-account</code>.
+It is also possible to configure an account with different certificate authority than Let&#8217;s Encrypt by adding custom <code>certificate-authority</code> resource and passing it to <code>certificate-authority-account</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/certificate-authority=myCA:add(url="https://my.example.url/acme/directory", staging-url="https://my.example.staging.url/acme/directory")
+/subsystem=elytron/certificate-authority-account=myCAAccount:add(certificate-authority=myCA,alias=example,key-store=accountsKS,contact-urls=[mailto:admin@example.org])</code></pre>
+</div>
+</div>
 </div>
 <div class="sect5">
 <h6 id="obtain-signed-certificate">Obtain a signed certificate from Let&#8217;s Encrypt</h6>
@@ -5238,7 +5533,7 @@ obtains a signed certificate from Let&#8217;s Encrypt, and stores it in the KeyS
 </div>
 </div>
 <div class="sect3">
-<h4 id="certificate-authority-account-operations">4.3.6. Certificate authority account operations</h4>
+<h4 id="certificate-authority-account-operations">4.3.7. Certificate authority account operations</h4>
 <div class="paragraph">
 <p>It is possible to perform various operations on an Elytron certificate-authority-account
 resource using the management CLI.</p>
@@ -5301,7 +5596,7 @@ and whether or not an external account is required), if any, associated with the
 </div>
 </div>
 <div class="sect3">
-<h4 id="using-an-ldap-key-store">4.3.7. Using an ldap-key-store</h4>
+<h4 id="using-an-ldap-key-store">4.3.8. Using an ldap-key-store</h4>
 <div class="paragraph">
 <p>An <em>ldap-key-store</em> allows you to use a keystore stored in an LDAP
 server. You can use an <em>ldap-key-store</em> in same way you can use a
@@ -5361,7 +5656,7 @@ applications.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="using-a-filtering-key-store">4.3.8. Using a filtering-key-store</h4>
+<h4 id="using-a-filtering-key-store">4.3.9. Using a filtering-key-store</h4>
 <div class="paragraph">
 <p>A <em>filtering-key-store</em> allows you to expose a subset of aliases from an
 existing <em>key-store</em>, and use it in the same places you could use a
@@ -5433,7 +5728,7 @@ applications.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="reload-a-keystore">4.3.9. Reload a Keystore</h4>
+<h4 id="reload-a-keystore">4.3.10. Reload a Keystore</h4>
 <div class="paragraph">
 <p>You can reload a keystore configured in WildFly from the management CLI.
 This is useful in cases where you have made changes to certificates
@@ -5449,7 +5744,7 @@ referenced by a keystore.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="reinitialize-a-key-manager">4.3.10. Reinitialize a Key Manager</h4>
+<h4 id="reinitialize-a-key-manager">4.3.11. Reinitialize a Key Manager</h4>
 <div class="paragraph">
 <p>You can reinitialize a key-manager configured in WildFly from the management CLI.
 This is useful in cases where you have made changes in certificates provided by keystore
@@ -5473,7 +5768,7 @@ resource and you want to apply this change to new SSL connections without restar
 </div>
 </div>
 <div class="sect3">
-<h4 id="reinitialize-a-trust-manager">4.3.11. Reinitialize a Trust Manager</h4>
+<h4 id="reinitialize-a-trust-manager">4.3.12. Reinitialize a Trust Manager</h4>
 <div class="paragraph">
 <p>You can reinitialize a trust-manager configured in WildFly from the management CLI.
 This is useful in cases where you have made changes to certificates provided by keystore
@@ -5497,7 +5792,7 @@ resource and you want to apply this change to new SSL connections without restar
 </div>
 </div>
 <div class="sect3">
-<h4 id="check-the-content-of-a-keystore-by-alias">4.3.12. Check the Content of a Keystore by Alias</h4>
+<h4 id="check-the-content-of-a-keystore-by-alias">4.3.13. Check the Content of a Keystore by Alias</h4>
 <div class="paragraph">
 <p>If you add a keystore to the <em>elytron</em> subsystem using the <em>key-store</em>
 component, you can check the keystore&#8217;s contents using the <em>alias</em> child
@@ -5557,7 +5852,7 @@ and Other. Unrecognized types will be reported as Other.</p></td>
 </table>
 </div>
 <div class="sect3">
-<h4 id="custom-components">4.3.13. Custom Components</h4>
+<h4 id="custom-components">4.3.14. Custom Components</h4>
 <div class="paragraph">
 <p>When configuring SSL/TLS in the <em>elytron</em> subsystem, you can provide and
 use custom implementations of the following components:</p>
@@ -5590,7 +5885,166 @@ present the appropriate capabilities and requirements.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="default-sslcontext">4.3.14. Default SSLContext</h4>
+<h4 id="configuring-a-server-sslcontext">4.3.15. Configuring a server SSLContext</h4>
+<div class="paragraph">
+<p>Using the Elytron subsystem, it is possible to configure an <code>SSLContext</code> for use on the server side of a connection.</p>
+</div>
+<div class="paragraph">
+<p>Adding a server <code>SSLContext</code> takes the general form:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/server-ssl-context=test-server-ssl-context:add(...)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following attributes can be specified when creating a <code>server-ssl-context</code>:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">security-domain</dt>
+<dd>
+<p><em>(Optional)</em> A reference to the <code>security-domain</code> to use for authentication during SSL session
+establishment.</p>
+</dd>
+<dt class="hdlist1">key-manager</dt>
+<dd>
+<p><em>(Optional)</em> A reference to the <code>KeyManager</code> to be used by this <code>SSLContext</code>.</p>
+</dd>
+<dt class="hdlist1">trust-manager</dt>
+<dd>
+<p><em>(Optional)</em> A reference to the <code>TrustManager</code> to be used by this <code>SSLContext</code>.</p>
+</dd>
+<dt class="hdlist1">cipher-suite-filter</dt>
+<dd>
+<p><em>(Optional)</em> The filter to be applied to the cipher suites for TLSv1.2 and below made available
+by this SSLContext. The format of this attribute is described in detail in
+<a href="http://wildfly-security.github.io/wildfly-elytron/master/org/wildfly/security/ssl/CipherSuiteSelector.html#fromString-java.lang.String-">org.wildfly.security.ssl.CipherSuiteSelector.fromString(selector)</a>.
+The default value is <code>DEFAULT</code>, which corresponds to all known cipher suites that do not have NULL encryption and
+excludes any cipher suites that have no authentication.</p>
+</dd>
+<dt class="hdlist1">protocols</dt>
+<dd>
+<p><em>(Optional)</em> A space separated list of the protocols to be supported by this <code>SSLContext</code>.</p>
+</dd>
+<dt class="hdlist1">want-client-auth</dt>
+<dd>
+<p><em>(Optional)</em> To request (but not to require) a client certificate on SSL handshake. If a
+<code>security-domain</code> is configured and supports X509 evidence, this will be set to <code>true</code> automatically. Ignored when
+<code>need-client-auth</code> is set. The default value is <code>false</code>.</p>
+</dd>
+<dt class="hdlist1">need-client-auth</dt>
+<dd>
+<p><em>(Optional)</em> If <code>true</code>, a client certificate is required on SSL handshake. A connection without a
+trusted client certificate will be rejected. The default value is <code>false</code>.</p>
+</dd>
+<dt class="hdlist1">authentication-optional</dt>
+<dd>
+<p><em>(Optional)</em> Rejection of the client certificate by the configured <code>security-domain</code> will not
+prevent the connection. This allows a fall through to use other authentication mechanisms (like form login) when the
+client certificate is rejected by the
+<code>security-domain</code>. This has an effect only when the <code>security-domain</code> is configured. The default value is <code>false</code>.</p>
+</dd>
+<dt class="hdlist1">use-cipher-suites-order</dt>
+<dd>
+<p><em>(Optional)</em> If <code>true</code>, the cipher suites order defined on the server will be used. If <code>false</code>,
+the cipher suites order presented by the client will be used. The default value is <code>true</code>.</p>
+</dd>
+<dt class="hdlist1">provider-name</dt>
+<dd>
+<p><em>(Optional)</em> The name of the provider to use. If not specified, all providers from <code>providers</code> will be
+passed to the <code>SSLContext</code>.</p>
+</dd>
+<dt class="hdlist1">providers</dt>
+<dd>
+<p><em>(Optional)</em> The name of the providers to obtain the <code>Provider[]</code> to use to load the <code>SSLContext</code>.</p>
+</dd>
+<dt class="hdlist1">maximum-session-cache-size</dt>
+<dd>
+<p><em>(Optional)</em> The maximum number of SSL sessions to be cached. The default value <code>-1</code>
+indicates that the JVM default value should be used. A value of <code>0</code> means there is no limit.</p>
+</dd>
+<dt class="hdlist1">session-timeout</dt>
+<dd>
+<p><em>(Optional)</em> The timeout for SSL sessions. The default value <code>-1</code> indicates that the JVM default value
+should be used. A value of <code>0</code> means there is no limit.</p>
+</dd>
+<dt class="hdlist1">wrap</dt>
+<dd>
+<p><em>(Optional)</em> If <code>true</code>, the returned <code>SSLEngine</code>, <code>SSLSocket</code>, and <code>SSLServerSocket</code> instances will be wrapped to
+protect against further modification. The default value is <code>false</code>.</p>
+</dd>
+<dt class="hdlist1">pre-realm-principal-transformer</dt>
+<dd>
+<p><em>(Optional)</em> A principal transformer to apply before the realm is selected.</p>
+</dd>
+<dt class="hdlist1">post-realm-principal-transformer</dt>
+<dd>
+<p><em>(Optional)</em> A principal transformer to apply after the realm is selected.</p>
+</dd>
+<dt class="hdlist1">final-principal-transformer</dt>
+<dd>
+<p><em>(Optional)</em> A final principal transformer to apply for this mechanism realm.</p>
+</dd>
+<dt class="hdlist1">realm-mapper</dt>
+<dd>
+<p><em>(Optional)</em> The realm mapper to be used for SSL authentication.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="configuring-a-client-sslcontext">4.3.16. Configuring a client SSLContext</h4>
+<div class="paragraph">
+<p>Using the Elytron subsystem, it is possible to configure an <code>SSLContext</code> for use on the client side of a connection.</p>
+</div>
+<div class="paragraph">
+<p>Adding a client <code>SSLContext</code> takes the general form:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/client-ssl-context=test-client-ssl-context:add(...)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following attributes can be specified when creating a <code>client-ssl-context</code>:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">key-manager</dt>
+<dd>
+<p><em>(Optional)</em> A reference to the <code>KeyManager</code> to be used by this <code>SSLContext</code>.</p>
+</dd>
+<dt class="hdlist1">trust-manager</dt>
+<dd>
+<p><em>(Optional)</em> A reference to the <code>TrustManager</code> to be used by this <code>SSLContext</code>.</p>
+</dd>
+<dt class="hdlist1">cipher-suite-filter</dt>
+<dd>
+<p><em>(Optional)</em> The filter to be applied to the cipher suites for TLSv1.2 and below made available
+by this SSLContext. The format of this attribute is described in detail in
+<a href="http://wildfly-security.github.io/wildfly-elytron/master/org/wildfly/security/ssl/CipherSuiteSelector.html#fromString-java.lang.String-">org.wildfly.security.ssl.CipherSuiteSelector.fromString(selector)</a>.
+The default value is <code>DEFAULT</code>, which corresponds to all known cipher suites that do not have NULL encryption and
+excludes any cipher suites that have no authentication.</p>
+</dd>
+<dt class="hdlist1">protocols</dt>
+<dd>
+<p><em>(Optional)</em> A space separated list of the protocols to be supported by this <code>SSLContext</code>.</p>
+</dd>
+<dt class="hdlist1">provider-name</dt>
+<dd>
+<p><em>(Optional)</em> The name of the provider to use. If not specified, all providers from <code>providers</code> will be
+passed to the <code>SSLContext</code>.</p>
+</dd>
+<dt class="hdlist1">providers</dt>
+<dd>
+<p><em>(Optional)</em> The name of the providers to obtain the <code>Provider[]</code> to use to load the <code>SSLContext</code>.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="default-sslcontext">4.3.17. Default SSLContext</h4>
 <div class="paragraph">
 <p>Many libraries that can be used within deployments may require SSL configuration for any connections they establish, these libraries tend to be configurable by the caller or if no configuration is provided fall back to using the default <code>SSLContext</code> for the process available from: -</p>
 </div>
@@ -5635,7 +6089,7 @@ present the appropriate capabilities and requirements.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="configuring-sni">4.3.15. Configuring SNI</h4>
+<h4 id="configuring-sni">4.3.18. Configuring SNI</h4>
 <div class="paragraph">
 <p>Using the WildFly Elytron subsystem it is possible to configure an SSL context which supports SNI.  By supporting SNI if an SNI host name is available whilst the SSLSession is being negotiated a host specific SSLContext will be selected.  If no host specific SSLContext is identified either because no host name was received or because there is no match a default SSLContext will be used instead.  By identifying a host specific SSLContext it means that a certificate appropriate for that host can be used.</p>
 </div>
@@ -5972,97 +6426,34 @@ default:</p>
 <div class="paragraph">
 <p>In the third mode evidence is passed to the security realm and used to construct the resulting identity, this mode is predominantly used with certificate and token based authentication mechanisms where the verified certificate or token can be used to construct the resulting identity.</p>
 </div>
+<div class="paragraph">
+<p>Once an identity has been loaded for authorization decisions the identity will have a set of associated attributes, these will subsequent be mapped using role decoders, role mappers, and permission mappers as required for identity specific authorization decisions.</p>
+</div>
 </div>
 <div class="sect3">
-<h4 id="jdbc-security-realm">4.6.2. JDBC Security Realm</h4>
+<h4 id="aggregate-security-realm">4.6.2. Aggregate Security Realm</h4>
 <div class="paragraph">
-<p>The JDBC security realm is a security realm developed to support loading identities from a database with the option of multiple credentials and multiple attributes each with the option of containing multiple values.</p>
-</div>
-<div class="paragraph">
-<p>When defining the JDBC security realm one or more principal queries can be defined, each of these can load a credential and / or attributes for the resulting identity.  Each defined principal query is associated with it&#8217;s own datasource, this means quite a complex configuration can be created loading the different aspects of an identity from multiple locations.</p>
+<p>The aggregate security realm allows for two or more security realms to be aggregated into a single security realm allowing one to be used during the authentication steps and one or more to be used to assemble the identity used for authorization decisions and aggregating any associated attributes.</p>
 </div>
 <div class="paragraph">
-<p>Each of the examples documented within this section will be making use of pre-configured datasources, please refer to the datasources subsystem documentation for more information relating to how to define datasources.</p>
+<p>The <code>aggregate-realm</code> resource contains the following attributes: -</p>
 </div>
-<div class="sect4">
-<h5 id="loading-a-single-clear-text-password">Loading a Single Clear Text Password</h5>
-<div class="paragraph">
-<p>The simplest configuration is to load a clear text password for an identity.  This approach would not be recommended at all in a production set up, however it does make a suitable starting point to illustrate how the JDBC security realm can be configured.</p>
-</div>
-<table class="tableblock frame-all grid-all" style="width: 33%;">
-<caption class="title">Table 1. Example Table</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">NAME</th>
-<th class="tableblock halign-left valign-top">PASSWORD</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">test</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">myPassword</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>A JDBC security realm can be defined as: -</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/jdbc-realm=demo-realm:add(
-    principal-query=[{data-source=Identities,
-                      sql="select PASSWORD from IDENTITIES where NAME = ?",
-                      clear-password-mapper={password-index=1}}])</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This realm is defined within a single <code>princpal-query</code> against the <code>Identities</code> datasource.  For the user <code>test</code> the result of the query would be: -</p>
-</div>
-<table class="tableblock frame-all grid-all" style="width: 25%;">
-<caption class="title">Table 2. Query Results</caption>
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">1</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">myPassword</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>The principal query can be defined with password mappers which define which columns should be used to construct the password for the identity being loaded, in this example a <code>clear-password-mapper</code> is used: -</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code>clear-password-mapper={password-index=1}</code></pre>
-</div>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-The index of the first column is 1
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="alternative-password-mappers">Alternative Password Mappers</h5>
-<div class="paragraph">
-<p>The WildFly Elytron project supports a variety of password types as described within <a href="#Passwords">Passwords</a>, some of these password types require multiple values to be loaded from the database to reconstruct the password so alternative password mappers are made available.  More than one password mapper can be defined on a single <code>principal-query</code> to support loading multiple passwords simultaneously.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>authentication-realm</code> - This realm use used to load the credentials of the identity or perform evidence verification.</p>
+</li>
+<li>
+<p><code>authorization-realm</code> - The realm to use to load the identities attributes used for authorization.</p>
+</li>
+<li>
+<p><code>authorization-realms</code> - A list of one or more realms to use to load the identities attributes and aggregate into a single set of attributes.</p>
+</li>
+<li>
+<p><code>principal-transformer</code> - A principal transformer that can be used to transform the principal after loading the credentials
+for authentication but before loading the identities attributes for authorization. This attribute is optional.</p>
+</li>
+</ul>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -6071,495 +6462,149 @@ The index of the first column is 1
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Where the various password mappers load encoded representations of passwords and salts from the database these can either be encoded using Base64 or Hexadecimal, by default unless specified Base64 is assumed.
+<code>authorization-realm</code> and <code>authorization-realms</code> are mutually exclusive so exactly one of these must be specified.
 </td>
 </tr>
 </table>
 </div>
-<div class="sect5">
-<h6 id="clear-password-mapper">clear-password-mapper</h6>
+<div class="sect4">
+<h5 id="defining-a-simple-aggregation">Defining a Simple Aggregation</h5>
 <div class="paragraph">
-<p>This mapper is used to load a clear text password directly from the database.</p>
+<p>Assuming two realms <code>properties-realm</code> and <code>jdbc-realm</code> already exist an <code>aggregate-realm</code> combining these two can be created with the following command.</p>
 </div>
-<div class="paragraph">
-<p>The following attribute is supported for this password mapper: -</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/aggregate-realm=combined:add(
+    authentication-realm=properties-realm,
+    authorization-realm=jdbc-realm)</code></pre>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>password-index</code> - The index of the column containing the clear text password.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect5">
-<h6 id="bcrypt-password-mapper">bcrypt-password-mapper</h6>
-<div class="paragraph">
-<p>The <code>bcrypt-password-mapper</code> can be used for passwords to be loaded using the <a href="#bcrypt">bcrypt</a> algorithm, as an iterated salted password type the iteration count and salt are also loaded from the database query.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>password-index</code> - The index of the column containing the encoded password.</p>
-</li>
-<li>
-<p><code>hash-encoding</code> - The encoding of the hash, either <code>base64</code> or <code>hex</code>.</p>
-</li>
-<li>
-<p><code>salt-index</code> - The index of the column containing the encoded salt.</p>
-</li>
-<li>
-<p><code>salt-encoding</code> - The encoding of the salt, either <code>base64</code> or <code>hex</code>.</p>
-</li>
-<li>
-<p><code>iteration-count-index</code> - The index of the column containing the iteration count.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect5">
-<h6 id="modular-crypt-mapper">modular-crypt-mapper</h6>
-<div class="paragraph">
-<p>The <code>modular-crypt-mapper</code> can be used for passwords encoded using modular crypt, this encoding allows for multiple pieces of information to be encoded in single String such as the password type, the hash or digest, the salt, and the iteraction count.</p>
 </div>
 <div class="paragraph">
-<p>Information on how to encode and decode modular crypt representations can be seen in <a href="#modular-crypt">Modular Crypt Encoding</a>.</p>
+<p>Where this realm is used the <code>properties-realm</code> will be used to load an identity&#8217;s credentials and the <code>jdbc-realm</code> will be used to load the attributes for the identity.</p>
 </div>
 <div class="paragraph">
-<p>The following attribute is supported for this password mapper: -</p>
+<p>The following command is exactly the same except the <code>authorization-realms</code> attribute is used instead.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>password-index</code> - The index of the column containing the modular crypt encoded password.</p>
-</li>
-</ul>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/aggregate-realm=combined:add(
+    authentication-realm=properties-realm,
+    authorization-realms=[jdbc-realm])</code></pre>
 </div>
 </div>
-<div class="sect5">
-<h6 id="salted-simple-digest-mapper">salted-simple-digest-mapper</h6>
 <div class="paragraph">
-<p>The <code>salted-simple-digest-mapper</code> supports the password types hashed with a salt as described in <a href="#salted-digest">Salted Digest</a>, for this type of password the encoded form of the password is loaded in addition to the salt.</p>
+<p>The following command will reference a principal transformer defined in the mappers configuration to be used to transform the principal
+after authentication.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>algorithm</code> - The algorithm of the password type, the supported values are listed at <a href="#salted-digest">Salted Digest</a>.</p>
-</li>
-<li>
-<p><code>password-index</code> - The index of the column containing the encoded password.</p>
-</li>
-<li>
-<p><code>hash-encoding</code> - The encoding of the hash, either <code>base64</code> or <code>hex</code>.</p>
-</li>
-<li>
-<p><code>salt-index</code> - The index of the column containing the encoded salt.</p>
-</li>
-<li>
-<p><code>salt-encoding</code> - The encoding of the salt, either <code>base64</code> or <code>hex</code>.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect5">
-<h6 id="simple-digest-mapper">simple-digest-mapper</h6>
-<div class="paragraph">
-<p>The <code>simple-digest-mapper</code> supports the loading of passwords which have been simply hashed without any salt as described in <a href="#simple-digest">Simple Digest</a>.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>algorithm</code> - The algorithm of the password type, the supported values are listed at <a href="#simple-digest">Simple Digest</a>.</p>
-</li>
-<li>
-<p><code>password-index</code> - The index of the column containing the encoded password.</p>
-</li>
-<li>
-<p><code>hash-encoding</code> - The encoding of the hash, either <code>base64</code> or <code>hex</code>.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect5">
-<h6 id="scram-mapper">scram-mapper</h6>
-<div class="paragraph">
-<p>The <code>scram-mapper</code> supports the loading of SCRAM passwords which use both a salt and an interation count as described in <a href="#scram">Scram</a>.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>algorithm</code> - The algorithm of the password type, the supported values are listed at <a href="#scram">Scram</a>.</p>
-</li>
-<li>
-<p><code>password-index</code> - The index of the column containing the encoded password.</p>
-</li>
-<li>
-<p><code>hash-encoding</code> - The encoding of the hash, either <code>base64</code> or <code>hex</code>.</p>
-</li>
-<li>
-<p><code>salt-index</code> - The index of the column containing the encoded salt.</p>
-</li>
-<li>
-<p><code>salt-encoding</code> - The encoding of the salt, either <code>base64</code> or <code>hex</code>.</p>
-</li>
-<li>
-<p><code>iteration-count-index</code> - The index of the column containing the iteration count.</p>
-</li>
-</ul>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/aggregate-realm=combined:add(
+    authentication-realm=properties-realm,
+    authorization-realms=[jdbc-realm],
+    principal-transformer=custom-transformer)</code></pre>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="using-a-hashed-password-representation">Using a Hashed Password Representation</h5>
+<h5 id="aggregating-attributes">Aggregating Attributes</h5>
 <div class="paragraph">
-<p>The same approach can be taken for all hashed password representations, for illustration purposes this section will illustrate how a <a href="#bcrypt">bcrypt</a> password can be prepared to be stored in a database and the subsequent realm configuration to make use of it.  Examples uising the APIs for the different password types can be found in the <a href="#Passwords">Passwords</a> section of this documentation.</p>
-</div>
-<div class="paragraph">
-<p>The following example takes the password <code>myPassword</code>, generates a random salt an produces a <code>bcrypt</code> representation of the password.</p>
+<p>If a third realm <code>ldap-realm</code> also exists that shoud also be used for the loading of attributes an <code>aggregate-realm</code> can be defined using the following command: -</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Provider</span> ELYTRON_PROVIDER = <span class="keyword">new</span> WildFlyElytronProvider();
-
-<span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> TEST_PASSWORD = <span class="string"><span class="delimiter">&quot;</span><span class="content">myPassword</span><span class="delimiter">&quot;</span></span>;
-
-<span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) <span class="directive">throws</span> <span class="exception">Exception</span> {
-    PasswordFactory passwordFactory = PasswordFactory.getInstance(BCryptPassword.ALGORITHM_BCRYPT, ELYTRON_PROVIDER);
-
-    <span class="type">int</span> iterationCount = <span class="integer">10</span>;
-
-    <span class="type">byte</span><span class="type">[]</span> salt = <span class="keyword">new</span> <span class="type">byte</span>[BCryptPassword.BCRYPT_SALT_SIZE];
-    <span class="predefined-type">SecureRandom</span> random = <span class="keyword">new</span> <span class="predefined-type">SecureRandom</span>();
-    random.nextBytes(salt);
-
-    IteratedSaltedPasswordAlgorithmSpec iteratedAlgorithmSpec = <span class="keyword">new</span> IteratedSaltedPasswordAlgorithmSpec(iterationCount, salt);
-    EncryptablePasswordSpec encryptableSpec = <span class="keyword">new</span> EncryptablePasswordSpec(TEST_PASSWORD.toCharArray(), iteratedAlgorithmSpec);
-
-    BCryptPassword original = (BCryptPassword) passwordFactory.generatePassword(encryptableSpec);
-
-    <span class="type">byte</span><span class="type">[]</span> hash = original.getHash();
-
-    <span class="predefined-type">Encoder</span> encoder = Base64.getEncoder();
-    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Encoded Salt = </span><span class="delimiter">&quot;</span></span> + encoder.encodeToString(salt));
-    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Encoded Hash = </span><span class="delimiter">&quot;</span></span> + encoder.encodeToString(hash));
-}</code></pre>
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/aggregate-realm=combined:add(
+    authentication-realm=properties-realm,
+    authorization-realms=[jdbc-realm, ldap-realm])</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This produces the following output, as the salt is randomly generated the output would differ each time the above code is executed.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code>Encoded Salt = 3bFOQwRU75to+yJ8Cv0g8w==
-Encoded Hash = x9P/0cxfNz+Pf3HCinZ3dLCbNMnBeiU=</code></pre>
-</div>
+<p>As before the <code>properties-realm</code> will be used to load the identity&#8217;s credentials or perform evidence verification but the attributes for the identity will be loaded both from the <code>jdbc-realm</code> and <code>ldap-realm</code> then combined together.</p>
 </div>
 <div class="paragraph">
-<p>This could now be stored in a database table: -</p>
+<p>The approach taken to combine attributes makes use of the first instance of each attribute, if the same attribute is loaded by multiple realms only the first occurrence will be used. Later occurrences of an existing attribtue will be ignored.</p>
+</div>
+<div class="paragraph">
+<p>As an example if the following attributes were loaded from the <code>jdbc-realm</code>: -</p>
 </div>
 <table class="tableblock frame-all grid-all" style="width: 33%;">
-<caption class="title">Table 3. Example Table</caption>
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">NAME</th>
-<th class="tableblock halign-left valign-top">PASSWORD</th>
-<th class="tableblock halign-left valign-top">SALT</th>
-<th class="tableblock halign-left valign-top">ITERATION_COUNT</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">test</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">x9P/0cxfNz+Pf3HCinZ3dLCbNMnBeiU=</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3bFOQwRU75to+yJ8Cv0g8w==</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>The JDBC security realm can instead be created with the following CLI command: -</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/jdbc-realm=demo-realm:add(
-    principal-query=[{data-source=Identities,
-                      sql="select PASSWORD, SALT, ITERATION_COUNT from IDENTITIES where NAME = ?",
-                      bcrypt-mapper={password-index=1, salt-index=2, iteration-count-index=3}}])</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>For the user <code>test</code> the result of the query would be: -</p>
-</div>
-<table class="tableblock frame-all grid-all" style="width: 25%;">
-<caption class="title">Table 4. Query Results</caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">1</th>
-<th class="tableblock halign-left valign-top">2</th>
-<th class="tableblock halign-left valign-top">3</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">x9P/0cxfNz+Pf3HCinZ3dLCbNMnBeiU=</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3bFOQwRU75to+yJ8Cv0g8w==</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>The <code>bcrypt-password-mapper</code> is defined to load the encoded password, encoded salt and iteration count from the relevent columns in the query result.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code>bcrypt-mapper={password-index=1, salt-index=2, iteration-count-index=3}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Had the values been encoding using hexadecimal instead of Base64 the <code>bcrypt-mapper</code> could have been defined as: -</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code>bcrypt-mapper={password-index=1, hash-encoding=hex, salt-index=2, salt-encoding=hex, iteration-count-index=3}</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-It is worth noting that as the <code>hash-encoding</code> and <code>salt-encoding</code> are specified separately one could use Base64 whilst the other uses hexadecimal.
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="loading-passwords-from-different-queries-datasources">Loading Passwords from Different Queries / Datasources</h5>
-<div class="paragraph">
-<p>It is also possible to combine both of the example so far and define two separate <code>principal-query</code> instances to attempt to load both password types from different locations.</p>
-</div>
-<div class="paragraph">
-<p>Here is an example configuration loading a clear text password from one datasource / table and loading a bcrypt password from a second datasource / table.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/jdbc-realm=demo-realm:add(
-    principal-query=[
-        {data-source=LegacyIdentities,
-         sql="select PASSWORD from LEGACY_IDENTITIES where NAME = ?",
-         clear-password-mapper={password-index=1}},
-        {data-source=NewIdentities,
-         sql="select PASSWORD, SALT, ITERATION_COUNT from NEW_IDENTITIES where NAME = ?",
-         bcrypt-mapper={password-index=1, salt-index=2, iteration-count-index=3}}
-                    ])</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-It is not required that the identity is found from both of the queries, this can be useful in situations where identities are being migrated from one location to another or for aggregating two together.
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="loading-attributes">Loading Attributes</h5>
-<div class="paragraph">
-<p>The examples so far have focussed on the loading of passwords from the database, the principal queries can also be used to load attributes for the resulting identities.</p>
-</div>
-<div class="paragraph">
-<p>The loading of attributes can either be defined to happen within the principal queries being used to load the passwords or attribute specific principal queries can be defined, as each <code>principal-query</code> can be defined with it&#8217;s own <code>datasource</code> reference this means attributes can also be loaded from alternative locations.</p>
-</div>
-<div class="paragraph">
-<p>The loaded attributes can then be used for mapping to roles and permissions which should be granted to the identity or they can be obtained programatically within the deployment to identify information about the currently authenticated identity.</p>
-</div>
-<div class="sect5">
-<h6 id="loading-attributes-with-passwords">Loading Attributes with Passwords</h6>
-<div class="paragraph">
-<p>For single valued attributes these can often be loaded using the same <code>principal-query</code> used to load an identities password, as an example if an identities e-mail address or department is to be loaded from the database these can be loaded at the same time as the password.</p>
-</div>
-<div class="paragraph">
-<p>A table for this example could look like: -</p>
-</div>
-<table class="tableblock frame-all grid-all" style="width: 33%;">
-<caption class="title">Table 5. Example Table</caption>
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">NAME</th>
-<th class="tableblock halign-left valign-top">PASSWORD</th>
-<th class="tableblock halign-left valign-top">E_MAIL</th>
-<th class="tableblock halign-left valign-top">Department</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">test</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">myPassword</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="mailto:test@example.com">test@example.com</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sales</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>The realm can now be defined as: -</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/jdbc-realm=demo-realm:add(
-    principal-query=[
-        {data-source=Identities,
-         sql="select PASSWORD, E_MAIL, DEPARTMENT from IDENTITIES where NAME = ?",
-         clear-password-mapper={password-index=1},
-         attribute-mapping=[{index=2, to=email},{index=3,to=department}]
-        }])</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>For the user <code>test</code> the result of the query would be: -</p>
-</div>
-<table class="tableblock frame-all grid-all" style="width: 25%;">
-<caption class="title">Table 6. Query Results</caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">1</th>
-<th class="tableblock halign-left valign-top">2</th>
-<th class="tableblock halign-left valign-top">3</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">myPassword</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="mailto:test@example.com">test@example.com</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sales</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>The configuration contained the following attribute mappings: -</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code>attribute-mapping=[{index=2, to=email},{index=3,to=department}]</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This means the contents of column 2 will be mapped to the <code>email</code> attribute and the contents of column 3 will be mapped to the <code>department</code> attribute.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="loading-attributes-separately">Loading Attributes Separately.</h6>
-<div class="paragraph">
-<p>For multi-valued attributes such as a list of groups it can often make sense to define a separate principal query.</p>
-</div>
-<div class="paragraph">
-<p>A list of groups could be represented as follows in a table.</p>
-</div>
-<table class="tableblock frame-all grid-all" style="width: 33%;">
-<caption class="title">Table 7. Example Table</caption>
+<caption class="title">Table 1. JDBC Attributes</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">NAME</th>
-<th class="tableblock halign-left valign-top">TEAM</th>
+<th class="tableblock halign-left valign-top">ATTRIBUTE</th>
+<th class="tableblock halign-left valign-top">VALUES</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">test</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Users</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">e-mail</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="mailto:example@wildfly.org">example@wildfly.org</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">test</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">groups</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisor, User</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>A realm can now be defined with a second principal query to load the groups into an attribute.</p>
+<p>And the following attributes were loaded from the <code>ldap-realm</code>: -</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/jdbc-realm=demo-realm:add(
-    principal-query=[
-        {data-source=Identities,
-         sql="select PASSWORD from IDENTITIES where NAME = ?",
-         clear-password-mapper={password-index=1}
-        },{data-source=Identities,
-         sql="select TEAM from MEMBERSHIP where NAME = ?",
-         attribute-mapping=[{index=1, to=groups}]
-        }])</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Within this definition the second <code>principal-query</code> will load the attribute <code>groups</code>: -</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight nowrap"><code>{data-source=Identities,
- sql="select TEAM from MEMBERSHIP where NAME = ?",
- attribute-mapping=[{index=1, to=groups}]
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>For the user <code>test</code> the results would be: -</p>
-</div>
-<table class="tableblock frame-all grid-all" style="width: 25%;">
-<caption class="title">Table 8. Query Results</caption>
+<table class="tableblock frame-all grid-all" style="width: 33%;">
+<caption class="title">Table 2. LDAP Attributes</caption>
 <colgroup>
-<col style="width: 100%;">
+<col style="width: 50%;">
+<col style="width: 50%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">1</th>
+<th class="tableblock halign-left valign-top">ATTRIBUTE</th>
+<th class="tableblock halign-left valign-top">VALUES</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Users</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">e-mail</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="mailto:administrator@wildfly.org">administrator@wildfly.org</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">phone</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0000 0000 0000</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>The end result would be that the identity contains the attribute <code>groups</code> with the values <code>Users</code>, and <code>Supervisors</code></p>
+<p>The resulting attributes would be: -</p>
 </div>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 33%;">
+<caption class="title">Table 3. Combined Attributes</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ATTRIBUTE</th>
+<th class="tableblock halign-left valign-top">VALUES</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">e-mail</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="mailto:example@wildfly.org">example@wildfly.org</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">groups</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisor, User</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">phone</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0000 0000 0000</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -6840,6 +6885,595 @@ modifiableIdentity.dispose();</code></pre>
 </div>
 <div class="paragraph">
 <p>This command creates new filesystem realm with users taken from users.properties file and roles taken from roles.properties file. Script <code>example-fs-realm.sh</code> that contains the commands for WildFly CLI is generated as well. The script adds this filesystem realm to the Elytron subsystem and also adds new security domain that uses this filesystem realm as a default realm.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="jdbc-security-realm">4.6.4. JDBC Security Realm</h4>
+<div class="paragraph">
+<p>The JDBC security realm is a security realm developed to support loading identities from a database with the option of multiple credentials and multiple attributes each with the option of containing multiple values.</p>
+</div>
+<div class="paragraph">
+<p>When defining the JDBC security realm one or more principal queries can be defined, each of these can load a credential and / or attributes for the resulting identity.  Each defined principal query is associated with it&#8217;s own datasource, this means quite a complex configuration can be created loading the different aspects of an identity from multiple locations.</p>
+</div>
+<div class="paragraph">
+<p>Each of the examples documented within this section will be making use of pre-configured datasources, please refer to the datasources subsystem documentation for more information relating to how to define datasources.</p>
+</div>
+<div class="sect4">
+<h5 id="loading-a-single-clear-text-password">Loading a Single Clear Text Password</h5>
+<div class="paragraph">
+<p>The simplest configuration is to load a clear text password for an identity.  This approach would not be recommended at all in a production set up, however it does make a suitable starting point to illustrate how the JDBC security realm can be configured.</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 33%;">
+<caption class="title">Table 4. Example Table</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">NAME</th>
+<th class="tableblock halign-left valign-top">PASSWORD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">test</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">myPassword</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>A JDBC security realm can be defined as: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/jdbc-realm=demo-realm:add(
+    principal-query=[{data-source=Identities,
+                      sql="select PASSWORD from IDENTITIES where NAME = ?",
+                      clear-password-mapper={password-index=1}}])</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This realm is defined within a single <code>princpal-query</code> against the <code>Identities</code> datasource.  For the user <code>test</code> the result of the query would be: -</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 25%;">
+<caption class="title">Table 5. Query Results</caption>
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">myPassword</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The principal query can be defined with password mappers which define which columns should be used to construct the password for the identity being loaded, in this example a <code>clear-password-mapper</code> is used: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>clear-password-mapper={password-index=1}</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+The index of the first column is 1
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="alternative-password-mappers">Alternative Password Mappers</h5>
+<div class="paragraph">
+<p>The WildFly Elytron project supports a variety of password types as described within <a href="#Passwords">Passwords</a>, some of these password types require multiple values to be loaded from the database to reconstruct the password so alternative password mappers are made available.  More than one password mapper can be defined on a single <code>principal-query</code> to support loading multiple passwords simultaneously.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Where the various password mappers load encoded representations of passwords and salts from the database these can either be encoded using Base64 or Hexadecimal, by default unless specified Base64 is assumed.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect5">
+<h6 id="clear-password-mapper">clear-password-mapper</h6>
+<div class="paragraph">
+<p>This mapper is used to load a clear text password directly from the database.</p>
+</div>
+<div class="paragraph">
+<p>The following attribute is supported for this password mapper: -</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>password-index</code> - The index of the column containing the clear text password.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="bcrypt-password-mapper">bcrypt-password-mapper</h6>
+<div class="paragraph">
+<p>The <code>bcrypt-password-mapper</code> can be used for passwords to be loaded using the <a href="#bcrypt">bcrypt</a> algorithm, as an iterated salted password type the iteration count and salt are also loaded from the database query.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>password-index</code> - The index of the column containing the encoded password.</p>
+</li>
+<li>
+<p><code>hash-encoding</code> - The encoding of the hash, either <code>base64</code> or <code>hex</code>.</p>
+</li>
+<li>
+<p><code>salt-index</code> - The index of the column containing the encoded salt.</p>
+</li>
+<li>
+<p><code>salt-encoding</code> - The encoding of the salt, either <code>base64</code> or <code>hex</code>.</p>
+</li>
+<li>
+<p><code>iteration-count-index</code> - The index of the column containing the iteration count.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="modular-crypt-mapper">modular-crypt-mapper</h6>
+<div class="paragraph">
+<p>The <code>modular-crypt-mapper</code> can be used for passwords encoded using modular crypt, this encoding allows for multiple pieces of information to be encoded in single String such as the password type, the hash or digest, the salt, and the iteraction count.</p>
+</div>
+<div class="paragraph">
+<p>Information on how to encode and decode modular crypt representations can be seen in <a href="#modular-crypt">Modular Crypt Encoding</a>.</p>
+</div>
+<div class="paragraph">
+<p>The following attribute is supported for this password mapper: -</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>password-index</code> - The index of the column containing the modular crypt encoded password.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="salted-simple-digest-mapper">salted-simple-digest-mapper</h6>
+<div class="paragraph">
+<p>The <code>salted-simple-digest-mapper</code> supports the password types hashed with a salt as described in <a href="#salted-digest">Salted Digest</a>, for this type of password the encoded form of the password is loaded in addition to the salt.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>algorithm</code> - The algorithm of the password type, the supported values are listed at <a href="#salted-digest">Salted Digest</a>.</p>
+</li>
+<li>
+<p><code>password-index</code> - The index of the column containing the encoded password.</p>
+</li>
+<li>
+<p><code>hash-encoding</code> - The encoding of the hash, either <code>base64</code> or <code>hex</code>.</p>
+</li>
+<li>
+<p><code>salt-index</code> - The index of the column containing the encoded salt.</p>
+</li>
+<li>
+<p><code>salt-encoding</code> - The encoding of the salt, either <code>base64</code> or <code>hex</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="simple-digest-mapper">simple-digest-mapper</h6>
+<div class="paragraph">
+<p>The <code>simple-digest-mapper</code> supports the loading of passwords which have been simply hashed without any salt as described in <a href="#simple-digest">Simple Digest</a>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>algorithm</code> - The algorithm of the password type, the supported values are listed at <a href="#simple-digest">Simple Digest</a>.</p>
+</li>
+<li>
+<p><code>password-index</code> - The index of the column containing the encoded password.</p>
+</li>
+<li>
+<p><code>hash-encoding</code> - The encoding of the hash, either <code>base64</code> or <code>hex</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="scram-mapper">scram-mapper</h6>
+<div class="paragraph">
+<p>The <code>scram-mapper</code> supports the loading of SCRAM passwords which use both a salt and an interation count as described in <a href="#scram">Scram</a>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>algorithm</code> - The algorithm of the password type, the supported values are listed at <a href="#scram">Scram</a>.</p>
+</li>
+<li>
+<p><code>password-index</code> - The index of the column containing the encoded password.</p>
+</li>
+<li>
+<p><code>hash-encoding</code> - The encoding of the hash, either <code>base64</code> or <code>hex</code>.</p>
+</li>
+<li>
+<p><code>salt-index</code> - The index of the column containing the encoded salt.</p>
+</li>
+<li>
+<p><code>salt-encoding</code> - The encoding of the salt, either <code>base64</code> or <code>hex</code>.</p>
+</li>
+<li>
+<p><code>iteration-count-index</code> - The index of the column containing the iteration count.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="using-a-hashed-password-representation">Using a Hashed Password Representation</h5>
+<div class="paragraph">
+<p>The same approach can be taken for all hashed password representations, for illustration purposes this section will illustrate how a <a href="#bcrypt">bcrypt</a> password can be prepared to be stored in a database and the subsequent realm configuration to make use of it.  Examples uising the APIs for the different password types can be found in the <a href="#Passwords">Passwords</a> section of this documentation.</p>
+</div>
+<div class="paragraph">
+<p>The following example takes the password <code>myPassword</code>, generates a random salt an produces a <code>bcrypt</code> representation of the password.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Provider</span> ELYTRON_PROVIDER = <span class="keyword">new</span> WildFlyElytronProvider();
+
+<span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> TEST_PASSWORD = <span class="string"><span class="delimiter">&quot;</span><span class="content">myPassword</span><span class="delimiter">&quot;</span></span>;
+
+<span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) <span class="directive">throws</span> <span class="exception">Exception</span> {
+    PasswordFactory passwordFactory = PasswordFactory.getInstance(BCryptPassword.ALGORITHM_BCRYPT, ELYTRON_PROVIDER);
+
+    <span class="type">int</span> iterationCount = <span class="integer">10</span>;
+
+    <span class="type">byte</span><span class="type">[]</span> salt = <span class="keyword">new</span> <span class="type">byte</span>[BCryptPassword.BCRYPT_SALT_SIZE];
+    <span class="predefined-type">SecureRandom</span> random = <span class="keyword">new</span> <span class="predefined-type">SecureRandom</span>();
+    random.nextBytes(salt);
+
+    IteratedSaltedPasswordAlgorithmSpec iteratedAlgorithmSpec = <span class="keyword">new</span> IteratedSaltedPasswordAlgorithmSpec(iterationCount, salt);
+    EncryptablePasswordSpec encryptableSpec = <span class="keyword">new</span> EncryptablePasswordSpec(TEST_PASSWORD.toCharArray(), iteratedAlgorithmSpec);
+
+    BCryptPassword original = (BCryptPassword) passwordFactory.generatePassword(encryptableSpec);
+
+    <span class="type">byte</span><span class="type">[]</span> hash = original.getHash();
+
+    <span class="predefined-type">Encoder</span> encoder = Base64.getEncoder();
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Encoded Salt = </span><span class="delimiter">&quot;</span></span> + encoder.encodeToString(salt));
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Encoded Hash = </span><span class="delimiter">&quot;</span></span> + encoder.encodeToString(hash));
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This produces the following output, as the salt is randomly generated the output would differ each time the above code is executed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>Encoded Salt = 3bFOQwRU75to+yJ8Cv0g8w==
+Encoded Hash = x9P/0cxfNz+Pf3HCinZ3dLCbNMnBeiU=</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This could now be stored in a database table: -</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 33%;">
+<caption class="title">Table 6. Example Table</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">NAME</th>
+<th class="tableblock halign-left valign-top">PASSWORD</th>
+<th class="tableblock halign-left valign-top">SALT</th>
+<th class="tableblock halign-left valign-top">ITERATION_COUNT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">test</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x9P/0cxfNz+Pf3HCinZ3dLCbNMnBeiU=</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3bFOQwRU75to+yJ8Cv0g8w==</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The JDBC security realm can instead be created with the following CLI command: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/jdbc-realm=demo-realm:add(
+    principal-query=[{data-source=Identities,
+                      sql="select PASSWORD, SALT, ITERATION_COUNT from IDENTITIES where NAME = ?",
+                      bcrypt-mapper={password-index=1, salt-index=2, iteration-count-index=3}}])</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For the user <code>test</code> the result of the query would be: -</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 25%;">
+<caption class="title">Table 7. Query Results</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">1</th>
+<th class="tableblock halign-left valign-top">2</th>
+<th class="tableblock halign-left valign-top">3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">x9P/0cxfNz+Pf3HCinZ3dLCbNMnBeiU=</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3bFOQwRU75to+yJ8Cv0g8w==</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The <code>bcrypt-password-mapper</code> is defined to load the encoded password, encoded salt and iteration count from the relevent columns in the query result.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>bcrypt-mapper={password-index=1, salt-index=2, iteration-count-index=3}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Had the values been encoding using hexadecimal instead of Base64 the <code>bcrypt-mapper</code> could have been defined as: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>bcrypt-mapper={password-index=1, hash-encoding=hex, salt-index=2, salt-encoding=hex, iteration-count-index=3}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+It is worth noting that as the <code>hash-encoding</code> and <code>salt-encoding</code> are specified separately one could use Base64 whilst the other uses hexadecimal.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="loading-passwords-from-different-queries-datasources">Loading Passwords from Different Queries / Datasources</h5>
+<div class="paragraph">
+<p>It is also possible to combine both of the example so far and define two separate <code>principal-query</code> instances to attempt to load both password types from different locations.</p>
+</div>
+<div class="paragraph">
+<p>Here is an example configuration loading a clear text password from one datasource / table and loading a bcrypt password from a second datasource / table.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/jdbc-realm=demo-realm:add(
+    principal-query=[
+        {data-source=LegacyIdentities,
+         sql="select PASSWORD from LEGACY_IDENTITIES where NAME = ?",
+         clear-password-mapper={password-index=1}},
+        {data-source=NewIdentities,
+         sql="select PASSWORD, SALT, ITERATION_COUNT from NEW_IDENTITIES where NAME = ?",
+         bcrypt-mapper={password-index=1, salt-index=2, iteration-count-index=3}}
+                    ])</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+It is not required that the identity is found from both of the queries, this can be useful in situations where identities are being migrated from one location to another or for aggregating two together.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="loading-attributes">Loading Attributes</h5>
+<div class="paragraph">
+<p>The examples so far have focussed on the loading of passwords from the database, the principal queries can also be used to load attributes for the resulting identities.</p>
+</div>
+<div class="paragraph">
+<p>The loading of attributes can either be defined to happen within the principal queries being used to load the passwords or attribute specific principal queries can be defined, as each <code>principal-query</code> can be defined with it&#8217;s own <code>datasource</code> reference this means attributes can also be loaded from alternative locations.</p>
+</div>
+<div class="paragraph">
+<p>The loaded attributes can then be used for mapping to roles and permissions which should be granted to the identity or they can be obtained programatically within the deployment to identify information about the currently authenticated identity.</p>
+</div>
+<div class="sect5">
+<h6 id="loading-attributes-with-passwords">Loading Attributes with Passwords</h6>
+<div class="paragraph">
+<p>For single valued attributes these can often be loaded using the same <code>principal-query</code> used to load an identities password, as an example if an identities e-mail address or department is to be loaded from the database these can be loaded at the same time as the password.</p>
+</div>
+<div class="paragraph">
+<p>A table for this example could look like: -</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 33%;">
+<caption class="title">Table 8. Example Table</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">NAME</th>
+<th class="tableblock halign-left valign-top">PASSWORD</th>
+<th class="tableblock halign-left valign-top">E_MAIL</th>
+<th class="tableblock halign-left valign-top">Department</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">test</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">myPassword</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="mailto:test@example.com">test@example.com</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sales</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The realm can now be defined as: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/jdbc-realm=demo-realm:add(
+    principal-query=[
+        {data-source=Identities,
+         sql="select PASSWORD, E_MAIL, DEPARTMENT from IDENTITIES where NAME = ?",
+         clear-password-mapper={password-index=1},
+         attribute-mapping=[{index=2, to=email},{index=3,to=department}]
+        }])</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For the user <code>test</code> the result of the query would be: -</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 25%;">
+<caption class="title">Table 9. Query Results</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">1</th>
+<th class="tableblock halign-left valign-top">2</th>
+<th class="tableblock halign-left valign-top">3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">myPassword</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="mailto:test@example.com">test@example.com</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sales</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The configuration contained the following attribute mappings: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>attribute-mapping=[{index=2, to=email},{index=3,to=department}]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This means the contents of column 2 will be mapped to the <code>email</code> attribute and the contents of column 3 will be mapped to the <code>department</code> attribute.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="loading-attributes-separately">Loading Attributes Separately.</h6>
+<div class="paragraph">
+<p>For multi-valued attributes such as a list of groups it can often make sense to define a separate principal query.</p>
+</div>
+<div class="paragraph">
+<p>A list of groups could be represented as follows in a table.</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 33%;">
+<caption class="title">Table 10. Example Table</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">NAME</th>
+<th class="tableblock halign-left valign-top">TEAM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">test</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">test</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisors</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>A realm can now be defined with a second principal query to load the groups into an attribute.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=elytron/jdbc-realm=demo-realm:add(
+    principal-query=[
+        {data-source=Identities,
+         sql="select PASSWORD from IDENTITIES where NAME = ?",
+         clear-password-mapper={password-index=1}
+        },{data-source=Identities,
+         sql="select TEAM from MEMBERSHIP where NAME = ?",
+         attribute-mapping=[{index=1, to=groups}]
+        }])</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Within this definition the second <code>principal-query</code> will load the attribute <code>groups</code>: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>{data-source=Identities,
+ sql="select TEAM from MEMBERSHIP where NAME = ?",
+ attribute-mapping=[{index=1, to=groups}]
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For the user <code>test</code> the results would be: -</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 25%;">
+<caption class="title">Table 11. Query Results</caption>
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisors</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The end result would be that the identity contains the attribute <code>groups</code> with the values <code>Users</code>, and <code>Supervisors</code></p>
+</div>
 </div>
 </div>
 </div>
@@ -7276,8 +7910,51 @@ authentication configuration, authentication context, and match rules.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>You can then reference that file in your client&#8217;s code by setting a
-system property when running your client.</p>
+<p>The above example shows how the password for authentication can be specified in the clear. However, it&#8217;s also possible
+to use a masked password instead.</p>
+</div>
+<div class="paragraph">
+<p><strong>custom-config.xml</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;configuration&gt;</span>
+    <span class="tag">&lt;authentication-client</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:elytron:1.4</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;authentication-rules&gt;</span>
+            <span class="tag">&lt;rule</span> <span class="attribute-name">use-configuration</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">monitor</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;match-host</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">127.0.0.1</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+            <span class="tag">&lt;/rule&gt;</span>
+            <span class="tag">&lt;rule</span> <span class="attribute-name">use-configuration</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">administrator</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;match-host</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">localhost</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+            <span class="tag">&lt;/rule&gt;</span>
+        <span class="tag">&lt;/authentication-rules&gt;</span>
+        <span class="tag">&lt;authentication-configurations&gt;</span>
+            <span class="tag">&lt;configuration</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">monitor</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;allow-sasl-mechanisms</span> <span class="attribute-name">names</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">DIGEST-MD5</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                 <span class="tag">&lt;use-service-loader-providers</span> <span class="tag">/&gt;</span>
+                 <span class="tag">&lt;set-user-name</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">monitor</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                 <span class="tag">&lt;credentials&gt;</span>
+                     <span class="tag">&lt;masked-password</span> <span class="attribute-name">iteration-count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">100</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">salt</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">12345678</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">masked-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/Nym2s/dssMrabfdIGsZfQ==</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                 <span class="tag">&lt;/credentials&gt;</span>
+                 <span class="tag">&lt;set-mechanism-realm</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">ManagementRealm</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+             <span class="tag">&lt;/configuration&gt;</span>
+
+             <span class="tag">&lt;configuration</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">administrator</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;allow-sasl-mechanisms</span> <span class="attribute-name">names</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">DIGEST-MD5</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                 <span class="tag">&lt;use-service-loader-providers</span> <span class="tag">/&gt;</span>
+                 <span class="tag">&lt;set-user-name</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">administrator</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                 <span class="tag">&lt;credentials&gt;</span>
+                     <span class="tag">&lt;masked-password</span> <span class="attribute-name">iteration-count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">100</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">salt</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">12345678</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">masked-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/Nym2s/dssMrabfdIGsZfQ==</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                 <span class="tag">&lt;/credentials&gt;</span>
+                 <span class="tag">&lt;set-mechanism-realm</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">ManagementRealm</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+             <span class="tag">&lt;/configuration&gt;</span>
+        <span class="tag">&lt;/authentication-configurations&gt;</span>
+    <span class="tag">&lt;/authentication-client&gt;</span>
+<span class="tag">&lt;/configuration&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can then reference that file in your client&#8217;s code by setting a system property when running your client.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7379,6 +8056,42 @@ AuthenticationConfiguration adminConfig =
       .useRealm(<span class="string"><span class="delimiter">&quot;</span><span class="content">ManagementRealm</span><span class="delimiter">&quot;</span></span>)
       .useName(<span class="string"><span class="delimiter">&quot;</span><span class="content">administrator</span><span class="delimiter">&quot;</span></span>)
       .usePassword(<span class="string"><span class="delimiter">&quot;</span><span class="content">password1!</span><span class="delimiter">&quot;</span></span>);
+<span class="error"> </span>
+<span class="comment">//create your authentication context</span>
+AuthenticationContext context = AuthenticationContext.empty();
+context = context.with(MatchRule.ALL.matchHost(<span class="string"><span class="delimiter">&quot;</span><span class="content">127.0.0.1</span><span class="delimiter">&quot;</span></span>), adminConfig);
+<span class="error"> </span>
+<span class="error"> </span>
+<span class="comment">//create your runnable for establishing a connection</span>
+<span class="predefined-type">Runnable</span> runnable =
+    <span class="keyword">new</span> <span class="predefined-type">Runnable</span>() {
+      <span class="directive">public</span> <span class="type">void</span> run() {
+        <span class="keyword">try</span> {
+           <span class="comment">//Establish your connection and do some work</span>
+        } <span class="keyword">catch</span> (<span class="exception">Exception</span> e) {
+          e.printStackTrace();
+        }
+      }
+    };
+<span class="error"> </span>
+<span class="comment">//use your authentication context to run your client</span>
+context.run(runnable);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above example shows how the password for authentication can be specified in the clear. However, it&#8217;s also possible
+to use a masked password instead.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="comment">//create your authentication configuration</span>
+AuthenticationConfiguration adminConfig =
+    AuthenticationConfiguration.EMPTY
+      .useProviders(() -&gt; <span class="keyword">new</span> <span class="predefined-type">Provider</span><span class="type">[]</span> { <span class="keyword">new</span> WildFlyElytronProvider() })
+      .allowSaslMechanisms(<span class="string"><span class="delimiter">&quot;</span><span class="content">DIGEST-MD5</span><span class="delimiter">&quot;</span></span>)
+      .useRealm(<span class="string"><span class="delimiter">&quot;</span><span class="content">ManagementRealm</span><span class="delimiter">&quot;</span></span>)
+      .useName(<span class="string"><span class="delimiter">&quot;</span><span class="content">administrator</span><span class="delimiter">&quot;</span></span>)
+      .usePassword(<span class="string"><span class="delimiter">&quot;</span><span class="content">/Nym2s/dssMrabfdIGsZfQ==</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">null</span>, <span class="predefined-constant">null</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">100</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">12345678</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">null</span>);
 <span class="error"> </span>
 <span class="comment">//create your authentication context</span>
 AuthenticationContext context = AuthenticationContext.empty();
@@ -8208,7 +8921,7 @@ to enable JACC you can execute a command as follows:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="Elytron_and_Java_EE_Security">11. Elytron and Java EE Security</h2>
+<h2 id="Elytron_and_Java_EE_Security">11. Elytron and Jakarta EE Security</h2>
 <div class="sectionbody">
 <div class="sect1">
 <h2 id="introduction-2">10. Introduction</h2>
@@ -8804,6 +9517,1001 @@ While in WildFly 14 there was only one attribute <code>synchronized</code>, whic
 * <code>synchonized</code> defines whether should be file descriptor synchronized after every audit event (guarantees that all system buffers are synchronized with the underlying device)</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="syslog-audit-logging">16.2. Syslog Audit Logging</h3>
+<div class="paragraph">
+<p>Syslog audit logging logs security events to a syslog server using a transmission protocol.
+WildFly Elytron supports using UDP, TCP, or TCP with SSL, with the latter protocol requiring
+a <code><code>SSLContext</code></code> to be defined. When syslog audit logging is first defined, Elytron will send
+an <code><code>INFORMATIONAL</code></code> priority event to the defined syslog server containing the message
+"Elytron audit logging enabled with RFC format: &lt;format&gt;", where <code><code>&lt;format&gt;</code></code> is the
+RFC format that the audit logging handler has been defined with, defaulting to <code><code>RFC5424</code></code>.
+If the given syslog server is not defined, resulting in Elytron being unable to send the
+message, then Elytron will keep track of the amount of attempts that sending a message has
+failed, up to a maximum defined by the <code><code>reconnect-attempts</code></code> parameter, before
+closing the endpoint and reporting an error. It is possible to define this value
+as infinite, by specifying <code><code>-1</code></code>, in which case Elytron will never close the
+endpoint and so will always attempt to send audit messages despite previous failures.</p>
+</div>
+<div class="sect3">
+<h4 id="required-parameters">16.2.1. Required Parameters</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 70%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><code>server-address</code></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String consisting of the IP address, or a name recognized by Java&#8217;s InetAddress.getByName(), of the syslog server</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><code>port</code></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><code>int</code></code> of the listening port on the syslog server</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><code>host-name</code></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String of the host name that will be embedded into all events sent to the syslog server</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><code>ssl-context</code></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <code><code>SSLContext</code></code> used to connect to the syslog server, only required if <code><code>transport</code></code> is set to <code><code>SSL_TCP</code></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="optional-parameters">16.2.2. Optional Parameters</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 60%;">
+<col style="width: 20%;">
+<col style="width: 10%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Possible Values</th>
+<th class="tableblock halign-left valign-top">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><code>transport</code></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The transport protocol to be used to connect to the syslog server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String of: <code><code>UDP</code></code>, <code><code>TCP</code></code>, or <code><code>SSL_TCP</code></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><code>TCP</code></code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><code>format</code></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The format that audit events should be recorded in</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String of <code><code>SIMPLE</code></code> or <code><code>JSON</code></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><code>SIMPLE</code></code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><code>syslog-format</code></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The RFC format to be used for describing the audit event</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String of <code><code>RFC5424</code></code> or <code><code>RFC3164</code></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><code>RFC5424</code></code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><code>reconnect-attempts</code></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum number of times that elytron will attempt to send successive messages to a syslog server before closing the endpoint to disallow further attempts to send messages.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><code>int</code></code> of <code><code>-1</code></code> (infinite attempts) or higher</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><code>0</code></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="defining-syslog-audit-logging">16.2.3. Defining Syslog Audit Logging</h4>
+<div class="paragraph">
+<p>Syslog audit logging can be defined under the <code><code>elytron</code></code> subsystem resource. Some
+examples syslog audit logging resources can be created with the following commands:</p>
+</div>
+<div class="sect4">
+<h5 id="minimum-resource-definition">Minimum Resource Definition</h5>
+<div class="paragraph">
+<p>Using the following command will generate a syslog audit logging resource that connects with
+TCP, records audit events in a simple format, and uses RFC5424 to describe the audit event.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>---
+/subsystem=elytron/syslog-audit-log=syslog-example:add(
+    server-address=127.0.0.1,
+    port=10857,
+    host-name=localhost
+)
+---</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="default-format-and-reconnect-attempts-with-udp-and-rfc3164">Default Format and Reconnect Attempts with UDP and RFC3164</h5>
+<div class="paragraph">
+<p>Using the following command will generate a syslog audit logging resource that connects with
+UDP, does not send any further messages to the syslog server if there is an error sending,
+records audit events in a simple format, and uses RFC3164 to describe the audit event.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>---
+/subsystem=elytron/syslog-audit-log=syslog-example:add(
+    server-address=127.0.0.1,
+    port=10837,
+    host-name=localhost,
+    transport=UDP,
+    syslog-format=RFC3164
+)
+---</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="full-udp-definition-with-rfc5424-explicitly-set-and-10-reconnect-attempts">Full UDP Definition with RFC5424 Explicitly Set and 10 Reconnect Attempts</h5>
+<div class="paragraph">
+<p>Using the following command will generate a syslog audit logging resource that connects with
+UDP, attempts to send messages 10 times if there is an error sending before no longer sending messages,
+records audit events in a simple format, and uses RFC5424 to describe the audit event.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>---
+/subsystem=elytron/syslog-audit-log=syslog-example:add(
+    server-address=127.0.0.1,
+    port=10837,
+    host-name=localhost,
+    transport=UDP,
+    syslog-format=RFC5424,
+    reconnect-attempts=10
+)
+---</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="full-udp-definition-with-infinite-reconnect-attempts-and-json-format">Full UDP Definition with Infinite Reconnect Attempts and JSON Format</h5>
+<div class="paragraph">
+<p>Using the following command will generate a syslog audit logging resource that connects with
+UDP, always attempts to send messages despite previous failures sending messages, records audit
+events in a JSON format, and uses RFC5424 to describe the audit event.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>---
+/subsystem=elytron/syslog-audit-log=syslog-example:add(
+    server-address=127.0.0.1,
+    port=10837,
+    host-name=localhost,
+    transport=UDP,
+    format=JSON,
+    reconnect-attempts=-1
+)
+---
+[[CredentialStore]]
+= Credential Store</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>One new component included with WildFly Elytron for the secure storage of credentials is the Credential Store.  Previous versions of the application server made use of the Vault which was used for the secure storage of clear text strings; the credential store moves forward a step to focus on the secure storage of credentials.  As with the Vault the stored credentials could be clear text passwords however other formats are also supported.</p>
+</div>
+<div class="paragraph">
+<p>WildFly Elytron contains a default credential store implementation <code>KeyStoreCredentialStore</code> which is a store implementation backed by a <code>KeyStore</code>.</p>
+</div>
+<div class="paragraph">
+<p>This documentation will be focused on using the <code>KeyStoreCredentialStore</code>; however the section <a href="#Custom_CredentialStore">Custom CredentialStore</a> will describe how to convert a vault to a credential store.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="keystorecredentialstore">16.3. KeyStoreCredentialStore</h3>
+<div class="sect3">
+<h4 id="creation">16.3.1. Creation</h4>
+<div class="sect4">
+<h5 id="command-line">Command Line</h5>
+<div class="paragraph">
+<p>Included with WildFly is a command line tool which amongst other things allows for the creation of and manipulation of credential stores.  A script to execute this tool can be found within the <code>bin</code> folder of the application server installation.  The WildFly Elytron tool supports a number of commands, one of which being <code>credential-store</code> which operates on a credential store.  By default this command assumes the type of the store is a <code>KeyStoreCredentialStore</code> backed by a <code>JCEKS</code> <code>KeyStore</code>.</p>
+</div>
+<div class="paragraph">
+<p>The following command provides a summary of the command line arguments which can be used with the <code>credential-store</code> command: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>]$ bin/elytron-tool.sh credential-store</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+These commands are making use of the <code>.sh</code> script on linux; the <code>elytron-tool.bat</code> and <code>elytron-tools.ps1</code> scripts can be used on Microsoft Windows.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A new credential store can be created using the following command: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>]$ bin/elytron-tool.sh credential-store --create --location=standalone/configuration/mycredstore.cs
+Credential store password:
+Confirm credential store password:
+Credential Store has been successfully created</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This command prompts twice for the password that should be used to secure the store.  Alternatively the password can be passed in using the <code>--password</code> argument however that may mean the password is cached in the local command history or visible to other users viewing the list of running processes.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="management-operation">Management Operation</h5>
+<div class="paragraph">
+<p>It is also possible to operate on a credential store using management operations against a running server using the application server&#8217;s CLI.</p>
+</div>
+<div class="paragraph">
+<p>The following operation can be used to add a <code>credential-store</code> resource to the <code>elytron</code> subsystem referencing this newly created credential store.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/] /subsystem=elytron/credential-store=mycredstore:add(location=mycredstore.cs, relative-to=jboss.server.config.dir, credential-reference={clear-text=StorePassword})
+{"outcome" =&gt; "success"}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example the resource was added to reference an existing credential store, however with a small change this command can also automatically create the store if it does not exist.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/] /subsystem=elytron/credential-store=mycredstore:add(location=mycredstore.cs, relative-to=jboss.server.config.dir, credential-reference={clear-text=StorePassword}, create=true)
+{"outcome" =&gt; "success"}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The file representing the credential store is not created immediately, it will instead be created the first time a credential is added.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Previous versions of the application server supported a single vault definition only; credential stores however are cross referenced by name so multiple credential stores can be defined simultaneously.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="adding-a-credential">16.3.2. Adding a Credential</h4>
+<div class="paragraph">
+<p>As with all the manipulation options it is possible to use either the command line tool or management operations against a running server to modify the contents of the store.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Care should be taken when using the command line tool to ensure the store is not currently in use by any other processes.  If the store is in use by another process which updates the contents of the store changes made by the tool could be lost.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Using the tooling it is possible to add a clear text password as a credential.</p>
+</div>
+<div class="sect4">
+<h5 id="command-line-2">Command Line</h5>
+<div class="paragraph">
+<p>The following command adds a new credential with an alias of <code>example</code> to the store using the command line tool: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>]$ bin/elytron-tool.sh credential-store --add=example --location=standalone/configuration/mycredstore.cs
+Credential store password:
+Confirm credential store password:
+Secret to store:
+Confirm secret to store:
+Alias "example" has been successfully stored</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="management-operation-2">Management Operation</h5>
+<div class="paragraph">
+<p>Using a management operation the following command can be used to add a new alias of <code>example</code> to the credential store.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>[standalone@localhost:9990 /] /subsystem=elytron/credential-store=mycredstore:add-alias(alias=example, secret-value=ExamplePassword)
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; undefined
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="listing-aliases">16.3.3. Listing Aliases</h4>
+<div class="paragraph">
+<p>It is possible to list the aliases contained within the credential store, however it is not possible to list the actual values stored.</p>
+</div>
+<div class="sect4">
+<h5 id="command-line-3">Command Line</h5>
+<div class="paragraph">
+<p>Using the command the command line tool will show a list of aliases stored within the credential store: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>]$ bin/elytron-tool.sh credential-store --aliases --location=standalone/configuration/mycredstore.cs
+Credential store password:
+Confirm credential store password:
+Credential store contains following aliases: example</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="management-operation-3">Management Operation</h5>
+<div class="paragraph">
+<p>The following management operation will also show the aliases contained within the credential store.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/] /subsystem=elytron/credential-store=mycredstore:read-aliases
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; ["example"]
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="removing-aliases">16.3.4. Removing Aliases</h4>
+<div class="paragraph">
+<p>Finally it is also possible to remove an alais from the credential store.</p>
+</div>
+<div class="sect4">
+<h5 id="command-line-4">Command Line</h5>
+<div class="paragraph">
+<p>Using the WildFly Elytron Tool the following command will remove an alias from the store.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>]$ bin/elytron-tool.sh credential-store --remove=example --location=standalone/configuration/mycredstore.cs
+Credential store password:
+Confirm credential store password:
+Alias "example" has been successfully removed</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="management-operation-4">Management Operation</h5>
+<div class="paragraph">
+<p>The following management operation can be used to remove an alias from the credential store.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/] /subsystem=elytron/credential-store=mycredstore:remove-alias(alias=example)
+{
+    "outcome" =&gt; "success",
+    "result" =&gt; undefined,
+    "response-headers" =&gt; {"warnings" =&gt; [{
+        "warning" =&gt; "Update dependent resources as alias 'example' does not exist anymore",
+        "level" =&gt; "WARNING",
+        "operation" =&gt; {
+            "address" =&gt; [
+                ("subsystem" =&gt; "elytron"),
+                ("credential-store" =&gt; "mycredstore")
+            ],
+            "operation" =&gt; "remove-alias"
+        }
+    }]}
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="referencing-credentials">16.4. Referencing Credentials</h3>
+<div class="paragraph">
+<p>After being able to populate and manipulate a credential store the next step is being able to reference the stored credential so that it can be used.</p>
+</div>
+<div class="sect3">
+<h4 id="management-model-references">16.4.1. Management Model References</h4>
+<div class="paragraph">
+<p>Various resources that make use of credentials across the application server&#8217;s management model contain <code>credential-reference</code> attributes that can be used either to specify a <code>clear-password</code> or to cross reference a credential from within a configured credential store.</p>
+</div>
+<div class="paragraph">
+<p>The following is an example of how how to define a <code>key-store</code> within the Elytron subsystem specifying a clear text password to access the store.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/] /subsystem=elytron/key-store=exampleKS:add(relative-to=jboss.server.config.dir, path=example.keystore,    \
+                                              type=JCEKS, credential-reference={clear-text=ExamplePassword})
+{"outcome" =&gt; "success"}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To reference a credential from the previously defined credential store the following command could be used instead.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/] /subsystem=elytron/key-store=exampleKS:add(relative-to=jboss.server.config.dir, path=example.keystore, type=JCEKS, credential-reference={store=mycredstore, alias=example})
+{"outcome" =&gt; "success"}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="wildfly-config-xml">16.4.2. wildfly-config.xml</h4>
+<div class="paragraph">
+<p>If you are making use of the <code>wildfly-config.xml</code> descriptor it is also possible to define a credential store within this descriptor to obtain credentials without requiring them to be in-lined within the configuration.</p>
+</div>
+<div class="paragraph">
+<p>As an example the CLI can be executed with a configuration: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>]$ bin/jboss-cli.sh -c -Dwildfly.config.url=bin/wildfly-config.xml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Without using a credential store the username and credential can be specified in the clear e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+
+<span class="tag">&lt;configuration&gt;</span>
+    <span class="tag">&lt;authentication-client</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:elytron:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;authentication-rules&gt;</span>
+                    <span class="tag">&lt;rule</span> <span class="attribute-name">use-configuration</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+        <span class="tag">&lt;/authentication-rules&gt;</span>
+        <span class="tag">&lt;authentication-configurations&gt;</span>
+            <span class="tag">&lt;configuration</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;sasl-mechanism-selector</span> <span class="attribute-name">selector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">DIGEST-MD5</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                <span class="tag">&lt;providers&gt;</span>
+                    <span class="tag">&lt;use-service-loader</span><span class="tag">/&gt;</span>
+                <span class="tag">&lt;/providers&gt;</span>
+                <span class="tag">&lt;set-user-name</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">User</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                <span class="tag">&lt;credentials&gt;</span>
+                    <span class="tag">&lt;clear-password</span> <span class="attribute-name">password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">UserPassword</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                <span class="tag">&lt;/credentials&gt;</span>
+             <span class="tag">&lt;/configuration&gt;</span>
+        <span class="tag">&lt;/authentication-configurations&gt;</span>
+    <span class="tag">&lt;/authentication-client&gt;</span>
+<span class="tag">&lt;/configuration&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>However it is possible to move this password to the credential store and update the configuration to load it from the store e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+
+<span class="tag">&lt;configuration&gt;</span>
+    <span class="tag">&lt;authentication-client</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:elytron:1.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;credential-stores&gt;</span>
+            <span class="tag">&lt;credential-store</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">mycredstore</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;attributes&gt;</span>
+                    <span class="tag">&lt;attribute</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">keyStoreType</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">JCEKS</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                    <span class="tag">&lt;attribute</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">location</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">standalone/configuration/mycredstore.cs</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                <span class="tag">&lt;/attributes&gt;</span>
+                <span class="tag">&lt;protection-parameter-credentials&gt;</span>
+                    <span class="tag">&lt;clear-password</span> <span class="attribute-name">password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">StorePassword</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                <span class="tag">&lt;/protection-parameter-credentials&gt;</span>
+            <span class="tag">&lt;/credential-store&gt;</span>
+        <span class="tag">&lt;/credential-stores&gt;</span>
+
+        <span class="tag">&lt;authentication-rules&gt;</span>
+                    <span class="tag">&lt;rule</span> <span class="attribute-name">use-configuration</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+        <span class="tag">&lt;/authentication-rules&gt;</span>
+        <span class="tag">&lt;authentication-configurations&gt;</span>
+            <span class="tag">&lt;configuration</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;sasl-mechanism-selector</span> <span class="attribute-name">selector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">DIGEST-MD5</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                <span class="tag">&lt;providers&gt;</span>
+                    <span class="tag">&lt;use-service-loader</span><span class="tag">/&gt;</span>
+                <span class="tag">&lt;/providers&gt;</span>
+                <span class="tag">&lt;set-user-name</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">User</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                <span class="tag">&lt;credentials&gt;</span>
+                    <span class="tag">&lt;credential-store-reference</span> <span class="attribute-name">store</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">mycredstore</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">User</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                <span class="tag">&lt;/credentials&gt;</span>
+             <span class="tag">&lt;/configuration&gt;</span>
+        <span class="tag">&lt;/authentication-configurations&gt;</span>
+    <span class="tag">&lt;/authentication-client&gt;</span>
+<span class="tag">&lt;/configuration&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Within this second example the key changes being the addition of the <code>&lt;credential-stores /&gt;</code> section and updating the <code>&lt;credentials/&gt;</code> section to use a <code>&lt;credential-store-reference/&gt;</code> to specify which credential store should be used and which alias from that credential store should be used.</p>
+</div>
+<div class="paragraph">
+<p>In the above example, the credential store&#8217;s protection parameter is specified as a clear password, but it is also possible
+to specify it as a masked password.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+
+<span class="tag">&lt;configuration&gt;</span>
+    <span class="tag">&lt;authentication-client</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:elytron:1.4</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;credential-stores&gt;</span>
+            <span class="tag">&lt;credential-store</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">mycredstore</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;attributes&gt;</span>
+                    <span class="tag">&lt;attribute</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">keyStoreType</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">JCEKS</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                    <span class="tag">&lt;attribute</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">location</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">standalone/configuration/mycredstore.cs</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                <span class="tag">&lt;/attributes&gt;</span>
+                <span class="tag">&lt;protection-parameter-credentials&gt;</span>
+                    <span class="tag">&lt;masked-password</span> <span class="attribute-name">masked-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">M3loEZ7uua1X1PiYCYJDpg==</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">iteration-count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">100</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">salt</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">12345678</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+                <span class="tag">&lt;/protection-parameter-credentials&gt;</span>
+            <span class="tag">&lt;/credential-store&gt;</span>
+        <span class="tag">&lt;/credential-stores&gt;</span>
+
+        <span class="tag">&lt;authentication-rules&gt;</span>
+                    <span class="tag">&lt;rule</span> <span class="attribute-name">use-configuration</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+        <span class="tag">&lt;/authentication-rules&gt;</span>
+        <span class="tag">&lt;authentication-configurations&gt;</span>
+            <span class="tag">&lt;configuration</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;sasl-mechanism-selector</span> <span class="attribute-name">selector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">DIGEST-MD5</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                <span class="tag">&lt;providers&gt;</span>
+                    <span class="tag">&lt;use-service-loader</span><span class="tag">/&gt;</span>
+                <span class="tag">&lt;/providers&gt;</span>
+                <span class="tag">&lt;set-user-name</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">User</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                <span class="tag">&lt;credentials&gt;</span>
+                    <span class="tag">&lt;credential-store-reference</span> <span class="attribute-name">store</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">mycredstore</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">User</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+                <span class="tag">&lt;/credentials&gt;</span>
+             <span class="tag">&lt;/configuration&gt;</span>
+        <span class="tag">&lt;/authentication-configurations&gt;</span>
+    <span class="tag">&lt;/authentication-client&gt;</span>
+<span class="tag">&lt;/configuration&gt;</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="credentialstore-apis">16.5. CredentialStore APIs</h3>
+<div class="paragraph">
+<p>It is also possible to make use of the CredentialStore APIs directly.  This could be useful for applications that require access to securely stored credentials.  This could also be an option for an application to populate a credential store for use elsewhere.</p>
+</div>
+<div class="paragraph">
+<p>The following code demonstrates how to obtain an initialised instance of <code>KeyStoreCredentialStore</code> so it can be used to store and retrieve credentials.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java">Password storePassword = ClearPassword.createRaw(ClearPassword.ALGORITHM_CLEAR, <span class="string"><span class="delimiter">&quot;</span><span class="content">StorePassword</span><span class="delimiter">&quot;</span></span>.toCharArray());
+ProtectionParameter protectionParameter = <span class="keyword">new</span> CredentialSourceProtectionParameter(IdentityCredentials.NONE.withCredential(<span class="keyword">new</span> PasswordCredential(storePassword)));
+
+CredentialStore credentialStore = CredentialStore.getInstance(<span class="string"><span class="delimiter">&quot;</span><span class="content">KeyStoreCredentialStore</span><span class="delimiter">&quot;</span></span>, CREDENTIAL_STORE_PROVIDER);
+
+<span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; configuration = <span class="keyword">new</span> <span class="predefined-type">HashMap</span>&lt;&gt;();
+configuration.put(<span class="string"><span class="delimiter">&quot;</span><span class="content">location</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">mystore.cs</span><span class="delimiter">&quot;</span></span>);
+configuration.put(<span class="string"><span class="delimiter">&quot;</span><span class="content">create</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span>);
+
+credentialStore.initialize(configuration, protectionParameter);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following code illustrates how a couple of different credential types can be added to a credential store: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java">Password clearPassword = ClearPassword.createRaw(ClearPassword.ALGORITHM_CLEAR, <span class="string"><span class="delimiter">&quot;</span><span class="content">ExamplePassword</span><span class="delimiter">&quot;</span></span>.toCharArray());
+credentialStore.store(<span class="string"><span class="delimiter">&quot;</span><span class="content">clearPassword</span><span class="delimiter">&quot;</span></span>, <span class="keyword">new</span> PasswordCredential(clearPassword));
+
+<span class="predefined-type">KeyGenerator</span> keyGenerator = <span class="predefined-type">KeyGenerator</span>.getInstance(<span class="string"><span class="delimiter">&quot;</span><span class="content">AES</span><span class="delimiter">&quot;</span></span>);
+keyGenerator.init(<span class="integer">256</span>);
+<span class="predefined-type">SecretKey</span> secretKey = keyGenerator.generateKey();
+credentialStore.store(<span class="string"><span class="delimiter">&quot;</span><span class="content">secretKey</span><span class="delimiter">&quot;</span></span>, <span class="keyword">new</span> SecretKeyCredential(secretKey));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These credentials can then be obtained again from the store: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java">Password password = credentialStore.retrieve(<span class="string"><span class="delimiter">&quot;</span><span class="content">clearPassword</span><span class="delimiter">&quot;</span></span>, PasswordCredential.class).getPassword();
+<span class="predefined-type">SecretKey</span> secretKey = credentialStore.retrieve(<span class="string"><span class="delimiter">&quot;</span><span class="content">secretKey</span><span class="delimiter">&quot;</span></span>, SecretKeyCredential.class).getSecretKey();</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+As the type is specified when retrieving a credential it is possible to store multiple credentials under the same alias.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Please use the published javadoc for more information in relation to the APIs and the credential types supported within WildFly Elytron.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="migrating-existing-vaults">16.6. Migrating Existing Vaults</h3>
+<div class="paragraph">
+<p>If migrating from a prior version of the application server it is possible that you already are making use of a PicketBox vault for the storage of clear text passwords.  The tooling provided can be used to convert the vault to the format used by the <code>KeyStoreCredentialStore</code>.</p>
+</div>
+<div class="paragraph">
+<p>Within the WildFly Elytron command line tool an additional command <code>vault</code> is available specifically for the conversion of legacy vaults to a credential store.  A complete vault can be converted to a credential store with the following command: -</p>
+</div>
+<div class="paragraph">
+<p>The following command can be used to convert a single entry from a vault to a credential store: -</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>]$ bin/elytron-tool.sh vault --enc-dir standalone/configuration/vault --keystore standalone/configuration/vault.keystore --iteration 44 --salt 00000000 --alias vault \
+    --location standalone/configuration/newcredstore.cs
+Vault password:
+Confirm vault password:
+Vault (enc-dir="standalone/configuration/vault";keystore="standalone/configuration/vault.keystore") converted to credential store "standalone/configuration/newcredstore.cs"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When executing this command the destination credential store must not already exist.  The password used for the credential store will be the password originally used for the vault.</p>
+</div>
+<div class="paragraph">
+<p>Entries stored within the vault would have been stored specifying a "block" and "alias" value; within the credential store the new alias will be <code>block::alias</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Custom_CredentialStore">16.7. Custom Credential Store</h3>
+<div class="paragraph">
+<p>It is also possible to provide custom credential store implementations.  Overall the pattern to implementing a custom credential store is very similar to the pattern that would be followed to implement a custom key store.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Extend the SPI</p>
+</li>
+<li>
+<p>Implement a <code>java.security.Provider</code> to register the implementation.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The SPI to be extended is <code>org.wildfly.security.credential.store.CredentialStoreSpi</code>.  The custom implementation will be required to implement the following methods.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">void</span> initialize(<span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; attributes, CredentialStore.ProtectionParameter protectionParameter, <span class="predefined-type">Provider</span><span class="type">[]</span> providers) <span class="directive">throws</span> CredentialStoreException;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This method is required to perform the initialisation of the credential store, by taking in a <code>Map</code> of attributes it allows for custom configuration to be provided as required by the store.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">boolean</span> isModifiable();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A credential store needs to advertise if it supports modifications so clients can determine if the modification APIs can be used.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> &lt;C <span class="directive">extends</span> Credential&gt; C retrieve(<span class="predefined-type">String</span> credentialAlias, <span class="predefined-type">Class</span>&lt;C&gt; credentialType, <span class="predefined-type">String</span> credentialAlgorithm, <span class="predefined-type">AlgorithmParameterSpec</span> parameterSpec, CredentialStore.ProtectionParameter protectionParameter) <span class="directive">throws</span> CredentialStoreException;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>retrieve</code> method is essential for all credential store implementations to retrieve credentials of a specific type using the alias specified.</p>
+</div>
+<div class="paragraph">
+<p>In addition to <code>retrieve</code> there are two more methods that can optionally be implemented.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="directive">public</span> <span class="type">boolean</span> exists(<span class="predefined-type">String</span> credentialAlias, <span class="predefined-type">Class</span>&lt;? <span class="directive">extends</span> Credential&gt; credentialType) <span class="directive">throws</span> CredentialStoreException;
+
+<span class="directive">public</span> <span class="predefined-type">Set</span>&lt;<span class="predefined-type">String</span>&gt; getAliases() <span class="directive">throws</span> <span class="exception">UnsupportedOperationException</span>, CredentialStoreException;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A default implementation of <code>exists</code> already is implemented which checks if a call to <code>retrieve</code> returns a credential as requested.  However it could be optimal to check the existence of a credential without actually loading it.  The <code>getAliases</code> method is optional as some implementations may only be able to retrieve a credential by name rather than query all available credentials.</p>
+</div>
+<div class="paragraph">
+<p>The next set of methods to implement are the methods needed for updates to be applied to the underlying credential store.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">void</span> store(<span class="predefined-type">String</span> credentialAlias, Credential credential, CredentialStore.ProtectionParameter protectionParameter)
+            <span class="directive">throws</span> CredentialStoreException, UnsupportedCredentialTypeException;
+
+<span class="directive">public</span> <span class="directive">abstract</span> <span class="type">void</span> remove(<span class="predefined-type">String</span> credentialAlias, <span class="predefined-type">Class</span>&lt;? <span class="directive">extends</span> Credential&gt; credentialType, <span class="predefined-type">String</span> credentialAlgorithm, <span class="predefined-type">AlgorithmParameterSpec</span> parameterSpec) <span class="directive">throws</span> CredentialStoreException;
+
+<span class="directive">public</span> <span class="type">void</span> flush() <span class="directive">throws</span> CredentialStoreException;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>store</code> and <code>remove</code> methods either add credentials to a credential store or remove them.  Implementing the <code>flush</code> method is optional but this method can be used as a trigger for a store to persist its state.</p>
+</div>
+<div class="paragraph">
+<p>The final stage is to provide an implementation of <code>java.security.Provider</code> which can return an instance of the SPI for the <code>CredentialStore</code> service type.  The WildFly Elytron provider which makes the Elytron implementations available is <code>org.wildfly.security.credential.store.WildFlyElytronCredentialStoreProvider</code>.  The source code for this provider can be used as an example.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="reference">16.8. Reference</h3>
+<div class="paragraph">
+<p>The previous sections have made use of either the WildFly Elytron Tool or the management operations and specified the arguments and configuration options required for the action being performed.  These operations and tools however support a variety of other options so this section provides some additional detail.</p>
+</div>
+<div class="sect3">
+<h4 id="elytron-tool-code-credential-store-code-command">16.8.1. Elytron Tool - <code>credential-store</code> Command</h4>
+<div class="paragraph">
+<p>Examples of how to structure calling the <code>credential-store</code> command were provided earlier.  When using the <code>credential-store</code> command the following actions are possible: -</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 12. credential-store Actions</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Action</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-a,--add &lt;alias&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Add a new entry to the credential store using the specified alias.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-c,--create</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create a new credential store instance.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-e,--exists &lt;alias&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Test if the specified alias already exists in the credential store.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-r,--remove &lt;alias&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Remove the aliad specified from the credential store.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-v,--aliases</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Display all aliases</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-f,--summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Print summary, especially command how to create this credential store</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-h,--help</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Get help with usage of this command</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The following parameters can be provided for each action to specify how to load the store.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 13. credential-store Parameters</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-d,--debug</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Print stack trace when error occurs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-i,--iteration &lt;arg&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Iteration count for final masked password of the credential store</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-l,--location &lt;loc&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Location of credential store storage file</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-n,--entry-type &lt;type&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type of entry in credential store</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-o,--other-providers &lt;providers&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comma separated list of JCA provider names. Providers will be supplied to the credential store instance.  Each provider must be installed through java.security file or through service loader from properly packaged jar file on classpath.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-p,--password &lt;pwd&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Password for credential store</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-q,--credential-store-provider &lt;cs-provider&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Provider name containing CredentialStoreSpi implementation.  Provider must be installed through java.security file or through service loader from properly packaged jar file on classpath.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-s,--salt &lt;arg&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Salt to apply for final masked password of the credential store</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-t,--type &lt;type&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Credential store type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-u,--properties &lt;arg&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Implementation properties for credential store type in form of "prop1=value1; &#8230;&#8203; ;propN=valueN"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-x,--secret &lt;secret to store&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Password credential value</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="elytron-tool-code-vault-code-command">16.8.2. Elytron Tool - <code>vault</code> Command</h4>
+<div class="paragraph">
+<p>The <code>vault</code> command is used to convert a legacy vault to a credential store and supports the following parameters.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 14. vault Parameters</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-b,--bulk-convert &lt;description file&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bulk conversion with options listed in description file.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-d,--debug</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Print stack trace when error occurs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-e,--enc-dir &lt;dir&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Vault directory containing encrypted files (defaults to "vault")</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-f,--summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Print summary of conversion</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-h,--help</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Get help with usage of this command</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-i,--iteration &lt;arg&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Iteration count (defaults to "23")</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-k,--keystore &lt;keystore&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Vault keystore URL (defaults to "vault.keystore")</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-l,--location &lt;loc&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Location of credential store storage file (defaults to "converted-vault.cr-store" in vault encryption directory)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-o,--other-providers &lt;providers&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comma separated list of JCA provider names. Providers will be supplied to the credential store instance.  Each provider must be installed through java.security file or through service loader from properly packaged jar file on classpath.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-p,--keystore-password &lt;pwd&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Vault keystore password, used to open original vault key store, and used as password for new converted credential store</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-q,--credential-store-provider &lt;cs-provider&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Provider name containing CredentialStoreSpi implementation.  Provider must be installed through java.security file or through service loader from properly packaged jar file on classpath.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-s,--salt &lt;salt&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 character salt (defaults to "12345678")</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-t,--type &lt;type&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Converted credential store type (defaults to "KeyStoreCredentialStore")</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-u,--properties &lt;arg&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration parameters for credential store in form of: "parameter1=value1; &#8230;&#8203; ;parameterN=valueN"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-v,--alias &lt;arg&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Vault master key alias within key store (defaults to "vault")</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="keystorecredentialstore-2">16.8.3. KeyStoreCredentialStore</h4>
+<div class="paragraph">
+<p>When configuring the <code>KeyStoreCredentialStore</code> the following configuration options are supported.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 15. KeyStoreCredentialStore Configuration</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">create</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If the credential store does not exist should it be created?</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cryptographicAlgorithm</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AES/CBC/NoPadding</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The algorithm to use when using an external store.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">external</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Should external storage be used?</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">externalPath</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to external storage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">keyAlias</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cs_key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The alias to use from the KeyStore when working with external storage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">keyStoreType</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>KeyStore.getDefault()</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The type of the key store used for the credential store.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">location</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The location of the credential store.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">modifiable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Should the store be modifiable via the exposed API.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -8826,14 +10534,19 @@ completion:</p>
 <div class="content">
 <pre>[standalone@localhost:9990 /] /subsystem=elytron/custom-
 custom-credential-security-factory  custom-realm
-custom-modifiable-realm             custom-realm-mapper
-custom-permission-mapper            custom-role-decoder
-custom-principal-decoder            custom-role-mapper
-custom-principal-transformer        custom-security-event-listener</pre>
+custom-evidence-decoder             custom-realm-mapper
+custom-modifiable-realm             custom-role-decoder
+custom-permission-mapper            custom-role-mapper
+custom-principal-decoder            custom-security-event-listener
+custom-principal-transformer</pre>
 </div>
 </div>
 <div class="sect2">
 <h3 id="security-event-listener">17.1. Security event listener</h3>
+<div class="paragraph">
+<p>This section describes how to add a custom security event listener. Similar steps can be followed to add another
+custom component type.</p>
+</div>
 <div class="paragraph">
 <p>To create custom security event listener you need to implement <code>java.util.function.Consumer&lt;org.wildfly.security.auth.server.event.SecurityEvent&gt;</code> interface.
 Resulting class needs to be packed into JAR and WildFly module created.
@@ -11651,8 +13364,8 @@ for example, Infinispan cache cannot be used, any others?</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 17.0.0.Final<br>
-Last updated 2019-05-10 20:15:16 CDT
+Version 18.0.0.Final<br>
+Last updated 2019-08-21 11:00:49 PDT
 </div>
 </div>
 </body>

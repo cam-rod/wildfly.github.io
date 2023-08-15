@@ -522,8 +522,8 @@ table.CodeRay td.code>pre{padding:0}
 <div id="header">
 <h1>WildFly Client Configuration</h1>
 <div class="details">
-<span id="revnumber">version 17.0.0.Final,</span>
-<span id="revdate">2019-07-15T01:10:21Z</span>
+<span id="revnumber">version 18.0.0.Final,</span>
+<span id="revdate">2019-10-02T18:46:03Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Client Configuration Guide</div>
@@ -709,6 +709,7 @@ table.CodeRay td.code>pre{padding:0}
     <span class="tag">&lt;key-store-reference&gt;</span>...<span class="tag">&lt;/key-store-reference&gt;</span>
     <span class="tag">&lt;credential-store-reference</span> <span class="attribute-name">store</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">clear-text</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
     <span class="tag">&lt;clear-password</span> <span class="attribute-name">password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;masked-password</span> <span class="attribute-name">algorithm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">key-material</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">iteration-count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">salt</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">masked-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">initialization-vector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
     <span class="tag">&lt;key-pair</span> <span class="attribute-name">public-key-pem</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">private-key-pem</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
     <span class="tag">&lt;certificate</span> <span class="attribute-name">private-key-pem</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">pem</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
     <span class="tag">&lt;public-key-pem&gt;</span>...<span class="tag">&lt;/public-key-pem&gt;</span>
@@ -735,6 +736,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;key-store-reference</span> <span class="attribute-name">key-store-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
    <span class="tag">&lt;key-store-clear-password</span> <span class="attribute-name">password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+   <span class="tag">&lt;key-store-masked-password</span> <span class="attribute-name">algorithm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">key-material</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">iteration-count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">salt</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">masked-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">initialization-vector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
    <span class="tag">&lt;credential-store-reference</span> <span class="attribute-name">store</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">clear-text</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
    <span class="tag">&lt;key-store-credential&gt;</span>...<span class="tag">&lt;/key-store-credential&gt;</span>
 <span class="tag">&lt;/key-store-reference&gt;</span></code></pre>
@@ -752,6 +754,10 @@ table.CodeRay td.code>pre{padding:0}
 <dt class="hdlist1">&lt;clear-password password="&#8230;&#8203;" /&gt;</dt>
 <dd>
 <p>A password specified in the clear.</p>
+</dd>
+<dt class="hdlist1">&lt;masked-password algorithm="&#8230;&#8203;" key-material="&#8230;&#8203;" iteration-count="&#8230;&#8203;" salt="&#8230;&#8203;" masked-password="&#8230;&#8203;" initialization-vector="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>A masked password.</p>
 </dd>
 <dt class="hdlist1">&lt;key-pair public-key-pem="&#8230;&#8203;" private-key-pem="&#8230;&#8203;" /&gt;</dt>
 <dd>
@@ -782,7 +788,13 @@ table.CodeRay td.code>pre{padding:0}
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;oauth2-bearer-token</span> <span class="attribute-name">token-endpoint-uri</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
     <span class="tag">&lt;client-credentials</span> <span class="attribute-name">client-id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">client-secret</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;masked-client-credentials</span> <span class="attribute-name">client-id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;masked-client-secret</span> <span class="attribute-name">algorithm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">key-material</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">iteration-count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">salt</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">masked-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">initialization-vector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;/masked-client-credentials&gt;</span>
     <span class="tag">&lt;resource-owner-credentials</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;masked-resource-owner-credentials</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;masked-password</span> <span class="attribute-name">algorithm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">key-material</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">iteration-count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">salt</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">masked-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">initialization-vector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;/masked-resource-owner-credentials</span> <span class="error">&gt;</span>
 <span class="tag">&lt;/oauth2-bearer-token&gt;</span></code></pre>
 </div>
 </div>
@@ -806,6 +818,7 @@ table.CodeRay td.code>pre{padding:0}
                <span class="tag">&lt;resource</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
                <span class="comment">&lt;!-- One of the following to specify the protection parameter to unlock the KeyStore. --&gt;</span>
                <span class="tag">&lt;key-store-clear-password</span> <span class="attribute-name">password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+               <span class="tag">&lt;key-store-masked-password</span> <span class="attribute-name">algorithm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">key-material</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">iteration-count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">salt</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">masked-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">initialization-vector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
                <span class="tag">&lt;key-store-credential&gt;</span>...<span class="tag">&lt;/key-store-credential&gt;</span>
             <span class="tag">&lt;/key-store&gt;</span>
         <span class="tag">&lt;/key-stores&gt;</span>
@@ -842,6 +855,10 @@ table.CodeRay td.code>pre{padding:0}
 <dd>
 <p>A password specified in the clear.</p>
 </dd>
+<dt class="hdlist1">&lt;key-store-masked-password algorithm="&#8230;&#8203;" key-material="&#8230;&#8203;" iteration-count="&#8230;&#8203;" salt="&#8230;&#8203;" masked-password="&#8230;&#8203;" initialization-vector="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>A masked password.</p>
+</dd>
 <dt class="hdlist1">&lt;key-store-credential&gt;&#8230;&#8203;&lt;/key-store-credential&gt;</dt>
 <dd>
 <p>A reference to another KeyStore to obtain an Entry to use as the protection parameter to access this KeyStore.</p>
@@ -855,6 +872,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;key-store-credential</span> <span class="attribute-name">key-store-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
    <span class="tag">&lt;key-store-clear-password</span> <span class="attribute-name">password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+   <span class="tag">&lt;key-store-masked-password</span> <span class="attribute-name">algorithm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">key-material</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">iteration-count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">salt</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">masked-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">initialization-vector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
    <span class="tag">&lt;credential-store-reference</span> <span class="attribute-name">store</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">clear-text</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
    <span class="tag">&lt;key-store-credential&gt;</span>...<span class="tag">&lt;/key-store-credential&gt;</span>
 <span class="tag">&lt;/key-store-credential&gt;</span></code></pre>
@@ -883,6 +901,10 @@ table.CodeRay td.code>pre{padding:0}
 <dt class="hdlist1">&lt;key-store-clear-password password="&#8230;&#8203;" /&gt;</dt>
 <dd>
 <p>A password specified in the clear.</p>
+</dd>
+<dt class="hdlist1">&lt;key-store-masked-password algorithm="&#8230;&#8203;" key-material="&#8230;&#8203;" iteration-count="&#8230;&#8203;" salt="&#8230;&#8203;" masked-password="&#8230;&#8203;" initialization-vector="&#8230;&#8203;" /&gt;</dt>
+<dd>
+<p>A masked password.</p>
 </dd>
 <dt class="hdlist1">&lt;credential-store-reference store="&#8230;&#8203;" alias="&#8230;&#8203;" clear-text="&#8230;&#8203;" /&gt;</dt>
 <dd>
@@ -1100,6 +1122,7 @@ table.CodeRay td.code>pre{padding:0}
     <span class="tag">&lt;key-store-reference&gt;</span>...<span class="tag">&lt;/key-store-reference&gt;</span>
     <span class="tag">&lt;credential-store-reference</span> <span class="attribute-name">store</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">clear-text</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
     <span class="tag">&lt;clear-password</span> <span class="attribute-name">password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;masked-password</span> <span class="attribute-name">algorithm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">key-material</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">iteration-count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">salt</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">masked-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">initialization-vector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
     <span class="tag">&lt;key-pair</span> <span class="attribute-name">public-key-pem</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">private-key-pem</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
     <span class="tag">&lt;certificate</span> <span class="attribute-name">private-key-pem</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">pem</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
     <span class="tag">&lt;public-key-pem&gt;</span>...<span class="tag">&lt;/public-key-pem&gt;</span>
@@ -1193,6 +1216,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;key-store-ssl-certificate</span> <span class="attribute-name">key-store-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">provider-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">algorithm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
    <span class="tag">&lt;key-store-clear-password</span> <span class="attribute-name">password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+   <span class="tag">&lt;key-store-masked-password</span> <span class="attribute-name">algorithm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">key-material</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">iteration-count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">salt</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">masked-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">initialization-vector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
    <span class="tag">&lt;credential-store-reference</span> <span class="attribute-name">store</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">alias</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">clear-text</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
    <span class="tag">&lt;key-store-credential&gt;</span>...<span class="tag">&lt;/key-store-credential&gt;</span>
 <span class="tag">&lt;/key-store-ssl-certificate&gt;</span></code></pre>
@@ -1329,6 +1353,59 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 <div class="paragraph">
 <p>This gives the WildFly Elytron Provider priority over any globally registered Providers but also allows for the globally registered providers to be used.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="MaskedPasswords">3.1.8. Masked Password Types</h4>
+<div class="paragraph">
+<p>The authentication client supports the following masked password types:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;masked-password</span> <span class="attribute-name">algorithm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">key-material</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">iteration-count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">salt</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">masked-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">initialization-vector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+<span class="tag">&lt;key-store-masked-password</span> <span class="attribute-name">algorithm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">key-material</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">iteration-count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">salt</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">masked-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">initialization-vector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+
+<span class="comment">&lt;!--In oauth2-bearer-token!--&gt;</span>
+<span class="tag">&lt;masked-resource-owner-credentials</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;masked-password</span> <span class="attribute-name">algorithm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">key-material</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">iteration-count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">salt</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">masked-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">initialization-vector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+<span class="tag">&lt;/masked-resource-owner-credentials</span> <span class="error">&gt;</span>
+<span class="tag">&lt;masked-client-credentials</span> <span class="attribute-name">client-id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;masked-client-secret</span> <span class="attribute-name">algorithm</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">key-material</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">iteration-count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">salt</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">masked-password</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">initialization-vector</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+<span class="tag">&lt;/masked-client-credentials&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following attributes are used to define the masked password:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>algorithm</code></dt>
+<dd>
+<p>The algorithm that was used to encrypt the password. If this attribute is not specified, the default value is "masked-MD5-DES".
+A list of the supported algorithm types can be found in
+<a href="https://github.com/wildfly/wildfly/blob/master/docs/src/main/asciidoc/_elytron/Passwords.adoc#masked-password-types">Masked Password Type</a></p>
+</dd>
+<dt class="hdlist1"><code>key-material</code></dt>
+<dd>
+<p>The initial key material that was used to encrypt the password. If this attribute is not specified, the default value is "somearbitrarycrazystringthatdoesnotmatter".</p>
+</dd>
+<dt class="hdlist1"><code>iteration-count</code></dt>
+<dd>
+<p>The iteration count that was used to encrypt the password. This attribute is required.</p>
+</dd>
+<dt class="hdlist1"><code>salt</code></dt>
+<dd>
+<p>The salt that was used to encrypt the password. This attribute is required.</p>
+</dd>
+<dt class="hdlist1"><code>masked-password</code></dt>
+<dd>
+<p>The base64 encrypted password (without the "MASK-" prefix). This attribute is required.</p>
+</dd>
+<dt class="hdlist1"><code>initialization-vector</code></dt>
+<dd>
+<p>The initialization vector that was used to encrypt the password. This attribute is optional.</p>
+</dd>
+</dl>
 </div>
 </div>
 </div>
@@ -1886,8 +1963,8 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 17.0.0.Final<br>
-Last updated 2019-05-10 20:15:16 CDT
+Version 18.0.0.Final<br>
+Last updated 2019-02-06 11:57:26 PST
 </div>
 </div>
 </body>

@@ -524,8 +524,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>WildFly Admin Guide</h1>
 <div class="details">
 <span id="author" class="author">WildFly developer team</span><br>
-<span id="revnumber">version 17.0.0.Final,</span>
-<span id="revdate">2019-07-15T01:10:21Z</span>
+<span id="revnumber">version 18.0.0.Final,</span>
+<span id="revdate">2019-10-02T18:46:03Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">WildFly Admin guide</div>
@@ -1372,7 +1372,7 @@ invoked via the HTTP API, the JSON representation of a <code>ModelNode</code>.)<
 </div>
 <div class="paragraph">
 <p>Every resource except the root resource will have an <code>add</code> operation and
-should have a <code>remove</code> operation ("should" because in WildFly 17 many do
+should have a <code>remove</code> operation ("should" because in WildFly 18 many do
 not). The parameters for the <code>add</code> operation vary depending on the
 resource. The <code>remove</code> operation has no parameters.</p>
 </div>
@@ -1581,7 +1581,7 @@ configuration:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code>[standalone@localhost:9990 /] /subsystem=undertow/server=default-server/http-listener=default:read-resource(include-runtime=false
+<pre class="CodeRay highlight nowrap"><code>[standalone@localhost:9990 /] /subsystem=undertow/server=default-server/http-listener=default:read-resource(include-runtime=false)
 {
     "outcome" =&gt; "success",
     "result" =&gt; {
@@ -3728,7 +3728,7 @@ we add role based authorization checks to the management model.</p>
 <div class="paragraph">
 <p>After a realm has been defined it needs to be associated with an inbound
 or outbound connection for it to be used, the following are some
-examples where these associations are used within the WildFly 17
+examples where these associations are used within the WildFly 18
 configuration.</p>
 </div>
 <div class="sect3">
@@ -5179,7 +5179,7 @@ the <code>search-credential</code> attribute.  This element supports the followi
 <div class="sect2">
 <h3 id="Security_Realms_Plugins"><a class="link" href="#Security_Realms_Plugins">6.9. Plug Ins</a></h3>
 <div class="paragraph">
-<p>Within WildFly 17 for communication with the management interfaces and
+<p>Within WildFly 18 for communication with the management interfaces and
 for other services exposed using Remoting where username / password
 authentication is used the use of Digest authentication is preferred
 over the use of HTTP Basic or SASL Plain so that we can avoid the
@@ -5204,7 +5204,7 @@ support loading a users password, hash and roles from a custom store to
 allow different stores to be implemented without forcing the
 authentication back to plain text variant, this article describes the
 requirements for a plug in and shows a simple example plug-in for use
-with WildFly 17.</p>
+with WildFly 18.</p>
 </div>
 <div class="paragraph">
 <p>When implementing a plug in there are two steps to the authentication
@@ -5366,7 +5366,7 @@ used for the authorization step.</p>
 <h4 id="installing-and-configuring-a-plug-in"><a class="link" href="#installing-and-configuring-a-plug-in">6.9.4. Installing and Configuring a Plug-In</a></h4>
 <div class="paragraph">
 <p>The next step of this article describes the steps to implement a plug-in
-provider and how to make it available within WildFly 17 and how to
+provider and how to make it available within WildFly 18 and how to
 configure it. Example configuration and an example implementation are
 shown to illustrate this.</p>
 </div>
@@ -5480,7 +5480,7 @@ PlugInProvider implementation class.</p>
 <h5 id="package-as-a-module"><a class="link" href="#package-as-a-module">Package as a Module</a></h5>
 <div class="paragraph">
 <p>To make the <code>PlugInProvider</code> available to the application it is bundled
-as a module and added to the modules already shipped with WildFly 17.</p>
+as a module and added to the modules already shipped with WildFly 18.</p>
 </div>
 <div class="paragraph">
 <p>To add as a module we first need a <code>module.xml</code>: -</p>
@@ -8464,10 +8464,10 @@ The configuration schemas can found in <code>$JBOSS_HOME/docs/schema</code>.
 <div class="sect2">
 <h3 id="EE"><a class="link" href="#EE">9.1. EE Subsystem Configuration</a></h3>
 <div class="paragraph">
-<p>The EE subsystem provides common functionality in the Java EE platform,
+<p>The EE subsystem provides common functionality in the Jakarta EE platform,
 such as the EE Concurrency Utilities (JSR 236) and <code>@Resource</code>
 injection. The subsystem is also responsible for managing the lifecycle
-of Java EE application&#8217;s deployments, that is, <code>.ear</code> files.</p>
+of Jakarta EE application&#8217;s deployments, that is, <code>.ear</code> files.</p>
 </div>
 <div class="paragraph">
 <p>The EE subsystem configuration may be used to:</p>
@@ -8475,7 +8475,7 @@ of Java EE application&#8217;s deployments, that is, <code>.ear</code> files.</p
 <div class="ulist">
 <ul>
 <li>
-<p>customise the deployment of Java EE applications</p>
+<p>customise the deployment of Jakarta EE applications</p>
 </li>
 <li>
 <p>create EE Concurrency Utilities instances</p>
@@ -8560,17 +8560,17 @@ specified:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="EE_Application_Deployment_Configuration"><a class="link" href="#EE_Application_Deployment_Configuration">9.1.1. Java EE Application Deployment</a></h4>
+<h4 id="EE_Application_Deployment_Configuration"><a class="link" href="#EE_Application_Deployment_Configuration">9.1.1. Jakarta EE Application Deployment</a></h4>
 <div class="paragraph">
 <p>The EE subsystem configuration allows the customisation of the
-deployment behaviour for Java EE Applications.</p>
+deployment behaviour for Jakarta EE Applications.</p>
 </div>
 <div class="sect4">
 <h5 id="global-modules"><a class="link" href="#global-modules">Global Modules</a></h5>
 <div class="paragraph">
 <p>Global modules is a set of JBoss Modules that will be added as
-dependencies to the JBoss Module of every Java EE deployment. Such
-dependencies allows Java EE deployments to see the classes exported by
+dependencies to the JBoss Module of every Jakarta EE deployment. Such
+dependencies allows Jakarta EE deployments to see the classes exported by
 the global modules.</p>
 </div>
 <div class="paragraph">
@@ -8661,7 +8661,7 @@ classes from that <code>.war</code>. This is as per spec.
 <div class="paragraph">
 <p>The EE subsystem configuration includes flags to configure whether
 system property replacement will be done on XML descriptors and Java
-Annotations included in Java EE deployments.</p>
+Annotations included in Jakarta EE deployments.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -8684,7 +8684,7 @@ prevented.
 <h6 id="spec-descriptor-property-replacement"><a class="link" href="#spec-descriptor-property-replacement">Spec Descriptor Property Replacement</a></h6>
 <div class="paragraph">
 <p>Flag indicating whether system property replacement will be performed on
-standard Java EE XML descriptors. If not configured this defaults to
+standard Jakarta EE XML descriptors. If not configured this defaults to
 <code>true</code>, however it is set to <code>false</code> in the standard configuration files
 shipped with WildFly.</p>
 </div>
@@ -8724,17 +8724,16 @@ Java annotations. The default value is <code>false</code>.</p>
 <div class="sect3">
 <h4 id="EE_Concurrency_Utilities_Configuration"><a class="link" href="#EE_Concurrency_Utilities_Configuration">9.1.2. EE Concurrency Utilities</a></h4>
 <div class="paragraph">
-<p>EE Concurrency Utilities (JSR 236) were introduced with Java EE 7, to
-ease the task of writing multithreaded Java EE applications. Instances
-of these utilities are managed by WildFly, and the related configuration
-provided by the EE subsystem.</p>
+<p>EE Concurrency Utilities (JSR 236) were introduced to
+ease the task of writing multithreaded applications. Instances
+of these utilities are managed by WildFly, and the related configuration.</p>
 </div>
 <div class="sect4">
 <h5 id="context-services"><a class="link" href="#context-services">Context Services</a></h5>
 <div class="paragraph">
 <p>The Context Service is a concurrency utility which creates contextual
 proxies from existent objects. WildFly Context Services are also used to
-propagate the context from a Java EE application invocation thread, to
+propagate the context from a Jakarta EE application invocation thread, to
 the threads internally used by the other EE Concurrency Utilities.
 Context Service instances may be created using the subsystem XML
 configuration:</p>
@@ -8778,9 +8777,9 @@ one named <code>other</code>:</p>
 <div class="sect4">
 <h5 id="managed-thread-factories"><a class="link" href="#managed-thread-factories">Managed Thread Factories</a></h5>
 <div class="paragraph">
-<p>The Managed Thread Factory allows Java EE applications to create new
+<p>The Managed Thread Factory allows Jakarta EE applications to create new
 threads. WildFly Managed Thread Factory instances may also, optionally,
-use a Context Service instance to propagate the Java EE application
+use a Context Service instance to propagate the Jakarta EE application
 thread&#8217;s context to the new threads. Instance creation is done through
 the EE subsystem, by editing the subsystem XML configuration:</p>
 </div>
@@ -8827,8 +8826,8 @@ configure Managed Thread Factory instances. An example to <code>add</code> and
 <div class="sect4">
 <h5 id="managed-executor-services"><a class="link" href="#managed-executor-services">Managed Executor Services</a></h5>
 <div class="paragraph">
-<p>The Managed Executor Service is the Java EE adaptation of Java SE
-Executor Service, providing to Java EE applications the functionality of
+<p>The Managed Executor Service is the Jakarta EE adaptation of Java SE
+Executor Service, providing to Jakarta EE applications the functionality of
 asynchronous task execution. WildFly is responsible to manage the
 lifecycle of Managed Executor Service instances, which are specified
 through the EE subsystem XML configuration:</p>
@@ -8942,8 +8941,8 @@ configure Managed Executor Service instances. An example to <code>add</code> and
 <div class="sect4">
 <h5 id="managed-scheduled-executor-services"><a class="link" href="#managed-scheduled-executor-services">Managed Scheduled Executor Services</a></h5>
 <div class="paragraph">
-<p>The Managed Scheduled Executor Service is the Java EE adaptation of Java
-SE Scheduled Executor Service, providing to Java EE applications the
+<p>The Managed Scheduled Executor Service is the Jakarta EE adaptation of Java
+SE Scheduled Executor Service, providing to Jakarta EE applications the
 functionality of scheduling task execution. WildFly is responsible to
 manage the lifecycle of Managed Scheduled Executor Service instances,
 which are specified through the EE subsystem XML configuration:</p>
@@ -9024,7 +9023,7 @@ configure Managed Scheduled Executor Service instances. An example to
 <div class="sect3">
 <h4 id="EE_Default_Bindings_Configuration"><a class="link" href="#EE_Default_Bindings_Configuration">9.1.3. Default EE Bindings</a></h4>
 <div class="paragraph">
-<p>The Java EE Specification mandates the existence of a default instance
+<p>The Jakarta EE Specification mandates the existence of a default instance
 for each of the following resources:</p>
 </div>
 <div class="ulist">
@@ -9092,7 +9091,7 @@ they might not be required or covered by non-default resources. In such case def
 <td class="content">
 The default bindings are optional, if the jndi name for a default
 binding is not configured then the related resource will not be
-available to Java EE applications.
+available to Jakarta EE applications.
 </td>
 </tr>
 </table>
@@ -9186,7 +9185,7 @@ following global JNDI namespaces:</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If WildFly is to be used as a Java EE application server, then it&#8217;s
+If WildFly is to be used as a Jakarta EE application server, then it&#8217;s
 recommended to opt for <code>java:global</code>, since it is a standard (i.e.
 portable) namespace.
 </td>
@@ -9490,7 +9489,7 @@ you installed.</p>
 <div class="sect3">
 <h4 id="jdbc-driver-installation"><a class="link" href="#jdbc-driver-installation">9.3.1. JDBC Driver Installation</a></h4>
 <div class="paragraph">
-<p>The recommended way to install a JDBC driver into WildFly 17 is to deploy
+<p>The recommended way to install a JDBC driver into WildFly 18 is to deploy
 it as a regular JAR deployment. The reason for this is that when you run
 WildFly in domain mode, deployments are automatically propagated to all
 servers to which the deployment applies; thus distribution of the driver
@@ -10317,137 +10316,7 @@ subdirectory of the distribution:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="filter-expressions"><a class="link" href="#filter-expressions">9.5.5. Filter Expressions</a></h4>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Filter Type</th>
-<th class="tableblock halign-left valign-top">Expression</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Parameter(s)</th>
-<th class="tableblock halign-left valign-top">Examples</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">accept</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">accept</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Accepts all log messages.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">accept</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">deny</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">deny</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Denies all log messages.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">deny</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">not</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">not(filterExpression)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Accepts a filter as an argument and inverts
-the returned value.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The expression takes a single filter for it&#8217;s
-argument.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">not(match("JBAS"))</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">all</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">all(filterExpressions)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A filter consisting of several filters in
-a chain. If any filter find the log message to be unloggable, the
-message will not be logged and subsequent filters will not be checked.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The expression takes a comma delimited list of filters for it&#8217;s
-argument.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">all(match("JBAS"), match("WELD"))</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">any</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">any(filterExpressions)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A filter consisting of several filters in
-a chain. If any filter fins the log message to be loggable, the message
-will be logged and the subsequent filters will not be checked.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The
-expression takes a comma delimited list of filters for it&#8217;s argument.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">any(match("JBAS"), match("WELD"))</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">levelChange</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">levelChange(level)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A filter which modifies the log record
-with a new level.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The expression takes a single string based level for
-it&#8217;s argument.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">levelChange(WARN)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">levels</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">levels(levels)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A filter which includes log messages with a
-level that is listed in the list of levels.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The expression takes a
-comma delimited list of string based levels for it&#8217;s argument.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">levels(DEBUG, INFO, WARN, ERROR)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">levelRange</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">levelRange([minLevel,maxLevel])</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A filter which logs
-records that are within the level range.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The filter expression uses a
-"[" to indicate a minimum inclusive level and a "]" to indicate a
-maximum inclusive level. Otherwise use "(" or ")" respectively indicate
-exclusive. The first argument for the expression is the minimum level
-allowed, the second argument is the maximum level allowed.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">minimum
-level must be less than ERROR and the maximum level must be greater than
-DEBUGlevelRange(ERROR, DEBUG) minimum level must be less than or equal
-to ERROR and the maximum level must be greater than
-DEBUGlevelRange[ERROR, DEBUG) minimum level must be less than or equal
-to ERROR and the maximum level must be greater or equal to
-INFOlevelRange[ERROR, INFO]</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">match</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">match("pattern")</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A regular-expression based filter. The raw
-unformatted message is used against the pattern.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The expression takes a
-regular expression for it&#8217;s argument. match("JBAS\d+")</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">substitute</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">substitute("pattern", "replacement value")</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A filter which
-replaces the first match to the pattern with the replacement value.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The
-first argument for the expression is the pattern the second argument is
-the replacement text.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">substitute("JBAS", "EAP")</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">substituteAll</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">substituteAll("pattern", "replacement value")</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A filter
-which replaces all matches of the pattern with the replacement value.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The first argument for the expression is the pattern the second
-argument is the replacement text.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">substituteAll("JBAS", "EAP")</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="list-log-files-and-reading-log-files"><a class="link" href="#list-log-files-and-reading-log-files">9.5.6. List Log Files and Reading Log Files</a></h4>
+<h4 id="list-log-files-and-reading-log-files"><a class="link" href="#list-log-files-and-reading-log-files">9.5.5. List Log Files and Reading Log Files</a></h4>
 <div class="paragraph">
 <p>Log files can be listed and viewed via management operations. The log
 files allowed to be viewed are intentionally limited to files that exist
@@ -10539,7 +10408,7 @@ down.</p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="faq"><a class="link" href="#faq">9.5.7. FAQ</a></h4>
+<h4 id="faq"><a class="link" href="#faq">9.5.6. FAQ</a></h4>
 <div class="sect4">
 <h5 id="why-is-there-a-logging.properties-file"><a class="link" href="#why-is-there-a-logging.properties-file">Why is there a logging.properties file?</a></h5>
 <div class="paragraph">
@@ -10568,7 +10437,7 @@ on the next boot.
 </div>
 </div>
 <div class="sect3">
-<h4 id="logging-formatters"><a class="link" href="#logging-formatters">9.5.8. Logging Formatters</a></h4>
+<h4 id="logging-formatters"><a class="link" href="#logging-formatters">9.5.7. Logging Formatters</a></h4>
 <div class="paragraph">
 <p>Formatters are used to format a log message. A formatter can be assigned to a logging handler.</p>
 </div>
@@ -11053,7 +10922,7 @@ formatted.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="handlers"><a class="link" href="#handlers">9.5.9. Handlers</a></h4>
+<h4 id="handlers"><a class="link" href="#handlers">9.5.8. Handlers</a></h4>
 <div class="sect4">
 <h5 id="overview"><a class="link" href="#overview">Overview</a></h5>
 <div class="paragraph">
@@ -11300,7 +11169,7 @@ this will no longer be necessary.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Logging_How_To"><a class="link" href="#Logging_How_To">9.5.10. How To</a></h4>
+<h4 id="Logging_How_To"><a class="link" href="#Logging_How_To">9.5.9. How To</a></h4>
 <div class="sect4">
 <h5 id="how-do-i-add-a-log-category"><a class="link" href="#how-do-i-add-a-log-category">How do I add a log category?</a></h5>
 <div class="listingblock">
@@ -11399,7 +11268,7 @@ continue to use the logging subsystem configuration.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Logging_Loggers"><a class="link" href="#Logging_Loggers">9.5.11. Loggers</a></h4>
+<h4 id="Logging_Loggers"><a class="link" href="#Logging_Loggers">9.5.10. Loggers</a></h4>
 <div class="paragraph">
 <p>WIP</p>
 </div>
@@ -11533,6 +11402,177 @@ class name. For example the logger <code>org.wildfly</code> is the parent logger
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="logging-filters"><a class="link" href="#logging-filters">9.5.11. Logging Filters</a></h4>
+<div class="paragraph">
+<p>Filters are used to add fine grained control over a log message. A filter can be assigned to a logger or log handler.
+See the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Filter.html">Filter</a> documentation for details on filters.</p>
+</div>
+<div class="sect4">
+<h5 id="filter"><a class="link" href="#filter">Filter</a></h5>
+<div class="paragraph">
+<p>The filter resource allows a custom filter to be used. The custom filter must reside in a module and implement the
+<a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Filter.html">Filter</a> interface.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s generally suggested to add filters to a handler. By default loggers do no inherit filters. This means if a filter
+is placed on a logger named <code>org.jboss.as.logging</code> is only checked if the logger name is equal to <code>org.jboss.as.logging</code>.</p>
+</div>
+<div class="sect5">
+<h6 id="examples-5"><a class="link" href="#examples-5">Examples</a></h6>
+<div class="listingblock">
+<div class="title">Adding a filter</div>
+<div class="content">
+<pre>/subsystem=logging/filter=myFilter:add(class=org.jboss.example.MyFilter, module=org.jboss.example, properties={matches="true"}, constructor-properties={pattern="*.WFLYLOG.*"))</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Nesting a filter</div>
+<div class="content">
+<pre>/subsystem=logging/console-handler=CONSOLE:write-attribute(name=filter-spec, value=not(myFilter))</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="filter-expressions"><a class="link" href="#filter-expressions">Filter Expressions</a></h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Filter Type</th>
+<th class="tableblock halign-left valign-top">Expression</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Parameter(s)</th>
+<th class="tableblock halign-left valign-top">Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">accept</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">accept</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accepts all log messages.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">accept</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">deny</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">deny</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Denies all log messages.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">deny</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">not</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">not(filterExpression)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accepts a filter as an argument and inverts
+the returned value.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The expression takes a single filter for it&#8217;s
+argument.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">not(match("JBAS"))</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">all(filterExpressions)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A filter consisting of several filters in
+a chain. If any filter find the log message to be unloggable, the
+message will not be logged and subsequent filters will not be checked.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The expression takes a comma delimited list of filters for it&#8217;s
+argument.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">all(match("JBAS"), match("WELD"))</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any(filterExpressions)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A filter consisting of several filters in
+a chain. If any filter fins the log message to be loggable, the message
+will be logged and the subsequent filters will not be checked.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The
+expression takes a comma delimited list of filters for it&#8217;s argument.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any(match("JBAS"), match("WELD"))</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">levelChange</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">levelChange(level)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A filter which modifies the log record
+with a new level.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The expression takes a single string based level for
+it&#8217;s argument.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">levelChange(WARN)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">levels</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">levels(levels)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A filter which includes log messages with a
+level that is listed in the list of levels.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The expression takes a
+comma delimited list of string based levels for it&#8217;s argument.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">levels(DEBUG, INFO, WARN, ERROR)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">levelRange</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">levelRange([minLevel,maxLevel])</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A filter which logs
+records that are within the level range.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The filter expression uses a
+"[" to indicate a minimum inclusive level and a "]" to indicate a
+maximum inclusive level. Otherwise use "(" or ")" respectively indicate
+exclusive. The first argument for the expression is the minimum level
+allowed, the second argument is the maximum level allowed.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">minimum
+level must be less than ERROR and the maximum level must be greater than
+DEBUGlevelRange(ERROR, DEBUG) minimum level must be less than or equal
+to ERROR and the maximum level must be greater than
+DEBUGlevelRange[ERROR, DEBUG) minimum level must be less than or equal
+to ERROR and the maximum level must be greater or equal to
+INFOlevelRange[ERROR, INFO]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">match</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">match("pattern")</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A regular-expression based filter. The raw
+unformatted message is used against the pattern.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The expression takes a
+regular expression for it&#8217;s argument. match("JBAS\d+")</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">substitute</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">substitute("pattern", "replacement value")</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A filter which
+replaces the first match to the pattern with the replacement value.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The
+first argument for the expression is the pattern the second argument is
+the replacement text.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">substitute("JBAS", "EAP")</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">substituteAll</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">substituteAll("pattern", "replacement value")</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A filter
+which replaces all matches of the pattern with the replacement value.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The first argument for the expression is the pattern the second
+argument is the replacement text.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">substituteAll("JBAS", "EAP")</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>filterName</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">myCustomFilter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A custom filter which is defined on a <code>filter</code> resource.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">myCustomFilter<br>
+any(myFilter1, myFilter2, myFilter3)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="EJB3"><a class="link" href="#EJB3">9.6. EJB3 subsystem configuration guide</a></h3>
@@ -11546,7 +11586,7 @@ of each</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:domain:ejb3:1.2</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;subsystem</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:jboss:domain:ejb3:6.0</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
   <span class="tag">&lt;session-bean&gt;</span>
     <span class="tag">&lt;stateless&gt;</span>
       <span class="tag">&lt;bean-instance-pool-ref</span> <span class="attribute-name">pool-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">slsb-strict-max-pool</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
@@ -11578,15 +11618,18 @@ of each</p>
     <span class="tag">&lt;cluster-passivation-store</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">infinispan</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">cache-container</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">ejb</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
   <span class="tag">&lt;/passivation-stores&gt;</span>
   <span class="tag">&lt;async</span> <span class="attribute-name">thread-pool-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-  <span class="tag">&lt;timer-service</span> <span class="attribute-name">thread-pool-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-    <span class="tag">&lt;data-store</span> <span class="attribute-name">path</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">timer-service-data</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">relative-to</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jboss.server.data.dir</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;timer-service</span> <span class="attribute-name">thread-pool-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">default-data-store</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default-file-store</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;data-stores&gt;</span>
+      <span class="tag">&lt;file-data-store</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default-file-store</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">path</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">timer-service-data</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">relative-to</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jboss.server.data.dir</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/data-stores&gt;</span>
   <span class="tag">&lt;/timer-service&gt;</span>
   <span class="tag">&lt;remote</span> <span class="attribute-name">connector-ref</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">remoting-connector</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">thread-pool-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
   <span class="tag">&lt;thread-pools&gt;</span>
     <span class="tag">&lt;thread-pool</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
       <span class="tag">&lt;max-threads</span> <span class="attribute-name">count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">10</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-      <span class="tag">&lt;keepalive-time</span> <span class="attribute-name">time</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">100</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">unit</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">milliseconds</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-      <span class="tag">&lt;/thread-pool&gt;</span>
+      <span class="tag">&lt;core-threads</span> <span class="attribute-name">count</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">10</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+      <span class="tag">&lt;keepalive-time</span> <span class="attribute-name">time</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">60</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">unit</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">seconds</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/thread-pool&gt;</span>
   <span class="tag">&lt;/thread-pools&gt;</span>
   <span class="tag">&lt;iiop</span> <span class="attribute-name">enable-by-default</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">use-qualified-name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
   <span class="tag">&lt;in-vm-remote-interface-invocation</span> <span class="attribute-name">pass-by-value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span> <span class="comment">&lt;!-- Warning see notes below about possible issues --&gt;</span>
@@ -11734,6 +11777,23 @@ and the thread pool to use for remote invocations.</p>
 <p>This is used to configure the thread pools used by async, timer and
 remote invocations.</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>max-threads</code> specifies the maximum number of threads in the thread pool.
+It is a required attribute and defaults to <code>10</code>.</p>
+</li>
+<li>
+<p><code>core-threads</code> specifies the number of core threads in the thread pool.
+It is an optional attribute and defaults to <code>max-threads</code> value.</p>
+</li>
+<li>
+<p><code>keepalive-time</code> specifies the amount of time that non-core threads can
+stay idle before they become eligible for removal. It is an optional
+attribute and defaults to <code>60</code> seconds.</p>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect3">
 <h4 id="iiop"><a class="link" href="#iiop">9.6.11. &lt;iiop&gt;</a></h4>
@@ -11791,6 +11851,129 @@ top level deployment with a META-INF/jboss-ejb-client.xml containing:</p>
         <span class="tag">&lt;ejb-receivers</span> <span class="attribute-name">local-receiver-pass-by-value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
     <span class="tag">&lt;/client-context&gt;</span>
 <span class="tag">&lt;/jboss-ejb-client&gt;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="server-interceptors"><a class="link" href="#server-interceptors">9.6.13. &lt;server-interceptors&gt;</a></h4>
+<div class="paragraph">
+<p>This element configures a number of server-side interceptors which can be
+configured without changing the deployments.</p>
+</div>
+<div class="paragraph">
+<p>Each interceptor is configured in <em>&lt;interceptor&gt;</em> tag which contains the
+following fields:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>module</code> - the module in which the interceptor is defined</p>
+</li>
+<li>
+<p><code>class</code> - the class which implements the interceptor</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In order to use server interceptors you have to create a module that implements
+them and place it into <em>${WILDFLY_HOME}/modules</em> directory.</p>
+</div>
+<div class="paragraph">
+<p>Interceptor implementations are POJO classes which use
+<em>javax.interceptor.AroundInvoke</em> and <em>javax.interceptor.AroundTimeout</em> to
+mark interceptor methods.</p>
+</div>
+<div class="paragraph">
+<p>Sample configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;server-interceptors&gt;</span>
+        <span class="tag">&lt;interceptor</span> <span class="attribute-name">module</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.foo:FooInterceptor:1.0</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.foo.FooInterceptor</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+<span class="tag">&lt;/server-interceptors&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Sample interceptor implementation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">package org.foo;
+
+import javax.annotation.PostConstruct;
+import javax.interceptor.AroundInvoke;
+import javax.interceptor.InvocationContext;
+
+public class FooInterceptor {
+
+    @AroundInvoke
+    public Object bar(final InvocationContext invocationContext) throws Exception {
+        return invocationContext.proceed();
+    }
+}</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="client-interceptors"><a class="link" href="#client-interceptors">9.6.14. &lt;client-interceptors&gt;</a></h4>
+<div class="paragraph">
+<p>This element configures a number of client-side interceptors which can be
+configured without changing the deployments.</p>
+</div>
+<div class="paragraph">
+<p>Each interceptor is configured in <em>&lt;interceptor&gt;</em> tag which contains the
+following fields:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>module</code> - the module in which the interceptor is defined</p>
+</li>
+<li>
+<p><code>class</code> - the class which implements the interceptor</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In order to use server interceptors you have to create a module that implements
+them and place it into <em>${WILDFLY_HOME}/modules</em> directory.</p>
+</div>
+<div class="paragraph">
+<p>Interceptor implementations must implement <em>org.jboss.ejb.client.EJBClientInterceptor</em>
+interface.</p>
+</div>
+<div class="paragraph">
+<p>Sample configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="xml"><span class="tag">&lt;client-interceptors&gt;</span>
+        <span class="tag">&lt;interceptor</span> <span class="attribute-name">module</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.foo:FooInterceptor:1.0</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.foo.FooInterceptor</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+<span class="tag">&lt;/client-interceptors&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Sample interceptor implementation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">package org.foo;
+
+import org.jboss.ejb.client.EJBClientInterceptor;
+import org.jboss.ejb.client.EJBClientInvocationContext;
+
+public class FooInterceptor implements EJBClientInterceptor {
+
+    @Override
+    public void handleInvocation(EJBClientInvocationContext context) throws Exception {
+        context.sendRequest();
+    }
+
+    @Override
+    public Object handleInvocationResult(EJBClientInvocationContext context) throws Exception {
+        return context.getResult();
+    }
+}</pre>
 </div>
 </div>
 </div>
@@ -12289,6 +12472,15 @@ responses.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">If this is true then the default encoding will
 be the same as that used by the listener that received the request.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">preserve-path-on-forward</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If this is <code>true</code>, the return values of the
+<code>getServletPath()</code>, <code>getRequestURL()</code> and <code>getRequestURI()</code> methods from
+ <code>HttpServletRequest</code> will be unchanged following a
+ <code>RequestDispatcher.forward()</code> call, and point to the original resource requested.
+If <code>false</code>, following the <code>RequestDispatcher.forward()</code> call, they will
+point to the resource being forwarded to.</p></td>
+</tr>
 </tbody>
 </table>
 <div class="sect4">
@@ -12423,9 +12615,9 @@ new connector configuration:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Undertow_using_as_a_Load_Balancer"><a class="link" href="#Undertow_using_as_a_Load_Balancer">9.7.5. Using Wildfly as a Load Balancer</a></h4>
+<h4 id="Undertow_using_as_a_Load_Balancer"><a class="link" href="#Undertow_using_as_a_Load_Balancer">9.7.5. Using WildFly as a Load Balancer</a></h4>
 <div class="paragraph">
-<p>Wildfly 10 adds support for using the Undertow subsystem as a load
+<p>WildFly 10 added support for using the Undertow subsystem as a load
 balancer. Wildfly supports two different approaches, you can either
 define a static load balancer, and specify the back end hosts in your
 configuration, or use it as a mod_cluster frontend, and use mod_cluster
@@ -12473,7 +12665,7 @@ the backend know that it should not attempt to push for this request.</p>
 <div class="sect5">
 <h6 id="load-balancer-server-profiles"><a class="link" href="#load-balancer-server-profiles">Load balancer server profiles</a></h6>
 <div class="paragraph">
-<p>WildFly 11 adds load balancer profiles for both standalone and domain modes.</p>
+<p>WildFly 11 added load balancer profiles for both standalone and domain modes.</p>
 </div>
 <div class="sect6">
 <h7 id="example-start-standalone-load-balancer"><a class="link" href="#example-start-standalone-load-balancer">Example: Start standalone load balancer</a></h7>
@@ -12525,7 +12717,7 @@ $WILDFLY_HOME/bin/standalone.sh -c standalone-ha.xml -b $MY_IP -bprivate $MY_IP<
 </div>
 </div>
 <div class="sect4">
-<h5 id="using-wildly-as-a-static-load-balancer"><a class="link" href="#using-wildly-as-a-static-load-balancer">Using Wildly as a static load balancer</a></h5>
+<h5 id="using-wildly-as-a-static-load-balancer"><a class="link" href="#using-wildly-as-a-static-load-balancer">Using WildFly as a static load balancer</a></h5>
 <div class="paragraph">
 <p>To use WildFly as a static load balancer the first step is to create a
 proxy handler in the Undertow subsystem. For the purposes of this
@@ -12576,7 +12768,7 @@ content.</p>
 </div>
 <div class="paragraph">
 <p>The full details of all configuration options available can be found in
-the <a href="https://wildscribe.github.io/WildFly/17/subsystem/undertow/index.html">subsystem reference</a>.</p>
+the <a href="https://wildscribe.github.io/WildFly/18/subsystem/undertow/index.html">subsystem reference</a>.</p>
 </div>
 </div>
 </div>
@@ -13035,7 +13227,7 @@ the command line.</p>
 <div class="sect3">
 <h4 id="deployment-of--jms.xml-files"><a class="link" href="#deployment-of--jms.xml-files">9.8.10. Deployment of -jms.xml files</a></h4>
 <div class="paragraph">
-<p>Starting with WildFly 17, you have the ability to deploy a -jms.xml file
+<p>Starting with WildFly 18, you have the ability to deploy a -jms.xml file
 defining JMS destinations, e.g.:</p>
 </div>
 <div class="listingblock">
@@ -13252,6 +13444,28 @@ CLI:</p>
                 ...
         }
     }]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="jms-bridge-statistics"><a class="link" href="#jms-bridge-statistics">Statistics of a JMS Bridge</a></h5>
+<div class="paragraph">
+<p>Currently two statistics are available on a JMS bridge: the number of processed messages and the number of aborted/rolled back messages.
+Those are available with the following command :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="ruby"><span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=messaging</span><span class="delimiter">/</span></span>jms-bridge=<span class="key">myBridge</span>:read-attribute(name=message-count)
+{
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">result</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">0</span><span class="constant">L</span>
+}
+
+<span class="regexp"><span class="delimiter">/</span><span class="content">subsystem=messaging</span><span class="delimiter">/</span></span>jms-bridge=<span class="key">myBridge</span>:read-attribute(name=aborted-message-count)
+{
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">outcome</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">success</span><span class="delimiter">&quot;</span></span>,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">result</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">0</span><span class="constant">L</span>
 }</code></pre>
 </div>
 </div>
@@ -13523,7 +13737,7 @@ Please note that the destination is created remotely but won&#8217;t be removed 
 <div class="paragraph">
 <p>WildFly 10 supports both backwards and forwards compatibility with
 legacy versions that were using HornetQ as their messaging brokers (such
-as JBoss AS7, WildFly 17 &amp; 9).<br>
+as JBoss AS7, WildFly 18 &amp; 9).<br>
 These two compatibility modes are provided by the ActiveMQ Artemis
 project that supports the HornetQ&#8217;s CORE protocol:</p>
 </div>
@@ -13702,7 +13916,17 @@ NIO.</p>
 </div>
 <div class="paragraph">
 <p>The AIO journal is only available when running Linux kernel 2.6 or later
-and after having installed libaio (if it&#8217;s not already installed).</p>
+and after having installed libaio (if it&#8217;s not already installed). If AIO is
+not supported on the system then Artemis will fallback to NIO. To know which
+type of journal is effectively used you can execute the following command using jboss-cli:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>/subsystem=messaging-activemq/server=default:read-attribute(name=runtime-journal-type)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Please note that AIO is represented by ASYNCIO in the WildFly model configuration.</p>
 </div>
 <div class="paragraph">
 <p>Also, please note that AIO will only work with the following file
@@ -13732,7 +13956,7 @@ encrypted partitions, thus you have to move to NIO on those.</strong></p>
 <p>that means that AIO isn&#8217;t working properly on your system.</p>
 </div>
 <div class="paragraph">
-<p>To use NIO instead execute the following commnd using jboss-cli :</p>
+<p>To use NIO instead execute the following command using jboss-cli:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -13847,7 +14071,7 @@ yet).</p>
 <ul>
 <li>
 <p>Artemis JDBC Persistence -
-<a href="http://activemq.apache.org/artemis/docs/1.5.0/persistence.html#configuring-jdbc-persistence" class="bare">http://activemq.apache.org/artemis/docs/1.5.0/persistence.html#configuring-jdbc-persistence</a></p>
+<a href="https://activemq.apache.org/components/artemis/documentation/latest/persistence.html#configuring-jdbc-persistence" class="bare">https://activemq.apache.org/components/artemis/documentation/latest/persistence.html#configuring-jdbc-persistence</a></p>
 </li>
 </ul>
 </div>
@@ -14206,10 +14430,18 @@ element to the xml or by using the following CLI operation:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="http-endpoint"><a class="link" href="#http-endpoint">9.10.3. HTTP Endpoint</a></h4>
+<h4 id="http-endpoints"><a class="link" href="#http-endpoints">9.10.3. HTTP Endpoints</a></h4>
 <div class="paragraph">
-<p>The Health HTTP endpoint is accessible on WildFly HTTP management interface <a href="http://localhost:9990/health">http://localhost:9990/health</a>.</p>
+<p>The MicroProfile Health Check specifications defines three HTTP endpoints:
+* <code>/health</code> to test both the liveness and readiness of the runtime.
+* <code>/health/live</code> to test the liveness of the runtime.
+* <code>/health/ready</code> to test the readiness of the runtime.</p>
 </div>
+<div class="paragraph">
+<p>The Health HTTP endpoints are accessible on WildFly HTTP management interface (e.g. <a href="http://localhost:9990/health">http://localhost:9990/health</a>).</p>
+</div>
+<div class="sect4">
+<h5 id="secured-access-to-the-http-endpoints"><a class="link" href="#secured-access-to-the-http-endpoints">Secured Access to the HTTP endpoints</a></h5>
 <div class="paragraph">
 <p>Secured access to the HTTP endpoint is controlled by the <code>security-enabled</code> attribute of the <code>/subsystem=microprofile-health-smallrye</code> resource.
 If it is set to <code>true</code>, the HTTP client must be authenticated.</p>
@@ -14217,39 +14449,57 @@ If it is set to <code>true</code>, the HTTP client must be authenticated.</p>
 <div class="paragraph">
 <p>If the application server is healthy, it will return a <code>200 OK</code> response:</p>
 </div>
-<hr>
-<div class="paragraph">
-<p>$ curl -v <a href="http://localhost:9990/health" class="bare">http://localhost:9990/health</a>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">$ curl -v http://localhost:9990/health
 &lt; HTTP/1.1 200 OK
-&#8230;&#8203;
-{"outcome":"UP","checks":[]}
----</p>
+...
+{&quot;outcome&quot;:&quot;UP&quot;,&quot;checks&quot;:[]}</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>If the application server (and its deployment) is not healthy, it returns <code>503 Service Unavailable</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>$ curl -v http://localhost:9990/health
+<pre class="CodeRay highlight"><code data-lang="shell">$ curl -v http://localhost:9990/health
 &lt; HTTP/1.1 503 Service Unavailable
 ...
-{"outcome":"DOWN","checks":[{"name":"myFailingProbe","state":"DOWN","data":{"foo":"bar"}}]}</pre>
+{&quot;outcome&quot;:&quot;DOWN&quot;,&quot;checks&quot;:[{&quot;name&quot;:&quot;myFailingProbe&quot;,&quot;state&quot;:&quot;DOWN&quot;,&quot;data&quot;:{&quot;foo&quot;:&quot;bar&quot;}}]}</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>If security has been enabled, the HTTP client must pass the credentials corresponding to a management user
 created by the <code>add-user</code> script. For example:</p>
 </div>
-<hr>
-<div class="paragraph">
-<p>$ curl -v --digest -u myadminuser:myadminpassword <a href="http://localhost:9990/health" class="bare">http://localhost:9990/health</a>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">$ curl -v --digest -u myadminuser:myadminpassword http://localhost:9990/health
 &lt; HTTP/1.1 200 OK
-&#8230;&#8203;
-{"outcome":"UP","checks":[]}
----</p>
+...
+{&quot;outcome&quot;:&quot;UP&quot;,&quot;checks&quot;:[]}</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>If the authentication fails, the  server will reply with a <code>401 NOT AUTHORIZED</code> response.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="global-status-when-probes-are-not-defined"><a class="link" href="#global-status-when-probes-are-not-defined">Global Status when probes are not defined</a></h5>
+<div class="paragraph">
+<p>By default, the HTTP endpoints will return <code>UP</code> if there are no health check probes defined by the application.</p>
+</div>
+<div class="paragraph">
+<p>However, it is possible to change this behaviour.
+The <code>/health/live</code> HTTP endpoint (as well as the <code>check-live</code> management operation) can return <code>DOWN</code> when there are no liveness check probes by setting the <code>empty-liveness-checks-status</code> attribute
+on the <code>subystem</code> resource to <code>DOWN</code>.
+Similarly, the <code>/health/ready</code> HTTP endpoint (as well as the <code>check-ready</code> management operation) can return <code>DOWN</code> when there are no readiness check probes by setting the <code>empty-readiness-checks-status</code> attribute
+on the <code>subystem</code> resource to <code>DOWN</code>.</p>
+</div>
+<div class="paragraph">
+<p>This allows application to ensure that the HTTP liveness and readiness endpoints will return <code>DOWN</code> until their probes are deployed and used to determine the actual
+liveness and readiness state of the application.</p>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -14319,7 +14569,7 @@ configuration sets this attribute to <code></strong></code>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="http-endpoint-2"><a class="link" href="#http-endpoint-2">9.11.3. HTTP Endpoint</a></h4>
+<h4 id="http-endpoint"><a class="link" href="#http-endpoint">9.11.3. HTTP Endpoint</a></h4>
 <div class="paragraph">
 <p>The Metric HTTP endpoint is accessible on WildFly HTTP management interface <a href="http://localhost:9990/metrics">http://localhost:9990/metrics</a>.</p>
 </div>
@@ -14482,7 +14732,7 @@ element to the xml or by using the following CLI operation:</p>
 <div class="sect3">
 <h4 id="supported-instrumentation-libraries"><a class="link" href="#supported-instrumentation-libraries">9.12.2. Supported instrumentation libraries</a></h4>
 <div class="paragraph">
-<p>WildFly&#8217;s MicroProfile OpenTracing subsystem implements MicroProfile 1.1, which includes support for tracing JAX-RS and
+<p>WildFly&#8217;s MicroProfile OpenTracing subsystem implements MicroProfile 1.3, which includes support for tracing JAX-RS and
 CDI.</p>
 </div>
 <div class="paragraph">
@@ -14569,7 +14819,7 @@ existing trace.</p>
 <div class="paragraph">
 <p>The security subsystem is the subsystem that brings the security
 services provided by <a href="http://www.jboss.org/picketbox">PicketBox</a> to the
-WildFly 17 server instances.</p>
+WildFly 18 server instances.</p>
 </div>
 <div class="paragraph">
 <p>If you are looking to secure the management interfaces for the
@@ -20526,7 +20776,13 @@ WildFly defined layers to assemble a custom configuration. <a href="#galleon-cli
 <p><em>cdi</em>: Support for cdi.</p>
 </li>
 <li>
-<p><em>jaxrs</em>: Support for jaxrs.</p>
+<p><em>datasources</em>: Support for datasources.</p>
+</li>
+<li>
+<p><em>ee-security</em>: Support for Jakarta EE Security API</p>
+</li>
+<li>
+<p><em>jaxrs</em>: Support for jaxrs. Depends on <em>web-server</em> (layer defined in the WildFly servlet feature-pack).</p>
 </li>
 <li>
 <p><em>jms-activemq</em>: Support for connections to a remote jms broker.</p>
@@ -20538,10 +20794,19 @@ WildFly defined layers to assemble a custom configuration. <a href="#galleon-cli
 <p><em>observability</em>: Support for microprofile monitoring and configuration features (config, health, metrics, open-tracing).</p>
 </li>
 <li>
+<p><em>open-tracing</em>: Support for microprofile open-tracing. This layer is an optional dependency of <em>observability</em> layer.</p>
+</li>
+<li>
 <p><em>resource-adapters</em>: Support for deployment of JCA adapters.</p>
 </li>
 <li>
-<p><em>h2-database</em>: Support for h2 database.</p>
+<p><em>h2-driver</em>: Support for h2 driver.</p>
+</li>
+<li>
+<p><em>h2-datasource</em>: Support for h2 datasource.</p>
+</li>
+<li>
+<p><em>h2-default-datasource</em>: Support for h2 datasource set as ee subsystem default datasource.</p>
 </li>
 </ul>
 </div>
@@ -20551,25 +20816,9 @@ WildFly defined layers to assemble a custom configuration. <a href="#galleon-cli
 <div class="ulist">
 <ul>
 <li>
-<p><em>cloud-profile</em>, an aggregation of the basic layers (except <em>h2-database</em>).</p>
+<p><em>cloud-profile</em>, an aggregation of the basic layers (except <em>h2-*</em> layers) and a <em>web-server</em> .</p>
 </li>
 </ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>These layers depend at least on the <em>web-server</em> layer defined in the WildFly servlet
-feature-pack (on which WildFly feature-pack depends). This means that when creating an
-installation with these layers, the installed WildFly server is also configured to be a servlet container.</p>
-</div>
-</td>
-</tr>
-</table>
 </div>
 </div>
 <div class="sect4">
@@ -20580,7 +20829,7 @@ installation with these layers, the installed WildFly server is also configured 
 <div class="ulist">
 <ul>
 <li>
-<p><em>ee</em>: Support for common functionality in the Java EE platform.</p>
+<p><em>ee</em>: Support for common functionality in the Jakarta EE platform.</p>
 </li>
 <li>
 <p><em>legacy-security</em>: Support for legacy web security.</p>
@@ -20590,6 +20839,9 @@ installation with these layers, the installed WildFly server is also configured 
 </li>
 <li>
 <p><em>undertow</em>: Support for the Undertow HTTP server.</p>
+</li>
+<li>
+<p><em>undertow-legacy-https</em>: Support for the Undertow HTTPS server secured using ApplicationRealm.</p>
 </li>
 <li>
 <p><em>undertow-load-balancer</em>: Support for Undertow configured as a load balancer.</p>
@@ -20625,6 +20877,9 @@ installation with these layers, the installed WildFly server is also configured 
 <p><em>core-management</em>: Support for server management services.</p>
 </li>
 <li>
+<p><em>core-security-realms</em>: Support for core Application and Management realms.</p>
+</li>
+<li>
 <p><em>deployment-scanner</em>: Support for deployment directory scanning.</p>
 </li>
 <li>
@@ -20646,7 +20901,10 @@ installation with these layers, the installed WildFly server is also configured 
 <p><em>logging</em>: Support for logging subsystem.</p>
 </li>
 <li>
-<p><em>management</em>: Support for remote access to management interfaces.</p>
+<p><em>legacy-management</em>: Support for remote access to management interfaces secured with core ManagementRealm.</p>
+</li>
+<li>
+<p><em>management</em>: Support for remote access to management interfaces (unsecured).</p>
 </li>
 <li>
 <p><em>remoting</em>: Support for inbound and outbound JBOSS Remoting connections.</p>
@@ -20668,7 +20926,7 @@ installation with these layers, the installed WildFly server is also configured 
 <div class="ulist">
 <ul>
 <li>
-<p><em>core-server</em>: Aggregation of layers that compose a typical core server: <em>secure-management</em>,
+<p><em>core-server</em>: Aggregation of layers that compose a typical core server: <em>core-security-realms</em>, <em>secure-management</em>,
 <em>jmx-remoting</em>, <em>logging</em>, <em>core-management</em>, <em>request-controller</em> and <em>security-manager</em>.</p>
 </li>
 </ul>
@@ -20696,6 +20954,14 @@ installation with these layers, the installed WildFly server is also configured 
 </div>
 </div>
 <div class="sect4">
+<h5 id="installation-of-a-cloud-profile-with-support-for-https-using-legacy-core-applicationrealm"><a class="link" href="#installation-of-a-cloud-profile-with-support-for-https-using-legacy-core-applicationrealm">Installation of a cloud-profile with support for https (using legacy core ApplicationRealm)</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>galleon.sh install wildfly:current --dir=my-wildfly-server --layers=cloud-profile,undertow-legacy-https</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
 <h5 id="installation-of-jaxrs-cdi-elytron-and-logging"><a class="link" href="#installation-of-jaxrs-cdi-elytron-and-logging">Installation of jaxrs, cdi, elytron and logging</a></h5>
 <div class="listingblock">
 <div class="content">
@@ -20712,10 +20978,26 @@ installation with these layers, the installed WildFly server is also configured 
 </div>
 </div>
 <div class="sect4">
+<h5 id="installation-of-a-servlet-container-with-support-for-https-using-legacy-core-applicationrealm"><a class="link" href="#installation-of-a-servlet-container-with-support-for-https-using-legacy-core-applicationrealm">Installation of a servlet container with support for https (using legacy core ApplicationRealm)</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>galleon.sh install wildfly:current --dir=my-wildfly-server --layers=web-server,undertow-legacy-https</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
 <h5 id="installation-of-an-undertow-http-server-with-logging"><a class="link" href="#installation-of-an-undertow-http-server-with-logging">Installation of an Undertow http server with logging</a></h5>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code>galleon.sh install wildfly:current --dir=my-wildfly-server --layers=undertow,logging</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="installation-of-an-undertow-https-server-using-legacy-core-applicationrealm"><a class="link" href="#installation-of-an-undertow-https-server-using-legacy-core-applicationrealm">Installation of an Undertow https server (using legacy core ApplicationRealm)</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code>galleon.sh install wildfly:current --dir=my-wildfly-server --layers=undertow-legacy-https</code></pre>
 </div>
 </div>
 </div>
@@ -23399,7 +23681,7 @@ to the process it was managing and release other resources:</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-request"><a class="link" href="#format-of-a-detyped-operation-request">13.5.3. Format of a Detyped Operation Request</a></h4>
 <div class="paragraph">
-<p>The basic method a user of the WildFly 17 programmatic management API
+<p>The basic method a user of the WildFly 18 programmatic management API
 would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -23919,7 +24201,7 @@ header just like this :</p>
 <div class="sect3">
 <h4 id="format-of-a-detyped-operation-response"><a class="link" href="#format-of-a-detyped-operation-response">13.5.4. Format of a Detyped Operation Response</a></h4>
 <div class="paragraph">
-<p>As noted previously, the basic method a user of the WildFly 17
+<p>As noted previously, the basic method a user of the WildFly 18
 programmatic management API would use is very simple:</p>
 </div>
 <div class="listingblock">
@@ -24825,7 +25107,7 @@ script (e.g. 'bin/jboss-admin.bat --connect command=:shutdown').</p>
 <div class="paragraph">
 <p>To avoid "Press any key to continue &#8230;&#8203;" message you need to specify
 NOPAUSE variable. Call 'set NOPAUSE=true' in command line before running
-any WildFly 17 .bat script or include it in your custom script before
+any WildFly 18 .bat script or include it in your custom script before
 invoking scripts from WildFly.</p>
 </div>
 </div>
@@ -25205,6 +25487,12 @@ Do you confirm y/n :y</code></pre>
 <div class="paragraph">
 <p>NB: Once the command is executed, the CLI will reload the server and reconnect to it.</p>
 </div>
+<div class="paragraph">
+<p>This command can also obtain the certificates from the Let&#8217;s Encrypt certificate authority
+by use of the --lets-encrypt parameter.
+Besides the mentioned workflow the user will be prompted to specify more information
+(eg: account key store, certificate authority account) to obtain the certificate from Let&#8217;s Encrypt.</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -25217,6 +25505,16 @@ a complete description of the command.</p>
 <em>undertow</em> server. The same wizard as the <em>enable-ssl-management</em> action is available.
 Type <em>help security enable-ssl-http-server</em> for a complete description of the command.</p>
 </li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This command can also obtain the certificates from the Let&#8217;s Encrypt certificate authority
+by use of the --lets-encrypt parameter.
+Besides the mentioned workflow the user will be prompted to specify more information
+(eg: account key store, certificate authority account) to obtain the certificate from Let&#8217;s Encrypt.</p>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p><em>security disable-ssl-http-server</em>: To disable SSL (elytron SSLContext) for the
 <em>undertow</em> server. Type <em>help security disable-ssl-http-server</em> for a complete
@@ -25312,8 +25610,8 @@ for a complete description of the command.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 17.0.0.Final<br>
-Last updated 2019-05-10 20:15:16 CDT
+Version 18.0.0.Final<br>
+Last updated 2019-04-04 08:25:30 PDT
 </div>
 </div>
 </body>
